@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClienteApiController;
 use App\Http\Controllers\ProductoApiController;
+use App\Http\Controllers\VentaApiController;
+
 
 
 /*
@@ -36,7 +38,12 @@ Route::group(['prefix' => 'producto'], function () {
     Route::get('get-productos', [ProductoApiController::class, 'getAllProductos']);
     Route::post('add-producto', [ProductoApiController::class, 'createNewProducto']);
     Route::post('update-producto', [ProductoApiController::class, 'UpdateProducto']);
-    Route::post('delete-producto/{id}', [ProductoApiController::class, 'deleteProducto']);
+    
+
+});
+
+Route::group(['prefix' => 'venta'], function () {
+    Route::post('create-venta', [VentaApiController::class, 'createVenta']);
     
 
 });

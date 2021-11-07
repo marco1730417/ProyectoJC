@@ -25,6 +25,9 @@ Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
 
+import 'vue-select/dist/vue-select.css';
+
+
 
 
 /**
@@ -47,6 +50,9 @@ Vue.component('modal-edit-cliente', require('./components/clientes/ModalEditClie
 Vue.component('productos', require('./components/productos/Productos.vue').default);
 Vue.component('modal-nuevo-producto', require('./components/productos/ModalNuevoProducto.vue').default);
 Vue.component('modal-edit-producto', require('./components/productos/ModalEditProducto.vue').default);
+
+Vue.component('venta', require('./components/venta/Venta.vue').default);
+Vue.component('modal-venta-producto', require('./components/venta/ModalVentaProducto.vue').default);
 
 
 /**

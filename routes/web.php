@@ -39,6 +39,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::get('cliente', ['as' => 'cliente.index', 'uses' => 'App\Http\Controllers\ClienteController@index']);
 	Route::get('productos', ['as' => 'productos.index', 'uses' => 'App\Http\Controllers\ProductoController@index']);
+	Route::get('venta', ['as' => 'venta.index', 'uses' => 'App\Http\Controllers\VentaController@index']);
 	
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
