@@ -1,81 +1,129 @@
 <template>
-<div class="card">
-  <div class="card-body">
-    <b-form v-if="show">
-      <b-form-group id="input-group-2" label="Nombre del Producto" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="infoeditproducto.nombre"
-          placeholder="Ingrese el nombre"
-          required
-        ></b-form-input>
-    <!--     {{ nombre }} -->
-      </b-form-group>
-           <b-form-group id="input-group-3"   label="Codigo:" label-for="input-3"  >
-        <b-form-input
-          id="input-2"
-          v-model="infoeditproducto.codigo"
-          placeholder="Ingrese Codigo"
-           @keypress="onlyNumber"
-          
-          required
-        ></b-form-input>
-      </b-form-group>
-      <b-form-group
-        id="input-group-2"
-        label="Unidades:"
-        label-for="input-2"
-      >
-        <b-form-input
-          id="input-2"
-          v-model="infoeditproducto.unidades"
-          placeholder="Enter unidades"
-           @keypress="onlyNumber"
-          required
-        ></b-form-input>
-      </b-form-group>
+  <div class="card">
+    <div class="card-body">
+      <form>
+        <div class="row">
+          <div class="col-6">
+            <!--left side -->
+            <div class="form-group row">
+              <label for="fname" class="col-sm-4 col-form-label">Nombre</label>
+              <div class="col-sm-8">
+                <input
+                  v-model="infoeditproducto.nombre"
+                  type="text"
+                  class="form-control"
+                  required
+                  id="nombre"
+                />
+              </div>
+            </div>
 
-       <b-form-group
-        id="input-group-2"
-        label="PrecioVenta1:"
-        label-for="input-2"
-      >
-        <b-form-input
-          id="input-2"
-          v-model="infoeditproducto.PrecioVenta1"
-          placeholder="Enter unidades"
-           @keypress="onlyNumber"
-          required
-        ></b-form-input>
-      </b-form-group>
+            <div class="form-group row">
+              <label for="lname" class="col-sm-4 col-form-label"
+                >Unidades</label
+              >
+              <div class="col-sm-8">
+                <input
+                  v-model="infoeditproducto.unidades"
+                  type="text"
+                  class="form-control"
+                  id="unidades"
+                />
+              </div>
+            </div>
 
-      <b-form-group
-        id="input-group-1"
-        label="Iva"
-        label-for="input-1"
-      >
-        <b-form-input
-          id="input-1"
-          v-model="infoeditproducto.iva"
-          placeholder="Enter iva"
-          required
-        ></b-form-input>
-      </b-form-group>
-      <b-form-group id="input-group-1" label="Direccion" label-for="input-3">
-        <b-form-textarea
-          id="textarea"
-          v-model="infoeditproducto.descripcion"
-          placeholder="Ingrese la descripcion"
-          rows="3"
-          max-rows="6"
-        ></b-form-textarea>
-      </b-form-group>
-     <!--  {{infoeditproducto}}
- -->
-      <b-button  size="sm"  variant="primary" @click="UpdateProducto(infoeditproducto)">Actualizar</b-button>
-    </b-form>
-  </div>
+            <div class="form-group row">
+              <label for="lname" class="col-sm-4 col-form-label">Iva</label>
+              <div class="col-sm-8">
+                <div class="row">
+                  <b-form-group id="input-group-2" label-for="input-2">
+                    <b-form-radio v-model="infoeditproducto.iva" name="some-radios" value="12">
+                      12
+                    </b-form-radio>
+                    <b-form-radio v-model="infoeditproducto.iva" name="some-radios" value="0">
+                      0
+                    </b-form-radio>
+                  </b-form-group>
+                  <!--     {{iva}} -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-6">
+            <div class="form-group row">
+              <label for="email" class="col-sm-6 col-form-label"
+                >P.V 1 (mtr)
+              </label>
+              <div class="col-sm-6">
+                <input
+                  @keypress="onlyNumber"
+                  v-model="infoeditproducto.PrecioVenta1"
+                  type="text"
+                  class="form-control"
+                  id="PrecioVenta1"
+                />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="password" class="col-sm-6 col-form-label"
+                >P.V 2 (rll)</label
+              >
+              <div class="col-sm-6">
+                <input
+                  @keypress="onlyNumber"
+                  v-model="infoeditproducto.PrecioVenta2"
+                  type="text"
+                  class="form-control"
+                  id="PrecioVenta2"
+                />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="password2" class="col-sm-6 col-form-label"
+                >P.V 3 (esp)</label
+              >
+              <div class="col-sm-6">
+                <input
+                  @keypress="onlyNumber"
+                  v-model="infoeditproducto.PrecioVenta3"
+                  type="text"
+                  class="form-control"
+                  id="PrecioVenta3"
+                />
+              </div>
+            </div>
+          </div>
+          <!--right side -->
+        </div>
+        <div class="row">
+          <label for="password2" class="col-sm-12 col-form-label"
+            >Descripcion</label
+          >
+          <div class="col-sm-12">
+            <input
+              v-model="infoeditproducto.descripcion"
+              type="text"
+              class="form-control"
+              id="descripcion"
+            />
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="col-sm-12 text-center">
+            <b-button size="md" variant="primary" @click="UpdateProducto(infoeditproducto)"
+              >Guardar</b-button
+            >
+          </div>
+        </div>
+
+        <!-- form for teacher/student-->
+      </form>
     </div>
+  </div>
 </template>
 
 
@@ -85,7 +133,7 @@ import ProductoServices from "../../services/productoServices";
 import { BootstrapVue } from "bootstrap-vue";
 Vue.use(BootstrapVue);
 export default {
-  props:['infoeditproducto'],
+  props: ["infoeditproducto"],
   data() {
     return {
       show: true,
@@ -95,26 +143,23 @@ export default {
       codigo: "",
       descripcion: "",
       unidades: "",
-      PrecioVenta1:"",
+      PrecioVenta1: "",
       iva: "",
     };
   },
-  mounted() {
-
-  },
+  mounted() {},
   methods: {
-      clearfields(){
-this.nombre="";
-this.codigo="";
-this.descripcion="";
-this.unidades="";
-this.iva="";
-this.PrecioVenta1="";
-
+    clearfields() {
+      this.nombre = "";
+      this.codigo = "";
+      this.descripcion = "";
+      this.unidades = "";
+      this.iva = "";
+      this.PrecioVenta1 = "";
     },
     UpdateProducto(infoedicionproducto) {
       let data = {
-        informacionedicionproducto: infoedicionproducto
+        informacionedicionproducto: infoedicionproducto,
       };
       ProductoServices.UpdateProducto(data)
         .then((response) => {
@@ -127,13 +172,14 @@ this.PrecioVenta1="";
           console.log(error);
         });
     },
-         onlyNumber ($event) {
-          //console.log($event.keyCode); //keyCodes value
-          let keyCode = ($event.keyCode ? $event.keyCode : $event.which);
-          if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) { // 46 is dot
-              $event.preventDefault();
-          }
-      },
+    onlyNumber($event) {
+      //console.log($event.keyCode); //keyCodes value
+      let keyCode = $event.keyCode ? $event.keyCode : $event.which;
+      if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) {
+        // 46 is dot
+        $event.preventDefault();
+      }
+    },
   },
 };
 </script>

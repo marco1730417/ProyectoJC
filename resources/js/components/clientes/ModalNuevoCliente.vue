@@ -67,10 +67,13 @@
 
 <script>
 import ClienteServices from "../../services/clienteServices";
-
+import vSelect from "vue-select";
 import { BootstrapVue } from "bootstrap-vue";
 Vue.use(BootstrapVue);
 export default {
+    components: {
+    "v-select": vSelect,
+  },
   data() {
     return {
       show: true,

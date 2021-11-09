@@ -1,83 +1,132 @@
 <template>
-<div class="card">
-  <div class="card-body">
-    <b-form v-if="show">
-      <b-form-group id="input-group-2" label="Nombre del Producto" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="nombre"
-          placeholder="Ingrese el nombre"
-          required
-        ></b-form-input>
-    <!--     {{ nombre }} -->
-      </b-form-group>
-           <b-form-group id="input-group-3"   label="Codigo:" label-for="input-3"  >
-        <b-form-input
-          id="input-2"
-          v-model="codigo"
-          placeholder="Ingrese Codigo"
-           @keypress="onlyNumber"
-          
-          required
-        ></b-form-input>
-      </b-form-group>
-      <b-form-group
-        id="input-group-2"
-        label="Unidades:"
-        label-for="input-2"
-      >
-        <b-form-input
-          id="input-2"
-          v-model="unidades"
-          placeholder="Ingrese unidades"
-           @keypress="onlyNumber"
-          required
-        ></b-form-input>
-      </b-form-group>
+  <div class="card">
+    <div class="card-body">
+      <div class="container">
+        <form>
+          <div class="row">
+            <div class="col-6">
+              <!--left side -->
+              <div class="form-group row">
+                <label for="fname" class="col-sm-4 col-form-label"
+                  >Nombre</label
+                >
+                <div class="col-sm-8">
+                  <input
+                    v-model="nombre"
+                    type="text"
+                    class="form-control"
+                    required
+                    id="nombre"
+                  />
+                </div>
+              </div>
 
+              <div class="form-group row">
+                <label for="lname" class="col-sm-4 col-form-label"
+                  >Unidades</label
+                >
+                <div class="col-sm-8">
+                  <input
+                    v-model="unidades"
+                    type="text"
+                    class="form-control"
+                    id="unidades"
+                  />
+                </div>
+              </div>
 
-         <b-form-group
-        id="input-group-2"
-        label="Precio Venta1:"
-        label-for="input-2"
-      >
-        <b-form-input
-          id="input-2"
-          v-model="PrecioVenta1"
-          placeholder="Ingrese precio venta1"
-           @keypress="onlyNumber"
-          required
-        ></b-form-input>
-      </b-form-group>
+              <div class="form-group row">
+                <label for="lname" class="col-sm-4 col-form-label">Iva</label>
+                <div class="col-sm-8">
+                  <div class="row">
+                    <b-form-group id="input-group-2" label-for="input-2">
+                      <b-form-radio v-model="iva" name="some-radios" value="12">
+                        12
+                      </b-form-radio>
+                      <b-form-radio v-model="iva" name="some-radios" value="0">
+                        0
+                      </b-form-radio>
+                    </b-form-group>
+                    <!--     {{iva}} -->
+                  </div>
+                </div>
+              </div>
+            </div>
 
-      <b-form-group
-        id="input-group-1"
-        label="Iva"
-        label-for="input-1"
-      >
-        <b-form-input
-          id="input-1"
-          v-model="iva"
-          type="iva"
-          placeholder="Ingrese iva"
-           @keypress="onlyNumber"
-          required
-        ></b-form-input>
-      </b-form-group>
-      <b-form-group id="input-group-1" label="Direccion" label-for="input-3">
-        <b-form-textarea
-          id="textarea"
-          v-model="descripcion"
-          placeholder="Ingrese la descripcion"
-          rows="3"
-          max-rows="6"
-        ></b-form-textarea>
-      </b-form-group>
+            <div class="col-6">
+              <div class="form-group row">
+                <label for="email" class="col-sm-6 col-form-label"
+                  >P.V 1 (mtr)
+                </label>
+                <div class="col-sm-6">
+                  <input
+                    @keypress="onlyNumber"
+                    v-model="PrecioVenta1"
+                    type="text"
+                    class="form-control"
+                    id="PrecioVenta1"
+                  />
+                </div>
+              </div>
 
-      <b-button  size="sm"  variant="primary" @click="createNewProducto()">Guardar</b-button>
-    </b-form>
-  </div>
+              <div class="form-group row">
+                <label for="password" class="col-sm-6 col-form-label"
+                  >P.V 2 (rll)</label
+                >
+                <div class="col-sm-6">
+                  <input
+                    @keypress="onlyNumber"
+                    v-model="PrecioVenta2"
+                    type="text"
+                    class="form-control"
+                    id="PrecioVenta2"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="password2" class="col-sm-6 col-form-label"
+                  >P.V 3 (esp)</label
+                >
+                <div class="col-sm-6">
+                  <input
+                    @keypress="onlyNumber"
+                    v-model="PrecioVenta3"
+                    type="text"
+                    class="form-control"
+                    id="PrecioVenta3"
+                  />
+                </div>
+              </div>
+            </div>
+            <!--right side -->
+          </div>
+           <div class="row">
+    <label for="password2" class="col-sm-12 col-form-label"
+                  >Descripcion</label
+                >
+                <div class="col-sm-12">
+                  <input
+                    v-model="descripcion"
+                    type="text"
+                    class="form-control"
+                    id="descripcion"
+                  />
+                </div>
+
+           </div><br/>
+                <div class="row">
+
+                   <div class="col-sm-12 text-center">
+      <b-button  size="md"   variant="primary" @click="createNewProducto()">Guardar</b-button>
+              </div>
+           </div>
+               
+          <!-- form for teacher/student-->
+        </form>
+      </div>
     </div>
+  </div>
 </template>
 
 
@@ -89,7 +138,6 @@ Vue.use(BootstrapVue);
 export default {
   data() {
     return {
-      show: true,
       producto: "",
       infoproducto: [],
       nombre: "",
@@ -98,6 +146,8 @@ export default {
       unidades: "",
       iva: "",
       PrecioVenta1: "",
+      PrecioVenta2: "",
+      PrecioVenta3: "",
       
     };
   },
@@ -105,14 +155,16 @@ export default {
     console.log("Component mounted.");
   },
   methods: {
-      clearfields(){
-this.nombre="";
-this.codigo="";
-this.descripcion="";
-this.unidades="";
-this.iva="";
-this.PrecioVenta1=""
-
+    clearfields() {
+      this.nombre = "";
+      this.codigo = "";
+      this.descripcion = "";
+      this.unidades = "";
+      this.iva = "";
+      this.PrecioVenta1 = "";
+      this.PrecioVenta2 = "";
+      this.PrecioVenta3 = "";
+      
     },
     createNewProducto() {
       let data = {
@@ -121,7 +173,10 @@ this.PrecioVenta1=""
         descripcion: this.descripcion,
         unidades: this.unidades,
         iva: this.iva,
-PrecioVenta1:this.PrecioVenta1,
+        PrecioVenta1: this.PrecioVenta1,
+        PrecioVenta2: this.PrecioVenta2,
+        PrecioVenta3: this.PrecioVenta3,
+        
       };
       ProductoServices.createNewProducto(data)
         .then((response) => {
@@ -135,13 +190,14 @@ PrecioVenta1:this.PrecioVenta1,
           console.log(error);
         });
     },
-         onlyNumber ($event) {
-          //console.log($event.keyCode); //keyCodes value
-          let keyCode = ($event.keyCode ? $event.keyCode : $event.which);
-          if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) { // 46 is dot
-              $event.preventDefault();
-          }
-      },
+    onlyNumber($event) {
+      //console.log($event.keyCode); //keyCodes value
+      let keyCode = $event.keyCode ? $event.keyCode : $event.which;
+      if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) {
+        // 46 is dot
+        $event.preventDefault();
+      }
+    },
   },
 };
 </script>

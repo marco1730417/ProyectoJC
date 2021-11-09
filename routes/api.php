@@ -44,6 +44,15 @@ Route::group(['prefix' => 'producto'], function () {
 
 Route::group(['prefix' => 'venta'], function () {
     Route::post('create-venta', [VentaApiController::class, 'createVenta']);
+    Route::post('create-detalle-venta', [VentaApiController::class, 'createDetalleVenta']);
+    Route::get('get-informacion-venta/{venId}',  [VentaApiController::class, 'getInformacionVenta']);
+    Route::post('delete-detalle-venta/{id}', [VentaApiController::class, 'deleteDetalleVenta']);
+    Route::get('totales-venta/{venId}',  [VentaApiController::class, 'totalesVenta']);
+  
+
+
+    
+        
     
 
 });

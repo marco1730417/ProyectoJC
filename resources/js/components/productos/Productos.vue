@@ -19,6 +19,11 @@
 
             <!--          Modal agregar nuevo producto -->
 
+          </div>
+          <!--          Modal agregar nuevo producto -->
+
+
+
             <div
               class="modal fade"
               id="ModalNuevoProducto"
@@ -26,7 +31,7 @@
               role="dialog"
               aria-hidden="true"
             >
-              <div class="modal-dialog" role="document">
+              <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
                     <h5 class="modal-title">Nuevo Producto</h5>
@@ -46,10 +51,8 @@
                 </div>
               </div>
             </div>
-          </div>
-          <!--          Modal agregar nuevo producto -->
 
-          <!--          Modal agregar nuevo producto -->
+          <!--          Modal agregar editar producto -->
 
           <div
             class="modal fade"
@@ -58,7 +61,7 @@
             role="dialog"
             aria-hidden="true"
           >
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title">Edit Producto</h5>
@@ -84,44 +87,29 @@
 
           <!--          Modal agregar nuevo producto -->
 
-          <b-button
+       <!--    <b-button
             size="xs"
             variant="primary"
             data-toggle="modal"
             data-target="#ModalNuevoProducto"
             >Nuevo Producto</b-button
           >
+ -->
+   <div class="col-4 text-right">
+                  <a
+                    href=""
+                    class="btn btn-sm btn-primary"
+                    data-toggle="modal"
+                    data-target="#ModalNuevoProducto"
+                    >Nuevo Producto</a
+                  >  </div>
+
         </div>
       </div>
 
-      <!-- {{infoproducto}} -->
       <div class="col-md-6 float-right">
-        <!--a href="#" @click="this.getActiveQuotes" > <i style="float:right" 
-           
-            class="glyph-icon iconsminds-refresh mr-1"
-          ></i></a-->
-
-        <div class="text-center" v-if="loading">
-          <b-button variant="dark" disabled>
-            <b-spinner small></b-spinner>
-            <span class="sr-only">Loading...</span>
-          </b-button>
-
-          <b-button variant="dark" disabled>
-            <b-spinner small type="grow"></b-spinner>
-            Loading...
-          </b-button>
-        </div>
       </div>
-
-      <vue-perfect-scrollbar
-        :class="
-          infoproducto.lenght > 0 || infoproducto.lenght < 7 ? 'inactive' : ''
-        "
-        class="scroll dashboard dashboard-list-with-thumbs"
-        :settings="{ suppressScrollX: true, wheelPropagation: false }"
-      >
-        <b-table
+       <b-table
           :items="infoproducto"
           :fields="fields"
           :filter="filter"
@@ -130,12 +118,11 @@
           bordered
           class="dsh-resent"
         >
+        
           <template #cell(nombre)="data">
             <small class="mb-0 mr-2">{{ data.item.nombre }}</small>
           </template>
-          <template #cell(codigo)="data">
-            <small class="mb-0 mr-2">{{ data.item.codigo }}</small>
-          </template>
+         
           <template #cell(descripcion)="data">
             <small class="mb-0 mr-2">{{ data.item.descripcion }}</small>
           </template>
@@ -143,16 +130,24 @@
             <small class="mb-0 mr-2">{{ data.item.unidades }}</small>
           </template>
 
-          <template #cell(iva)="data">
-            <b-badge variant="outline" class="p-1" size="sm">{{
-              data.item.iva
-            }}</b-badge>
-          </template>
+         
           <template #cell(PrecioVenta1)="data">
             <b-badge variant="outline" class="p-1" size="sm">{{
               data.item.PrecioVenta1
             }}</b-badge>
           </template>
+          
+      <template #cell(PrecioVenta2)="data">
+            <b-badge variant="outline" class="p-1" size="sm">{{
+              data.item.PrecioVenta2
+            }}</b-badge>
+          </template>
+          <template #cell(PrecioVenta3)="data">
+            <b-badge variant="outline" class="p-1" size="sm">{{
+              data.item.PrecioVenta3
+            }}</b-badge>
+          </template>
+
           <template #cell(actions)="data">
             <b-button
               variant="outline-info default actions"
@@ -177,7 +172,7 @@
             </b-button>
           </template>
         </b-table>
-      </vue-perfect-scrollbar>
+     
     </b-card>
   </div>
 </template>
@@ -199,6 +194,7 @@ export default {
       infoeditproducto: [],
       filter: null,
       fields: [
+
         {
           key: "nombre",
           label: "Producto",
@@ -206,13 +202,7 @@ export default {
           sortDirection: "desc",
           tdClass: "list-item-enddate",
         },
-        {
-          key: "codigo",
-          label: "Codigo",
-          sortable: false,
-          sortDirection: "desc",
-          tdClass: "list-item-enddate",
-        },
+     
         {
           key: "descripcion",
           label: "Descripcion",
@@ -228,22 +218,30 @@ export default {
           sortDirection: "desc",
           tdClass: "list-item-enddate",
         },
-
-        {
-          key: "iva",
-          label: "Iva",
-          sortable: false,
-          sortDirection: "desc",
-          tdClass: "list-item-enddate text-center",
-        },
-
-        {
+           {
           key: "PrecioVenta1",
           label: "PrecioVenta1",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate text-center",
         },
+
+          {
+          key: "PrecioVenta2",
+          label: "PrecioVenta2",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "list-item-enddate text-center",
+        },
+      {
+          key: "PrecioVenta3",
+          label: "PrecioVenta3",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "list-item-enddate text-center",
+        },
+
+     
 
         { key: "actions", label: "Acciones", tdClass: "text-center" },
       ],
@@ -254,9 +252,10 @@ export default {
   },
   methods: {
     updateProducto() {
-      this.getAllProductos();
-
       $("#ModalNuevoProducto").modal("hide");
+     this.getAllProductos();
+
+     
     },
 
     updateProductosUpdate() {
