@@ -141,14 +141,23 @@ if($new_detalle){
         return $total_venta ;
     }
 
+    public function detalleGeneralVenta($venId)
+    {
+
+      
+        $info_venta= Venta :: select ('ventas.id','ventas.fecha','clientes.nombre','clientes.ruc','clientes.direccion','clientes.telefono','ventas.metodopago')
+        ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
+        ->where('ventas.id', $venId)->get();;
+        return $this->successResponse($info_venta);
+    }
+
 
     public function downloadVenta($venId)
     {
-/* 
+ 
         $detalle_venta = DetalleVenta::select(
             'detalle_ventas.cantidad',
             'detalle_ventas.id',
-            
             'detalle_ventas.precioUnitario',
             'productos.nombre',
             'productos.descripcion',
@@ -158,21 +167,38 @@ if($new_detalle){
             ->leftJoin('ventas', 'detalle_ventas.id', '=', 'ventas.id')
             ->leftJoin('productos', 'detalle_ventas.proId', '=', 'productos.id')
             ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
-
             ->where('venId', $venId)->get();
 
-     
-        
-        $pdf = \PDF::loadView('venta.ventapdf',  ["detalle_venta" => $detalle_venta],['format' => 'A4']);
-        return $pdf->download('venta.ventapdf'); */
-        $data = [
-            'titulo' => 'Styde.net'
-        ];
- 
-        $pdf = PDF::loadView('venta.ventapdf', $data);
+            $parciales = DetalleVenta::queryVentaParcial($venId)->get();
+            $subtotal = $parciales->sum('parcial');
+            $iva = 12;
+            $valor_iva = $subtotal*$iva/100;
+            $total = $subtotal+$valor_iva;
     
-        return $pdf->download('archivo.pdf');
+            $totales_venta = [
+                                    'subtotal' => $subtotal,
+                                    'iva' =>     round($iva),
+                                    'valorIva' => $valor_iva,
+                                    'total' => $total
+                                  ];
+    
+            //return $this->successResponse($totales_cotizacion);
+              
+            $total_venta=collect($totales_venta);
 
+
+            $info_venta= Venta :: select ('ventas.id','ventas.fecha','clientes.nombre','clientes.ruc','clientes.direccion','clientes.telefono','ventas.metodopago')
+            ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
+            ->where('ventas.id', $venId)->get();
+
+     
+ 
+      //  $pdf = PDF::loadView('venta.ventapdf', $data);
+        $pdf = PDF::loadView('venta.ventapdf',  ["detalle_venta" => $detalle_venta, "total_venta" => $total_venta, "info_venta"=> $info_venta ],['format' => 'A4']);
+    
+        return $pdf->download('venta.pdf'); 
+      
+      
     }
 
     
