@@ -48,6 +48,8 @@ Route::group(['prefix' => 'venta'], function () {
     Route::get('get-informacion-venta/{venId}',  [VentaApiController::class, 'getInformacionVenta']);
     Route::post('delete-detalle-venta/{id}', [VentaApiController::class, 'deleteDetalleVenta']);
     Route::get('totales-venta/{venId}',  [VentaApiController::class, 'totalesVenta']);
+    Route::get('download-venta/{venId}',  [VentaApiController::class, 'downloadVenta']);
+    
   
 
 

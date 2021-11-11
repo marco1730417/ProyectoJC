@@ -270,6 +270,7 @@
                 </b-col>
               </b-row>
             </b-container>
+              <b-button @click="downloadVenta()" variant="danger">Button</b-button>
 
             <!--  {{totalesventa}} -->
 
@@ -287,7 +288,10 @@
 <script>
 import VentaServices from "../../services/ventaServices";
 import ClienteServices from "../../services/clienteServices";
+import Conf from '../../services/conf.js';
 
+const resource = 'api/venta/'
+const server = Conf.server;
 import moment from "moment";
 import { BootstrapVue } from "bootstrap-vue";
 import vSelect from "vue-select";
@@ -354,6 +358,17 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+      downloadVenta() {
+   /*    VentaServices.downloadVenta(this.venId)
+        .then((response) => {
+          
+        })
+        .catch((error) => {
+          console.log(error);
+        }); */
+         let routeData = server + resource + `download-venta/`+ this.venId;
+      window.open(routeData);
     },
     totalesVenta() {
       VentaServices.totalesVenta(this.venId)

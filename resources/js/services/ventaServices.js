@@ -1,5 +1,6 @@
 import Axios from 'axios';
 import Conf from './conf.js';
+
 const axios = require('axios');
 const resource = 'api/venta/'
 const server = Conf.server;
@@ -25,7 +26,12 @@ export default {
         let url = server + resource + 'totales-venta';
         return Axios.get(url + "/" + venId);
     },
+    downloadVenta(venId) {
+        let url = server + resource + 'download-venta';
+        return Axios.get(url + "/" + venId);
+    },
 
+    
 
     deleteDetalleVenta(id) {
         let url = server + resource + "delete-detalle-venta";

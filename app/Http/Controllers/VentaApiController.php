@@ -11,6 +11,8 @@ use App\Models\DetalleVenta;
 use App\Models\Producto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
+use PDF
+ ;
 
 class VentaApiController extends ApiResponseController
 {
@@ -130,6 +132,39 @@ class VentaApiController extends ApiResponseController
         return $total_venta ;
     }
 
+
+    public function downloadVenta($venId)
+    {
+/* 
+        $detalle_venta = DetalleVenta::select(
+            'detalle_ventas.cantidad',
+            'detalle_ventas.id',
+            
+            'detalle_ventas.precioUnitario',
+            'productos.nombre',
+            'productos.descripcion',
+            db::raw('detalle_ventas.cantidad*detalle_ventas.precioUnitario as subTotal'),
+
+        )
+            ->leftJoin('ventas', 'detalle_ventas.id', '=', 'ventas.id')
+            ->leftJoin('productos', 'detalle_ventas.proId', '=', 'productos.id')
+            ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
+
+            ->where('venId', $venId)->get();
+
+     
+        
+        $pdf = \PDF::loadView('venta.ventapdf',  ["detalle_venta" => $detalle_venta],['format' => 'A4']);
+        return $pdf->download('venta.ventapdf'); */
+        $data = [
+            'titulo' => 'Styde.net'
+        ];
+ 
+        $pdf = PDF::loadView('venta.ventapdf', $data);
+    
+        return $pdf->download('archivo.pdf');
+
+    }
 
     
     }
