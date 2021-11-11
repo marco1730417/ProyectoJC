@@ -49,7 +49,7 @@
                       <h5 class="card-title text-uppercase text-muted mb-0">
                         Elija un cliente
                         <v-select
-                          label="ruc"
+                          label="nombre"
                           v-model="cliente"
                           :options="infocliente"
                           required
@@ -154,7 +154,7 @@
                     class="btn btn-sm btn-primary"
                     data-toggle="modal"
                     data-target="#ModalVentaProducto"
-                    >Producto</a
+                    ><i class="fas fa-plus"></i></a
                   >
 
                   <div
@@ -167,7 +167,8 @@
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h5 class="modal-title">Nuevo Producto</h5>
+                     <!--      <h5 class="modal-title"> Cliente {{cliente.nombre}} - Fecha {{fecha}}  </h5> -->
+                      <h5 class="modal-title"> Nuevo Item  </h5>
                           <button
                             type="button"
                             class="close"
@@ -313,7 +314,7 @@ export default {
 
       filter: null,
       formadepago: "",
-      venId: 9,
+      venId: 7,
     };
   },
   mounted() {

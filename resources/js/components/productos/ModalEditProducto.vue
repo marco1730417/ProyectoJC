@@ -28,7 +28,7 @@
                   type="text"
                   class="form-control"
                   id="unidades"
-                />
+                /><small>Favor ingresar unidades en metros</small>
               </div>
             </div>
 
@@ -37,10 +37,18 @@
               <div class="col-sm-8">
                 <div class="row">
                   <b-form-group id="input-group-2" label-for="input-2">
-                    <b-form-radio v-model="infoeditproducto.iva" name="some-radios" value="12">
+                    <b-form-radio
+                      v-model="infoeditproducto.iva"
+                      name="some-radios"
+                      value="12"
+                    >
                       12
                     </b-form-radio>
-                    <b-form-radio v-model="infoeditproducto.iva" name="some-radios" value="0">
+                    <b-form-radio
+                      v-model="infoeditproducto.iva"
+                      name="some-radios"
+                      value="0"
+                    >
                       0
                     </b-form-radio>
                   </b-form-group>
@@ -48,12 +56,37 @@
                 </div>
               </div>
             </div>
+
+                 <div class="form-group row">
+                <label
+                  v-if="infoeditproducto.PrecioVenta1 && infoeditproducto.preciocompra"
+                  for="lname"
+                  class="col-sm-12 col-form-label"
+                  >Su utilidad x metro es $
+                  {{ infoeditproducto.PrecioVenta1 - infoeditproducto.preciocompra }}
+                </label>
+              </div>
+
           </div>
 
           <div class="col-6">
             <div class="form-group row">
               <label for="email" class="col-sm-6 col-form-label"
-                >P.V 1 (mtr)
+                >Precio de compra
+              </label>
+              <div class="col-sm-6">
+                <input
+                  @keypress="onlyNumber"
+                  v-model="infoeditproducto.preciocompra"
+                  type="text"
+                  class="form-control"
+                  id="preciocompra"
+                />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="email" class="col-sm-6 col-form-label"
+                >Precio x metro
               </label>
               <div class="col-sm-6">
                 <input
@@ -68,7 +101,7 @@
 
             <div class="form-group row">
               <label for="password" class="col-sm-6 col-form-label"
-                >P.V 2 (rll)</label
+                >Precio x rollo</label
               >
               <div class="col-sm-6">
                 <input
@@ -80,21 +113,20 @@
                 />
               </div>
             </div>
-
-            <div class="form-group row">
-              <label for="password2" class="col-sm-6 col-form-label"
-                >P.V 3 (esp)</label
-              >
-              <div class="col-sm-6">
-                <input
-                  @keypress="onlyNumber"
-                  v-model="infoeditproducto.PrecioVenta3"
-                  type="text"
-                  class="form-control"
-                  id="PrecioVenta3"
-                />
+                     <div class="form-group row">
+                <label for="password" class="col-sm-6 col-form-label"
+                  >Precio Especial</label
+                >
+                <div class="col-sm-6">
+                  <input
+                    @keypress="onlyNumber"
+                    v-model="infoeditproducto.PrecioVenta3"
+                    type="text"
+                    class="form-control"
+                    id="PrecioVenta3"
+                  /> <small> Este precio aplica por metro </small>
+                </div>
               </div>
-            </div>
           </div>
           <!--right side -->
         </div>
@@ -114,7 +146,10 @@
         <br />
         <div class="row">
           <div class="col-sm-12 text-center">
-            <b-button size="md" variant="primary" @click="UpdateProducto(infoeditproducto)"
+            <b-button
+              size="md"
+              variant="primary"
+              @click="UpdateProducto(infoeditproducto)"
               >Guardar</b-button
             >
           </div>

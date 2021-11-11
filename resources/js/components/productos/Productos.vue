@@ -1,5 +1,7 @@
 <template>
   <div>
+
+
     <b-card>
       <div class="card-title mb-0">
         <div class="d-flex">
@@ -34,7 +36,7 @@
               <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title">Nuevo Producto</h5>
+                    <h5 class="modal-title">Registrar nuevo producto</h5>
                     <button
                       type="button"
                       class="close"
@@ -113,10 +115,8 @@
           :items="infoproducto"
           :fields="fields"
           :filter="filter"
-          show-empty
-          small
-          bordered
-          class="dsh-resent"
+          
+ responsive="sm"
         >
         
           <template #cell(nombre)="data">
@@ -142,11 +142,13 @@
               data.item.PrecioVenta2
             }}</b-badge>
           </template>
-          <template #cell(PrecioVenta3)="data">
+                    
+      <template #cell(Utilidad)="data">
             <b-badge variant="outline" class="p-1" size="sm">{{
-              data.item.PrecioVenta3
+              data.item.Utilidad
             }}</b-badge>
           </template>
+         
 
           <template #cell(actions)="data">
             <b-button
@@ -193,8 +195,16 @@ export default {
       loading: false,
       infoeditproducto: [],
       filter: null,
+      
       fields: [
 
+   /*      {
+          key: "id",
+          label: "Id",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "list-item-enddate",
+        }, */
         {
           key: "nombre",
           label: "Producto",
@@ -220,7 +230,7 @@ export default {
         },
            {
           key: "PrecioVenta1",
-          label: "PrecioVenta1",
+          label: "Precio metro",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate text-center",
@@ -228,18 +238,19 @@ export default {
 
           {
           key: "PrecioVenta2",
-          label: "PrecioVenta2",
+          label: "Precio rollo",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate text-center",
         },
-      {
-          key: "PrecioVenta3",
-          label: "PrecioVenta3",
+       {
+          key: "Utilidad",
+          label: "Utilidad",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate text-center",
         },
+ 
 
      
 

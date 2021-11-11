@@ -124,10 +124,7 @@
           :items="infocliente"
           :fields="fields"
           :filter="filter"
-          show-empty
-          small
-          bordered
-          class="dsh-resent"
+          responsive="sm"
         >
           <template #cell(nombre)="data">
             <small class="mb-0 mr-2">{{ data.item.nombre }}</small>

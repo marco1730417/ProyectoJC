@@ -13,11 +13,15 @@
               :options="infoproducto"
               required
             ></v-select>
+            <small v-if="producto">
+              {{ producto.descripcion }} - Disponible #
+              {{ producto.unidades }} mtr
+            </small>
           </div>
         </div>
         <br />
 
-        <div class="row">
+        <div v-if="producto.unidades >0" class="row">
           <div class="col-4">
             <!--left side -->
             <div class="form-group row">
@@ -36,7 +40,7 @@
               <br />
               <div v-if="precioUnitario == 2" class="col-sm-12">
                 <label for="lname" class="col-sm-12 col-form-label text-center"
-                  >Metros Totales</label
+                  >Metros x rollo</label
                 >
                 <input
                   v-model="metrosrollo"
@@ -44,55 +48,41 @@
                   type="number"
                   class="form-control"
                   id="metrosrollo"
-                />
+                /> <small>Favor ingrese cuantos metros tiene cada rollo</small>
               </div>
             </div>
           </div>
 
-          <div class="col-8">
+          <div v-if="producto" class="col-8">
             <!--left side -->
             <div class="form-group row">
               <label for="lname" class="col-sm-12 col-form-label text-center"
-                >Precio</label
+                >Escoja un precio</label
               >
               <div class="col-sm-12">
-                <!-- 
-                <div style="float: left" class="form-check">
-                   <label class="form-check-label" for="flexRadioDefault1">
-      
-                  </label>
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    v-model="precioUnitario"
-                    checked
-                    :value="1"
-                  />
-                  <label class="form-check-label" for="flexRadioDefault1">
-                    {{ producto.PrecioVenta1 }}
-                  </label>
-                </div> -->
-
-                <b-row class="my-1">
+                <b-row v-if="producto.PrecioVenta1" class="my-1">
                   <b-col sm="9  ">
-                    <label for="input-none">Precio Venta 1 (  $   {{ producto.PrecioVenta1 }}) </label>
+                    <label for="input-none"
+                      >Precio x metro ( $ {{ producto.PrecioVenta1 }})
+                    </label>
                   </b-col>
-                  <b-col sm="3" >
+                  <b-col sm="3">
                     <input
                       class="form-check-input"
                       type="radio"
                       v-model="precioUnitario"
                       :value="1"
                     />
-               <!--      <label class="form-check-label" for="flexRadioDefault2">
+                    <!--      <label class="form-check-label" for="flexRadioDefault2">
                  
                     </label> -->
                   </b-col>
                 </b-row>
-                <b-row class="my-1">
+                <b-row v-if="producto.PrecioVenta2" class="my-1">
                   <b-col sm="9">
-                     <label for="input-none">Precio Venta 2 (  $  {{ producto.PrecioVenta2 }}) </label>
-                
+                    <label for="input-none"
+                      >Precio x rollo ( $ {{ producto.PrecioVenta2 }})
+                    </label>
                   </b-col>
                   <b-col sm="3">
                     <input
@@ -101,15 +91,16 @@
                       v-model="precioUnitario"
                       :value="2"
                     />
-             <!--        <label class="form-check-label" for="flexRadioDefault2">
+                    <!--        <label class="form-check-label" for="flexRadioDefault2">
                       {{ producto.PrecioVenta2 }}
                     </label> -->
                   </b-col>
                 </b-row>
-                <b-row class="my-1">
+                <b-row v-if="producto.PrecioVenta3" class="my-1">
                   <b-col sm="9">
-                       <label for="input-none">Precio Venta 3 (  $   {{ producto.PrecioVenta3 }}) </label>
-                
+                    <label for="input-none"
+                      >Precio Especial ( $ {{ producto.PrecioVenta3 }})
+                    </label>
                   </b-col>
                   <b-col sm="3">
                     <input
@@ -118,43 +109,19 @@
                       v-model="precioUnitario"
                       :value="3"
                     />
-                <!--     <label class="form-check-label" for="flexRadioDefault2">
+                    <!--     <label class="form-check-label" for="flexRadioDefault2">
                       {{ producto.PrecioVenta3 }}
                     </label> -->
                   </b-col>
                 </b-row>
-
-                <!--      <br />
-                <div style="float: left" class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    v-model="precioUnitario"
-                    :value="2"
-                  />
-                  <label class="form-check-label" for="flexRadioDefault2">
-                    {{ producto.PrecioVenta2 }}
-                  </label>
-                </div>
-                <br />
-                <div style="float: left" class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    v-model="precioUnitario"
-                    :value="3"
-                  />
-                  <label class="form-check-label" for="flexRadioDefault2">
-                    {{ producto.PrecioVenta3 }}
-                  </label>
-                </div> -->
-                <!-- 
-                 {{precioUnitario}}  -->
               </div>
             </div>
           </div>
 
           <!--right side -->
+        </div>
+        <div v-else>
+          No existe stock del producto
         </div>
 
         <div class="row" v-if="precioUnitario == 1 || precioUnitario == 3">
@@ -260,6 +227,7 @@ export default {
           if (mensaje == 200) {
             this.$emit("updateVenta");
             this.clearfields();
+            this.getAllProductos();
           }
         })
         .catch((error) => {

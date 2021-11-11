@@ -33,6 +33,8 @@ class ProductoApiController extends ApiResponseController
         $new_producto->PrecioVenta1 =  $data['PrecioVenta1'];
         $new_producto->PrecioVenta2 =  $data['PrecioVenta2'];
         $new_producto->PrecioVenta3 =  $data['PrecioVenta3'];
+        $new_producto->preciocompra =  $data['preciocompra'];
+        $new_producto->Utilidad =  $data['PrecioVenta1'] - $data['preciocompra'];
         
         $new_producto->save();
 
@@ -54,6 +56,8 @@ class ProductoApiController extends ApiResponseController
         $PrecioVenta2 = $data['PrecioVenta2'];
         $PrecioVenta3 = $data['PrecioVenta3'];
         
+        $preciocompra = $data['preciocompra'];
+        
         
    
 
@@ -65,6 +69,11 @@ class ProductoApiController extends ApiResponseController
         $producto_update->PrecioVenta1 = $PrecioVenta1;
         $producto_update->PrecioVenta2 = $PrecioVenta2;
         $producto_update->PrecioVenta3 = $PrecioVenta3;
+        
+        $producto_update->preciocompra = $preciocompra;
+        
+        $producto_update->Utilidad = $PrecioVenta1-$preciocompra;
+        
         $producto_update->update(); 
 
 

@@ -10,7 +10,7 @@
                 <div class="card bg-secondary shadow border-0">
                     <div class="card-header bg-transparent pb-5">
                         <div class="text-muted text-center mt-2 mb-4"><small>{{ __('Sign up with') }}</small></div>
-                        <div class="text-center">
+                      <!--   <div class="text-center">
                             <a href="#" class="btn btn-neutral btn-icon mr-4">
                                 <span class="btn-inner--icon"><img src="{{ asset('argon') }}/img/icons/common/github.svg"></span>
                                 <span class="btn-inner--text">{{ __('Github') }}</span>
@@ -19,7 +19,7 @@
                                 <span class="btn-inner--icon"><img src="{{ asset('argon') }}/img/icons/common/google.svg"></span>
                                 <span class="btn-inner--text">{{ __('Google') }}</span>
                             </a>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="card-body px-lg-5 py-lg-5">
                         <div class="text-center text-muted mb-4">

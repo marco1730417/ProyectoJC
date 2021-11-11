@@ -21,7 +21,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
   <meta name="author" content="Creative Tim">
-  <title>Argon Dashboard - Free Dashboard for Bootstrap 4</title>
+  <title>JC DISTRIBUIDORES</title>
   <!-- Favicon -->
   <link rel="icon" href="../assets/img/brand/favicon.png" type="image/png">
   <!-- Fonts -->
@@ -77,7 +77,7 @@
             </li>
             <li class="nav-item">
                     <a class="nav-link" href="{{ route('icons') }}">
-                        <i class="ni ni-planet text-blue"></i> {{ __('Ventas') }}
+                        <i class="ni ni-planet text-blue"></i> {{ __('Nueva Venta') }}
                     </a>
                 </li>
         <!--     <li class="nav-item">
@@ -85,7 +85,7 @@
                     <i class="ni ni-planet text-blue"></i> {{ __('Icons') }}
                 </a>
             </li> -->
-            <li class="nav-item ">
+         <!--    <li class="nav-item ">
                 <a class="nav-link" href="{{ route('map') }}">
                     <i class="ni ni-pin-3 text-orange"></i> {{ __('Maps') }}
                 </a>
@@ -100,16 +100,16 @@
                 <a class="nav-link text-white" href="{{route('upgrade')}}">
                     <i class="ni ni-cloud-download-95"></i> Upgrade to PRO
                 </a>
-            </li>
+            </li> -->
         </ul>
           <!-- Divider -->
           <hr class="my-3">
           <!-- Heading -->
-          <h6 class="navbar-heading p-0 text-muted">
+      <!--     <h6 class="navbar-heading p-0 text-muted">
             <span class="docs-normal">Documentation</span>
-          </h6>
+          </h6> -->
           <!-- Navigation -->
-          <ul class="navbar-nav mb-md-3">
+      <!--     <ul class="navbar-nav mb-md-3">
             <li class="nav-item">
               <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/getting-started/overview.html" target="_blank">
                 <i class="ni ni-spaceship"></i>
@@ -134,7 +134,7 @@
                 <span class="nav-link-text">Plugins</span>
               </a>
             </li>
-          </ul>
+          </ul> -->
         </div>
       </div>
     </div>
@@ -146,7 +146,7 @@
       <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <!-- Search form -->
-          <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
+    <!--       <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
             <div class="form-group mb-0">
               <div class="input-group input-group-alternative input-group-merge">
                 <div class="input-group-prepend">
@@ -158,7 +158,7 @@
             <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
-          </form>
+          </form> -->
           <!-- Navbar links -->
           <ul class="navbar-nav align-items-center  ml-md-auto ">
             <li class="nav-item d-xl-none">
@@ -1232,7 +1232,7 @@
             <a href="https://www.updivision.com" class="font-weight-bold ml-1" target="_blank">Updivision</a>
         </div>
           </div>
-    <div class="col-xl-6">
+   <!--  <div class="col-xl-6">
         <ul class="nav nav-footer justify-content-center justify-content-xl-end">
             <li class="nav-item">
                 <a href="https://www.creative-tim.com" class="nav-link" target="_blank">Creative Tim</a>
@@ -1250,7 +1250,7 @@
                 <a href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md" class="nav-link" target="_blank">MIT License</a>
             </li>
         </ul>
-    </div>
+    </div> -->
         </div>
       </footer>
     </div>

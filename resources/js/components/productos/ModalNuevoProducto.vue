@@ -31,7 +31,7 @@
                     type="text"
                     class="form-control"
                     id="unidades"
-                  />
+                  /> <small>Favor ingresar unidades en metros</small>
                 </div>
               </div>
 
@@ -51,12 +51,35 @@
                   </div>
                 </div>
               </div>
+              <div class="form-group row">
+                <label
+                  v-if="this.PrecioVenta1 && this.preciocompra"
+                  for="lname"
+                  class="col-sm-12 col-form-label"
+                  >Su utilidad x metro es $
+                  {{ this.PrecioVenta1 - this.preciocompra }}
+                </label>
+              </div>
             </div>
 
             <div class="col-6">
               <div class="form-group row">
                 <label for="email" class="col-sm-6 col-form-label"
-                  >P.V 1 (mtr)
+                  >Precio de compra
+                </label>
+                <div class="col-sm-6">
+                  <input
+                    @keypress="onlyNumber"
+                    v-model="preciocompra"
+                    type="text"
+                    class="form-control"
+                    id="preciocompra"
+                  />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="email" class="col-sm-6 col-form-label"
+                  >Precio x metro
                 </label>
                 <div class="col-sm-6">
                   <input
@@ -71,7 +94,7 @@
 
               <div class="form-group row">
                 <label for="password" class="col-sm-6 col-form-label"
-                  >P.V 2 (rll)</label
+                  >Precio x rollo</label
                 >
                 <div class="col-sm-6">
                   <input
@@ -83,10 +106,10 @@
                   />
                 </div>
               </div>
-
+              
               <div class="form-group row">
-                <label for="password2" class="col-sm-6 col-form-label"
-                  >P.V 3 (esp)</label
+                <label for="password" class="col-sm-6 col-form-label"
+                  >Precio Especial</label
                 >
                 <div class="col-sm-6">
                   <input
@@ -95,33 +118,41 @@
                     type="text"
                     class="form-control"
                     id="PrecioVenta3"
-                  />
+                  /> <small> Este precio debe ser por metro </small>
                 </div>
               </div>
             </div>
             <!--right side -->
           </div>
-           <div class="row">
-    <label for="password2" class="col-sm-12 col-form-label"
-                  >Descripcion</label
-                >
-                <div class="col-sm-12">
-                  <input
-                    v-model="descripcion"
-                    type="text"
-                    class="form-control"
-                    id="descripcion"
-                  />
-                </div>
+          <div class="row">
+            <label for="password2" class="col-sm-12 col-form-label"
+              >Descripcion</label
+            >
+            <div class="col-sm-12">
+              <input
+                v-model="descripcion"
+                type="text"
+                class="form-control"
+                id="descripcion"
+              />
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="col-sm-12 text-center">
+              <b-button
+                size="md"
+                v-if="nombre && unidades && PrecioVenta1 && preciocompra"
+                variant="primary"
+                @click="createNewProducto()"
+                >Guardar</b-button
+              >
+              <b-button size="md" v-else disabled variant="primary"
+                >Guardar</b-button
+              >
+            </div>
+          </div>
 
-           </div><br/>
-                <div class="row">
-
-                   <div class="col-sm-12 text-center">
-      <b-button  size="md"   variant="primary" @click="createNewProducto()">Guardar</b-button>
-              </div>
-           </div>
-               
           <!-- form for teacher/student-->
         </form>
       </div>
@@ -147,7 +178,9 @@ export default {
       iva: "",
       PrecioVenta1: "",
       PrecioVenta2: "",
-      PrecioVenta3: "",
+      PrecioVenta3:"",
+      Utilidad:"",
+      preciocompra:"",
       
     };
   },
@@ -161,9 +194,11 @@ export default {
       this.descripcion = "";
       this.unidades = "";
       this.iva = "";
+      this.PrecioVenta3 = "";
       this.PrecioVenta1 = "";
       this.PrecioVenta2 = "";
-      this.PrecioVenta3 = "";
+
+      this.preciocompra="";
       
     },
     createNewProducto() {
@@ -176,6 +211,8 @@ export default {
         PrecioVenta1: this.PrecioVenta1,
         PrecioVenta2: this.PrecioVenta2,
         PrecioVenta3: this.PrecioVenta3,
+        
+        preciocompra: this.preciocompra,
         
       };
       ProductoServices.createNewProducto(data)

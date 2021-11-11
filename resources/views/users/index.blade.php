@@ -181,7 +181,7 @@
             </li>
             <li class="nav-item">
                     <a class="nav-link" href="{{ route('venta.index') }}">
-                        <i class="ni ni-planet text-blue"></i> {{ __('Ventas') }}
+                        <i class="ni ni-planet text-blue"></i> {{ __('Nueva Venta') }}
                     </a>
                 </li>
            <!--  <li class="nav-item">
@@ -189,7 +189,7 @@
                     <i class="ni ni-planet text-blue"></i> {{ __('Icons') }}
                 </a>
             </li> -->
-            <li class="nav-item ">
+      <!--       <li class="nav-item ">
                 <a class="nav-link" href="{{ route('map') }}">
                     <i class="ni ni-pin-3 text-orange"></i> {{ __('Maps') }}
                 </a>
@@ -204,14 +204,14 @@
                     <a class="nav-link text-white" href="https://www.creative-tim.com/product/argon-dashboard-pro-laravel" target="_blank">
                         <i class="ni ni-cloud-download-95"></i> Upgrade to PRO
                     </a>
-                </li>
+                </li> -->
         </ul>
         <!-- Divider -->
-        <hr class="my-3">
-        <!-- Heading -->
-        <h6 class="navbar-heading text-muted">Documentation</h6>
-        <!-- Navigation -->
-        <ul class="navbar-nav mb-md-3">
+    <!--     <hr class="my-3">
+     -->    <!-- Heading -->
+    <!--     <h6 class="navbar-heading text-muted">Documentation</h6>
+      -->   <!-- Navigation -->
+      <!--   <ul class="navbar-nav mb-md-3">
             <li class="nav-item">
                 <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/getting-started/overview.html">
                     <i class="ni ni-spaceship"></i> Getting started
@@ -227,7 +227,7 @@
                     <i class="ni ni-ui-04"></i> Components
                 </a>
             </li>
-        </ul>
+        </ul> -->
     </div>
 </div>
 </nav>                
@@ -236,9 +236,9 @@
 <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
 <div class="container-fluid">
     <!-- Brand -->
-    <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="{{ route('home') }}">Dashboard</a>
+    <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="{{ route('home') }}">JC Distribuidores</a>
     <!-- Form -->
-    <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
+ <!--    <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
         <div class="form-group mb-0">
             <div class="input-group input-group-alternative">
                 <div class="input-group-prepend">
@@ -247,7 +247,7 @@
                 <input class="form-control" placeholder="Search" type="text">
             </div>
         </div>
-    </form>
+    </form> -->
     <!-- User -->
     <ul class="navbar-nav align-items-center d-none d-md-flex">
         <li class="nav-item dropdown">

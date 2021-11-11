@@ -59,7 +59,7 @@ class VentaApiController extends ApiResponseController
 
         if ($precioUnitarioOpcion == 2) {
             $valorPrecio = $infoproducto->PrecioVenta2;
-            $metrostotales = $metrosrollo;
+            $metrostotales = $metrosrollo*$data['cantidad'];
         }
 
         if ($precioUnitarioOpcion == 3) {
@@ -73,9 +73,13 @@ class VentaApiController extends ApiResponseController
         $new_detalle->proId =  $data['proId'];
         $new_detalle->venId =  $data['venId'];
         $new_detalle->metrostotales =  $metrostotales;
-
-
         $new_detalle->save();
+
+if($new_detalle){
+    $actualizar_cantidad_producto= Producto::findOrFail($proId);
+    $actualizar_cantidad_producto->unidades = $actualizar_cantidad_producto->unidades - $metrostotales;
+    $actualizar_cantidad_producto->update(); 
+}
 
         if (!$new_detalle) return $this->errorResponse(500);
 
@@ -103,6 +107,11 @@ class VentaApiController extends ApiResponseController
     }
     public function deleteDetalleVenta($id)
     {        
+        $infodetalle=DetalleVenta::findOrFail($id);
+        $update_producto= Producto::findOrFail($infodetalle->proId);
+        $update_producto->unidades = $update_producto->unidades + $infodetalle->cantidad ;
+        $update_producto->update(); 
+
         $detalle_delete = DetalleVenta::findOrFail($id);
         $detalle_delete->delete();
         if (!$detalle_delete) return $this->errorResponse(500);

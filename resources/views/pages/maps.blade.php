@@ -118,7 +118,7 @@
             </li>
             <li class="nav-item">
                     <a class="nav-link" href="{{ route('venta.index') }}">
-                        <i class="ni ni-planet text-blue"></i> {{ __('Ventas') }}
+                        <i class="ni ni-planet text-blue"></i> {{ __('Nueva Venta') }}
                     </a>
                 </li>
            <!--  <li class="nav-item">
@@ -126,7 +126,7 @@
                     <i class="ni ni-planet text-blue"></i> {{ __('Icons') }}
                 </a>
             </li> -->
-            <li class="nav-item ">
+      <!--       <li class="nav-item ">
                 <a class="nav-link" href="{{ route('map') }}">
                     <i class="ni ni-pin-3 text-orange"></i> {{ __('Maps') }}
                 </a>
@@ -141,16 +141,16 @@
                 <a class="nav-link text-white" href="{{route('upgrade')}}">
                     <i class="ni ni-cloud-download-95"></i> Upgrade to PRO
                 </a>
-            </li>
+            </li> -->
         </ul>
           <!-- Divider -->
-          <hr class="my-3">
+        <!--   <hr class="my-3"> -->
           <!-- Heading -->
-          <h6 class="navbar-heading p-0 text-muted">
+        <!--   <h6 class="navbar-heading p-0 text-muted">
             <span class="docs-normal">Documentation</span>
-          </h6>
+          </h6> -->
           <!-- Navigation -->
-          <ul class="navbar-nav mb-md-3">
+         <!--  <ul class="navbar-nav mb-md-3">
             <li class="nav-item">
               <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/getting-started/overview.html" target="_blank">
                 <i class="ni ni-spaceship"></i>
@@ -175,7 +175,7 @@
                 <span class="nav-link-text">Plugins</span>
               </a>
             </li>
-          </ul>
+          </ul> -->
         </div>
       </div>
     </div>
@@ -187,7 +187,7 @@
       <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <!-- Search form -->
-          <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
+     <!--      <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
             <div class="form-group mb-0">
               <div class="input-group input-group-alternative input-group-merge">
                 <div class="input-group-prepend">
@@ -199,7 +199,7 @@
             <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
-          </form>
+          </form> -->
           <!-- Navbar links -->
           <ul class="navbar-nav align-items-center  ml-md-auto ">
             <li class="nav-item d-xl-none">

@@ -6,7 +6,7 @@
         </button>
         <!-- Brand -->
         <a class="navbar-brand pt-0" href="{{ route('home') }}">
-            <img src="{{ asset('argon') }}/img/brand/blue.png" class="navbar-brand-img" alt="...">
+            <img src="{{ asset('argon') }}/img/brand/jc.jpg" class="navbar-brand-img" alt="...">
         </a>
         <!-- User -->
         <ul class="nav align-items-center d-md-none">
@@ -119,7 +119,7 @@
 
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('venta.index') }}">
-                        <i class="ni ni-planet text-blue"></i> {{ __('Ventas') }}
+                        <i class="ni ni-planet text-blue"></i> {{ __('Nueva Venta') }}
                     </a>
                 </li>
 
@@ -128,7 +128,7 @@
                         <i class="ni ni-planet text-blue"></i> {{ __('Icons') }}
                     </a>
                 </li> -->
-                <li class="nav-item ">
+        <!--         <li class="nav-item ">
                     <a class="nav-link" href="{{ route('map') }}">
                         <i class="ni ni-pin-3 text-orange"></i> {{ __('Maps') }}
                     </a>
@@ -148,14 +148,14 @@
                     <a class="nav-link text-white" href="https://www.creative-tim.com/product/argon-dashboard-pro-laravel" target="_blank">
                         <i class="ni ni-cloud-download-95"></i> Upgrade to PRO
                     </a>
-                </li>
+                </li> -->
             </ul>
             <!-- Divider -->
             <hr class="my-3">
             <!-- Heading -->
-            <h6 class="navbar-heading text-muted">Documentation</h6>
-            <!-- Navigation -->
-            <ul class="navbar-nav mb-md-3">
+          <!--   <h6 class="navbar-heading text-muted">Documentation</h6>
+           -->  <!-- Navigation -->
+   <!--          <ul class="navbar-nav mb-md-3">
                 <li class="nav-item">
                     <a class="nav-link" href="https://argon-dashboard-laravel.creative-tim.com/docs/getting-started/overview.html">
                         <i class="ni ni-spaceship"></i> Getting started
@@ -171,7 +171,7 @@
                         <i class="ni ni-ui-04"></i> Components
                     </a>
                 </li>
-            </ul>
+            </ul> -->
         </div>
     </div>
 </nav>
