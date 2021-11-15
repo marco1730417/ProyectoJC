@@ -53,6 +53,7 @@ Vue.component('modal-edit-producto', require('./components/productos/ModalEditPr
 
 Vue.component('venta', require('./components/venta/Venta.vue').default);
 Vue.component('modal-venta-producto', require('./components/venta/ModalVentaProducto.vue').default);
+Vue.component('ventas', require('./components/venta/IndexVenta.vue').default);
 
 
 /**

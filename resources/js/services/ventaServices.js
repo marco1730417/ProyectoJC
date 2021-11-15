@@ -26,6 +26,10 @@ export default {
         let url = server + resource + 'get-detalle-general-venta';
         return Axios.get(url + "/" + venId);
     },
+    detalleVenta() {
+        let url = server + resource + 'get-detalle-venta';
+        return Axios.get(url);
+    },
     totalesVenta(venId) {
         let url = server + resource + 'totales-venta';
         return Axios.get(url + "/" + venId);

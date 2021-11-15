@@ -81,7 +81,7 @@
               </div>
             </div>
 
-            <div v-if="!detallegeneralventa" class="col-xl-6 col-lg-6">
+            <div  class="col-xl-6 col-lg-6">
               <div class="card card-stats mb-4 mb-xl-0">
                 <div class="card-body">
                   <div class="row">
@@ -132,56 +132,7 @@
               </div>
             </div>
 
-     <div v-else class="col-xl-6 col-lg-6">
-              <div class="card card-stats mb-4 mb-xl-0">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col">
-                      <h5 class="card-title text-uppercase text-muted mb-0">
-                        Detalle de venta
-                      </h5>
-                      <span class="h4 font-weight-bold mb-0">
-                        Razon Social: {{ detallegeneralventa.nombre }}
-                      </span>
-                      <br />
-                      <span class="h4 font-weight-bold mb-0">
-                        Ruc: {{ detallegeneralventa.ruc }}
-                      </span>
-                      <br />
-
-                      <span class="h4 font-weight-bold mb-0">
-                        Forma de pago: {{ detallegeneralventa.metodopago }}
-                      </span>
-                      <br />
-
-                      <span class="h4 font-weight-bold mb-0">
-                        Fecha: {{ detallegeneralventa.fecha }}
-                      </span>
-                    </div>
-                    <div class="col-auto">
-                      <div
-                        class="
-                          icon icon-shape
-                          bg-danger
-                          text-white
-                          rounded-circle
-                          shadow
-                        "
-                      >
-                        <i class="fas fa-cart-plus"></i>
-                      </div>
-                    </div>
-                  </div>
-                  <p v-if="!venId" class="mt-3 mb-0 text-muted text-sm">
-                    <b-button variant="primary" @click="createVenta"
-                      >Crear Venta</b-button
-                    >
-
-                    <!--   <span class="text-nowrap">Since last month</span> -->
-                  </p>
-                </div>
-              </div>
-            </div>
+  
 
 
 
@@ -211,7 +162,7 @@
                     class="btn btn-sm btn-primary"
                     data-toggle="modal"
                     data-target="#ModalVentaProducto"
-                    ><i class="fas fa-plus"></i></a
+                    ><i class="fas fa-search"></i>Buscar Productos</a
                   >
 
                   <div
@@ -372,7 +323,7 @@ export default {
 
       filter: null,
       formadepago: "",
-      venId: "",
+      venId: 10,
     };
   },
   mounted() {

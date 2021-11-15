@@ -15,13 +15,13 @@
             ></v-select>
             <small v-if="producto">
               {{ producto.descripcion }} - Disponible #
-              {{ producto.unidades }} mtr
+              {{ producto.unidades }} mtrs
             </small>
           </div>
         </div>
         <br />
 
-        <div v-if="producto.unidades >0" class="row">
+        <div  class="row">
           <div class="col-4">
             <!--left side -->
             <div class="form-group row">
@@ -115,14 +115,25 @@
                   </b-col>
                 </b-row>
               </div>
+
+                  <div  class="col-sm-12">
+                <label v-if="total_metro_rollo==false" for="lname" class="col-sm-12 col-form-label text-center"
+                  >No existe suficiente stock (Existen maximo  {{ producto.unidades }} mtrs )</label
+                >
+        
+              </div>
+
+
             </div>
+
+
           </div>
 
           <!--right side -->
         </div>
-        <div v-else>
+      <!--   <div >
           No existe stock del producto
-        </div>
+        </div> -->
 
         <div class="row" v-if="precioUnitario == 1 || precioUnitario == 3">
           <div class="col-sm-12 text-center">
@@ -138,11 +149,12 @@
             >
           </div>
         </div>
+      <!--   {{total_metro_rollo}} -->
 
         <div class="row" v-if="precioUnitario == 2">
           <div class="col-sm-12 text-center">
             <b-button
-              v-if="producto && cantidad && precioUnitario && metrosrollo"
+              v-if="producto && cantidad && precioUnitario && metrosrollo && total_metro_rollo===true"
               size="md"
               variant="primary"
               @click="createDetalleVenta(producto.id)"
@@ -153,6 +165,8 @@
             >
           </div>
         </div>
+
+      <!--   {{total_metro_rollo}} -->
 
         <!-- form for teacher/student-->
       </form>
@@ -183,11 +197,34 @@ export default {
       iva: "",
       PrecioVenta1: "",
       metrosrollo: "",
+      
     };
   },
   mounted() {
     //  console.log("Component mounted.");
     this.getAllProductos();
+  }, computed: {
+
+   total_metro_rollo: function () {
+      //console.log(this.productosSelected.tarVenta + "valor unitario");
+      if(this.cantidad>0  && this.metrosrollo>0){ 
+      
+      let stock = this.producto.unidades;
+      let total = parseFloat(this.cantidad) * parseFloat(this.metrosrollo);
+      
+
+//      console.log(this.producto.unidades + "total descuentos");
+
+       if (stock < total)  return false; 
+       if (stock > total) return true; 
+     
+       
+      }
+    },
+
+    
+
+ 
   },
   methods: {
     onlyNumber($event) {

@@ -6,134 +6,137 @@
 @section('styleCSS')
 
 @endsection
-<style type = "text/css">
+<style>
 
-table {
-            width: 100%;
-            max-width: 100%;
-            border-collapse: collapse;
-        }
+td {
+        font-size: 7px;
+       padding-left: 5px;
+        padding-bottom: 3px;
 
-        .table.producto tr{
-            border: none;
-        }
+           
+      }
+      th {
+        font-size: 10px;
+        font-weight: bold;
+       
+       padding-left: 1px;
+        padding-bottom: 3px;
 
-        .table.producto th{
-            padding: 0.2rem;
-            border-bottom: 1px solid #dee2e6;
-            border-top: 1px solid #dee2e6;
-            text-align: center;
-            vertical-align: middle;
-        }
-        .table.producto td{
-            padding: 0.2rem;
-            vertical-align: middle;
-            border-top: 1px solid #dee2e6;
-            border-bottom: 1px solid #dee2e6;
-        }
+           
+      }
 
-
-  .table.producto, th, td {
-  border: 1px solid black;
-  border-collapse: collapse;
+.padding {
+    padding: 5rem !important
 }
 
-        .table.prices td, .table.prices th {
-            padding: 0.3rem 0.2rem 0.3rem;
-            border-top: none;
-            text-align: right;
-            padding-right: 0.4rem;
-        }
+.card {
+    margin-bottom: 20px;
+    border: none;
+    -webkit-box-shadow: 0px 1px 2px 1px rgba(154, 154, 204, 0.22);
+    -moz-box-shadow: 0px 1px 2px 1px rgba(154, 154, 204, 0.22);
+    box-shadow: 0px 1px 2px 1px rgba(154, 154, 204, 0.22)
+}
 
+.card-header {
+    background-color: #fff;
+    border-bottom: 1px solid #e6e6f2
+}
+
+h3 {
+    font-size: 10px
+}
+
+h5 {
+    font-size: 7px;
+    line-height: 10px;
+    color: #3d405c;
+    margin: 0px 0px 15px 0px;
+    font-family: 'Circular Std Medium'
+}
+
+.text-dark {
+   
+    font-size: 8px;
+}
+
+
+    
     </style>
 @section('content')
-<div class="container">
- 
+<div class="offset-xl-2 col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12 padding">
+     <div class="card">
+   
+         <div class="card-body">
+             <div class="row mb-4">
+   
+                 <div class="col-sm-6 ">
+                     <h5 class="text-dark mb-1">Cliente :  {{$info_venta[0]['nombre'] }}</h5>
+                     <h5 class="text-dark mb-1">Ruc:  {{$info_venta[0]['ruc'] }}</h5>
+                     <h5 class="text-dark mb-1">Direccion: {{$info_venta[0]['direccion'] }}</h5>
+                     <h5 class="text-dark mb-1">Fecha: {{$info_venta[0]['fecha'] }}</h5>
+                     
+                  
+                 </div>
+         
+            
+             </div>
+             <div class="table-responsive-sm">
+                 <table class="table table-striped">
+                     <thead>
+                         <tr>
+                             <th>Codigo</th>
+                             <th>Descripcion</th>
+                             <th class="right">Precio Uni</th>
+                             <th class="center">Cantidad</th>
+                             <th class="right">Total</th>
+                         </tr>
+                     </thead>
+                     <tbody>
+                     @foreach ($detalle_venta as $item)  
+                         <tr>
+                             <td >{{$item['nombre']}}</td>
+                             <td class="left">{{$item['descripcion']}}</td>
+                             <td class="right">{{$item['precioUnitario']}}</td>
+                             <td class="center">{{$item['cantidad']}}</td>
+                             <td class="right">{{$item['subTotal']}}</td>
+                         </tr>
+                         @endforeach
+                     </tbody>
+                 </table>
+             </div>
+             <div class="row">
+                 <div class="col-md-4 col-sm-5">
+                 </div>
+                 <div class="col-md-4 col-sm-5 ml-auto">
+                  <table class="table table-clear">
+                         <tbody>
+                             <tr>
+                                 <td >
+                                     <h5 class="text-dark">Subtotal        </h5>
+                                 </td>
+                                 <td class="right"><strong class="text-dark"> $ @php echo(number_format($total_venta['subtotal'],2));@endphp</strong></td>
+                             </tr>
+                        
+                             <tr>
+                                 <td >
+                                 <h5 class="text-dark">Iva  @php echo(number_format($total_venta['iva'],2));@endphp %</h5>
+                                 </td>
+                                 <td class="right">   <strong class="text-dark"> $ @php echo(number_format($total_venta['valorIva'],2));@endphp</strong></td>
+                             </tr>
+                             <tr>
+                                 <td >
+                                     <strong class="text-dark">Total</strong> </td>
+                                 <td class="right">
+                                     <strong class="text-dark">$           @php echo(number_format($total_venta['total'],2));@endphp</strong>
+                                 </td>
+                             </tr>
+                         </tbody>
+                     </table> 
+           
+                 </div>
+             </div>
+         </div>
 
-
-<div class="table-responsive-sm">
-  <table class="table head" nocollapse="" sort-desc.sync="false" role="table" aria-busy="false" aria-colcount="7" class="table">
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <div><small class="font-weight-bold">Nombre </small>{{$info_venta[0]['nombre'] }}</div> 
-                                            <div><small class="font-weight-bold">Direccion </small>{{$info_venta[0]['direccion'] }}</div> 
-                                    
-                                        </td>
-                                        <td>
-                                            <div><small class="font-weight-bold">Ruc</small> {{$info_venta[0]['ruc'] }}</div>
-                                            <div><small class="font-weight-bold">Fecha</small> 
-                                            {{$info_venta[0]['fecha'] }}
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-  
-  <table class="table producto ">
-    <thead>
-      <tr>
-        <th>Codigo</th>
-        <th>Descripcion</th>
-        <th>Cantidad</th>
-        <th>Precio Unitario</th>
-        <th>Sub Total</th>
-        
-      </tr>
-    </thead>
-    <tbody>
-    @foreach ($detalle_venta as $item)  
-                                  
-      <tr>
-        <td height="7">{{$item['nombre']}}</td>
-        <td height="7">{{$item['descripcion']}}</td>
-        <td height="7">{{$item['cantidad']}}</td>
-        <td height="7">{{$item['precioUnitario']}}</td>
-        <td height="7">{{$item['subTotal']}}</td>
-      </tr>
-      @endforeach
-
-    </tbody>
-  </table>
-  <div class="quote-pdf-tableBg">
-            <table nocollapse="" sort-desc.sync="false" role="table" aria-busy="false" aria-colcount="7" class="table prices">
-                    <tr>
-                        <td width="72.5%">&nbsp;</td>
-                        <td class="quote-pdf-headerRight" width="27.5%">
-                            <table nocollapse="" sort-desc.sync="false" role="table" aria-busy="false" aria-colcount="7" class="table prices">
-                                <tbody role="rowgroup">
-                                    <tr>
-                                        <td width="50%">
-                                            Sub Total
-                                        </td>
-                                        <td width="50%">
-                                            @php echo(number_format($total_venta['subtotal'],2));@endphp
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td width="50%">
-                                           IVA @php echo(number_format($total_venta['iva'],2));@endphp %
-                                        </td>
-                                        <td width="50%">
-                                            @php echo(number_format($total_venta['valorIva'],2));@endphp
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td width="50%">
-                                            Total
-                                        </td>
-                                        <td width="50%">
-                                            @php echo(number_format($total_venta['total'],2));@endphp
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-              
-            </table>
-        </div>
-  </div>
-</div>
-
+     </div>
+ </div>
 @endsection

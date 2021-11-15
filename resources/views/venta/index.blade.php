@@ -6,7 +6,7 @@
 @section('content')
    
     <div id="app" >
-        <venta></venta> 
+        <ventas></ventas> 
     </div>
         @include('layouts.footers.auth')
     </div>

@@ -201,6 +201,18 @@ if($new_detalle){
       
     }
 
+
+
+    
+    public function detalleVenta()
+    {
+
+      
+        $info_venta= Venta :: select ('ventas.id','ventas.fecha','clientes.nombre','clientes.ruc','clientes.direccion','clientes.telefono','ventas.metodopago')
+        ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')->get();
+        return $this->successResponse($info_venta);
+    }
+
     
     }
 

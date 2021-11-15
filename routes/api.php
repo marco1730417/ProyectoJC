@@ -51,6 +51,7 @@ Route::group(['prefix' => 'venta'], function () {
     Route::get('download-venta/{venId}',  [VentaApiController::class, 'downloadVenta']);
     
     Route::get('get-detalle-general-venta/{venId}',  [VentaApiController::class, 'detalleGeneralVenta']);
+    Route::get('get-detalle-venta',  [VentaApiController::class, 'detalleVenta']);
    
     
 
