@@ -21,6 +21,22 @@ class VentaApiController extends ApiResponseController
      *
      * @return \Illuminate\Http\Response
      */
+
+
+    public function createNuevaVenta()
+    {
+        $carbon = new \Carbon\Carbon();
+        $fecha = $carbon->now();
+
+        $new_venta = new Venta;
+        $new_venta->fecha = $fecha;
+        $new_venta->save();
+
+        if (!$new_venta) return $this->errorResponse(500);
+
+        return $this->successResponse($new_venta->id);
+    }
+
     public function createVenta(Request $request)
     {
         $carbon = new \Carbon\Carbon();

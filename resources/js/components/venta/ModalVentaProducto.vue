@@ -120,6 +120,9 @@
                 <label v-if="total_metro_rollo==false" for="lname" class="col-sm-12 col-form-label text-center"
                   >No existe suficiente stock (Existen maximo  {{ producto.unidades }} mtrs )</label
                 >
+                  <label v-if="validacion_metro==false" for="lname" class="col-sm-12 col-form-label text-center"
+                  >No existe suficiente stock (Existen maximo  {{ producto.unidades }} mtrs )</label
+                >
         
               </div>
 
@@ -135,10 +138,10 @@
           No existe stock del producto
         </div> -->
 
-        <div class="row" v-if="precioUnitario == 1 || precioUnitario == 3">
+        <div class="row" v-if="precioUnitario == 1 || precioUnitario == 3 ">
           <div class="col-sm-12 text-center">
             <b-button
-              v-if="producto && cantidad && precioUnitario"
+              v-if="producto && cantidad && precioUnitario &&validacion_metro===true"
               size="md"
               variant="primary"
               @click="createDetalleVenta(producto.id)"
@@ -166,7 +169,7 @@
           </div>
         </div>
 
-      <!--   {{total_metro_rollo}} -->
+  <!--      {{validacion_metro}}  -->
 
         <!-- form for teacher/student-->
       </form>
@@ -210,14 +213,24 @@ export default {
       if(this.cantidad>0  && this.metrosrollo>0){ 
       
       let stock = this.producto.unidades;
-      let total = parseFloat(this.cantidad) * parseFloat(this.metrosrollo);
+      let totalxrollo = parseFloat(this.cantidad) * parseFloat(this.metrosrollo);
+       if (stock < totalxrollo)  return false; 
+       if (stock >= totalxrollo) return true; 
+
       
+       
+      }
+    },
+       validacion_metro: function () {
+      //console.log(this.productosSelected.tarVenta + "valor unitario");
+      if(this.cantidad>0 ){ 
+      
+      let stock = this.producto.unidades;
+      let cantidades = this.cantidad;
+       if (stock < cantidades)  return false; 
+       if (stock >= cantidades) return true; 
 
-//      console.log(this.producto.unidades + "total descuentos");
-
-       if (stock < total)  return false; 
-       if (stock > total) return true; 
-     
+      
        
       }
     },

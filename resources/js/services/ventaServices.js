@@ -14,6 +14,10 @@ export default {
         let url = server + resource + "create-venta";
         return Axios.post(url, data);
     },
+    createNuevaVenta() {
+        let url = server + resource + "create-nueva-venta";
+        return Axios.post(url);
+    },
     createDetalleVenta(data) {
         let url = server + resource + "create-detalle-venta";
         return Axios.post(url, data);

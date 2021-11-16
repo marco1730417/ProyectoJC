@@ -5,7 +5,7 @@
         <div class="header-body">
           <!-- Card stats -->
           <div class="row">
-            <div v-if="!venId" class="col-xl-6 col-lg-6">
+            <div class="col-xl-6 col-lg-6">
               <div class="card card-stats mb-4 mb-xl-0">
                 <div class="card-body">
                   <div class="row">
@@ -44,6 +44,7 @@
                       </div>
                     </div>
                   </div>
+
                   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">
@@ -73,6 +74,15 @@
                       </div>
                     </div>
                   </div>
+                  <br /><br />
+                  <button
+                    v-if="!venId"
+                    class="btn btn-primary btn-md btn-block"
+                    @click="createVenta"
+                  >
+                    Continuar
+                  </button>
+
                   <!--     <p class="mt-3 mb-0 text-muted text-sm">
                     <span class="text-success mr-2"> {{ cliente.email }} </span>
                     <span class="text-nowrap"> {{ cliente.direccion }} </span>
@@ -81,62 +91,52 @@
               </div>
             </div>
 
-            <div  class="col-xl-6 col-lg-6">
+
+      <div  v-if="venId>0" class="col-xl-6 col-lg-6">
               <div class="card card-stats mb-4 mb-xl-0">
                 <div class="card-body">
                   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">
-                        Detalle de venta
+                        Total Venta
                       </h5>
-                      <span class="h4 font-weight-bold mb-0">
-                        Razon Social: {{ cliente.nombre }}
-                      </span>
-                      <br />
-                      <span class="h4 font-weight-bold mb-0">
-                        Ruc: {{ cliente.ruc }}
-                      </span>
-                      <br />
-
-                      <span class="h4 font-weight-bold mb-0">
-                        Forma de pago: {{ formadepago }}
-                      </span>
-                      <br />
-
-                      <span class="h4 font-weight-bold mb-0">
-                        Fecha: {{ fecha }}
-                      </span>
+                      <span class="h2 font-weight-bold mb-0">   {{ totalesventa.total }}</span>
                     </div>
                     <div class="col-auto">
                       <div
                         class="
                           icon icon-shape
-                          bg-danger
+                          bg-yellow
                           text-white
                           rounded-circle
                           shadow
                         "
                       >
-                        <i class="fas fa-cart-plus"></i>
+                        <i class="fas fa-users"></i>
                       </div>
                     </div>
                   </div>
-                  <p v-if="!venId" class="mt-3 mb-0 text-muted text-sm">
-                    <b-button variant="primary" @click="createVenta"
-                      >Crear Venta</b-button
+                  <p class="mt-3 mb-0 text-muted text-sm">
+                    <span class="text-warning mr-2"
+                      ><i class="fas fa-user"></i>  {{cliente.nombre}} </span
                     >
-
-                    <!--   <span class="text-nowrap">Since last month</span> -->
-                  </p>
+                    <span class="text-nowrap">{{fecha}}</span>
+                  </p> <br/>
+                        <button
+                    class="btn btn-primary btn-sm btn-block"
+                    @click="downloadVenta"
+                  >
+                    Imprimir venta
+                  </button>
+                     <button
+                    class="btn btn-danger btn-sm btn-block"
+                  >
+                    Cancelar venta
+                  </button>
                 </div>
               </div>
+
             </div>
-
-  
-
-
-
-
 
 
           </div>
@@ -175,8 +175,8 @@
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
                         <div class="modal-header">
-                     <!--      <h5 class="modal-title"> Cliente {{cliente.nombre}} - Fecha {{fecha}}  </h5> -->
-                      <h5 class="modal-title"> Nuevo Item  </h5>
+                          <!--      <h5 class="modal-title"> Cliente {{cliente.nombre}} - Fecha {{fecha}}  </h5> -->
+                          <h5 class="modal-title">Nuevo Item</h5>
                           <button
                             type="button"
                             class="close"
@@ -278,8 +278,11 @@
                   </b-row>
                 </b-col>
               </b-row>
+           
             </b-container>
-              <b-button @click="downloadVenta()" variant="danger">Button</b-button>
+            
+
+            
 
             <!--  {{totalesventa}} -->
 
@@ -297,9 +300,9 @@
 <script>
 import VentaServices from "../../services/ventaServices";
 import ClienteServices from "../../services/clienteServices";
-import Conf from '../../services/conf.js';
+import Conf from "../../services/conf.js";
 
-const resource = 'api/venta/'
+const resource = "api/venta/";
 const server = Conf.server;
 import moment from "moment";
 import { BootstrapVue } from "bootstrap-vue";
@@ -319,24 +322,24 @@ export default {
       infoeditcliente: [],
       totalesventa: [],
       detalleventa: [],
- detallegeneralventa: [],
+      detallegeneralventa: [],
 
       filter: null,
       formadepago: "",
-      venId: 10,
+      venId: "",
     };
   },
+
   mounted() {
     this.getAllClientes();
     this.getInformacionVenta();
-    this.totalesVenta();
-    this.detalleGeneralVenta();
   },
   methods: {
     updateDatos() {
       this.getInformacionVenta();
       this.totalesVenta();
     },
+
     deleteDetalleVenta(id) {
       VentaServices.deleteDetalleVenta(id)
         .then((response) => {
@@ -370,25 +373,18 @@ export default {
           console.log(error);
         });
     },
-        detalleGeneralVenta() {
+    detalleGeneralVenta() {
       VentaServices.detalleGeneralVenta(this.venId)
         .then((response) => {
           this.detallegeneralventa = response.data.data;
-          this.detallegeneralventa= this.detallegeneralventa.shift();
+          this.detallegeneralventa = this.detallegeneralventa.shift();
         })
         .catch((error) => {
           console.log(error);
         });
     },
-      downloadVenta() {
-   /*    VentaServices.downloadVenta(this.venId)
-        .then((response) => {
-          
-        })
-        .catch((error) => {
-          console.log(error);
-        }); */
-         let routeData = server + resource + `download-venta/`+ this.venId;
+    downloadVenta() {
+      let routeData = server + resource + `download-venta/` + this.venId;
       window.open(routeData);
     },
     totalesVenta() {
@@ -399,21 +395,6 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-    },
-
-    updateClients() {
-      this.getAllClientes();
-
-      $("#ModalNuevoCliente").modal("hide");
-    },
-    updateClientsUpdate() {
-      this.getAllClientes();
-
-      $("#ModalEditCliente").modal("hide");
-    },
-    openModalEditCliente(infocliente) {
-      this.infoeditcliente = infocliente;
-      $("#ModalEditCliente").modal("show");
     },
 
     createVenta() {
@@ -427,6 +408,8 @@ export default {
           let mensaje = response.data.data;
 
           this.venId = mensaje;
+          this.totalesVenta();
+          this.detalleGeneralVenta();
         })
         .catch((error) => {
           console.log(error);

@@ -21,6 +21,10 @@ class VentaController extends Controller
     {
         return view ('venta.index');
     }
+    public function nuevaventa()
+    {
+        return view ('venta.nuevaventa');
+    }
     public function ventapdf()
     {
         return view ('venta.ventapdf');

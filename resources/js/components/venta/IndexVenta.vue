@@ -111,7 +111,7 @@
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">
                         Crear nueva venta
-                            
+                            <button @click="nuevaventa"> Crear</button>
 
                       </h5>
                 
@@ -264,6 +264,9 @@ export default  {
           console.log(error);
         });
     },
+    nuevaventa(){
+      window.location.href = "../nuevaventa/";
+    }
   },
 };
 </script>
