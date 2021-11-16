@@ -158,14 +158,14 @@
                     <ul class="nav nav-sm flex-column">
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('profile.edit') }}">
-                                {{ __('Perfil Usuario') }}
+                                {{ __('Perfil') }}
                             </a>
                         </li>
-                        <li class="nav-item">
+                  <!--       <li class="nav-item">
                             <a class="nav-link" href="{{ route('user.index') }}">
                                 {{ __('User Management') }}
                             </a>
-                        </li>
+                        </li> -->
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('cliente.index') }}">
                                 {{ __('Clientes') }}
@@ -181,7 +181,7 @@
             </li>
             <li class="nav-item">
                     <a class="nav-link" href="{{ route('venta.index') }}">
-                        <i class="ni ni-planet text-blue"></i> {{ __('Nueva Venta') }}
+                        <i class="ni ni-planet text-blue"></i> {{ __('Ventas') }}
                     </a>
                 </li>
            <!--  <li class="nav-item">

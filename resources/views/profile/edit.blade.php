@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('Perfil Usuario')])
+@extends('layouts.app', ['title' => __('Perfil')])
 
 @section('content')
     @include('users.partials.header', [

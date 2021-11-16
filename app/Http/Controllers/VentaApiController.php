@@ -57,6 +57,29 @@ class VentaApiController extends ApiResponseController
 
         return $this->successResponse($new_venta->id);
     }
+    public function updateVenta(Request $request)
+    {
+        $carbon = new \Carbon\Carbon();
+        $fecha = $carbon->now();
+
+        $data = request()->all();
+
+
+        $update_venta =  Venta::findOrFail($data['venId']) ;
+        $update_venta->fecha = $fecha;
+        $update_venta->metodopago =  $data['metodopago'];
+        $update_venta->cliId =  $data['cliId'];;
+
+        $update_venta->update();
+
+
+
+
+
+        if (!$update_venta) return $this->errorResponse(500);
+
+        return $this->successResponse(200);
+    }
 
     public function createDetalleVenta(Request $request)
     {
@@ -121,6 +144,17 @@ if($new_detalle){
             ->where('venId', $venId)->get();
         return $this->successResponse($detalle_venta);
     }
+
+    public function deleteVenta($venId)
+    {
+        $detalle_venta = DetalleVenta::where('venId',$venId)->delete();
+       $venta = Venta :: findOrFail($venId)->delete();  
+
+       if (!$venta) return $this->errorResponse(500);
+       return $this->successResponse(200);
+    }
+
+
     public function deleteDetalleVenta($id)
     {        
         $infodetalle=DetalleVenta::findOrFail($id);

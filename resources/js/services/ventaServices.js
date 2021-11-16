@@ -14,6 +14,10 @@ export default {
         let url = server + resource + "create-venta";
         return Axios.post(url, data);
     },
+    updateVenta(data) {
+        let url = server + resource + "update-venta";
+        return Axios.post(url, data);
+    },
     createNuevaVenta() {
         let url = server + resource + "create-nueva-venta";
         return Axios.post(url);
@@ -47,6 +51,11 @@ export default {
 
     deleteDetalleVenta(id) {
         let url = server + resource + "delete-detalle-venta";
+        return Axios.post(url+ '/' + id);
+    },
+
+    deleteVenta(id) {
+        let url = server + resource + "delete-venta";
         return Axios.post(url+ '/' + id);
     },
  
