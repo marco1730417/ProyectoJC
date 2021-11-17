@@ -224,21 +224,6 @@ $
                         ></i>
                           
                       </a>
-                             <a
-                        class="btn btn-sm btn-icon-only text-light"
-                        @click="deleteVenta(item.id)"
-                        role="button"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        <i
-                          class="fas fa-trash"
-                          title="Eliminar venta"
-                        
-                        ></i>
-                          
-                      </a>
                            <a
                         class="btn btn-sm btn-icon-only text-light"
                          data-toggle="modal"
@@ -255,6 +240,22 @@ $
                         ></i>
                           
                       </a>
+                             <a
+                        class="btn btn-sm btn-icon-only text-light"
+                        @click="deleteVenta(item.id)"
+                        role="button"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        <i
+                          class="fas fa-trash"
+                          title="Eliminar venta"
+                        
+                        ></i>
+                          
+                      </a>
+                      
                     </td>
                   </tr>
                 </tbody>

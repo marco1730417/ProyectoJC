@@ -298,15 +298,17 @@ if($new_detalle){
         $valor_iva = $maxima_venta*$iva/100;
         $maxima = $maxima_venta+$valor_iva;
 
-     
+        $numero_productos=Producto::count('id');
 
-       
+       $productos_stock= Producto::where('unidades','<',10)->orderBy('unidades')-> get();
 
 
         $info_dashboard = [
             'subtotal' => $subtotal,
             'cliente' =>     $numero_clientes,
-            'max_venta' => $maxima_venta
+            'max_venta' => $maxima_venta,
+            'numero_productos'=>$numero_productos,
+            'productos_stock'=> $productos_stock
           
           ];
 
