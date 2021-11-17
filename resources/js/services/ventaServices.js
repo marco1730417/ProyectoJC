@@ -38,6 +38,12 @@ export default {
         let url = server + resource + 'get-detalle-venta';
         return Axios.get(url);
     },
+
+    totalDashboardVentas() {
+        let url = server + resource + 'totales-dashboard-ventas';
+        return Axios.get(url);
+    },
+
     totalesVenta(venId) {
         let url = server + resource + 'totales-venta';
         return Axios.get(url + "/" + venId);
@@ -45,6 +51,11 @@ export default {
     downloadVenta(venId) {
         let url = server + resource + 'download-venta';
         return Axios.get(url + "/" + venId);
+    },
+
+    updateObservacion(data) {
+        let url = server + resource + "update-observacion";
+        return Axios.post(url, data);
     },
 
     

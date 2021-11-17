@@ -57,6 +57,10 @@ Route::group(['prefix' => 'venta'], function () {
     Route::get('get-detalle-venta',  [VentaApiController::class, 'detalleVenta']);
     Route::post('delete-venta/{id}', [VentaApiController::class, 'deleteVenta']);
    
+    Route::post('update-observacion', [VentaApiController::class, 'UpdateObservacion']);
+   
+    Route::get('totales-dashboard-ventas',  [VentaApiController::class, 'totalDashboardVentas']);
+    
     
 
 

@@ -195,7 +195,8 @@ if($new_detalle){
     {
 
       
-        $info_venta= Venta :: select ('ventas.id','ventas.fecha','clientes.nombre','clientes.ruc','clientes.direccion','clientes.telefono','ventas.metodopago')
+        $info_venta= Venta :: select ('ventas.id','ventas.fecha','clientes.nombre','clientes.ruc','clientes.direccion','clientes.telefono','ventas.metodopago'
+        )
         ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
         ->where('ventas.id', $venId)->get();;
         return $this->successResponse($info_venta);
@@ -258,12 +259,83 @@ if($new_detalle){
     {
 
       
-        $info_venta= Venta :: select ('ventas.id','ventas.fecha','clientes.nombre','clientes.ruc','clientes.direccion','clientes.telefono','ventas.metodopago')
+        $info_venta= Venta :: select ('ventas.id','ventas.fecha','ventas.observacion','clientes.nombre','clientes.ruc','clientes.direccion','clientes.telefono',
+        'ventas.metodopago',
+        DB::raw("(SELECT sum(detalle_ventas.cantidad*detalle_ventas.precioUnitario) FROM detalle_ventas
+        WHERE ventas.id=detalle_ventas.venId
+        ) AS total"),
+        )
+  
+     
+
         ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')->get();
         return $this->successResponse($info_venta);
     }
 
-    
+        
+    public function totalDashboardVentas()
+    {
+
+      
+        $venta_parciales = DetalleVenta::select(
+                                  
+            db::raw('(detalle_ventas.cantidad*detalle_ventas.precioUnitario) as parcial')
+        )->get();
+        $subtotal = $venta_parciales->sum('parcial');
+
+        $numero_clientes = Venta::distinct('cliId')->count('cliId');
+
+
+        $max_venta= Venta :: select (
+        DB::raw("(SELECT sum(detalle_ventas.cantidad*detalle_ventas.precioUnitario) FROM detalle_ventas
+        WHERE ventas.id=detalle_ventas.venId
+        ) AS total"),
+        ) ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')->get();
+        ;
+        $maxima_venta = $max_venta->max('total');
+        // se aplican valores sin iva Si funcionan las lineas de abajo para mostrar el valor maximo con iva
+        $iva = 12;
+        $valor_iva = $maxima_venta*$iva/100;
+        $maxima = $maxima_venta+$valor_iva;
+
+     
+
+       
+
+
+        $info_dashboard = [
+            'subtotal' => $subtotal,
+            'cliente' =>     $numero_clientes,
+            'max_venta' => $maxima_venta
+          
+          ];
+
+  
+        return $this->successResponse($info_dashboard);
+    }
+
+
+
+    public function UpdateObservacion(Request $request){
+     
+        $data = request()->all(); 
+     
+        $id = $data['id'];
+        $observacion = $data['observacion'];
+        
+   
+
+        $venta_update = Venta::findOrFail($id);
+        $venta_update->observacion = $observacion;
+        $venta_update->update(); 
+
+
+        if (!$venta_update) return $this->errorResponse(500);
+        return $this->successResponse(200);
+    }
+
+
+  
     }
 
 

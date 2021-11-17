@@ -78,6 +78,11 @@
                         <i class="ni ni-planet text-blue"></i> {{ __('Ventas') }}
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('venta.nuevaventa') }}">
+                        <i class="ni ni-spaceship text-orange"></i> {{ __('Nueva Venta') }}
+                    </a>
+                </li>
 
        <!--      <li class="nav-item">
                 <a class="nav-link" href="{{ route('icons') }}">

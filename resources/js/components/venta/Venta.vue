@@ -389,7 +389,7 @@ export default {
   },
   data() {
     return {
-      fecha: moment().format("MMMM Do YYYY, h:mm:ss a"),
+      fecha: moment().format("MMMM Do YYYY"),
       cliente: "",
       modeupdate:false,
       clienteupdate: "",
