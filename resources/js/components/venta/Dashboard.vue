@@ -196,6 +196,7 @@
                          
                         </div>
                     </div>
+                    <div class="table-wrapper-scroll-y my-custom-scrollbar">
                     <div class="table-responsive">
                         <!-- Projects table -->
                         <table class="table align-items-center table-flush">
@@ -225,6 +226,7 @@
                              
                             </tbody>
                         </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -465,3 +467,13 @@ export default {
 };
 </script>
 
+<style scoped>
+.my-custom-scrollbar {
+position: relative;
+height: 200px;
+overflow: auto;
+}
+.table-wrapper-scroll-y {
+display: block;
+}
+</style>
