@@ -84,39 +84,39 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                  <!--   <a class="nav-link active" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                         <i class="fab fa-laravel" style="color: #f4645f;"></i>
                         <span class="nav-link-text" style="color: #f4645f;">{{ __('Configuraciones') }}</span>
-                    </a>
+                    </a> -->
 
                     <div class="collapse show" id="navbar-examples">
                         <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
+                      <!--       <li class="nav-item">
                                 <a class="nav-link" href="{{ route('profile.edit') }}">
-                                    {{ __('Perfil ') }}
+                                <i class="ni ni-planet text-blue"></i>    {{ __('Perfil ') }}
                                 </a>
-                            </li>
+                            </li> -->
                         <!--     <li class="nav-item">
                                 <a class="nav-link" href="{{ route('user.index') }}">
                                     {{ __('User Management') }}
                                 </a>
                             </li> -->
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('cliente.index') }}">
-                                    {{ __('Clientes') }}
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('productos.index') }}">
-                                    {{ __('Productos') }}
-                                </a>
-                            </li>
+                         
                         </ul>
                     </div>
           
                 </li>
 
-
+                <li class="nav-item">
+                                <a class="nav-link" href="{{ route('cliente.index') }}">
+                                <i class="ni ni-circle-08 text-blue"></i>     {{ __('Clientes') }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('productos.index') }}">
+                                <i class="ni ni-books text-blue"></i>      {{ __('Productos') }}
+                                </a>
+                            </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('venta.index') }}">
                         <i class="ni ni-planet text-blue"></i> {{ __('Ventas') }}
@@ -124,7 +124,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('venta.nuevaventa') }}">
-                        <i class="ni ni-spaceship text-orange"></i> {{ __('Nueva Venta') }}
+                        <i class="ni ni-cart text-orange"></i> {{ __('Nueva Venta') }}
                     </a>
                 </li>
 
