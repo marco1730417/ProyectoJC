@@ -300,7 +300,22 @@ if($new_detalle){
 
         $numero_productos=Producto::count('id');
 
-       $productos_stock= Producto::where('unidades','<',10)->orderBy('unidades')-> get();
+ $productos_stock= Producto::where('unidades','<',10)->orderBy('unidades')-> get();
+  
+ $productos_mas_vendidos= DetalleVenta::select('proId', 'productos.nombre',  
+    DB::raw("(SELECT count(detalle_ventas.proId) FROM detalle_ventas
+        ) AS total"),
+    )
+    ->leftJoin('productos', 'productos.id', '=', 'detalle_ventas.proId')
+    ->groupBy('proId')->orderBy('total')->take(5)->get();
+ 
+    $mejores_clientes= Venta::select('cliId', 'clientes.nombre',  
+    DB::raw("(SELECT count(ventas.cliId) FROM ventas
+        ) AS total"),
+    )
+    ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
+    ->groupBy('cliId')->orderBy('total')->take(5)->get();
+ 
 
 
         $info_dashboard = [
@@ -308,7 +323,10 @@ if($new_detalle){
             'cliente' =>     $numero_clientes,
             'max_venta' => $maxima_venta,
             'numero_productos'=>$numero_productos,
-            'productos_stock'=> $productos_stock
+            'productos_stock'=> $productos_stock,
+            'productos_mas_vendidos'=> $productos_mas_vendidos,
+            'mejores_clientes'=> $mejores_clientes,
+            
           
           ];
 
