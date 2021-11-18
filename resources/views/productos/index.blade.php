@@ -5,7 +5,7 @@
 
 @section('content')
     @include('users.partials.header', [
-        'title' => __('Modulo Productos'),
+        'title' => __('Productos'),
     ])   
 
     <div id="app" >

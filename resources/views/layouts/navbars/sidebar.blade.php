@@ -54,7 +54,7 @@
                 <div class="row">
                     <div class="col-6 collapse-brand">
                         <a href="{{ route('home') }}">
-                            <img src="{{ asset('argon') }}/img/brand/blue.png">
+                            <img src="{{ asset('argon') }}/img/brand/jc.jpg">
                         </a>
                     </div>
                     <div class="col-6 collapse-close">
@@ -126,6 +126,13 @@
                     <a class="nav-link" href="{{ route('venta.nuevaventa') }}">
                         <i class="ni ni-cart text-orange"></i> {{ __('Nueva Venta') }}
                     </a>
+                </li>
+                <li class="nav-item">
+                <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();" class="nav-link" >
+   Salir
+  </a>
+
                 </li>
 
               <!--   <li class="nav-item">
