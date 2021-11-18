@@ -136,8 +136,7 @@
                     <div class="card-header bg-transparent">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h6 class="text-uppercase text-light ls-1 mb-1">Overview</h6>
-                                <h2 class="text-white mb-0">Sales value</h2>
+                                <h2 class="text-white mb-0">Ventas Anuales</h2>
                             </div>
                             <div class="col">
                                 <ul class="nav nav-pills justify-content-end">
@@ -159,11 +158,10 @@
                     </div>
                     <div class="card-body">
                         <!-- Chart -->
-                        <div class="chart">
-                            <!-- Chart wrapper -->
-                            <canvas id="chart-sales" class="chart-canvas"></canvas>
-                        </div>
-                    </div>
+                  
+  <apexchart width="700" type="bar" :options="options" :series="series"></apexchart>
+</div>
+                 
                 </div>
             </div>
             <div class="col-xl-4">
@@ -287,7 +285,7 @@
 <script>
 import VentaServices from "../../services/ventaServices";
 import ClienteServices from "../../services/clienteServices";
-
+import VueApexCharts from 'vue-apexcharts'
 import Venta from "./Venta.vue";
 import Conf from "../../services/conf.js";
 
@@ -315,6 +313,18 @@ export default {
       text: "",
       formadepago: "",
       venId: 10,
+       options: {
+        chart: {
+          id: 'vuechart-example'
+        },
+        xaxis: {
+          categories: ['Enero', 'Febrero', 'Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
+        }
+      },
+      series: [{
+        name: 'series-1',
+        data: [30, 40, 45, 50, 49, 60, 70, 91]
+      }]
     };
   },
   mounted() {

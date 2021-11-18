@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\DetalleVenta;
 use App\Models\Producto;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Config;
 use PDF
  ;
@@ -315,8 +316,35 @@ if($new_detalle){
     )
     ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
     ->groupBy('cliId')->orderBy('total')->take(5)->get();
- 
 
+  /*   $ventas_mes= Venta::select(
+        DB::raw("(SELECT sum(detalle_ventas.cantidad*detalle_ventas.precioUnitario) FROM detalle_ventas
+        WHERE ventas.id=detalle_ventas.venId
+        ) AS total"),
+
+                DB::raw("DATE_FORMAT(created_at,'%M %Y') as months")
+            )   ->groupBy('months' )
+                ->get();  */
+
+/* 
+                $ventas_mes=                DB::table('ventas')
+                ->select(DB::raw('DATE(created_at) as date'),
+                DB::raw("(SELECT sum(detalle_ventas.cantidad*detalle_ventas.precioUnitario) FROM detalle_ventas
+                WHERE ventas.id=detalle_ventas.venId
+                ) AS total"),
+                 )
+                ->groupBy('date')
+                ->get(); */
+           /*      $ventas_mes = Venta::where('created_at', '>=', \Carbon\Carbon::now->subMonth())
+                ->groupBy('date')
+                ->orderBy('date', 'DESC')
+                ->get(array(
+                    DB::raw('Date(created_at) as date'),
+                    DB::raw("(SELECT sum(detalle_ventas.cantidad*detalle_ventas.precioUnitario) FROM detalle_ventas
+                WHERE ventas.id=detalle_ventas.venId
+                ) AS total")
+                ));
+ */
 
         $info_dashboard = [
             'subtotal' => $subtotal,
