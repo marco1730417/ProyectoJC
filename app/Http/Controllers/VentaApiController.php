@@ -6,6 +6,7 @@ use  App\Http\Requests\Producto\StoreRequest;
 use App\Http\Requests\Producto\UpdateRequest;
 use App\Http\Controllers\api\ApiResponseController;
 use App\Models\Venta;
+use App\Models\Pago;
 use Illuminate\Support\Facades\DB;
 use App\Models\DetalleVenta;
 use App\Models\Producto;
@@ -57,6 +58,53 @@ class VentaApiController extends ApiResponseController
 
         return $this->successResponse($new_venta->id);
     }
+
+    public function registrarPagoContado(Request $request)
+    {
+        $carbon = new \Carbon\Carbon();
+        $fecha = $carbon->now();
+
+        $data = request()->all();
+
+
+        $new_pago = new Pago;
+        $new_pago->fecha = $fecha;
+        $new_pago->tipo = "Contado";
+        $new_pago->cliId =  $data['cliId'];
+        $new_pago->vuelto =  $data['vuelto'];
+        $new_pago->pago =  $data['pago'];
+        $new_pago->total =  $data['total'];
+
+        $new_pago->save();
+
+        if (!$new_pago) return $this->errorResponse(500);
+
+        return $this->successResponse(200);
+    }
+    public function registrarPagoTransferencia(Request $request)
+    {
+        $carbon = new \Carbon\Carbon();
+        $fecha = $carbon->now();
+
+        $data = request()->all();
+
+
+        $new_pago = new Pago;
+        $new_pago->fecha = $fecha;
+        $new_pago->tipo = "Transferencia";
+        $new_pago->cliId =  $data['cliId'];
+        $new_pago->pago =  $data['pago'];
+        $new_pago->numtransf =  $data['numtransf'];
+        $new_pago->total =  $data['total'];
+
+        $new_pago->save();
+
+        if (!$new_pago) return $this->errorResponse(500);
+
+        return $this->successResponse(200);
+    }
+
+
     public function updateVenta(Request $request)
     {
         $carbon = new \Carbon\Carbon();

@@ -291,10 +291,7 @@
                 <div class="modal-content">
                   <div class="modal-header">
                     <h5 class="modal-title">Terminar venta al contado</h5>
-                   
-                   
                     <button
-                    
                       type="button"
                       class="close"
                       data-dismiss="modal"
@@ -304,14 +301,8 @@
                     </button>
                   </div>
                   <div class="modal-body">
-   
-
-
-
-
 
 <div class="container d-lg-flex">
-  
     <div class="box-2">
         <div class="box-inner-2">
             <form action="">
@@ -319,11 +310,7 @@
                     <p class="dis fw-bold mb-2">Cantidad recibida</p> <input class="form-control" type="number" v-model="pagorecibido">
                 </div>
                 <div>
-                  
-                
                     <div class="address">
-                    
-                   
                         <div class="d-flex flex-column dis">
                             <div class="d-flex align-items-center justify-content-between mb-2">
                                 <p>Total</p>
@@ -337,7 +324,9 @@
                                 <p class="fw-bold">Cambio</p>
                                 <p class="fw-bold"><span class="fas fa-dollar-sign"></span>{{ parseFloat(total_cambio).toFixed(2) }}</p>
                             </div>
-                            <div @click="downloadVenta" class="btn btn-primary mt-2"><span class="fas fa-dollar-sign px-1"></span>Terminar Venta </div>
+                            <div v-if="pagorecibido" @click="downloadVentaContado(pagorecibido,total_cambio,cliente.id )" class="btn btn-primary mt-2"><span class="fas fa-dollar-sign px-1"></span>Terminar Venta </div>
+                            <div v-else  class="btn btn-primary mt-2"><span class="fas fa-dollar-sign px-1"></span>Terminar Venta </div>
+                       
                         </div>
                     </div>
                 </div>
@@ -346,14 +335,6 @@
     </div>
 </div>
 
-
-
-
-
-
-
-
-
                   </div>
                   <div class="modal-footer"></div>
                 </div>
@@ -361,6 +342,76 @@
             </div>
 
 <!-- modal venta al contado -->
+
+
+<!-- modal venta transferencia -->
+
+       <div
+              class="modal fade"
+              id="ModalVentaTransferencia"
+              tabindex="-1"
+              role="dialog"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Terminar venta como transferencia</h5>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+
+<div class="container d-lg-flex">
+    <div class="box-2">
+        <div class="box-inner-2">
+            <form action="">
+                <div class="mb-3">
+                    <p class="dis fw-bold mb-2">Cantidad recibida</p> <input class="form-control" type="number" v-model="pagorecibidotransferencia">
+                </div>
+                   <div class="mb-3">
+                    <p class="dis fw-bold mb-2">Detalle de transferencia</p> <input class="form-control" v-model="detalletransferencia" type="text" >
+                </div>
+                <div>
+                    <div class="address">
+                        <div class="d-flex flex-column dis">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <p>Total</p>
+                                <p><span class="fas fa-dollar-sign"></span> {{ parseFloat(totalesventa.total).toFixed(2) }}</p>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <p>Pago</p>
+                                <p><span class="fas fa-dollar-sign"></span>{{pagorecibidotransferencia}}</p>
+                            </div>
+                        
+                            <div v-if="pagorecibidotransferencia" @click="downloadVentaTransferencia(pagorecibidotransferencia,detalletransferencia,cliente.id )" class="btn btn-primary mt-2"><span class="fas fa-dollar-sign px-1"></span>Terminar Venta </div>
+                            <div v-else  class="btn btn-primary mt-2"><span class="fas fa-dollar-sign px-1"></span>Terminar Venta </div>
+                       
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+                  </div>
+                  <div class="modal-footer"></div>
+                </div>
+              </div>
+            </div>
+
+<!-- modal venta al transferencia -->
+
+
+
+
 
             <div class="col-12"></div>
 
@@ -448,10 +499,10 @@
             </b-container>
 
             <div class="row">
-              <div class="col-xl-12 col-lg-12 float:right">
+              <div class="col-xl-12 col-lg-12 pull-right">
                 <br />
 
-                <div @mouseover="onOver" @mouseleave="onLeave">
+                <div  @mouseover="onOver" @mouseleave="onLeave">
                   <b-dropdown
                     id="dropdown-1"
                     text="Continuar"
@@ -464,7 +515,8 @@
                       ><i class="fas fa-dollar-sign"></i> Al
                       contado</b-dropdown-item
                     >
-                    <b-dropdown-item
+                    <b-dropdown-item  data-toggle="modal"
+                    data-target="#ModalVentaTransferencia"
                       ><i class="fas fa-wallet"></i
                       >Transferencia</b-dropdown-item
                     >
@@ -521,9 +573,11 @@ export default {
       detalleventa: [],
       detallegeneralventa: [],
 pagorecibido:"",
+pagorecibidotransferencia:"",
+detalletransferencia:"",
       filter: null,
       formadepago: "",
-      venId: "",
+      venId: 95,
     };
   },
 computed: {
@@ -623,10 +677,61 @@ computed: {
           console.log(error);
         });
     },
-    downloadVenta() {
+    downloadVentaContado(pago,vuelto,cliId) {
+
+  let data = {
+        total: this.totalesventa.total,
+        pago: pago,
+        vuelto:vuelto,
+        cliId:cliId,
+      };
+      VentaServices.registrarPagoContado(data)
+        .then((response) => {
+          let mensaje = response.data.data;
+          if (mensaje == 200) {
+            this.detalleVenta();
+            this.totalDashboardVentas();
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+
+
       let routeData = server + resource + `download-venta/` + this.venId;
       window.open(routeData);
     },
+
+
+downloadVentaTransferencia(pago,detalle,cliId){
+let data = {
+        total: this.totalesventa.total,
+        pago:pago,
+        numtransf: detalle,
+        cliId:cliId,
+      };
+      VentaServices.registrarPagoTransferencia(data)
+        .then((response) => {
+          let mensaje = response.data.data;
+          if (mensaje == 200) {
+            this.detalleVenta();
+            this.totalDashboardVentas();
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+
+
+      let routeData = server + resource + `download-venta/` + this.venId;
+      window.open(routeData);
+    },
+
+
+
+
     totalesVenta() {
       VentaServices.totalesVenta(this.venId)
         .then((response) => {

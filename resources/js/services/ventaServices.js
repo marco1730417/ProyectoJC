@@ -58,6 +58,15 @@ export default {
         return Axios.post(url, data);
     },
 
+    registrarPagoContado(data) {
+        let url = server + resource + "registrar-pago-contado";
+        return Axios.post(url, data);
+    },
+    registrarPagoTransferencia(data) {
+        let url = server + resource + "registrar-pago-transferencia";
+        return Axios.post(url, data);
+    },
+
     
 
     deleteDetalleVenta(id) {
