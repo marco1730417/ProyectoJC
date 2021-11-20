@@ -8,37 +8,37 @@
             <div class="col-xl-6 col-lg-6">
               <div class="card card-stats mb-4 mb-xl-0">
                 <div class="card-body">
-                  <div class="row">
+                  <div class="row"></div>
+                  <!-- <div class="row">
                     <div class="col">
-                      <h5 class="card-title text-uppercase text-muted mb-0">
+                     <h5 class="card-title text-uppercase text-muted mb-0">
                         Elija un metodo de pago
                       </h5>
                       <b-form-group v-if="!modeupdate">
                         <b-form-radio
-                        :disabled="venId>0"
+                          :disabled="venId > 0"
                           v-model="formadepago"
                           name="some-radios"
                           value="Efectivo"
                           >Efectivo</b-form-radio
                         >
                         <b-form-radio
-                          :disabled="venId>0"
+                          :disabled="venId > 0"
                           v-model="formadepago"
                           name="some-radios"
                           value="Transferencia"
                           >Transferencia</b-form-radio
                         >
-                         <b-form-radio
-                          :disabled="venId>0"
+                        <b-form-radio
+                          :disabled="venId > 0"
                           v-model="formadepago"
                           name="some-radios"
                           value="Cheque"
                           >Cheque</b-form-radio
                         >
 
-                        <!--       <p>  {{formadepago}} </p> -->
                       </b-form-group>
-                             <b-form-group v-if="modeupdate">
+                      <b-form-group v-if="modeupdate">
                         <b-form-radio
                           v-model="formadepagoupdate"
                           name="some-radios"
@@ -51,18 +51,14 @@
                           value="Transferencia"
                           >Transferencia</b-form-radio
                         >
-                         <b-form-radio
+                        <b-form-radio
                           v-model="formadepagoupdate"
                           name="some-radios"
                           value="Cheque"
                           >Cheque</b-form-radio
                         >
 
-                        <!--       <p>  {{formadepago}} </p> -->
-                      </b-form-group>
-
-
-
+                      </b-form-group> 
                     </div>
                     <div class="col-auto">
                       <div
@@ -77,22 +73,27 @@
                         <i class="fas fa-wallet"></i>
                       </div>
                     </div>
-                  </div>
+                  </div>-->
 
                   <div class="row">
                     <div class="col">
-                      <h5 v-if="!modeupdate" class="card-title text-uppercase text-muted mb-0">
+                      <h5
+                        v-if="!modeupdate"
+                        class="card-title text-uppercase text-muted mb-0"
+                      >
                         Elija un cliente
                         <v-select
-                         :disabled="venId>0"
+                          :disabled="venId > 0"
                           label="nombre"
                           v-model="cliente"
                           :options="infocliente"
                           required
                         ></v-select>
-                        
                       </h5>
-                          <h5 v-if="modeupdate" class="card-title text-uppercase text-muted mb-0">
+                      <h5
+                        v-if="modeupdate"
+                        class="card-title text-uppercase text-muted mb-0"
+                      >
                         Elija un cliente
                         <v-select
                           label="nombre"
@@ -100,7 +101,6 @@
                           :options="infocliente"
                           required
                         ></v-select>
-                        
                       </h5>
                       <!--        <span class="h2 font-weight-bold mb-0"
                         >{{ cliente.nombre }}
@@ -128,14 +128,14 @@
                   >
                     Continuar
                   </button>
-                         <button
+                  <button
                     v-if="venId && !camposactivos"
                     class="btn btn-primary btn-sm btn-block"
                     @click="updateVenta"
                   >
                     Cambiar datos
                   </button>
-                      <button
+                  <button
                     v-if="modeupdate && camposactivos"
                     class="btn btn-primary btn-sm btn-block"
                     @click="actualizarVenta"
@@ -151,8 +151,7 @@
               </div>
             </div>
 
-
-      <div  v-if="venId>0" class="col-xl-6 col-lg-6">
+            <div v-if="venId > 0" class="col-xl-6 col-lg-6">
               <div class="card card-stats mb-4 mb-xl-0">
                 <div class="card-body">
                   <div class="row">
@@ -160,7 +159,9 @@
                       <h5 class="card-title text-uppercase text-muted mb-0">
                         Total Venta
                       </h5>
-                      <span class="h2 font-weight-bold mb-0">    {{ parseFloat(totalesventa.total ).toFixed(2) }}   </span>
+                      <span class="h2 font-weight-bold mb-0">
+                        {{ parseFloat(totalesventa.total).toFixed(2) }}
+                      </span>
                     </div>
                     <div class="col-auto">
                       <div
@@ -178,28 +179,44 @@
                   </div>
                   <p class="mt-3 mb-0 text-muted text-sm">
                     <span class="text-warning mr-2"
-                      ><i class="fas fa-user"></i>  {{cliente.nombre}} </span
-                    >
-                    <span class="text-nowrap">{{fecha}}</span>
-                  </p> <br/>
-                        <button
-                    class="btn btn-primary btn-sm btn-block"
-                    @click="downloadVenta"
-                  >
-                    Imprimir venta
-                  </button>
-                     <button
-                    class="btn btn-danger btn-sm btn-block"
-                    @click="deleteVenta"
-                  >
-                    Cancelar venta
-                  </button>
+                      ><i class="fas fa-user"></i> {{ cliente.nombre }}
+                    </span>
+                    <span class="text-nowrap">{{ fecha }}</span>
+                  </p>
                 </div>
               </div>
 
+              <br />
+
+              <div class="card card-stats mb-4 mb-xl-0">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col">
+                      <h5 class="card-title text-uppercase text-muted mb-0">
+                        Notas
+                      </h5>
+                      <div>
+                        <b-form-textarea
+                          id="textarea"
+                          v-model="observacion"
+                          placeholder="Enter something..."
+                          rows="3"
+                          max-rows="6"
+                        ></b-form-textarea>
+                      </div>
+                    </div>
+                    <div class="col-auto">
+                      <b-button
+                        @click="updateObservacion(observacion)"
+                        size="sm"
+                        variant="success"
+                        >Guardar</b-button
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-
-
           </div>
         </div>
       </div>
@@ -261,6 +278,90 @@
               </div>
             </div>
 
+<!-- modal venta al contado -->
+
+       <div
+              class="modal fade"
+              id="ModalVentaContado"
+              tabindex="-1"
+              role="dialog"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Terminar venta al contado</h5>
+                   
+                   
+                    <button
+                    
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+   
+
+
+
+
+
+<div class="container d-lg-flex">
+  
+    <div class="box-2">
+        <div class="box-inner-2">
+            <form action="">
+                <div class="mb-3">
+                    <p class="dis fw-bold mb-2">Cantidad recibida</p> <input class="form-control" type="number" v-model="pagorecibido">
+                </div>
+                <div>
+                  
+                
+                    <div class="address">
+                    
+                   
+                        <div class="d-flex flex-column dis">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <p>Total</p>
+                                <p><span class="fas fa-dollar-sign"></span> {{ parseFloat(totalesventa.total).toFixed(2) }}</p>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <p>Pago</p>
+                                <p><span class="fas fa-dollar-sign"></span>{{pagorecibido}}</p>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <p class="fw-bold">Cambio</p>
+                                <p class="fw-bold"><span class="fas fa-dollar-sign"></span>{{ parseFloat(total_cambio).toFixed(2) }}</p>
+                            </div>
+                            <div @click="downloadVenta" class="btn btn-primary mt-2"><span class="fas fa-dollar-sign px-1"></span>Terminar Venta </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+                  </div>
+                  <div class="modal-footer"></div>
+                </div>
+              </div>
+            </div>
+
+<!-- modal venta al contado -->
+
             <div class="col-12"></div>
 
             <div class="table-responsive">
@@ -284,17 +385,11 @@
                     <td>{{ item.descripcion }}</td>
                     <td>{{ item.cantidad }}</td>
                     <td>
-
-    {{ parseFloat(item.precioUnitario ).toFixed(2) }}
-
+                      {{ parseFloat(item.precioUnitario).toFixed(2) }}
                     </td>
-              
+
                     <td>
-
-      
-                    {{ parseFloat(item.subTotal ).toFixed(2) }}
-
-
+                      {{ parseFloat(item.subTotal).toFixed(2) }}
                     </td>
                     <td class="text-center">
                       <a
@@ -329,21 +424,19 @@
                           <tr>
                             <td>SubTotal</td>
                             <td>
-                          
-                               {{ parseFloat(totalesventa.subtotal ).toFixed(2) }}
+                              {{ parseFloat(totalesventa.subtotal).toFixed(2) }}
                             </td>
                           </tr>
                           <tr>
                             <td>Iva ({{ totalesventa.iva }})</td>
                             <td>
-                             
-                       {{ parseFloat(totalesventa.valorIva ).toFixed(2) }}
+                              {{ parseFloat(totalesventa.valorIva).toFixed(2) }}
                             </td>
                           </tr>
                           <tr>
                             <td>Total</td>
                             <td>
-                           {{ parseFloat(totalesventa.total ).toFixed(2) }}
+                              {{ parseFloat(totalesventa.total).toFixed(2) }}
                             </td>
                           </tr>
                         </tbody>
@@ -352,11 +445,37 @@
                   </b-row>
                 </b-col>
               </b-row>
-           
             </b-container>
-            
 
-            
+            <div class="row">
+              <div class="col-xl-12 col-lg-12 float:right">
+                <br />
+
+                <div @mouseover="onOver" @mouseleave="onLeave">
+                  <b-dropdown
+                    id="dropdown-1"
+                    text="Continuar"
+                    ref="dropdown"
+                    class="m-md-2"
+                  >
+                    <b-dropdown-item            data-toggle="modal"
+                    data-target="#ModalVentaContado"
+              
+                      ><i class="fas fa-dollar-sign"></i> Al
+                      contado</b-dropdown-item
+                    >
+                    <b-dropdown-item
+                      ><i class="fas fa-wallet"></i
+                      >Transferencia</b-dropdown-item
+                    >
+
+                    <b-dropdown-item @click="deleteVenta"
+                      ><i class="fas fa-ban"></i>Cancelar Venta</b-dropdown-item
+                    >
+                  </b-dropdown>
+                </div>
+              </div>
+            </div>
 
             <!--  {{totalesventa}} -->
 
@@ -391,34 +510,52 @@ export default {
     return {
       fecha: moment().format("MMMM Do YYYY"),
       cliente: "",
-      modeupdate:false,
+      modeupdate: false,
       clienteupdate: "",
-    formadepagoupdate:"",
-    infocliente: [],
+      formadepagoupdate: "",
+      infocliente: [],
       loading: false,
       infoeditcliente: [],
-      camposactivos:false,
+      camposactivos: false,
       totalesventa: [],
       detalleventa: [],
       detallegeneralventa: [],
-
+pagorecibido:"",
       filter: null,
       formadepago: "",
       venId: "",
     };
   },
+computed: {
 
+   total_cambio: function () {
+      //console.log(this.productosSelected.tarVenta + "valor unitario");
+     let total= this.totalesventa.total;     
+      let pagorecibido = this.pagorecibido;
+     let tt= pagorecibido-total;
+     
+     return tt; 
+
+      
+       
+      }
+    },
   mounted() {
     this.getAllClientes();
     this.getInformacionVenta();
-    this.totalesVenta()
-;  },
+    this.totalesVenta();
+  },
   methods: {
     updateDatos() {
       this.getInformacionVenta();
       this.totalesVenta();
     },
-
+    onOver() {
+      this.$refs.dropdown.visible = true;
+    },
+    onLeave() {
+      this.$refs.dropdown.visible = false;
+    },
     deleteDetalleVenta(id) {
       VentaServices.deleteDetalleVenta(id)
         .then((response) => {
@@ -433,31 +570,28 @@ export default {
         });
     },
 
-   deleteVenta() {
-   
-this.$swal.fire({
-  title: 'Estas seguro de cancelar esta venta?',
-  showCancelButton: true,
-  confirmButtonText: 'Save',
-  
-}).then((result) => {
-  /* Read more about isConfirmed, isDenied below */
-  if (result.isConfirmed) {
-     VentaServices.deleteVenta(this.venId)
-        .then((response) => {
-          let mensaje = response.data.data;
-          if (mensaje == 200) {
-       window.location.href = "../venta/";
-    }
+    deleteVenta() {
+      this.$swal
+        .fire({
+          title: "Estas seguro de cancelar esta venta?",
+          showCancelButton: true,
+          confirmButtonText: "Save",
         })
-        .catch((error) => {
-          console.log(error);
+        .then((result) => {
+          /* Read more about isConfirmed, isDenied below */
+          if (result.isConfirmed) {
+            VentaServices.deleteVenta(this.venId)
+              .then((response) => {
+                let mensaje = response.data.data;
+                if (mensaje == 200) {
+                  window.location.href = "../venta/";
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          }
         });
-
-
-  } 
-})
-
     },
 
     getAllClientes() {
@@ -502,11 +636,27 @@ this.$swal.fire({
           console.log(error);
         });
     },
+    updateObservacion(texto) {
+      let data = {
+        id: this.venId,
+        observacion: texto,
+      };
+      VentaServices.updateObservacion(data)
+        .then((response) => {
+          let mensaje = response.data.data;
+          if (mensaje == 200) {
+            this.detalleVenta();
+            this.totalDashboardVentas();
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
 
     createVenta() {
       let data = {
         cliId: this.cliente["id"],
-        metodopago: this.formadepago,
       };
 
       VentaServices.createVenta(data)
@@ -522,37 +672,33 @@ this.$swal.fire({
         });
     },
 
-
-   updateVenta() {
-    
-
-        this.modeupdate=true;
-        this.camposactivos=true;
+    updateVenta() {
+      this.modeupdate = true;
+      this.camposactivos = true;
     },
-    
-   actualizarVenta() {
-       let data = {
+
+    actualizarVenta() {
+      let data = {
         cliId: this.clienteupdate["id"],
         metodopago: this.formadepagoupdate,
-        venId: this.venId
+        venId: this.venId,
       };
 
       VentaServices.updateVenta(data)
         .then((response) => {
           let mensaje = response.data.data;
 
-  this.modeupdate=false;
-  this.camposactivos=false;
-  this.cliente =this.clienteupdate;
-  this.formadepago= this.formadepagoupdate;
+          this.modeupdate = false;
+          this.camposactivos = false;
+          this.cliente = this.clienteupdate;
+          this.formadepago = this.formadepagoupdate;
         })
         .catch((error) => {
           console.log(error);
-        }); 
-
-     
+        });
     },
-
   },
 };
 </script>
+
+

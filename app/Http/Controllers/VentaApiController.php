@@ -49,7 +49,6 @@ class VentaApiController extends ApiResponseController
         $new_venta = new Venta;
         $new_venta->fecha = $fecha;
         $new_venta->observacion = "Ninguna";
-        $new_venta->metodopago =  $data['metodopago'];
         $new_venta->cliId =  $data['cliId'];;
 
         $new_venta->save();
