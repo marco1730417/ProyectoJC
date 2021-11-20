@@ -577,7 +577,7 @@ pagorecibidotransferencia:"",
 detalletransferencia:"",
       filter: null,
       formadepago: "",
-      venId: 95,
+      venId: "",
     };
   },
 computed: {
@@ -680,6 +680,7 @@ computed: {
     downloadVentaContado(pago,vuelto,cliId) {
 
   let data = {
+    venId:this.venId,
         total: this.totalesventa.total,
         pago: pago,
         vuelto:vuelto,
@@ -706,6 +707,7 @@ computed: {
 
 downloadVentaTransferencia(pago,detalle,cliId){
 let data = {
+  venId:this.venId,
         total: this.totalesventa.total,
         pago:pago,
         numtransf: detalle,

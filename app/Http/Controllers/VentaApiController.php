@@ -12,6 +12,7 @@ use App\Models\DetalleVenta;
 use App\Models\Producto;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Pagination\PaginationState;
 use Illuminate\Support\Facades\Config;
 use PDF
  ;
@@ -68,6 +69,7 @@ class VentaApiController extends ApiResponseController
 
 
         $new_pago = new Pago;
+        $new_pago->venId = $data['venId'];
         $new_pago->fecha = $fecha;
         $new_pago->tipo = "Contado";
         $new_pago->cliId =  $data['cliId'];
@@ -90,6 +92,8 @@ class VentaApiController extends ApiResponseController
 
 
         $new_pago = new Pago;
+        $new_pago->venId = $data['venId'];
+     
         $new_pago->fecha = $fecha;
         $new_pago->tipo = "Transferencia";
         $new_pago->cliId =  $data['cliId'];
@@ -246,7 +250,7 @@ if($new_detalle){
         $info_venta= Venta :: select ('ventas.id','ventas.fecha','clientes.nombre','clientes.ruc','clientes.direccion','clientes.telefono','ventas.metodopago'
         )
         ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
-        ->where('ventas.id', $venId)->get();;
+        ->where('ventas.id', $venId)->get();
         return $this->successResponse($info_venta);
     }
 
@@ -307,8 +311,8 @@ if($new_detalle){
     {
 
       
-        $info_venta= Venta :: select ('ventas.id','ventas.fecha','ventas.observacion','clientes.nombre','clientes.ruc','clientes.direccion','clientes.telefono',
-        'ventas.metodopago',
+        $info_venta= Venta :: select ('ventas.id','pagos.tipo','pagos.total as totales','ventas.fecha','ventas.observacion','clientes.nombre','clientes.ruc','clientes.direccion','clientes.telefono',
+        
         DB::raw("(SELECT sum(detalle_ventas.cantidad*detalle_ventas.precioUnitario) FROM detalle_ventas
         WHERE ventas.id=detalle_ventas.venId
         ) AS total"),
@@ -316,7 +320,9 @@ if($new_detalle){
   
      
 
-        ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')->get();
+        ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
+        ->leftJoin('pagos', 'ventas.id', '=', 'pagos.venId')->get();
+       
         return $this->successResponse($info_venta);
     }
 
@@ -334,12 +340,15 @@ if($new_detalle){
         $numero_clientes = Venta::distinct('cliId')->count('cliId');
 
 
-        $max_venta= Venta :: select (
+        $max_venta1= Venta :: select (
         DB::raw("(SELECT sum(detalle_ventas.cantidad*detalle_ventas.precioUnitario) FROM detalle_ventas
         WHERE ventas.id=detalle_ventas.venId
         ) AS total"),
         ) ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')->get();
         ;
+
+$max_venta= Pago::max('total');
+
         $maxima_venta = $max_venta->max('total');
         // se aplican valores sin iva Si funcionan las lineas de abajo para mostrar el valor maximo con iva
         $iva = 12;
@@ -396,7 +405,7 @@ if($new_detalle){
         $info_dashboard = [
             'subtotal' => $subtotal,
             'cliente' =>     $numero_clientes,
-            'max_venta' => $maxima_venta,
+            'max_venta' => $max_venta,
             'numero_productos'=>$numero_productos,
             'productos_stock'=> $productos_stock,
             'productos_mas_vendidos'=> $productos_mas_vendidos,

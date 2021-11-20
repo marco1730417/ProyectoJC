@@ -201,11 +201,11 @@ $    {{ parseFloat(totalventas.subtotal ).toFixed(2) }}
                    {{item.fecha}}
                    </td>
 
-                    <td>{{ item.metodopago }}</td>
+                    <td>{{ item.tipo }}</td>
                       <td>{{ item.observacion }}</td>
                      <td>
 $
-    {{ parseFloat(item.total ).toFixed(2) }}
+    {{ parseFloat(item.totales ).toFixed(2) }}
 
                      </td>
                     <td class="text-center">
