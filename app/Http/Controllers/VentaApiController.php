@@ -340,14 +340,14 @@ if($new_detalle){
         $numero_clientes = Venta::distinct('cliId')->count('cliId');
 
 
-        $max_venta1= Venta :: select (
+        $max_venta= Venta :: select (
         DB::raw("(SELECT sum(detalle_ventas.cantidad*detalle_ventas.precioUnitario) FROM detalle_ventas
         WHERE ventas.id=detalle_ventas.venId
         ) AS total"),
         ) ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')->get();
         ;
 
-$max_venta= Pago::max('total');
+/* $max_venta= Pago::max('total'); */
 
         $maxima_venta = $max_venta->max('total');
         // se aplican valores sin iva Si funcionan las lineas de abajo para mostrar el valor maximo con iva

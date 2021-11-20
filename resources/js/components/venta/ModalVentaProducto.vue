@@ -8,7 +8,7 @@
           >
           <div class="col-sm-12">
             <v-select
-              label="nombre"
+              label="descripcion"
               v-model="producto"
               :options="infoproducto"
               required
