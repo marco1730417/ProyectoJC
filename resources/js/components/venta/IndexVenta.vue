@@ -193,7 +193,11 @@ $    {{ parseFloat(totalventas.subtotal ).toFixed(2) }}
                 <!--  {{detalleventa}}  -->
                 <tbody>
                   <tr v-for="item in detalleventa">
-                    <td>{{ item.nombre }}</td>
+                    <td>{{ item.nombre }}
+
+<router-link to="/Venta">Link a la página de about</router-link>
+
+                    </td>
                     <td>
 <!-- 
                    {{ moment(item.fecha).format( "MMM DD YYYY, ddd" ) }} -->

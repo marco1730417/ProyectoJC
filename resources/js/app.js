@@ -14,6 +14,10 @@ window.Vue = require('vue').default;
 
 
 import Vue from 'vue'
+
+
+
+
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
 // Import Bootstrap an BootstrapVue CSS files (order is important)
@@ -73,6 +77,25 @@ Vue.component('dashboard', require('./components/venta/Dashboard.vue').default);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+import VueRouter from 'vue-router';
+Vue.use(VueRouter);
+
+ const Venta = () => import('./components/venta/Venta.vue')
+ const routes = [
+ {
+    path: '/Venta',
+    component: Venta
+ },
+];
+
+const router = new VueRouter({
+    mode: "history",
+    routes
+  });
+
 const app = new Vue({
     el: '#app',
+    router
+    
+    
 });
