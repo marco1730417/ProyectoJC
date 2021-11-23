@@ -9,71 +9,6 @@
               <div class="card card-stats mb-4 mb-xl-0">
                 <div class="card-body">
                   <div class="row"></div>
-                  <!-- <div class="row">
-                    <div class="col">
-                     <h5 class="card-title text-uppercase text-muted mb-0">
-                        Elija un metodo de pago
-                      </h5>
-                      <b-form-group v-if="!modeupdate">
-                        <b-form-radio
-                          :disabled="venId > 0"
-                          v-model="formadepago"
-                          name="some-radios"
-                          value="Efectivo"
-                          >Efectivo</b-form-radio
-                        >
-                        <b-form-radio
-                          :disabled="venId > 0"
-                          v-model="formadepago"
-                          name="some-radios"
-                          value="Transferencia"
-                          >Transferencia</b-form-radio
-                        >
-                        <b-form-radio
-                          :disabled="venId > 0"
-                          v-model="formadepago"
-                          name="some-radios"
-                          value="Cheque"
-                          >Cheque</b-form-radio
-                        >
-
-                      </b-form-group>
-                      <b-form-group v-if="modeupdate">
-                        <b-form-radio
-                          v-model="formadepagoupdate"
-                          name="some-radios"
-                          value="Efectivo"
-                          >Efectivo</b-form-radio
-                        >
-                        <b-form-radio
-                          v-model="formadepagoupdate"
-                          name="some-radios"
-                          value="Transferencia"
-                          >Transferencia</b-form-radio
-                        >
-                        <b-form-radio
-                          v-model="formadepagoupdate"
-                          name="some-radios"
-                          value="Cheque"
-                          >Cheque</b-form-radio
-                        >
-
-                      </b-form-group> 
-                    </div>
-                    <div class="col-auto">
-                      <div
-                        class="
-                          icon icon-shape
-                          bg-danger
-                          text-white
-                          rounded-circle
-                          shadow
-                        "
-                      >
-                        <i class="fas fa-wallet"></i>
-                      </div>
-                    </div>
-                  </div>-->
 
                   <div class="row">
                     <div class="col">
@@ -278,9 +213,9 @@
               </div>
             </div>
 
-<!-- modal venta al contado -->
+            <!-- modal venta al contado -->
 
-       <div
+            <div
               class="modal fade"
               id="ModalVentaContado"
               tabindex="-1"
@@ -301,52 +236,103 @@
                     </button>
                   </div>
                   <div class="modal-body">
-
-<div class="container d-lg-flex">
-    <div class="box-2">
-        <div class="box-inner-2">
-            <form action="">
-                <div class="mb-3">
-                    <p class="dis fw-bold mb-2">Cantidad recibida</p> <input class="form-control" type="number" v-model="pagorecibido">
-                </div>
-                <div>
-                    <div class="address">
-                        <div class="d-flex flex-column dis">
-                            <div class="d-flex align-items-center justify-content-between mb-2">
-                                <p>Total</p>
-                                <p><span class="fas fa-dollar-sign"></span> {{ parseFloat(totalesventa.total).toFixed(2) }}</p>
+                    <div class="container d-lg-flex">
+                      <div class="box-2">
+                        <div class="box-inner-2">
+                          <form action="">
+                            <div class="mb-3">
+                              <p class="dis fw-bold mb-2">Cantidad recibida</p>
+                              <input
+                                class="form-control"
+                                type="number"
+                                v-model="pagorecibido"
+                              />
                             </div>
-                            <div class="d-flex align-items-center justify-content-between mb-2">
-                                <p>Pago</p>
-                                <p><span class="fas fa-dollar-sign"></span>{{pagorecibido}}</p>
+                            <div>
+                              <div class="address">
+                                <div class="d-flex flex-column dis">
+                                  <div
+                                    class="
+                                      d-flex
+                                      align-items-center
+                                      justify-content-between
+                                      mb-2
+                                    "
+                                  >
+                                    <p>Total</p>
+                                    <p>
+                                      <span class="fas fa-dollar-sign"></span>
+                                      {{
+                                        parseFloat(totalesventa.total).toFixed(
+                                          2
+                                        )
+                                      }}
+                                    </p>
+                                  </div>
+                                  <div
+                                    class="
+                                      d-flex
+                                      align-items-center
+                                      justify-content-between
+                                      mb-2
+                                    "
+                                  >
+                                    <p>Pago</p>
+                                    <p>
+                                      <span class="fas fa-dollar-sign"></span
+                                      >{{ pagorecibido }}
+                                    </p>
+                                  </div>
+                                  <div
+                                    class="
+                                      d-flex
+                                      align-items-center
+                                      justify-content-between
+                                      mb-2
+                                    "
+                                  >
+                                    <p class="fw-bold">Cambio</p>
+                                    <p class="fw-bold">
+                                      <span class="fas fa-dollar-sign"></span
+                                      >{{ parseFloat(total_cambio).toFixed(2) }}
+                                    </p>
+                                  </div>
+                                  <div
+                                    v-if="pagorecibido"
+                                    @click="
+                                      downloadVentaContado(
+                                        pagorecibido,
+                                        total_cambio,
+                                        cliente.id
+                                      )
+                                    "
+                                    class="btn btn-primary mt-2"
+                                  >
+                                    <span class="fas fa-dollar-sign px-1"></span
+                                    >Terminar Venta
+                                  </div>
+                                  <div v-else class="btn btn-primary mt-2">
+                                    <span class="fas fa-dollar-sign px-1"></span
+                                    >Terminar Venta
+                                  </div>
+                                </div>
+                              </div>
                             </div>
-                            <div class="d-flex align-items-center justify-content-between mb-2">
-                                <p class="fw-bold">Cambio</p>
-                                <p class="fw-bold"><span class="fas fa-dollar-sign"></span>{{ parseFloat(total_cambio).toFixed(2) }}</p>
-                            </div>
-                            <div v-if="pagorecibido" @click="downloadVentaContado(pagorecibido,total_cambio,cliente.id )" class="btn btn-primary mt-2"><span class="fas fa-dollar-sign px-1"></span>Terminar Venta </div>
-                            <div v-else  class="btn btn-primary mt-2"><span class="fas fa-dollar-sign px-1"></span>Terminar Venta </div>
-                       
+                          </form>
                         </div>
+                      </div>
                     </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
                   </div>
                   <div class="modal-footer"></div>
                 </div>
               </div>
             </div>
 
-<!-- modal venta al contado -->
+            <!-- modal venta al contado -->
 
+            <!-- modal venta transferencia -->
 
-<!-- modal venta transferencia -->
-
-       <div
+            <div
               class="modal fade"
               id="ModalVentaTransferencia"
               tabindex="-1"
@@ -356,7 +342,9 @@
               <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title">Terminar venta como transferencia</h5>
+                    <h5 class="modal-title">
+                      Terminar venta como transferencia
+                    </h5>
                     <button
                       type="button"
                       class="close"
@@ -367,51 +355,96 @@
                     </button>
                   </div>
                   <div class="modal-body">
+                    <div class="container d-lg-flex">
+                      <div class="box-2">
+                        <div class="box-inner-2">
+                          <form action="">
+                            <div class="mb-3">
+                              <p class="dis fw-bold mb-2">Cantidad recibida</p>
+                              <input
+                                class="form-control"
+                                type="number"
+                                v-model="pagorecibidotransferencia"
+                              />
+                            </div>
+                            <div class="mb-3">
+                              <p class="dis fw-bold mb-2">
+                                Detalle de transferencia
+                              </p>
+                              <input
+                                class="form-control"
+                                v-model="detalletransferencia"
+                                type="text"
+                              />
+                            </div>
+                            <div>
+                              <div class="address">
+                                <div class="d-flex flex-column dis">
+                                  <div
+                                    class="
+                                      d-flex
+                                      align-items-center
+                                      justify-content-between
+                                      mb-2
+                                    "
+                                  >
+                                    <p>Total</p>
+                                    <p>
+                                      <span class="fas fa-dollar-sign"></span>
+                                      {{
+                                        parseFloat(totalesventa.total).toFixed(
+                                          2
+                                        )
+                                      }}
+                                    </p>
+                                  </div>
+                                  <div
+                                    class="
+                                      d-flex
+                                      align-items-center
+                                      justify-content-between
+                                      mb-2
+                                    "
+                                  >
+                                    <p>Pago</p>
+                                    <p>
+                                      <span class="fas fa-dollar-sign"></span
+                                      >{{ pagorecibidotransferencia }}
+                                    </p>
+                                  </div>
 
-<div class="container d-lg-flex">
-    <div class="box-2">
-        <div class="box-inner-2">
-            <form action="">
-                <div class="mb-3">
-                    <p class="dis fw-bold mb-2">Cantidad recibida</p> <input class="form-control" type="number" v-model="pagorecibidotransferencia">
-                </div>
-                   <div class="mb-3">
-                    <p class="dis fw-bold mb-2">Detalle de transferencia</p> <input class="form-control" v-model="detalletransferencia" type="text" >
-                </div>
-                <div>
-                    <div class="address">
-                        <div class="d-flex flex-column dis">
-                            <div class="d-flex align-items-center justify-content-between mb-2">
-                                <p>Total</p>
-                                <p><span class="fas fa-dollar-sign"></span> {{ parseFloat(totalesventa.total).toFixed(2) }}</p>
+                                  <div
+                                    v-if="pagorecibidotransferencia"
+                                    @click="
+                                      downloadVentaTransferencia(
+                                        pagorecibidotransferencia,
+                                        detalletransferencia,
+                                        cliente.id
+                                      )
+                                    "
+                                    class="btn btn-primary mt-2"
+                                  >
+                                    <span class="fas fa-dollar-sign px-1"></span
+                                    >Terminar Venta
+                                  </div>
+                                  <div v-else class="btn btn-primary mt-2">
+                                    <span class="fas fa-dollar-sign px-1"></span
+                                    >Terminar Venta
+                                  </div>
+                                </div>
+                              </div>
                             </div>
-                            <div class="d-flex align-items-center justify-content-between mb-2">
-                                <p>Pago</p>
-                                <p><span class="fas fa-dollar-sign"></span>{{pagorecibidotransferencia}}</p>
-                            </div>
-                        
-                            <div v-if="pagorecibidotransferencia" @click="downloadVentaTransferencia(pagorecibidotransferencia,detalletransferencia,cliente.id )" class="btn btn-primary mt-2"><span class="fas fa-dollar-sign px-1"></span>Terminar Venta </div>
-                            <div v-else  class="btn btn-primary mt-2"><span class="fas fa-dollar-sign px-1"></span>Terminar Venta </div>
-                       
+                          </form>
                         </div>
+                      </div>
                     </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
                   </div>
                   <div class="modal-footer"></div>
                 </div>
               </div>
             </div>
 
-<!-- modal venta al transferencia -->
-
-
-
-
+            <!-- modal venta al transferencia -->
 
             <div class="col-12"></div>
 
@@ -502,21 +535,22 @@
               <div class="col-xl-12 col-lg-12 pull-right">
                 <br />
 
-                <div  @mouseover="onOver" @mouseleave="onLeave">
+                <div @mouseover="onOver" @mouseleave="onLeave">
                   <b-dropdown
                     id="dropdown-1"
                     text="Continuar"
                     ref="dropdown"
                     class="m-md-2"
                   >
-                    <b-dropdown-item            data-toggle="modal"
-                    data-target="#ModalVentaContado"
-              
+                    <b-dropdown-item
+                      data-toggle="modal"
+                      data-target="#ModalVentaContado"
                       ><i class="fas fa-dollar-sign"></i> Al
                       contado</b-dropdown-item
                     >
-                    <b-dropdown-item  data-toggle="modal"
-                    data-target="#ModalVentaTransferencia"
+                    <b-dropdown-item
+                      data-toggle="modal"
+                      data-target="#ModalVentaTransferencia"
                       ><i class="fas fa-wallet"></i
                       >Transferencia</b-dropdown-item
                     >
@@ -558,6 +592,7 @@ export default {
   components: {
     "v-select": vSelect,
   },
+  props: ["venId"],
   data() {
     return {
       fecha: moment().format("MMMM Do YYYY"),
@@ -572,32 +607,33 @@ export default {
       totalesventa: [],
       detalleventa: [],
       detallegeneralventa: [],
-pagorecibido:"",
-pagorecibidotransferencia:"",
-detalletransferencia:"",
+      pagorecibido: "",
+      pagorecibidotransferencia: "",
+      detalletransferencia: "",
       filter: null,
       formadepago: "",
-      venId: "",
-    };
-  },
-computed: {
-
-   total_cambio: function () {
-      //console.log(this.productosSelected.tarVenta + "valor unitario");
-     let total= this.totalesventa.total;     
-      let pagorecibido = this.pagorecibido;
-     let tt= pagorecibido-total;
-     
-     return tt; 
+      ventaindex:this.$route.params.venId
 
       
-       
-      }
+
+    };
+  },
+  computed: {
+    total_cambio: function () {
+      //console.log(this.productosSelected.tarVenta + "valor unitario");
+      let total = this.totalesventa.total;
+      let pagorecibido = this.pagorecibido;
+      let tt = pagorecibido - total;
+
+      return tt;
     },
+  },
   mounted() {
     this.getAllClientes();
     this.getInformacionVenta();
     this.totalesVenta();
+    this.ventaindex=this.venId;
+    console.log(this.ventaindex+'asdasdasdgg')
   },
   methods: {
     updateDatos() {
@@ -677,14 +713,13 @@ computed: {
           console.log(error);
         });
     },
-    downloadVentaContado(pago,vuelto,cliId) {
-
-  let data = {
-    venId:this.venId,
+    downloadVentaContado(pago, vuelto, cliId) {
+      let data = {
+        venId: this.venId,
         total: this.totalesventa.total,
         pago: pago,
-        vuelto:vuelto,
-        cliId:cliId,
+        vuelto: vuelto,
+        cliId: cliId,
       };
       VentaServices.registrarPagoContado(data)
         .then((response) => {
@@ -698,20 +733,17 @@ computed: {
           console.log(error);
         });
 
-
-
       let routeData = server + resource + `download-venta/` + this.venId;
       window.open(routeData);
     },
 
-
-downloadVentaTransferencia(pago,detalle,cliId){
-let data = {
-  venId:this.venId,
+    downloadVentaTransferencia(pago, detalle, cliId) {
+      let data = {
+        venId: this.venId,
         total: this.totalesventa.total,
-        pago:pago,
+        pago: pago,
         numtransf: detalle,
-        cliId:cliId,
+        cliId: cliId,
       };
       VentaServices.registrarPagoTransferencia(data)
         .then((response) => {
@@ -725,14 +757,9 @@ let data = {
           console.log(error);
         });
 
-
-
       let routeData = server + resource + `download-venta/` + this.venId;
       window.open(routeData);
     },
-
-
-
 
     totalesVenta() {
       VentaServices.totalesVenta(this.venId)

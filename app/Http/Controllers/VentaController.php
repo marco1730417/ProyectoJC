@@ -25,6 +25,12 @@ class VentaController extends Controller
     {
         return view ('venta.nuevaventa');
     }
+    public function editventa($id)
+    {
+        $id=2;
+        
+        return view('venta.editventa', ["venId" => $id]);
+    }
     public function ventapdf()
     {
         return view ('venta.ventapdf');

@@ -193,9 +193,23 @@ $    {{ parseFloat(totalventas.subtotal ).toFixed(2) }}
                 <!--  {{detalleventa}}  -->
                 <tbody>
                   <tr v-for="item in detalleventa">
-                    <td>{{ item.nombre }}
+                    <td>
+<!-- <router-link to="/nuevaventa" target="_blank">Contact</router-link>
+ --> <!-- <button @click="gotoVenta" >+</button>
+     -->
+     <!--  <router-link to="/nuevaventa" target="_blank">Contact</router-link>
+ -->
+ <!-- <router-link :to="{name: 'nuevaventa', params: { venId: 101 }   } ">Places, but 101</router-link>
+  -->
+   
+    
 
-<router-link to="/Venta">Link a la página de about</router-link>
+     <a href="#" @click="gotoEditVenta(item.id)" class="badge badge-primary">{{item.nombre}}</a>
+ <!--   <router-link :to="{ name: 'editventa', params: { id: item.id }  } " target="_blank">
+  
+    {{ item.id }}
+
+</router-link>  -->
 
                     </td>
                     <td>
@@ -356,7 +370,6 @@ export default  {
 infoventa:[],
 text:"",
       formadepago: "",
-      venId: 10,
     };
   },
   mounted() {
@@ -438,7 +451,25 @@ this.$swal.fire({
     },
     nuevaventa(){
       window.location.href = "../nuevaventa/";
-    }
+    },
+    gotoVenta(id){
+  
+    const userId = id
+/* this.$router.push({ name: 'nuevaventa', params: { venId:userId }})
+ */
+let routeData = this.$router.resolve({name: 'nuevaventa', params: {venId: userId}});
+window.open(routeData.href, '_blank');    
+    },
+       gotoEditVenta(id){
+  
+    const userId = id
+/* this.$router.push({ name: 'nuevaventa', params: { venId:userId }})
+ */
+let routeData = this.$router.resolve({name: 'editventa', params: {id: userId}});
+window.open(routeData.href, '_blank');    
+    },
+
+    
   },
 };
 </script>

@@ -247,7 +247,9 @@ if($new_detalle){
     {
 
       
-        $info_venta= Venta :: select ('ventas.id','ventas.fecha','clientes.nombre','clientes.ruc','clientes.direccion','clientes.telefono','ventas.metodopago'
+        $info_venta= Venta :: select ('ventas.id','ventas.fecha','clientes.nombre','clientes.ruc',
+        'clientes.id as cliId',
+        'clientes.direccion','clientes.telefono','ventas.metodopago'
         )
         ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
         ->where('ventas.id', $venId)->get();
@@ -311,7 +313,9 @@ if($new_detalle){
     {
 
       
-        $info_venta= Venta :: select ('ventas.id','pagos.tipo','pagos.total as totales','ventas.fecha','ventas.observacion','clientes.nombre','clientes.ruc','clientes.direccion','clientes.telefono',
+        $info_venta= Venta :: select ('ventas.id','pagos.tipo','pagos.total as totales','ventas.fecha','ventas.observacion',
+        
+        'clientes.nombre','clientes.ruc','clientes.direccion','clientes.telefono',
         
         DB::raw("(SELECT sum(detalle_ventas.cantidad*detalle_ventas.precioUnitario) FROM detalle_ventas
         WHERE ventas.id=detalle_ventas.venId
@@ -321,7 +325,9 @@ if($new_detalle){
      
 
         ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
-        ->leftJoin('pagos', 'ventas.id', '=', 'pagos.venId')->get();
+        ->leftJoin('pagos', 'ventas.id', '=', 'pagos.venId')
+        ->orderBy('ventas.fecha', 'desc')
+        ->get();
        
         return $this->successResponse($info_venta);
     }
