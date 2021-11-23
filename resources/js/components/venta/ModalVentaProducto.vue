@@ -7,6 +7,7 @@
             >Producto</label
           >
           <div class="col-sm-12">
+            <i @click="clear" class="fas fa-eraser"></i>
             <v-select
               label="descripcion"
               v-model="producto"
@@ -99,7 +100,7 @@
                 <b-row v-if="producto.PrecioVenta3" class="my-1">
                   <b-col sm="9">
                     <label for="input-none"
-                      >Precio Especial ( $ {{ producto.PrecioVenta3 }})
+                      >Precio x (25/15m) ( $ {{ producto.PrecioVenta3 }})
                     </label>
                   </b-col>
                   <b-col sm="3">
@@ -109,6 +110,25 @@
                       v-model="precioUnitario"
                       :value="3"
                     />
+                    <!--     <label class="form-check-label" for="flexRadioDefault2">
+                      {{ producto.PrecioVenta3 }}
+                    </label> -->
+                  </b-col>
+                </b-row>
+                   <b-row  class="my-1">
+                  <b-col sm="6">
+                    <label for="input-none"
+                      >Precio Especial 
+                    </label>
+                  </b-col>
+                  <b-col sm="6">
+              <input
+                      class="form-check-input"
+                      type="radio"
+                      v-model="precioUnitario"
+                      :value="4"
+                    />
+                     <b-form-input v-if="precioUnitario==4" v-model="precioEspecial" type="number" ></b-form-input>
                     <!--     <label class="form-check-label" for="flexRadioDefault2">
                       {{ producto.PrecioVenta3 }}
                     </label> -->
@@ -169,6 +189,23 @@
           </div>
         </div>
 
+
+<div class="row" v-if="precioUnitario == 4">
+          <div class="col-sm-12 text-center">
+            <b-button
+              v-if="producto && cantidad && precioEspecial && validacion_metro "
+              size="md"
+              variant="primary"
+              @click="createDetalleVentaEspecial(producto.id)"
+              >Agregar</b-button
+            >
+            <b-button v-else disabled size="md" variant="primary"
+              >Agregar</b-button
+            >
+          </div>
+        </div>
+
+
   <!--      {{validacion_metro}}  -->
 
         <!-- form for teacher/student-->
@@ -200,7 +237,7 @@ export default {
       iva: "",
       PrecioVenta1: "",
       metrosrollo: "",
-      
+      precioEspecial:"",      
     };
   },
   mounted() {
@@ -240,6 +277,13 @@ export default {
  
   },
   methods: {
+    clear(){
+this.producto="";
+this.metrosrollo="";
+this.cantidad="";
+this.precioUnitario="";
+
+    },
     onlyNumber($event) {
       //console.log($event.keyCode); //keyCodes value
       let keyCode = $event.keyCode ? $event.keyCode : $event.which;
@@ -253,6 +297,8 @@ export default {
       this.precioUnitario = "";
       this.producto = "";
       this.metrosrollo = "";
+      this.precioEspecial = "";
+      
     },
     getAllProductos() {
       ProductoServices.getAllProductos(this.cofId)
@@ -270,6 +316,29 @@ export default {
         proId: id,
         venId: this.venta,
         metrosrollo: this.metrosrollo,
+         precioEspecial: 0,
+      };
+      VentaServices.createDetalleVenta(data)
+        .then((response) => {
+          let mensaje = response.data.data;
+          if (mensaje == 200) {
+            this.$emit("updateVenta");
+            this.clearfields();
+            this.getAllProductos();
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+       createDetalleVentaEspecial(id) {
+      let data = {
+        cantidad: this.cantidad,
+        precioUnitario: this.precioUnitario,
+        proId: id,
+        venId: this.venta,
+        metrosrollo: this.metrosrollo,
+        precioEspecial: this.precioEspecial,
       };
       VentaServices.createDetalleVenta(data)
         .then((response) => {

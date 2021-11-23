@@ -45,6 +45,8 @@ class VentaApiController extends ApiResponseController
         $carbon = new \Carbon\Carbon();
         $fecha = $carbon->now();
 
+       // return $fecha;
+
         $data = request()->all();
 
 
@@ -142,6 +144,7 @@ class VentaApiController extends ApiResponseController
 
         $precioUnitarioOpcion = $data['precioUnitario'];
         $proId = $data['proId'];
+        $precioEspecial=$data['precioEspecial'];
         $infoproducto = Producto::findOrFail($proId);
         if ($precioUnitarioOpcion == 1) {
             $valorPrecio = $infoproducto->PrecioVenta1;
@@ -155,6 +158,10 @@ class VentaApiController extends ApiResponseController
 
         if ($precioUnitarioOpcion == 3) {
             $valorPrecio = $infoproducto->PrecioVenta3;
+            $metrostotales = $data['cantidad'];
+        }
+        if ($precioUnitarioOpcion == 4) {
+            $valorPrecio = $precioEspecial;
             $metrostotales = $data['cantidad'];
         }
 

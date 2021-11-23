@@ -612,10 +612,7 @@ export default {
       detalletransferencia: "",
       filter: null,
       formadepago: "",
-      ventaindex:this.$route.params.venId
-
-      
-
+ 
     };
   },
   computed: {
@@ -636,11 +633,12 @@ export default {
     this.getAllClientes();
     this.getInformacionVenta();
     this.totalesVenta();
-    if (localStorage.getItem('VentaId')) /* function to detect if localstorage is supported*/ {
+    /* function to detect if localstorage is supported*/
+   /*  if (localStorage.getItem('VentaId'))  {
    this.venId=localStorage.getItem('VentaId');
 
    }
-    localStorage.removeItem('VentaId')
+    localStorage.removeItem('VentaId') */
 
     //refactorizar por que actualmente al momento de crear una venta se almacena en el local storage un venId. en caso que 
     // se recargue la pagina mantiene el venId . pero para una 2 recarga se pierde el valo
