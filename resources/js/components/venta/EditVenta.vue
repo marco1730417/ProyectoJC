@@ -5,60 +5,72 @@
         <div class="header-body">
           <!-- Card stats -->
           <div class="row">
-            <div class="col-xl-6 col-lg-6">
+            <div v-if="detallegeneralventa.nombre" class="col-xl-6 col-lg-6">
               <div class="card card-stats mb-4 mb-xl-0">
                 <div class="card-body">
                   <div class="row"></div>
-<!--    {{substr}} --> 
-  {{detallegeneralventa}} 
+                  <!--    {{substr}} -->
+                  <!--   {{detallegeneralventa.fecha}}  -->
                   <div class="row">
                     <div class="col">
-                  
-                      <h5
-                        class="card-title text-uppercase text-muted mb-0"
-                      >
-                  Cliente:  {{detallegeneralventa.nombre}}
-                  
+                      <h5 class="card-title text-uppercase text-muted mb-0">
+                        Cliente: {{ detallegeneralventa.nombre }}
                       </h5>
-                   <h5
-                        class="card-title text-uppercase text-muted mb-0"
-                      >
-                  Direccion:  {{detallegeneralventa.direccion}}
-                  
+                      <h5 class="card-title text-uppercase text-muted mb-0">
+                        Direccion: {{ detallegeneralventa.direccion }}
                       </h5>
-                          <h5
-               
-                        class="card-title text-uppercase text-muted mb-0"
-                      >
-                  Telefono:  {{detallegeneralventa.telefono}}
-                  
+                      <h5 class="card-title text-uppercase text-muted mb-0">
+                        Telefono: {{ detallegeneralventa.telefono }}
                       </h5>
-                            <h5
-               
-                        class="card-title text-uppercase text-muted mb-0"
-                      >
-                  Ruc:  {{detallegeneralventa.ruc}}
-                  
+                      <h5 class="card-title text-uppercase text-muted mb-0">
+                        Ruc: {{ detallegeneralventa.ruc }}
                       </h5>
-                             <h5
-               
-                        class="card-title text-uppercase text-muted mb-0"
-                      >
-                  Fecha:  {{detallegeneralventa.fecha}}
-                  
+                      <h5 class="card-title text-uppercase text-muted mb-0">
+                        Fecha: {{ detallegeneralventa.fecha }}
                       </h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div v-if="detallegeneralventa.fecha" class="col-xl-6 col-lg-6">
+              <div class="card card-stats mb-4 mb-xl-0">
+                <div class="card-body">
+                  <div class="row"></div>
+
+                  <div class="row">
+                    <div class="col">
+                      <h5 class="card-title text-uppercase text-muted mb-0">
+                        Elija un cliente
+                        <v-select
+                          label="nombre"
+                          v-model="clienteupdate"
+                          :options="infocliente"
+                          @click="actualizarVenta"
+                          required
+                        ></v-select>
+                      </h5>
+                      {{ clienteupdate.id }}
                       <!--        <span class="h2 font-weight-bold mb-0"
                         >{{ cliente.nombre }}
                       </span> -->
                     </div>
-        
+                    <div class="col-auto">
+                      <div
+                        class="
+                          icon icon-shape
+                          bg-danger
+                          text-white
+                          rounded-circle
+                          shadow
+                        "
+                      >
+                        <i class="fas fa-user"></i>
+                      </div>
+                    </div>
                   </div>
-                 
-
-                  <!--     <p class="mt-3 mb-0 text-muted text-sm">
-                    <span class="text-success mr-2"> {{ cliente.email }} </span>
-                    <span class="text-nowrap"> {{ cliente.direccion }} </span>
-                  </p> -->
+                  <br /><br />
                 </div>
               </div>
             </div>
@@ -73,7 +85,6 @@
                       </h5>
                       <span class="h2 font-weight-bold mb-0">
                         {{ parseFloat(totalesventa.total).toFixed(2) }}
-                     
                       </span>
                     </div>
                     <div class="col-auto">
@@ -101,7 +112,7 @@
 
               <br />
 
-              <div class="card card-stats mb-4 mb-xl-0">
+              <!--   <div class="card card-stats mb-4 mb-xl-0">
                 <div class="card-body">
                   <div class="row">
                     <div class="col">
@@ -128,7 +139,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
@@ -281,7 +292,7 @@
                                       downloadVentaContado(
                                         pagorecibido,
                                         total_cambio,
-                                       detallegeneralventa.cliId
+                                        detallegeneralventa.cliId
                                       )
                                     "
                                     class="btn btn-primary mt-2"
@@ -589,11 +600,16 @@ export default {
       detalletransferencia: "",
       filter: null,
       formadepago: "",
-      substr:"",
-     
-      
-
+      substr: "",
     };
+  },
+  watch: {
+    // whenever question changes, this function will run
+    clienteupdate: function (newQuestion, oldQuestion) {
+      console.log(JSON.stringify(newQuestion.id));
+
+      this.actualizarVenta(newQuestion.id);
+    },
   },
   computed: {
     total_cambio: function () {
@@ -605,16 +621,15 @@ export default {
       return tt;
     },
   },
-  created(){
-  this.myFunction();
+  created() {
+    this.myFunction();
   },
   mounted() {
     this.getAllClientes();
     this.getInformacionVenta();
     this.totalesVenta();
     this.detalleGeneralVenta();
-  
-   },
+  },
   methods: {
     updateDatos() {
       this.getInformacionVenta();
@@ -768,6 +783,8 @@ export default {
         });
     },
 
+    updatecliente() {},
+
     createVenta() {
       let data = {
         cliId: this.cliente["id"],
@@ -791,33 +808,24 @@ export default {
       this.camposactivos = true;
     },
 
-    actualizarVenta() {
+    actualizarVenta(cliente) {
       let data = {
-        cliId: this.clienteupdate["id"],
-        metodopago: this.formadepagoupdate,
+        cliId: cliente,
         venId: this.substr,
       };
 
       VentaServices.updateVenta(data)
         .then((response) => {
           let mensaje = response.data.data;
-
-          this.modeupdate = false;
-          this.camposactivos = false;
-          this.cliente = this.clienteupdate;
-          this.formadepago = this.formadepagoupdate;
         })
         .catch((error) => {
           console.log(error);
         });
     },
-     myFunction: function () {
-		
-    this.substr=this.$route.path;
-    this.substr= this.substr.substring(11);
-   
-    }
-
+    myFunction: function () {
+      this.substr = this.$route.path;
+      this.substr = this.substr.substring(11);
+    },
   },
 };
 </script>

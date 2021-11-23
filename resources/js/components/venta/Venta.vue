@@ -806,7 +806,6 @@ export default {
       VentaServices.createVenta(data)
         .then((response) => {
           let mensaje = response.data.data;
-localStorage.setItem('VentaId', mensaje)
 
           this.venId = mensaje;
           this.totalesVenta();

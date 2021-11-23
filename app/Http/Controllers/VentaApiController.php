@@ -120,8 +120,6 @@ class VentaApiController extends ApiResponseController
 
 
         $update_venta =  Venta::findOrFail($data['venId']) ;
-        $update_venta->fecha = $fecha;
-        $update_venta->metodopago =  $data['metodopago'];
         $update_venta->cliId =  $data['cliId'];;
 
         $update_venta->update();

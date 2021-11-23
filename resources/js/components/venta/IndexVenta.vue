@@ -166,8 +166,13 @@ $    {{ parseFloat(totalventas.subtotal ).toFixed(2) }}
                   <h3 class="mb-0">Venta</h3>
                 </div>
                 <div class="col-4 text-right">
-                <button class="btn btn-sm btn-primary"
-                     @click="nuevaventa"> Nueva Venta</button> </div>
+           <!--      <button class="btn btn-sm btn-primary"
+                     @click="nuevaventa"> Nueva Venta</button> 
+                     
+                     
+                      -->
+     <a href="#" @click="gotoNuevaVenta()" class="badge badge-primary">Nueva Venta</a>
+                     </div>
 
        
               </div>
@@ -468,8 +473,26 @@ window.open(routeData.href, '_blank');
 let routeData = this.$router.resolve({name: 'editventa', params: {id: userId}});
 window.open(routeData.href, '_blank');    
     },
+gotoNuevaVenta(){
+
+
+      VentaServices.createNuevaVenta()
+        .then((response) => {
+          let mensaje = response.data.data;
+
+let routeData = this.$router.resolve({name: 'editventa', params: {id: mensaje}});
+window.open(routeData.href, '_blank');
+      
+        })
+        .catch((error) => {
+          console.log(error);
+        });
 
     
+
+}
+
+
   },
 };
 </script>
