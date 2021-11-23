@@ -628,12 +628,24 @@ export default {
       return tt;
     },
   },
+  created(){
+  
+
+  },
   mounted() {
     this.getAllClientes();
     this.getInformacionVenta();
     this.totalesVenta();
-    this.ventaindex=this.venId;
-    console.log(this.ventaindex+'asdasdasdgg')
+    if (localStorage.getItem('VentaId')) /* function to detect if localstorage is supported*/ {
+   this.venId=localStorage.getItem('VentaId');
+
+   }
+    localStorage.removeItem('VentaId')
+
+    //refactorizar por que actualmente al momento de crear una venta se almacena en el local storage un venId. en caso que 
+    // se recargue la pagina mantiene el venId . pero para una 2 recarga se pierde el valo
+
+
   },
   methods: {
     updateDatos() {
@@ -796,6 +808,7 @@ export default {
       VentaServices.createVenta(data)
         .then((response) => {
           let mensaje = response.data.data;
+localStorage.setItem('VentaId', mensaje)
 
           this.venId = mensaje;
           this.totalesVenta();
