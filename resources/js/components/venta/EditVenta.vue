@@ -5,40 +5,13 @@
         <div class="header-body">
           <!-- Card stats -->
           <div class="row">
-            <div v-if="detallegeneralventa.nombre" class="col-xl-6 col-lg-6">
+       
+
+            <div  class="col-xl-6 col-lg-6">
               <div class="card card-stats mb-4 mb-xl-0">
                 <div class="card-body">
                   <div class="row"></div>
-                  <!--    {{substr}} -->
-                  <!--   {{detallegeneralventa.fecha}}  -->
-                  <div class="row">
-                    <div class="col">
-                      <h5 class="card-title text-uppercase text-muted mb-0">
-                        Cliente: {{ detallegeneralventa.nombre }}
-                      </h5>
-                      <h5 class="card-title text-uppercase text-muted mb-0">
-                        Direccion: {{ detallegeneralventa.direccion }}
-                      </h5>
-                      <h5 class="card-title text-uppercase text-muted mb-0">
-                        Telefono: {{ detallegeneralventa.telefono }}
-                      </h5>
-                      <h5 class="card-title text-uppercase text-muted mb-0">
-                        Ruc: {{ detallegeneralventa.ruc }}
-                      </h5>
-                      <h5 class="card-title text-uppercase text-muted mb-0">
-                        Fecha: {{ detallegeneralventa.fecha }}
-                      </h5>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div v-if="detallegeneralventa.fecha" class="col-xl-6 col-lg-6">
-              <div class="card card-stats mb-4 mb-xl-0">
-                <div class="card-body">
-                  <div class="row"></div>
-
+<!-- {{detallegeneralventa.cliente[0]}} -->
                   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">
@@ -50,11 +23,10 @@
                           @click="actualizarVenta"
                           required
                         ></v-select>
+
+                        
                       </h5>
-                      {{ clienteupdate.id }}
-                      <!--        <span class="h2 font-weight-bold mb-0"
-                        >{{ cliente.nombre }}
-                      </span> -->
+               
                     </div>
                     <div class="col-auto">
                       <div
@@ -103,7 +75,7 @@
                   </div>
                   <p class="mt-3 mb-0 text-muted text-sm">
                     <span class="text-warning mr-2"
-                      ><i class="fas fa-user"></i> {{ cliente.nombre }}
+                      ><i class="fas fa-user"></i> {{detallegeneralventa.total[0].nombre }}
                     </span>
                     <span class="text-nowrap">{{ fecha }}</span>
                   </p>
@@ -112,42 +84,14 @@
 
               <br />
 
-              <!--   <div class="card card-stats mb-4 mb-xl-0">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col">
-                      <h5 class="card-title text-uppercase text-muted mb-0">
-                        Notas
-                      </h5>
-                      <div>
-                        <b-form-textarea
-                          id="textarea"
-                          v-model="observacion"
-                          placeholder="Enter something..."
-                          rows="3"
-                          max-rows="6"
-                        ></b-form-textarea>
-                      </div>
-                    </div>
-                    <div class="col-auto">
-                      <b-button
-                        @click="updateObservacion(observacion)"
-                        size="sm"
-                        variant="success"
-                        >Guardar</b-button
-                      >
-                    </div>
-                  </div>
-                </div>
-              </div> -->
+        
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 
-{{substr}} -->
+
 
     <div v-if="substr > 0" class="container-fluid mt--7">
       <div class="row">
@@ -435,6 +379,62 @@
 
             <!-- modal venta al transferencia -->
 
+
+         <!-- modal observaciones generales  -->
+
+            <div
+              class="modal fade"
+              id="ModalObservacionesGenerales"
+              tabindex="-1"
+              role="dialog"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-md" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">
+                      Observaciones Generales
+                    </h5>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="container d-lg-flex">
+                  
+                    
+                        <b-form-textarea
+                          id="textarea"
+                          v-model="observacion"
+                          placeholder="Espacio para nota general de la venta"
+                          rows="6"
+                          max-rows="6"
+                        ></b-form-textarea><br/>
+                            <b-button
+                        @click="updateObservacion(observacion)"
+                        size="sm"
+                        variant="success"
+                        >Guardar</b-button
+                      >
+                   
+             
+                  
+                    </div>
+                  </div>
+                  <div class="modal-footer"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- modal venta al transferencia -->
+
+
+
             <div class="col-12"></div>
 
             <div class="table-responsive">
@@ -484,7 +484,7 @@
               </table>
             </div>
 
-            <b-container class="bv-example-row">
+            <b-container  class="bv-example-row">
               <b-row>
                 <b-col></b-col>
                 <b-col></b-col>
@@ -543,9 +543,17 @@
                       ><i class="fas fa-wallet"></i
                       >Transferencia</b-dropdown-item
                     >
+                      <b-dropdown-item
+                      data-toggle="modal"
+                      data-target="#ModalObservacionesGenerales"
+                      ><i class="fas fa-paper-plane"></i
+                      >Observaciones</b-dropdown-item
+                    >
+
+                    
 
                     <b-dropdown-item @click="deleteVenta"
-                      ><i class="fas fa-ban"></i>Cancelar Venta</b-dropdown-item
+                      ><i class="fas fa-ban"></i>Eliminar Venta</b-dropdown-item
                     >
                   </b-dropdown>
                 </div>
@@ -605,10 +613,10 @@ export default {
   },
   watch: {
     // whenever question changes, this function will run
-    clienteupdate: function (newQuestion, oldQuestion) {
-      console.log(JSON.stringify(newQuestion.id));
+    clienteupdate: function (newClient, oldQuestion) {
+      console.log(JSON.stringify(newClient.id));
 
-      this.actualizarVenta(newQuestion.id);
+      this.actualizarVenta(newClient.id);
     },
   },
   computed: {
@@ -629,7 +637,8 @@ export default {
     this.getInformacionVenta();
     this.totalesVenta();
     this.detalleGeneralVenta();
-  },
+
+      },
   methods: {
     updateDatos() {
       this.getInformacionVenta();
@@ -658,9 +667,9 @@ export default {
     deleteVenta() {
       this.$swal
         .fire({
-          title: "Estas seguro de cancelar esta venta?",
+          title: "Estas seguro de eliminar esta venta?",
           showCancelButton: true,
-          confirmButtonText: "Save",
+          confirmButtonText: "Si",
         })
         .then((result) => {
           /* Read more about isConfirmed, isDenied below */
@@ -702,7 +711,9 @@ export default {
       VentaServices.detalleGeneralVenta(this.substr)
         .then((response) => {
           this.detallegeneralventa = response.data.data;
-          this.detallegeneralventa = this.detallegeneralventa.shift();
+       //   this.detallegeneralventa = this.detallegeneralventa.shift();
+       this.clienteupdate=this.detallegeneralventa['cliente'];
+       //   console.log(this.detallegeneralventa['cliente']);
         })
         .catch((error) => {
           console.log(error);
@@ -817,6 +828,8 @@ export default {
       VentaServices.updateVenta(data)
         .then((response) => {
           let mensaje = response.data.data;
+      this.detalleGeneralVenta();
+    
         })
         .catch((error) => {
           console.log(error);

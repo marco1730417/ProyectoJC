@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use  App\Http\Requests\Producto\StoreRequest;
 use App\Http\Requests\Producto\UpdateRequest;
 use App\Http\Controllers\api\ApiResponseController;
+use App\Models\Cliente;
 use App\Models\Venta;
 use App\Models\Pago;
 use Illuminate\Support\Facades\DB;
@@ -258,7 +259,21 @@ if($new_detalle){
         )
         ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
         ->where('ventas.id', $venId)->get();
-        return $this->successResponse($info_venta);
+
+        $info_cliente= Cliente::select ('clientes.id','clientes.nombre','clientes.ruc','clientes.direccion','clientes.telefono','clientes.email',
+        'clientes.created_at','clientes.updated_at')
+        ->leftJoin('ventas', 'ventas.cliId', '=', 'clientes.id')
+        ->where('ventas.id',$venId)
+        ->get();
+
+        $informacion_venta = [
+            'cliente' => $info_cliente,
+            'total' => $info_venta
+        ];
+
+       
+
+        return $this->successResponse($informacion_venta);
     }
 
 
