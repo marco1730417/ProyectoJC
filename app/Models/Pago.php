@@ -17,7 +17,7 @@ class Pago extends Model
     protected $fillable = [
        'tipo', 'total',
         'pago', 'abono', 'numtransf',
-        'fecha', 'cliId', 'restante'
+        'fecha', 'cliId', 'saldo'
 ,'vuelto'        
     ];
 

@@ -48,6 +48,10 @@ export default {
         let url = server + resource + 'totales-venta';
         return Axios.get(url + "/" + venId);
     },
+    getInformacionPagosVenta(venId) {
+        let url = server + resource + 'get-informacion-pagos-venta';
+        return Axios.get(url + "/" + venId);
+    },
     downloadVenta(venId) {
         let url = server + resource + 'download-venta';
         return Axios.get(url + "/" + venId);
@@ -57,6 +61,11 @@ export default {
         let url = server + resource + "update-observacion";
         return Axios.post(url, data);
     },
+    
+    registrarabono(data) {
+        let url = server + resource + "registrar-abono";
+        return Axios.post(url, data);
+    },
 
     registrarPagoContado(data) {
         let url = server + resource + "registrar-pago-contado";
@@ -64,6 +73,10 @@ export default {
     },
     registrarPagoTransferencia(data) {
         let url = server + resource + "registrar-pago-transferencia";
+        return Axios.post(url, data);
+    },
+    registrarPagoAbono(data) {
+        let url = server + resource + "registrar-pago-abono";
         return Axios.post(url, data);
     },
 

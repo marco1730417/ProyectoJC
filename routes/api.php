@@ -46,13 +46,19 @@ Route::group(['prefix' => 'venta'], function () {
     Route::post('create-venta', [VentaApiController::class, 'createVenta']);
     Route::post('create-nueva-venta', [VentaApiController::class, 'createNuevaVenta']);
     Route::post('update-venta', [VentaApiController::class, 'updateVenta']);
-    
+    Route::post('registrar-abono', [VentaApiController::class, 'registrarabono']);
+  
+
+
     Route::post('create-detalle-venta', [VentaApiController::class, 'createDetalleVenta']);
     Route::get('get-informacion-venta/{venId}',  [VentaApiController::class, 'getInformacionVenta']);
     Route::post('delete-detalle-venta/{id}', [VentaApiController::class, 'deleteDetalleVenta']);
     Route::get('totales-venta/{venId}',  [VentaApiController::class, 'totalesVenta']);
     Route::get('download-venta/{venId}',  [VentaApiController::class, 'downloadVenta']);
+    Route::get('get-informacion-pagos-venta/{venId}',  [VentaApiController::class, 'getInformacionPagosVenta']);
     
+    
+
     Route::get('get-detalle-general-venta/{venId}',  [VentaApiController::class, 'detalleGeneralVenta']);
     Route::get('get-detalle-venta',  [VentaApiController::class, 'detalleVenta']);
     Route::post('delete-venta/{id}', [VentaApiController::class, 'deleteVenta']);
@@ -60,6 +66,7 @@ Route::group(['prefix' => 'venta'], function () {
     Route::post('update-observacion', [VentaApiController::class, 'UpdateObservacion']);
     Route::post('registrar-pago-contado', [VentaApiController::class, 'registrarPagoContado']);
     Route::post('registrar-pago-transferencia', [VentaApiController::class, 'registrarPagoTransferencia']);
+    Route::post('registrar-pago-abono', [VentaApiController::class, 'registrarPagoAbono']);
    
 
 

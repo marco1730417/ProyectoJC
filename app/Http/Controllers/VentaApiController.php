@@ -111,6 +111,33 @@ class VentaApiController extends ApiResponseController
         return $this->successResponse(200);
     }
 
+    public function registrarPagoAbono(Request $request)
+    {
+        $carbon = new \Carbon\Carbon();
+        $fecha = $carbon->now();
+
+        $data = request()->all();
+
+
+        $new_pago = new Pago;
+        $new_pago->venId = $data['venId'];
+     
+        $new_pago->fecha = $fecha;
+        $new_pago->tipo = "Abono";
+        $new_pago->cliId =  $data['cliId'];
+        $new_pago->pago =  $data['abono'];
+        $new_pago->abono =  $data['abono'];
+        $new_pago->saldo =  $data['saldo'];
+        $new_pago->total =  $data['total'];
+        $new_pago->fechamaxima =  $data['fechamaxima'];
+
+        $new_pago->save();
+
+        if (!$new_pago) return $this->errorResponse(500);
+
+        return $this->successResponse(200);
+    }
+
 
     public function updateVenta(Request $request)
     {
@@ -201,6 +228,42 @@ if($new_detalle){
 
             ->where('venId', $venId)->get();
         return $this->successResponse($detalle_venta);
+    }
+
+    public function getInformacionPagosVenta($venId)
+    {
+        $detalle_venta = Pago::select(
+            'pagos.tipo',
+            'pagos.total',
+            'pagos.pago',
+            'pagos.abono',
+            'pagos.fechamaxima',
+            'pagos.saldo',
+            'pagos.fecha',
+            'pagos.venId',
+            'pagos.cliId'
+        )
+            ->leftJoin('ventas', 'pagos.venId', '=', 'ventas.id')
+            ->leftJoin('clientes', 'pagos.cliId', '=', 'clientes.id')
+            ->where('venId', $venId)->get();
+         $total_abonos= Pago::where('pagos.venId', $venId)->sum('pagos.abono');
+        $saldo= $detalle_venta[0]['total'] - $total_abonos;
+ $totalcobrar= $detalle_venta[0]['total'];
+ $fechamaxima= $detalle_venta[0]['fechamaxima'];
+ 
+
+        $info_pago_abono= [
+            'detalle_venta' => $detalle_venta,
+            'total_abonos' =>     $total_abonos,
+            'fechamaxima' => $fechamaxima,
+            'saldo' => $saldo,
+            'totalcobrar' => $totalcobrar,
+
+            
+       
+          ];
+
+        return $this->successResponse($info_pago_abono);
     }
 
     public function deleteVenta($venId)
@@ -347,6 +410,7 @@ if($new_detalle){
         ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
         ->leftJoin('pagos', 'ventas.id', '=', 'pagos.venId')
         ->orderBy('ventas.fecha', 'desc')
+       
         ->get();
        
         return $this->successResponse($info_venta);
@@ -461,6 +525,46 @@ if($new_detalle){
 
 
         if (!$venta_update) return $this->errorResponse(500);
+        return $this->successResponse(200);
+    }
+
+
+    public function registrarabono(Request $request){
+     
+
+        $carbon = new \Carbon\Carbon();
+        $fecha = $carbon->now();
+
+
+        $data = request()->all(); 
+        $info = $data['info'];
+        $total= $info[0]['total'];
+        $fechamaxima= $info[0]['fechamaxima'];
+
+        $venId= $info[0]['venId'];
+        $cliId= $info[0]['cliId'];
+        $fechamaxima= $info[0]['fechamaxima'];
+        $pago = $data['pago'];
+        $saldo = $data['saldo'];
+        
+
+
+        $new_pago = new Pago;
+        $new_pago->fecha = $fecha;
+        $new_pago->cliId =  $cliId;
+        $new_pago->tipo = "Abono";
+        $new_pago->venId =  $venId;
+
+        $new_pago->pago =  $pago;
+        $new_pago->abono =  $pago;
+        $new_pago->saldo =  $saldo;
+        $new_pago->total =  $total;
+        $new_pago->fechamaxima =  $fechamaxima;
+
+        $new_pago->save();
+
+        if (!$new_pago) return $this->errorResponse(500);
+
         return $this->successResponse(200);
     }
 

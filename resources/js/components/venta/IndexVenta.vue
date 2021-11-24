@@ -14,10 +14,7 @@
                         Ventas Totales
                       </h5>
                       <span class="h2 font-weight-bold mb-0">
-
-$    {{ parseFloat(totalventas.subtotal ).toFixed(2) }}
-   
-
+                        $ {{ parseFloat(totalventas.subtotal).toFixed(2) }}
                       </span>
                     </div>
                     <div class="col-auto">
@@ -34,7 +31,7 @@ $    {{ parseFloat(totalventas.subtotal ).toFixed(2) }}
                       </div>
                     </div>
                   </div>
-             <!--      <p class="mt-3 mb-0 text-muted text-sm">
+                  <!--      <p class="mt-3 mb-0 text-muted text-sm">
                     <span class="text-success mr-2"
                       ><i class="fa fa-arrow-up"></i> From </span
                     >
@@ -51,7 +48,9 @@ $    {{ parseFloat(totalventas.subtotal ).toFixed(2) }}
                       <h5 class="card-title text-uppercase text-muted mb-0">
                         Clientes activos
                       </h5>
-                      <span class="h2 font-weight-bold mb-0"> {{totalventas.cliente}}</span>
+                      <span class="h2 font-weight-bold mb-0">
+                        {{ totalventas.cliente }}</span
+                      >
                     </div>
                     <div class="col-auto">
                       <div
@@ -67,7 +66,7 @@ $    {{ parseFloat(totalventas.subtotal ).toFixed(2) }}
                       </div>
                     </div>
                   </div>
-                 <!--  <p class="mt-3 mb-0 text-muted text-sm">
+                  <!--  <p class="mt-3 mb-0 text-muted text-sm">
                     <span class="text-danger mr-2"
                       ><i class="fas fa-arrow-down"></i> 3.48%</span
                     >
@@ -85,9 +84,7 @@ $    {{ parseFloat(totalventas.subtotal ).toFixed(2) }}
                         Mejor Venta
                       </h5>
                       <span class="h2 font-weight-bold mb-0">
-
-    $ {{ parseFloat(totalventas.max_venta ).toFixed(2) }}
-
+                        $ {{ parseFloat(totalventas.max_venta).toFixed(2) }}
                       </span>
                     </div>
                     <div class="col-auto">
@@ -104,7 +101,7 @@ $    {{ parseFloat(totalventas.subtotal ).toFixed(2) }}
                       </div>
                     </div>
                   </div>
-               <!--    <p class="mt-3 mb-0 text-muted text-sm">
+                  <!--    <p class="mt-3 mb-0 text-muted text-sm">
                     <span class="text-warning mr-2"
                       ><i class="fas fa-arrow-down"></i> 1.10%</span
                     >
@@ -113,7 +110,7 @@ $    {{ parseFloat(totalventas.subtotal ).toFixed(2) }}
                 </div>
               </div>
             </div>
-<!--             <div class="col-xl-3 col-lg-6">
+            <!--             <div class="col-xl-3 col-lg-6">
               <div class="card card-stats mb-4 mb-xl-0">
                 <div class="card-body">
                   <div class="row">
@@ -166,15 +163,18 @@ $    {{ parseFloat(totalventas.subtotal ).toFixed(2) }}
                   <h3 class="mb-0">Venta</h3>
                 </div>
                 <div class="col-4 text-right">
-           <!--      <button class="btn btn-sm btn-primary"
+                  <!--      <button class="btn btn-sm btn-primary"
                      @click="nuevaventa"> Nueva Venta</button> 
                      
                      
                       -->
-     <a href="#" @click="gotoNuevaVenta()" class="badge badge-primary">Nueva Venta</a>
-                     </div>
-
-       
+                  <a
+                    href="#"
+                    @click="gotoNuevaVenta()"
+                    class="badge badge-primary"
+                    >Nueva Venta</a
+                  >
+                </div>
               </div>
             </div>
 
@@ -188,7 +188,7 @@ $    {{ parseFloat(totalventas.subtotal ).toFixed(2) }}
                     <th scope="col">Fecha</th>
                     <th scope="col">Metodo pago</th>
                     <th scope="col">Observaciones</th>
-                   
+
                     <th scope="col">Valor</th>
 
                     <th scope="col">Accion</th>
@@ -199,71 +199,62 @@ $    {{ parseFloat(totalventas.subtotal ).toFixed(2) }}
                 <tbody>
                   <tr v-for="item in detalleventa">
                     <td>
-<!-- <router-link to="/nuevaventa" target="_blank">Contact</router-link>
- --> <!-- <button @click="gotoVenta" >+</button>
-     -->
-     <!--  <router-link to="/nuevaventa" target="_blank">Contact</router-link>
+                      <!-- <router-link to="/nuevaventa" target="_blank">Contact</router-link>
  -->
- <!-- <router-link :to="{name: 'nuevaventa', params: { venId: 101 }   } ">Places, but 101</router-link>
+                      <!-- <button @click="gotoVenta" >+</button>
+     -->
+                      <!--  <router-link to="/nuevaventa" target="_blank">Contact</router-link>
+ -->
+                      <!-- <router-link :to="{name: 'nuevaventa', params: { venId: 101 }   } ">Places, but 101</router-link>
   -->
-   
-    
 
-     <a href="#" @click="gotoEditVenta(item.id)" class="badge badge-primary">{{item.nombre}}</a>
- <!--   <router-link :to="{ name: 'editventa', params: { id: item.id }  } " target="_blank">
+                      <a
+                        href="#"
+                        @click="gotoEditVenta(item.id)"
+                        class="badge badge-primary"
+                        >{{ item.nombre }}</a
+                      >
+                      <!--   <router-link :to="{ name: 'editventa', params: { id: item.id }  } " target="_blank">
   
     {{ item.id }}
 
 </router-link>  -->
-
                     </td>
                     <td>
-<!-- 
+                      <!-- 
                    {{ moment(item.fecha).format( "MMM DD YYYY, ddd" ) }} -->
-                   
-                   {{item.fecha}}
-                   </td>
+
+                      {{ item.fecha }}
+                    </td>
 
                     <td>{{ item.tipo }}</td>
-                      <td>{{ item.observacion }}</td>
-                     <td>
-$
-    {{ parseFloat(item.totales ).toFixed(2) }}
-
-                     </td>
+                    <td>{{ item.observacion }}</td>
+                    <td>
+                      $
+                      {{ parseFloat(item.totales).toFixed(2) }}
+                    </td>
                     <td class="text-center">
                       <a
                         class="btn btn-sm btn-icon-only text-light"
-                           @click="downloadVenta(item.id)"
+                        @click="downloadVenta(item.id)"
                         role="button"
                         data-toggle="dropdown"
                         aria-haspopup="true"
                         aria-expanded="false"
                       >
-                        <i
-                          class="fas fa-file"
-                          title="PDF"
-                      
-                        ></i>
-                          
+                        <i class="fas fa-file" title="PDF"></i>
                       </a>
-                           <a
+                      <a
                         class="btn btn-sm btn-icon-only text-light"
-                         data-toggle="modal"
-                    data-target="#ModalVentaObservaciones"
-                    @click="captureitem(item)"
-                 
+                        data-toggle="modal"
+                        data-target="#ModalVentaObservaciones"
+                        @click="captureitem(item)"
                         aria-haspopup="true"
                         aria-expanded="false"
                       >
-                        <i
-                          class="fas fa-eye"
-                          title="Eliminar venta"
-                        
-                        ></i>
-                          
+                        <i class="fas fa-eye" title="Eliminar venta"></i>
                       </a>
-                             <a
+                      <a
                         class="btn btn-sm btn-icon-only text-light"
                         @click="deleteVenta(item.id)"
                         role="button"
@@ -271,62 +262,189 @@ $
                         aria-haspopup="true"
                         aria-expanded="false"
                       >
-                        <i
-                          class="fas fa-trash"
-                          title="Eliminar venta"
-                        
-                        ></i>
-                          
+                        <i class="fas fa-trash" title="Eliminar venta"></i>
                       </a>
-                      
+                         <a
+                        class="btn btn-sm btn-icon-only text-light"
+                        data-toggle="modal"
+                        data-target="#ModalAbonos"
+                        @click="obtenerabonos(item.id)"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        <i class="fas fa-dollar-sign" title="Abonos"></i>
+                      </a>
                     </td>
                   </tr>
                 </tbody>
               </table>
-              
+              <!--          Modal agregar editar producto -->
+              <div
+                class="modal fade"
+                id="ModalVentaObservaciones"
+                tabindex="-1"
+                role="dialog"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog modal-lg" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Observaciones de venta</h5>
+                      <button
+                        type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <!--     {{infoventa.id}}  -->
+                      <b-form-textarea
+                        id="textarea"
+                        v-model="infoventa.observacion"
+                        placeholder="Enter something..."
+                        rows="3"
+                        max-rows="6"
+                      ></b-form-textarea>
+                      <br />
 
-
-            <div
-              class="modal fade"
-              id="ModalVentaObservaciones"
-              tabindex="-1"
-              role="dialog"
-              aria-hidden="true"
-            >
-              <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title">Observaciones de venta</h5>
-                    <button
-                      type="button"
-                      class="close"
-                      data-dismiss="modal"
-                      aria-label="Close"
-                    >
-                      <span aria-hidden="true">&times;</span>
-                    </button>
+                      <b-button
+                        @click="
+                          updateObservacion(infoventa.id, infoventa.observacion)
+                        "
+                        size="md"
+                        variant="success"
+                        >Guardar</b-button
+                      >
+                    </div>
+                    <div class="modal-footer"></div>
                   </div>
-                  <div class="modal-body">
-                   
-               <!--     {{infoventa.id}}  -->
-                   <b-form-textarea
-      id="textarea"
-      v-model="infoventa.observacion"
-      placeholder="Enter something..."
-      rows="3"
-      max-rows="6"
-    ></b-form-textarea>
-    <br/>
-
-     <b-button @click="updateObservacion(infoventa.id,infoventa.observacion)" size="md" variant="success">Guardar</b-button>
-  
-                  </div>
-                  <div class="modal-footer"></div>
                 </div>
               </div>
-            </div>
 
-          <!--          Modal agregar editar producto -->
+              <!--          Modal agregar editar producto -->
+                 <!--          Modal agregar editar producto -->
+              <div
+                class="modal fade"
+                id="ModalAbonos"
+                tabindex="-1"
+                role="dialog"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog modal-lg" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Abonos</h5>
+                      <button
+                        type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                <!--   {{infoabonos}} -->
+  <div> <h5>Total a cobrar : $ {{infoabonos.totalcobrar}}  </h5><h5>Fecha maxima :  {{infoabonos.fechamaxima}}  </h5>
+    <b-progress :value="infoabonos.total_abonos" :max="infoabonos.totalcobrar" show-progress animated></b-progress>
+    <b-table striped hover :items="infoabonos.detalle_venta" :fields="fields"></b-table>
+
+    <form action="">
+
+
+                            <div class="mb-3">
+                              <p class="dis fw-bold mb-2">Cantidad recibida</p>
+                              <input
+                                class="form-control"
+                                type="number"
+                                v-model="pagorecibido"
+                              />
+                            </div>
+                            <div class="mb-3">
+                         
+
+
+                            </div>
+                            <div>
+                              <div class="address">
+                                <div class="d-flex flex-column dis">
+                                  <div
+                                    class="
+                                      d-flex
+                                      align-items-center
+                                      justify-content-between
+                                      mb-2
+                                    "
+                                  >
+                                    <p>Total</p>
+                                    <p>
+                                      <span class="fas fa-dollar-sign"></span>
+                                      {{
+                                        parseFloat(infoabonos.saldo).toFixed(
+                                          2
+                                        )
+                                      }}
+                                    </p>
+                                  </div>
+                                        <div
+                                    class="
+                                      d-flex
+                                      align-items-center
+                                      justify-content-between
+                                      mb-2
+                                    "
+                                  >
+                                    <p>Abono</p>
+                                    <p>
+                                      <span class="fas fa-dollar-sign"></span
+                                      >{{ pagorecibido }}
+                                    </p>
+                                  </div>
+                                  <div
+                                    class="
+                                      d-flex
+                                      align-items-center
+                                      justify-content-between
+                                      mb-2
+                                    "
+                                  >
+                                    <p>Saldo</p>
+                                    <p>
+                                      <span class="fas fa-dollar-sign"></span
+                                      > {{ parseFloat(total_saldo).toFixed(2) }} 
+                                    </p>
+                                  </div>
+                                     
+
+                                  <div
+                                    v-if=" pagorecibido"
+                                    @click="registrarabono(pagorecibido,infoabonos.detalle_venta)"
+                              
+                                    class="btn btn-primary mt-2"
+                                  >
+                                    <span class="fas fa-dollar-sign px-1"></span
+                                    >Guardar Abono
+                                  </div>
+                             
+                                </div>
+                              </div>
+                            </div>
+                          </form>
+                      
+</div>
+
+
+
+                    </div>
+                    <div class="modal-footer"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!--          Modal agregar editar producto -->
             </div>
 
             <!--  {{totalesventa}} -->
@@ -357,82 +475,131 @@ import vSelect from "vue-select";
 
 Vue.use(BootstrapVue);
 
-
-
-
-export default  {
+export default {
   components: {
     "v-select": vSelect,
   },
   data() {
     return {
+           fields: [
+        
+          {
+            key: 'abono',
+            label: 'Abono',
+          },
+               {
+            key: 'fecha',
+            label: 'Fecha',
+          }
+        ],
       fecha: moment().format("MMMM Do YYYY"),
       cliente: "",
       infocliente: [],
       loading: false,
       detalleventa: [],
-      totalventas:"",
-infoventa:[],
-text:"",
+      totalventas: "",
+      infoventa: [],
+      text: "",
       formadepago: "",
+      infoabonos:"",
+      pagorecibido:"",
+      saldo:"",
     };
+  },
+    computed: {
+   
+      total_saldo: function () {
+   
+      let total = this.infoabonos.saldo;
+      let pagorecibido = this.pagorecibido;
+      let tt = total - pagorecibido;
+      this.saldo= tt;
+
+      return tt;
+    },
+    
   },
   mounted() {
     this.detalleVenta();
     this.totalDashboardVentas();
   },
   methods: {
-    updateObservacion(id,texto){
+    registrarabono(pago,info){
+
+      let data = {
+        info: info,
+        pago: pago,
+        saldo:this.saldo,
+ 
+      };
+      VentaServices.registrarabono(data)
+        .then((response) => {
+          let mensaje = response.data.data;
+          if (mensaje == 200) {
+        this.obtenerabonos();
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+
+          },
+    updateObservacion(id, texto) {
       let data = {
         id: id,
-        observacion: texto
-
+        observacion: texto,
       };
       VentaServices.updateObservacion(data)
         .then((response) => {
           let mensaje = response.data.data;
           if (mensaje == 200) {
-               this.detalleVenta();
-    this.totalDashboardVentas();
-   
-   }
+            this.detalleVenta();
+            this.totalDashboardVentas();
+          }
         })
         .catch((error) => {
           console.log(error);
         });
-    
-
     },
-    captureitem(item){
-this.infoventa=item;
+    captureitem(item) {
+      this.infoventa = item;
     },
-      deleteVenta(id) {
-   
-this.$swal.fire({
-  title: 'Estas seguro de cancelar esta venta?',
-  showCancelButton: true,
-  confirmButtonText: 'SI',
-  
-}).then((result) => {
-  /* Read more about isConfirmed, isDenied below */
-  if (result.isConfirmed) {
-     VentaServices.deleteVenta(id)
+    obtenerabonos(id){
+ VentaServices.getInformacionPagosVenta(id)
         .then((response) => {
-          let mensaje = response.data.data;
-          if (mensaje == 200) {
-       window.location.href = "../venta/";
-    }
+          this.infoabonos = response.data.data;
+
+
         })
         .catch((error) => {
           console.log(error);
         });
-
-
-  } 
-})
-
     },
-      downloadVenta(id) {
+    deleteVenta(id) {
+      this.$swal
+        .fire({
+          title: "Estas seguro de cancelar esta venta?",
+          showCancelButton: true,
+          confirmButtonText: "SI",
+        })
+        .then((result) => {
+          /* Read more about isConfirmed, isDenied below */
+          if (result.isConfirmed) {
+            VentaServices.deleteVenta(id)
+              .then((response) => {
+                let mensaje = response.data.data;
+                if (mensaje == 200) {
+                  window.location.href = "../venta/";
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          }
+        });
+    },
+    downloadVenta(id) {
       let routeData = server + resource + `download-venta/` + id;
       window.open(routeData);
     },
@@ -454,45 +621,44 @@ this.$swal.fire({
           console.log(error);
         });
     },
-    nuevaventa(){
+    nuevaventa() {
       window.location.href = "../nuevaventa/";
     },
-    gotoVenta(id){
-  
-    const userId = id
-/* this.$router.push({ name: 'nuevaventa', params: { venId:userId }})
- */
-let routeData = this.$router.resolve({name: 'nuevaventa', params: {venId: userId}});
-window.open(routeData.href, '_blank');    
+    gotoVenta(id) {
+      const userId = id;
+      /* this.$router.push({ name: 'nuevaventa', params: { venId:userId }})
+       */
+      let routeData = this.$router.resolve({
+        name: "nuevaventa",
+        params: { venId: userId },
+      });
+      window.open(routeData.href, "_blank");
     },
-       gotoEditVenta(id){
-  
-    const userId = id
-/* this.$router.push({ name: 'nuevaventa', params: { venId:userId }})
- */
-let routeData = this.$router.resolve({name: 'editventa', params: {id: userId}});
-window.open(routeData.href, '_blank');    
+    gotoEditVenta(id) {
+      const userId = id;
+      /* this.$router.push({ name: 'nuevaventa', params: { venId:userId }})
+       */
+      let routeData = this.$router.resolve({
+        name: "editventa",
+        params: { id: userId },
+      });
+      window.open(routeData.href, "_blank");
     },
-gotoNuevaVenta(){
-
-
+    gotoNuevaVenta() {
       VentaServices.createNuevaVenta()
         .then((response) => {
           let mensaje = response.data.data;
 
-let routeData = this.$router.resolve({name: 'editventa', params: {id: mensaje}});
-window.open(routeData.href, '_blank');
-      
+          let routeData = this.$router.resolve({
+            name: "editventa",
+            params: { id: mensaje },
+          });
+          window.open(routeData.href, "_blank");
         })
         .catch((error) => {
           console.log(error);
         });
-
-    
-
-}
-
-
+    },
   },
 };
 </script>
