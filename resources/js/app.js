@@ -74,6 +74,11 @@ Vue.component('modal-edit-producto', require('./components/productos/ModalEditPr
 Vue.component('venta', require('./components/venta/Venta.vue').default);
 Vue.component('edit-venta', require('./components/venta/EditVenta.vue').default);
 
+
+Vue.component('compras', require('./components/compra/IndexCompra.vue').default);
+Vue.component('edit-compra', require('./components/compra/EditCompra.vue').default);
+
+
 Vue.component('modal-venta-producto', require('./components/venta/ModalVentaProducto.vue').default);
 Vue.component('ventas', require('./components/venta/IndexVenta.vue').default);
 Vue.component('dashboard', require('./components/venta/Dashboard.vue').default);
@@ -87,7 +92,7 @@ Vue.component('dashboard', require('./components/venta/Dashboard.vue').default);
 
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
-import ExampleComponent from "./../js/components/ExampleComponent.vue";
+
  const Venta = () => import('./components/venta/Venta.vue')
  const routes = [
     {
@@ -110,6 +115,13 @@ import ExampleComponent from "./../js/components/ExampleComponent.vue";
         alias: 'id',
         component: () =>
             import ( /* webpackChunkName: "edit-venta" */ './components/venta/EditVenta.vue')
+    },
+    {
+        path: 'editcompra/:id',
+        name: 'editcompra',
+        alias: 'id',
+        component: () =>
+            import ( /* webpackChunkName: "edit-compra" */ './components/compra/EditCompra.vue')
     },
 ];
 

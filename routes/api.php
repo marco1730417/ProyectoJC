@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductoApiController;
 use App\Http\Controllers\VentaApiController;
 use App\Http\Controllers\ProveedoresApiController;
 
+use App\Http\Controllers\CompraApiController;
 
 
 
@@ -51,6 +52,17 @@ Route::group(['prefix' => 'producto'], function () {
     
 
 });
+
+
+Route::group(['prefix' => 'compras'], function () {
+    Route::get('get-informacion-compras', [CompraApiController::class, 'getInformacionCompras']);
+    
+    Route::get('get-compras', [CompraApiController::class, 'getCompras']);
+    Route::post('create-nueva-compra', [CompraApiController::class, 'createNuevaCompra']);
+   
+});
+
+
 
 Route::group(['prefix' => 'venta'], function () {
     Route::post('create-venta', [VentaApiController::class, 'createVenta']);

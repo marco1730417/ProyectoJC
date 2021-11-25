@@ -118,6 +118,11 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" href="{{ route('compra.index') }}">
+                                <i class="ni ni-ui-04 text-blue"></i>     {{ __('Compras') }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('productos.index') }}">
                                 <i class="ni ni-books text-blue"></i>      {{ __('Productos') }}
                                 </a>
