@@ -29,107 +29,46 @@
                 <div class="col-12 text-left">
              
 <div class="container">
-  <h3 class="text-center">Informacion de compra</h3>
+  <h3 class="text-center">Reportes de ventas</h3>
 
 
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-4">
       
-      <p>Ingrese la informacion de la compra</p>
+      <p>Seleccione la fecha</p>
    <b-container fluid>
- <b-row class="my-1">
-    <b-col sm="4">
-      <label for="input-small">Proveedor:</label>
-    </b-col>
-    <b-col sm="8">
-       <v-select
-                          label="nombre"
-                          v-model="proveedor"
-                          :options="infoproveedor"
-                          required
-                        ></v-select>
-    </b-col>
-  </b-row>
+ 
    <b-row class="my-1">
     <b-col sm="4">
-      <label for="input-small">Fecha:</label>
+      <label for="input-small">Desde:</label>
     </b-col>
-    <b-col sm="8">
-      <b-form-input id="input-small" size="sm" type="date" v-model="fecha" ></b-form-input>
-      <small v-if="detallegeneralcompra.length>0"> {{detallegeneralcompra.detalle_compra.fecha}} </small>
+      <b-col sm="8">
+      <b-form-input id="input-small" size="sm" type="date" v-model="fechadesde" ></b-form-input>
     </b-col>
-  </b-row>
+   </b-row>
+      <b-row class="my-1">
+    <b-col sm="4">
+      <label for="input-small">Hasta:</label>
+    </b-col>
+      <b-col sm="8">
+      <b-form-input id="input-small" size="sm" type="date" v-model="fechahasta" ></b-form-input>
+    </b-col>
+   </b-row>
      <b-row class="my-1">
-    <b-col sm="4">
-      <label for="input-small">Comprobante:</label>
-    </b-col>
-    <b-col sm="8">
-      <b-form-input id="input-small" size="sm" v-model="comprobante" ></b-form-input>
-    </b-col>
-  </b-row>
-       <b-row class="my-1">
-    <b-col sm="4">
-      <label for="input-small">Total:</label>
-    </b-col>
-    <b-col sm="8">
-      <b-form-input id="input-small" size="sm"          @keypress="onlyNumber" v-model="totalcompra" ></b-form-input>
-    </b-col>
-  </b-row>
-       <b-row class="my-1">
  <br/>
     <b-col class="text-center" sm="12">
-      <b-button size="sm" @click="updateCompra" variant="primary">Guardar Informacion</b-button>
+      <b-button size="sm" @click="reporteVentas" variant="primary">Generar</b-button>
     </b-col>
   </b-row>
   </b-container>
 
     
-      <p>Ingrese los productos adquiridos</p>
-   <b-container fluid>
- <b-row class="my-1">
-    <b-col sm="4">
-      <label for="input-small">Producto:</label>
-    </b-col>
-    <b-col sm="8">
-            <v-select
-              label="descripcion"
-              v-model="producto"
-              :options="infoproducto"
-              required
-            ></v-select>
-    </b-col>
-  </b-row>
-   <b-row class="my-1">
-    <b-col sm="4">
-      <label for="input-small">Cantidad:</label>
-    </b-col>
-    <b-col sm="8">
-      <b-form-input id="input-small"          @keypress="onlyNumber" size="sm" v-model="cantidad" ></b-form-input>
-    </b-col>
-  </b-row>
-     <b-row class="my-1">
-    <b-col sm="4">
-      <label for="input-small">Precio:</label>
-    </b-col>
-    <b-col sm="8">
-      <b-form-input id="input-small" size="sm"          @keypress="onlyNumber" v-model="precio" ></b-form-input>
-    </b-col>
-  </b-row>
-    <b-row class="my-1">
- <br/>
-    <b-col class="text-center" sm="12">
-      <b-button size="sm" @click="addProductosCompra" variant="primary">Guardar Producto</b-button>
-    </b-col>
-  </b-row>
-  </b-container>
-
-
     </div>
-    <div class="col-md-6">
- 
-  <!--  {{detallecompra}} -->
-    <b-table striped hover :items="detallecompra" :fields="fields"></b-table>
-    <b-alert v-if="producto" variant="success" show>El producto {{producto.nombre}}  tiene actualmente {{producto.unidades}} mtrs en stock  </b-alert>     
+    <div class="col-md-8">
+ <!-- {{infoventa}} -->
+    <b-table striped hover :items="infoventa" :fields="fields"></b-table>
+  
+  
       </div>
 
 
@@ -154,13 +93,14 @@
       </div>
     </div>
 
-  </div>
 </template>
 
 
 <script>
 import VentaServices from "../../services/ventaServices";
 import CompraServices from "../../services/compraServices";
+import ReporteServices from "../../services/reporteServices";
+
 import ClienteServices from "../../services/clienteServices";
 import ProveedorServices from "../../services/proveedorServices";
 import Conf from "../../services/conf.js";
@@ -180,26 +120,34 @@ export default {
   data() {
     return {
 
-
-      fecha: "",
+      fields: [
+        {
+          key: "nombre",
+          label: "Cliente",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "list-item-enddate",
+        },
+  {
+          key: "fecha",
+          label: "Fecha",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "list-item-enddate",
+        },
+        {
+          key: "total",
+          label: "Total",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "list-item-enddate",
+        },
+      ],
+      fechadesde: "",
+        fechahasta: "",
       cliente: "",
-      totalcompra: "",
-      modeupdate: false,
-      proveedor: "",
-      formadepagoupdate: "",
-      infoproveedor: [],
-      loading: false,
-      infoeditcliente: [],
-      camposactivos: false,
-      totalesventa: [],
-      detallecompra: [],
-      detallegeneralcompra: [],
-      cantidad: "",
-      precio: "",
-      filter: null,
-      comId: "",
-      comprobante: "",
-      infoproducto: "",
+      infoventa:"",
+    
       producto: "",
     };
   },
@@ -220,7 +168,15 @@ export default {
       }
     },
 
-
+    reporteVentas() {
+      ReporteServices.reporteVentas(this.fechadesde,this.fechahasta)
+        .then((response) => {
+          this.infoventa = response.data.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
 
 
   },

@@ -132,6 +132,11 @@
                         <i class="ni ni-planet text-blue"></i> {{ __('Ventas') }}
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('reporte.index') }}">
+                        <i class="ni ni-palette text-blue"></i> {{ __('Reportes') }}
+                    </a>
+                </li>
               <!--   <li class="nav-item">
                     <a class="nav-link" href="{{ route('venta.nuevaventa') }}">
                         <i class="ni ni-cart text-orange"></i> {{ __('Nueva Venta') }}

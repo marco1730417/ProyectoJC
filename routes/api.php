@@ -67,6 +67,13 @@ Route::group(['prefix' => 'compras'], function () {
   
 });
 
+Route::group(['prefix' => 'reportes'], function () {
+    Route::get('reporte-ventas/{fechadesde}/{fechahasta}', [ReportesApiController::class, 'reporteVentas']);
+    
+  
+});
+
+
 
 
 Route::group(['prefix' => 'venta'], function () {
