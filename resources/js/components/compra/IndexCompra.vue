@@ -251,6 +251,7 @@ export default {
 
   },
   methods: {
+     
     getCompras() {
       CompraServices.getCompras()
         .then((response) => {

@@ -59,6 +59,9 @@ Route::group(['prefix' => 'compras'], function () {
     
     Route::get('get-compras', [CompraApiController::class, 'getCompras']);
     Route::post('create-nueva-compra', [CompraApiController::class, 'createNuevaCompra']);
+    Route::post('update-compra', [CompraApiController::class, 'updateCompra']);
+    Route::post('add-productos-compra', [CompraApiController::class, 'addProductosCompra']);
+    Route::get('get-informacion-compra/{venId}',  [CompraApiController::class, 'getInformacionCompra']);
    
 });
 

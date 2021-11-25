@@ -1018,6 +1018,7 @@ downloadVentaAbono(pago,fechamaxima,cliId){
     myFunction: function () {
       this.substr = this.$route.path;
       this.substr = this.substr.substring(11);
+             console.log(this.substr+'venta');
     },
   },
 };

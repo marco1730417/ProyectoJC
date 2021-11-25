@@ -301,7 +301,7 @@ this.precioUnitario="";
       
     },
     getAllProductos() {
-      ProductoServices.getAllProductos(this.cofId)
+      ProductoServices.getAllProductos()
         .then((response) => {
           this.infoproducto = response.data.data;
         })

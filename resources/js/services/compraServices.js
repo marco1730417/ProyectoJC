@@ -24,5 +24,16 @@ export default {
         let url = server + resource + "create-nueva-compra";
         return Axios.post(url);
     },
- 
+    updateCompra(data) {
+        let url = server + resource + "update-compra";
+        return Axios.post(url, data);
+    },
+    addProductosCompra(data) {
+        let url = server + resource + "add-productos-compra";
+        return Axios.post(url, data);
+    },
+    getInformacionCompra(comId) {
+        let url = server + resource + 'get-informacion-compra';
+        return Axios.get(url + "/" + comId);
+    },
 }

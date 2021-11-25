@@ -4,10 +4,14 @@
       <div class="container-fluid">
         <div class="header-body">
           <!-- Card stats -->
-          <div class="row">
+     <div class="row">
        
 
+            <div  class="col-xl-6 col-lg-6">
         
+            </div>
+
+       
           </div>
         </div>
       </div>
@@ -15,15 +19,151 @@
 
 
 
+ <div  class="container-fluid mt--7">
+      <div class="row">
+        <div class="col">
+          <div class="card shadow">
+            <div class="card-header border-0">
+              <div class="row align-items-center">
+             
+                <div class="col-12 text-left">
+             
+<div class="container">
+  <h3 class="text-center">Informacion de compra</h3>
+
+
+  <div class="row">
+    <div class="col-md-6">
+      
+      <p>Ingrese la informacion de la nueva compra</p>
+   <b-container fluid>
+ <b-row class="my-1">
+    <b-col sm="4">
+      <label for="input-small">Proveedor:</label>
+    </b-col>
+    <b-col sm="8">
+       <v-select
+                          label="nombre"
+                          v-model="proveedor"
+                          :options="infoproveedor"
+                          required
+                        ></v-select>
+    </b-col>
+  </b-row>
+   <b-row class="my-1">
+    <b-col sm="4">
+      <label for="input-small">Fecha:</label>
+    </b-col>
+    <b-col sm="8">
+      <b-form-input id="input-small" size="sm" type="date" v-model="fecha" ></b-form-input>
+    </b-col>
+  </b-row>
+     <b-row class="my-1">
+    <b-col sm="4">
+      <label for="input-small">Numero comprobante:</label>
+    </b-col>
+    <b-col sm="8">
+      <b-form-input id="input-small" size="sm" v-model="comprobante" ></b-form-input>
+    </b-col>
+  </b-row>
+       <b-row class="my-1">
+    <b-col sm="4">
+      <label for="input-small">Total:</label>
+    </b-col>
+    <b-col sm="8">
+      <b-form-input id="input-small" size="sm" v-model="totalcompra" ></b-form-input>
+    </b-col>
+  </b-row>
+       <b-row class="my-1">
+ <br/>
+    <b-col class="text-center" sm="12">
+      <b-button size="sm" @click="updateCompra" variant="primary">Guardar Informacion</b-button>
+    </b-col>
+  </b-row>
+  </b-container>
+
+    
+      <p>Ingrese los productos adquiridos</p>
+   <b-container fluid>
+ <b-row class="my-1">
+    <b-col sm="4">
+      <label for="input-small">Producto:</label>
+    </b-col>
+    <b-col sm="8">
+            <v-select
+              label="descripcion"
+              v-model="producto"
+              :options="infoproducto"
+              required
+            ></v-select>
+    </b-col>
+  </b-row>
+   <b-row class="my-1">
+    <b-col sm="4">
+      <label for="input-small">Cantidad:</label>
+    </b-col>
+    <b-col sm="8">
+      <b-form-input id="input-small" size="sm" v-model="cantidad" ></b-form-input>
+    </b-col>
+  </b-row>
+     <b-row class="my-1">
+    <b-col sm="4">
+      <label for="input-small">Precio:</label>
+    </b-col>
+    <b-col sm="8">
+      <b-form-input id="input-small" size="sm" v-model="precio" ></b-form-input>
+    </b-col>
+  </b-row>
+    <b-row class="my-1">
+ <br/>
+    <b-col class="text-center" sm="12">
+      <b-button size="sm" @click="addProductosCompra" variant="primary">Guardar Producto</b-button>
+    </b-col>
+  </b-row>
+  </b-container>
+
+
+    </div>
+    <div class="col-md-6">
+ 
+  <!--  {{detallecompra}} -->
+    <b-table striped hover :items="detallecompra" :fields="fields"></b-table>
+    <b-alert v-if="producto" variant="success" show>El producto {{producto.nombre}}  tiene actualmente {{producto.unidades}} mtrs en stock  </b-alert>     
+      </div>
+
+
+    </div>
+  </div>
+</div>
+                </div>
+              </div>
+            </div>
+
+   
+       
+       
+
+            <!--  {{totalesventa}} -->
+
+            <div class="card-footer py-4">
+              <nav class="d-flex justify-content-end" aria-label="..."></nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
 
 <script>
 import VentaServices from "../../services/ventaServices";
+import CompraServices from "../../services/compraServices";
 import ClienteServices from "../../services/clienteServices";
 import ProveedorServices from "../../services/proveedorServices";
 import Conf from "../../services/conf.js";
+import ProductoServices from "../../services/productoServices";
 
 const resource = "api/venta/";
 const server = Conf.server;
@@ -38,23 +178,44 @@ export default {
   },
   data() {
     return {
-      fecha: moment().format("MMMM Do YYYY"),
+      fields: [
+        {
+          key: "proNombre",
+          label: "Producto",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "list-item-enddate",
+        },
+
+        {
+          key: "unidades",
+          label: "Stock",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "list-item-enddate",
+        },
+      ],
+
+      fecha: "",
       cliente: "",
+      totalcompra: "",
       modeupdate: false,
-      clienteupdate: "",
+      proveedor: "",
       formadepagoupdate: "",
       infoproveedor: [],
       loading: false,
       infoeditcliente: [],
       camposactivos: false,
       totalesventa: [],
-      detalleventa: [],
+      detallecompra: [],
       detallegeneralventa: [],
-      pagorecibido: "",
-      pagorecibidotransferencia: "",
-      detalletransferencia: "",
+      cantidad: "",
+      precio: "",
       filter: null,
-      substr: "",
+      comId: "",
+      comprobante: "",
+      infoproducto: "",
+      producto: "",
     };
   },
   created() {
@@ -63,33 +224,26 @@ export default {
 
   mounted() {
     this.getAllProveedores();
-      },
+    this.getAllProductos();
+    this.getInformacionCompra();
+  },
   methods: {
-    updateDatos() {
-      this.getInformacionVenta();
-      this.totalesVenta();
-    },
     onOver() {
       this.$refs.dropdown.visible = true;
     },
     onLeave() {
       this.$refs.dropdown.visible = false;
     },
- /*    deleteDetalleVenta(id) {
-      VentaServices.deleteDetalleVenta(id)
+
+    getAllProductos() {
+      ProductoServices.getAllProductos()
         .then((response) => {
-          let mensaje = response.data.data;
-          if (mensaje == 200) {
-            this.getInformacionVenta();
-            this.totalesVenta();
-          }
+          this.infoproducto = response.data.data;
         })
         .catch((error) => {
           console.log(error);
         });
-    }, */
-
-  
+    },
 
     getAllProveedores() {
       ProveedorServices.getAllProveedores()
@@ -101,28 +255,54 @@ export default {
         });
     },
 
- 
-    
-
-    actualizarVenta(cliente) {
+    updateCompra() {
       let data = {
-        cliId: cliente,
-        venId: this.substr,
+        comId: this.comId,
+        total: this.totalcompra,
+        prvId: this.proveedor["id"],
+        fecha: this.fecha,
+        comprobante: this.comprobante,
       };
-
-      VentaServices.updateVenta(data)
+      CompraServices.updateCompra(data)
         .then((response) => {
           let mensaje = response.data.data;
-      this.detalleGeneralVenta();
-    
         })
         .catch((error) => {
           console.log(error);
         });
     },
+
+    addProductosCompra() {
+      let data = {
+        comId: this.comId,
+
+        proId: this.producto["id"],
+        cantidad: this.cantidad,
+        precio: this.precio,
+      };
+      CompraServices.addProductosCompra(data)
+        .then((response) => {
+          let mensaje = response.data.data;
+          this.getInformacionCompra();
+          this.getAllProductos();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    getInformacionCompra() {
+      CompraServices.getInformacionCompra(this.comId)
+        .then((response) => {
+          this.detallecompra = response.data.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
     myFunction: function () {
-      this.substr = this.$route.path;
-      this.substr = this.substr.substring(11);
+      this.comId = this.$route.path;
+      this.comId = this.comId.substring(12);
     },
   },
 };
