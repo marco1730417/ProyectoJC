@@ -9,10 +9,10 @@ export default {
 
     /************************** STANDARS API ********************************/
 
-    getInformacionCompras() {
+    getInformacionHeaderCompras(comId) {
         //console.log(Axios.get(url));
-        let url = server + resource + 'get-informacion-compras';
-        return Axios.get(url);
+        let url = server + resource + 'get-informacion-header-compras';
+        return Axios.get(url + "/" + comId);
     },
  
     getCompras() {
@@ -35,5 +35,9 @@ export default {
     getInformacionCompra(comId) {
         let url = server + resource + 'get-informacion-compra';
         return Axios.get(url + "/" + comId);
+    },
+    deleteCompra(id) {
+        let url = server + resource + "delete-compra";
+        return Axios.post(url+ '/' + id);
     },
 }

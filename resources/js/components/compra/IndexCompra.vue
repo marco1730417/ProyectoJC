@@ -159,10 +159,10 @@
                   <tr v-for="item in detallecompra">
                     <td>
 
-
+<!-- {{item}} -->
                       <a
                         href="#"
-                        @click="compraServices(item.id)"
+                        @click="gotoEditCompra(item.id)"
                         class="badge badge-primary"
                         >{{ item.nombre }}</a
                       >
@@ -181,12 +181,23 @@
                     <td class="text-center">
                       <a
                         class="btn btn-sm btn-icon-only text-light"
+                        @click="gotoEditCompra(item.id)"
                         role="button"
                         data-toggle="dropdown"
                         aria-haspopup="true"
                         aria-expanded="false"
                       >
                         <i class="fas fa-file" title="PDF"></i>
+                      </a>
+                        <a
+                        class="btn btn-sm btn-icon-only text-light"
+                        @click="deleteCompra(item.id)"
+                        role="button"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        <i class="fas fa-trash" title="Borrar compra"></i>
                       </a>
                      
                     </td>
@@ -251,7 +262,31 @@ export default {
 
   },
   methods: {
-     
+
+ deleteCompra(id) {
+      this.$swal
+        .fire({
+          title: "Estas seguro de eliminar esta compra?",
+          showCancelButton: true,
+          confirmButtonText: "SI",
+        })
+        .then((result) => {
+          /* Read more about isConfirmed, isDenied below */
+          if (result.isConfirmed) {
+            CompraServices.deleteCompra(id)
+              .then((response) => {
+                let mensaje = response.data.data;
+                if (mensaje == 200) {
+                  window.location.href = "../compra/";
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          }
+        });
+    },
+
     getCompras() {
       CompraServices.getCompras()
         .then((response) => {
@@ -270,12 +305,11 @@ export default {
    
   
     gotoEditCompra(id) {
-      const userId = id;
-      /* this.$router.push({ name: 'nuevacompra', params: { venId:userId }})
-       */
+      const comId = id;
+     
       let routeData = this.$router.resolve({
         name: "editcompra",
-        params: { id: userId },
+        params: { id: comId },
       });
       window.open(routeData.href, "_blank");
     },

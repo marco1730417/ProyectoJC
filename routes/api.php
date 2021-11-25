@@ -8,6 +8,7 @@ use App\Http\Controllers\VentaApiController;
 use App\Http\Controllers\ProveedoresApiController;
 
 use App\Http\Controllers\CompraApiController;
+use App\Http\Controllers\ReportesApiController;
 
 
 
@@ -55,14 +56,15 @@ Route::group(['prefix' => 'producto'], function () {
 
 
 Route::group(['prefix' => 'compras'], function () {
-    Route::get('get-informacion-compras', [CompraApiController::class, 'getInformacionCompras']);
+    Route::get('get-informacion-header-compras/{comId} ', [CompraApiController::class, 'getInformacionHeaderCompras']);
     
     Route::get('get-compras', [CompraApiController::class, 'getCompras']);
     Route::post('create-nueva-compra', [CompraApiController::class, 'createNuevaCompra']);
     Route::post('update-compra', [CompraApiController::class, 'updateCompra']);
     Route::post('add-productos-compra', [CompraApiController::class, 'addProductosCompra']);
-    Route::get('get-informacion-compra/{venId}',  [CompraApiController::class, 'getInformacionCompra']);
-   
+    Route::get('get-informacion-compra/{comId}',  [CompraApiController::class, 'getInformacionCompra']);
+    Route::post('delete-compra/{id}', [CompraApiController::class, 'deleteCompra']);
+  
 });
 
 

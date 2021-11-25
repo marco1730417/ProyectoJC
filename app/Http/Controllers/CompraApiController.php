@@ -25,22 +25,26 @@ class CompraApiController extends ApiResponseController
 /* 
      api que trae todo el datalle de compras incluido los productos */
 
-    public function getInformacionCompras()
+    public function getInformacionHeaderCompras($id)
     {
-        $detalle_compras = Compras:: select('compras.fecha','compras.total','compras.valoriva','compras.comprobante','detalle_compras.cantidad','detalle_compras.precio','detalle_compras.proId',
-        'productos.nombre','productos.descripcion','proveedores.nombre','proveedores.ruc','proveedores.telefono','proveedores.email'
-        ) 
-        ->leftJoin('detalle_compras', 'compras.id', '=', 'detalle_compras.comId')
-            ->leftJoin('proveedores', 'compras.prvId', '=', 'proveedores.id')
-            ->leftJoin('productos', 'detalle_compras.proId', '=', 'productos.id')->get();
+        $detalle_compras = Compras::findOrFail($id);
 
-        return $this->successResponse($detalle_compras);
+       
+         $proveedor_actual= Proveedores::findOrFail($detalle_compras->prvId);
+
+         $informacion_header=[
+            'detalle_compra' => $detalle_compras,
+            'proveedor' => $proveedor_actual
+         ];
+
+           
+        return $this->successResponse($informacion_header);
     }
 /* 
     api que trae las compras con sus detalles basicos */
     public function getCompras()
     {
-        $compras = Compras:: select('compras.fecha','compras.total','compras.valoriva','compras.comprobante'
+        $compras = Compras:: select('compras.id','compras.fecha','compras.total','compras.valoriva','compras.comprobante'
         ,'proveedores.nombre','proveedores.ruc','proveedores.telefono','proveedores.email'
         ) 
 
@@ -115,6 +119,8 @@ class CompraApiController extends ApiResponseController
             'detalle_compras.precio',
             'productos.unidades',
             'productos.nombre as proNombre',
+            'productos.descripcion as proDescripcion',
+            
             'compras.fecha',
             'compras.comprobante',
             'proveedores.nombre'
@@ -131,6 +137,14 @@ class CompraApiController extends ApiResponseController
         return $this->successResponse($detalle_compra);
     }
 
+    public function deleteCompra($comId)
+    {
+     DetalleCompras::where('comId',$comId)->delete();
+       $compra = Compras :: findOrFail($comId)->delete();  
+
+       if (!$compra) return $this->errorResponse(500);
+       return $this->successResponse(200);
+    }
 
     
 

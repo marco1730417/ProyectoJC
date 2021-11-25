@@ -43,6 +43,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('proveedor', ['as' => 'proveedor.index', 'uses' => 'App\Http\Controllers\ProveedoresController@index']);
 	Route::get('venta', ['as' => 'venta.index', 'uses' => 'App\Http\Controllers\VentaController@index']);
 	Route::get('compra', ['as' => 'compra.index', 'uses' => 'App\Http\Controllers\CompraController@index']);
+	Route::get('reporte', ['as' => 'reporte.index', 'uses' => 'App\Http\Controllers\Reporteontroller@index']);
 	
 	Route::get('ventapdf', ['as' => 'venta.ventapdf', 'uses' => 'App\Http\Controllers\VentaController@ventapdf']);
 	Route::get('nuevaventa', ['as' => 'venta.nuevaventa', 'uses' => 'App\Http\Controllers\VentaController@nuevaventa']);

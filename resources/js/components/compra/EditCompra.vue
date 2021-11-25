@@ -8,7 +8,7 @@
        
 
             <div  class="col-xl-6 col-lg-6">
-        
+       
             </div>
 
        
@@ -35,7 +35,7 @@
   <div class="row">
     <div class="col-md-6">
       
-      <p>Ingrese la informacion de la nueva compra</p>
+      <p>Ingrese la informacion de la compra</p>
    <b-container fluid>
  <b-row class="my-1">
     <b-col sm="4">
@@ -56,11 +56,12 @@
     </b-col>
     <b-col sm="8">
       <b-form-input id="input-small" size="sm" type="date" v-model="fecha" ></b-form-input>
+      <small v-if="detallegeneralcompra.length>0"> {{detallegeneralcompra.detalle_compra.fecha}} </small>
     </b-col>
   </b-row>
      <b-row class="my-1">
     <b-col sm="4">
-      <label for="input-small">Numero comprobante:</label>
+      <label for="input-small">Comprobante:</label>
     </b-col>
     <b-col sm="8">
       <b-form-input id="input-small" size="sm" v-model="comprobante" ></b-form-input>
@@ -71,7 +72,7 @@
       <label for="input-small">Total:</label>
     </b-col>
     <b-col sm="8">
-      <b-form-input id="input-small" size="sm" v-model="totalcompra" ></b-form-input>
+      <b-form-input id="input-small" size="sm"          @keypress="onlyNumber" v-model="totalcompra" ></b-form-input>
     </b-col>
   </b-row>
        <b-row class="my-1">
@@ -103,7 +104,7 @@
       <label for="input-small">Cantidad:</label>
     </b-col>
     <b-col sm="8">
-      <b-form-input id="input-small" size="sm" v-model="cantidad" ></b-form-input>
+      <b-form-input id="input-small"          @keypress="onlyNumber" size="sm" v-model="cantidad" ></b-form-input>
     </b-col>
   </b-row>
      <b-row class="my-1">
@@ -111,7 +112,7 @@
       <label for="input-small">Precio:</label>
     </b-col>
     <b-col sm="8">
-      <b-form-input id="input-small" size="sm" v-model="precio" ></b-form-input>
+      <b-form-input id="input-small" size="sm"          @keypress="onlyNumber" v-model="precio" ></b-form-input>
     </b-col>
   </b-row>
     <b-row class="my-1">
@@ -180,13 +181,19 @@ export default {
     return {
       fields: [
         {
-          key: "proNombre",
+          key: "proDescripcion",
           label: "Producto",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate",
         },
-
+  {
+          key: "cantidad",
+          label: "Cantidad",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "list-item-enddate",
+        },
         {
           key: "unidades",
           label: "Stock",
@@ -208,7 +215,7 @@ export default {
       camposactivos: false,
       totalesventa: [],
       detallecompra: [],
-      detallegeneralventa: [],
+      detallegeneralcompra: [],
       cantidad: "",
       precio: "",
       filter: null,
@@ -226,6 +233,7 @@ export default {
     this.getAllProveedores();
     this.getAllProductos();
     this.getInformacionCompra();
+    this.getInformacionHeaderCompras();
   },
   methods: {
     onOver() {
@@ -253,6 +261,14 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+        onlyNumber($event) {
+      //console.log($event.keyCode); //keyCodes value
+      let keyCode = $event.keyCode ? $event.keyCode : $event.which;
+      if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) {
+        // 46 is dot
+        $event.preventDefault();
+      }
     },
 
     updateCompra() {
@@ -294,6 +310,23 @@ export default {
       CompraServices.getInformacionCompra(this.comId)
         .then((response) => {
           this.detallecompra = response.data.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+       getInformacionHeaderCompras() {
+      CompraServices.getInformacionHeaderCompras(this.comId)
+        .then((response) => {
+          this.detallegeneralcompra = response.data.data;
+        if(this.detallegeneralcompra){
+            this.proveedor=this.detallegeneralcompra.proveedor;
+            this.fecha=this.detallegeneralcompra.detalle_compra.fecha;
+ this.comprobante=this.detallegeneralcompra.detalle_compra.comprobante;
+ this.totalcompra=this.detallegeneralcompra.detalle_compra.total;
+
+        }
+
         })
         .catch((error) => {
           console.log(error);
