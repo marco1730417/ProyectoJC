@@ -113,6 +113,11 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" href="{{ route('proveedor.index') }}">
+                                <i class="ni ni-cloud-download-95 text-blue"></i>     {{ __('Proveedores') }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('productos.index') }}">
                                 <i class="ni ni-books text-blue"></i>      {{ __('Productos') }}
                                 </a>
@@ -122,11 +127,11 @@
                         <i class="ni ni-planet text-blue"></i> {{ __('Ventas') }}
                     </a>
                 </li>
-                <li class="nav-item">
+              <!--   <li class="nav-item">
                     <a class="nav-link" href="{{ route('venta.nuevaventa') }}">
                         <i class="ni ni-cart text-orange"></i> {{ __('Nueva Venta') }}
                     </a>
-                </li>
+                </li> -->
                 <li class="nav-item">
                 <a href="{{ route('logout') }}" onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();" class="nav-link" >

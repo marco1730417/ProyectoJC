@@ -83,13 +83,18 @@
 
           <!--          Modal agregar nuevo cliente -->
 
-          <b-button
-            size="xs"
-            variant="primary"
-            data-toggle="modal"
-            data-target="#ModalNuevoCliente"
-            >Nuevo Cliente</b-button
-          >
+
+      <div class="col-4 text-right">
+                  <a
+                    href=""
+                    class="btn btn-sm btn-primary"
+                    data-toggle="modal"
+                    data-target="#ModalNuevoCliente"
+                    >Nuevo Cliente</a
+                  >  </div>
+
+
+
         </div>
       </div>
 

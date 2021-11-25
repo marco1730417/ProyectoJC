@@ -61,6 +61,12 @@ Vue.component('clientes', require('./components/clientes/Clientes.vue').default)
 Vue.component('modal-nuevo-cliente', require('./components/clientes/ModalNuevoCliente.vue').default);
 Vue.component('modal-edit-cliente', require('./components/clientes/ModalEditCliente.vue').default);
 
+
+Vue.component('proveedores', require('./components/proveedores/Proveedores.vue').default);
+Vue.component('modal-nuevo-proveedor', require('./components/proveedores/ModalNuevoProveedor.vue').default);
+Vue.component('modal-edit-proveedor', require('./components/proveedores/ModalEditProveedor.vue').default);
+
+
 Vue.component('productos', require('./components/productos/Productos.vue').default);
 Vue.component('modal-nuevo-producto', require('./components/productos/ModalNuevoProducto.vue').default);
 Vue.component('modal-edit-producto', require('./components/productos/ModalEditProducto.vue').default);

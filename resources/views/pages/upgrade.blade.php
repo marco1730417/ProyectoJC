@@ -74,11 +74,11 @@
                     </ul>
                 </div>
             </li>
-            <li class="nav-item">
+         <!--    <li class="nav-item">
                     <a class="nav-link" href="{{ route('venta.index') }}">
                         <i class="ni ni-planet text-blue"></i> {{ __('Nueva Venta') }}
                     </a>
-                </li>
+                </li> -->
          <!--    <li class="nav-item">
                 <a class="nav-link" href="{{ route('icons') }}">
                     <i class="ni ni-planet text-blue"></i> {{ __('Icons') }}

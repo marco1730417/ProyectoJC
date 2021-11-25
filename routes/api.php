@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClienteApiController;
 use App\Http\Controllers\ProductoApiController;
 use App\Http\Controllers\VentaApiController;
+use App\Http\Controllers\ProveedoresApiController;
+
 
 
 
@@ -30,6 +32,14 @@ Route::group(['prefix' => 'cliente'], function () {
     Route::post('add-cliente', [ClienteApiController::class, 'createNewClient']);
     Route::post('update-cliente', [ClienteApiController::class, 'UpdateCliente']);
     Route::post('delete-cliente/{id}', [ClienteApiController::class, 'deleteCliente']);
+    
+
+});
+Route::group(['prefix' => 'proveedor'], function () {
+    Route::get('get-proveedor', [ProveedoresApiController::class, 'getAllProveedores']);
+    Route::post('add-proveedor', [ProveedoresApiController::class, 'createNewProveedor']);
+    Route::post('update-proveedor', [ProveedoresApiController::class, 'UpdateProveedor']);
+    Route::post('delete-proveedor/{id}', [ProveedoresApiController::class, 'deleteProveedor']);
     
 
 });
