@@ -20,21 +20,6 @@ import Vue from 'vue'
 
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
-import 'dtoaster/dist/dtoaster.css'
-import DToaster from 'dtoaster'
-
-Vue.use(DToaster, {
-  position: 'top-right', //toasts container position on the screen
-  containerOffset: '45px', //toasts container offset from top/bottom of the screen
-})
-
-// Import one of the available themes
-//import 'vue-toast-notification/dist/theme-default.css';
-
-
-// Import Bootstrap an BootstrapVue CSS files (order is important)
-/* import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css' */
 
 // Make BootstrapVue available throughout your project
 Vue.use(BootstrapVue)

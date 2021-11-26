@@ -580,7 +580,7 @@ export default {
     deleteVenta(id) {
       this.$swal
         .fire({
-          title: "Estas seguro de cancelar esta venta?",
+          title: "Estas seguro de eliminar esta venta?",
           showCancelButton: true,
           confirmButtonText: "SI",
         })

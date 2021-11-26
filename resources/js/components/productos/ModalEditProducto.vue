@@ -201,6 +201,16 @@ export default {
           let mensaje = response.data.data;
           if (mensaje == 200) {
 
+ this.$swal
+        .fire({
+
+
+  position: 'top-end',
+  icon: 'success',
+  title: 'Tu producto ha sido actualizado',
+  showConfirmButton: false,
+  timer: 1500
+})
 
             this.$emit("updateProductos");
           }

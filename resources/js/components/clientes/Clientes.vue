@@ -266,7 +266,20 @@ export default {
     },
 
     DeleteCliente(id) {
-      ClienteServices.DeleteCliente(id)
+
+
+
+
+this.$swal
+        .fire({
+          title: "Estas seguro de eliminar este cliente?",
+          showCancelButton: true,
+          confirmButtonText: "SI",
+        })
+        .then((result) => {
+          /* Read more about isConfirmed, isDenied below */
+          if (result.isConfirmed) {
+           ClienteServices.DeleteCliente(id)
         .then((response) => {
           let mensaje = response.data.data;
           if (mensaje == 200) {
@@ -276,6 +289,19 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+
+          }
+        });
+    
+
+
+
+
+
+
+
+
+
     },
   },
 };

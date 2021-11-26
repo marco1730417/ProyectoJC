@@ -291,7 +291,18 @@ export default {
     },
 
     DeleteProducto(id) {
-      ProductoServices.DeleteProducto(id)
+    
+    
+       this.$swal
+        .fire({
+          title: "Estas seguro de eliminar este producto?",
+          showCancelButton: true,
+          confirmButtonText: "SI",
+        })
+        .then((result) => {
+          /* Read more about isConfirmed, isDenied below */
+          if (result.isConfirmed) {
+          ProductoServices.DeleteProducto(id)
         .then((response) => {
           let mensaje = response.data.data;
           if (mensaje == 200) {
@@ -301,7 +312,21 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+          }
+        });
+    
+    
+    
+    
+    
+    
+    
     },
+
+
+
+
+
   },
 };
 </script>

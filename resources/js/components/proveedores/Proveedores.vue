@@ -266,6 +266,16 @@ export default {
     },
 
     DeleteProveedor(id) {
+
+this.$swal
+        .fire({
+          title: "Estas seguro de eliminar este proveedor?",
+          showCancelButton: true,
+          confirmButtonText: "SI",
+        })
+        .then((result) => {
+          /* Read more about isConfirmed, isDenied below */
+          if (result.isConfirmed) {
       ProveedorServices.DeleteProveedor(id)
         .then((response) => {
           let mensaje = response.data.data;
@@ -274,8 +284,28 @@ export default {
           }
         })
         .catch((error) => {
-          console.log(error);
+         this.$swal
+        .fire({
+  position: 'top-end',
+  icon: 'error',
+  title: 'Este proveedor tiene una compra asociada',
+  showConfirmButton: false,
+  timer: 1500
+})
+
+
+
         });
+
+          }
+        });
+    
+
+
+
+
+
+        
     },
   },
 };
