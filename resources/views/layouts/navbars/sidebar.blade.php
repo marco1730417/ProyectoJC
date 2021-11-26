@@ -124,6 +124,11 @@
                         <i class="ni ni-palette text-blue"></i> {{ __('Reporte Ventas') }}
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('reporte.reportecliente') }}">
+                        <i class="ni ni-palette text-blue"></i> {{ __('Reporte Clientes') }}
+                    </a>
+                </li>
 
                 
 

@@ -41,27 +41,7 @@ class VentaApiController extends ApiResponseController
         return $this->successResponse($new_venta->id);
     }
 
-    public function createVenta(Request $request)
-    {
-        $carbon = new \Carbon\Carbon();
-        $fecha = $carbon->now();
 
-       // return $fecha;
-
-        $data = request()->all();
-
-
-        $new_venta = new Venta;
-        $new_venta->fecha = $fecha;
-        $new_venta->observacion = "Ninguna";
-        $new_venta->cliId =  $data['cliId'];;
-
-        $new_venta->save();
-
-        if (!$new_venta) return $this->errorResponse(500);
-
-        return $this->successResponse($new_venta->id);
-    }
 
     public function registrarPagoContado(Request $request)
     {
@@ -130,6 +110,32 @@ class VentaApiController extends ApiResponseController
         $new_pago->saldo =  $data['saldo'];
         $new_pago->total =  $data['total'];
         $new_pago->fechamaxima =  $data['fechamaxima'];
+
+        $new_pago->save();
+
+        if (!$new_pago) return $this->errorResponse(500);
+
+        return $this->successResponse(200);
+    }
+    public function registrarPagoCheque(Request $request)
+    {
+        $carbon = new \Carbon\Carbon();
+        $fecha = $carbon->now();
+
+        $data = request()->all();
+
+
+        $new_pago = new Pago;
+        $new_pago->venId = $data['venId'];
+        $new_pago->fecha = $fecha;
+        $new_pago->tipo = "Cheque";
+        $new_pago->cliId =  $data['cliId'];
+        $new_pago->pago = 0;
+        $new_pago->total =  $data['total'];
+        $new_pago->saldo =  $data['total'];
+        $new_pago->fechamaxima =  $data['fechamaxima'];
+        $new_pago->cheque =  $data['cheque'];
+        
 
         $new_pago->save();
 
@@ -259,8 +265,6 @@ if($new_detalle){
             'saldo' => $saldo,
             'totalcobrar' => $totalcobrar,
 
-            
-       
           ];
 
         return $this->successResponse($info_pago_abono);
@@ -268,7 +272,8 @@ if($new_detalle){
 
     public function deleteVenta($venId)
     {
-        $detalle_venta = DetalleVenta::where('venId',$venId)->delete();
+        Pago::where('venId',$venId)->delete();
+        DetalleVenta::where('venId',$venId)->delete();
        $venta = Venta :: findOrFail($venId)->delete();  
 
        if (!$venta) return $this->errorResponse(500);

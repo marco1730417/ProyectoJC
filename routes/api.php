@@ -77,7 +77,6 @@ Route::group(['prefix' => 'reportes'], function () {
 
 
 Route::group(['prefix' => 'venta'], function () {
-    Route::post('create-venta', [VentaApiController::class, 'createVenta']);
     Route::post('create-nueva-venta', [VentaApiController::class, 'createNuevaVenta']);
     Route::post('update-venta', [VentaApiController::class, 'updateVenta']);
     Route::post('registrar-abono', [VentaApiController::class, 'registrarabono']);
@@ -101,6 +100,7 @@ Route::group(['prefix' => 'venta'], function () {
     Route::post('registrar-pago-contado', [VentaApiController::class, 'registrarPagoContado']);
     Route::post('registrar-pago-transferencia', [VentaApiController::class, 'registrarPagoTransferencia']);
     Route::post('registrar-pago-abono', [VentaApiController::class, 'registrarPagoAbono']);
+    Route::post('registrar-pago-cheque', [VentaApiController::class, 'registrarPagoCheque']);
    
 
 

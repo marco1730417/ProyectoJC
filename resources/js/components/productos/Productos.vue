@@ -183,6 +183,7 @@
 <script>
 import ProductoServices from "../../services/productoServices";
 
+
 import { BootstrapVue } from "bootstrap-vue";
 import ModalNuevoProducto from "./ModalNuevoProducto.vue";
 Vue.use(BootstrapVue);

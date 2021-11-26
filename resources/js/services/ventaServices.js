@@ -10,10 +10,7 @@ export default {
 
     /************************** STANDARS API ********************************/
 
-    createVenta(data) {
-        let url = server + resource + "create-venta";
-        return Axios.post(url, data);
-    },
+  
     updateVenta(data) {
         let url = server + resource + "update-venta";
         return Axios.post(url, data);
@@ -78,7 +75,11 @@ export default {
     registrarPagoAbono(data) {
         let url = server + resource + "registrar-pago-abono";
         return Axios.post(url, data);
+    },   registrarPagoCheque(data) {
+        let url = server + resource + "registrar-pago-cheque";
+        return Axios.post(url, data);
     },
+
 
     
 

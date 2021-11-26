@@ -35,7 +35,7 @@
   <div class="row">
     <div class="col-md-6">
       
-      <p>Ingrese la informacion de la compra</p>
+      <p>Informacion de la compra</p>
    <b-container fluid>
  <b-row class="my-1">
     <b-col sm="4">
@@ -84,7 +84,7 @@
   </b-container>
 
     
-      <p>Ingrese los productos adquiridos</p>
+      <p>Productos adquiridos</p>
    <b-container fluid>
  <b-row class="my-1">
     <b-col sm="4">
@@ -119,6 +119,11 @@
  <br/>
     <b-col class="text-center" sm="12">
       <b-button size="sm" @click="addProductosCompra" variant="primary">Guardar Producto</b-button>
+ <b-button size="sm"  data-toggle="modal"
+                    data-target="#ModalNuevoProducto" variant="secondary">Nuevo Producto</b-button>
+
+
+
     </b-col>
   </b-row>
   </b-container>
@@ -129,8 +134,8 @@
  
   <!--  {{detallecompra}} -->
     <b-table striped hover :items="detallecompra" :fields="fields"></b-table>
-    <b-alert v-if="producto" variant="success" show>El producto {{producto.nombre}}  tiene actualmente {{producto.unidades}} mtrs en stock  </b-alert>     
-      </div>
+    <!-- <b-alert v-if="producto" variant="success" show>El producto {{producto.nombre}}  tiene actualmente {{producto.unidades}} mtrs en stock  </b-alert>     
+     -->  </div>
 
 
     </div>
@@ -141,7 +146,39 @@
             </div>
 
    
-       
+          <!--          Modal agregar nuevo producto -->
+
+
+
+            <div
+              class="modal fade"
+              id="ModalNuevoProducto"
+              tabindex="-1"
+              role="dialog"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Registrar nuevo producto</h5>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <modal-nuevo-producto @updateProducto="getAllProductos" />
+                  </div>
+                  <div class="modal-footer"></div>
+                </div>
+              </div>
+            </div>
+
+          <!--          Modal agregar editar producto -->
        
 
             <!--  {{totalesventa}} -->
@@ -301,6 +338,9 @@ export default {
           let mensaje = response.data.data;
           this.getInformacionCompra();
           this.getAllProductos();
+          this.cantidad="";
+          this.precio="";
+          this.producto="";
         })
         .catch((error) => {
           console.log(error);

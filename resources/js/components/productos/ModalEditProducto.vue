@@ -200,6 +200,8 @@ export default {
         .then((response) => {
           let mensaje = response.data.data;
           if (mensaje == 200) {
+
+
             this.$emit("updateProductos");
           }
         })

@@ -5,17 +5,15 @@
         <div class="header-body">
           <!-- Card stats -->
           <div class="row">
-       
-
-            <div  class="col-xl-6 col-lg-6">
+            <div class="col-xl-6 col-lg-6">
               <div class="card card-stats mb-4 mb-xl-0">
                 <div class="card-body">
                   <div class="row"></div>
-<!-- {{detallegeneralventa.cliente[0]}} -->
+
                   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">
-                        Elija un cliente
+                        Cliente
                         <v-select
                           label="nombre"
                           v-model="clienteupdate"
@@ -23,10 +21,7 @@
                           @click="actualizarVenta"
                           required
                         ></v-select>
-
-                        
                       </h5>
-               
                     </div>
                     <div class="col-auto">
                       <div
@@ -75,7 +70,8 @@
                   </div>
                   <p class="mt-3 mb-0 text-muted text-sm">
                     <span class="text-warning mr-2"
-                      ><i class="fas fa-user"></i> {{detallegeneralventa.total[0].nombre }}
+                      ><i class="fas fa-user"></i>
+                      {{ detallegeneralventa.total[0].nombre }}
                     </span>
                     <span class="text-nowrap">{{ fecha }}</span>
                   </p>
@@ -83,15 +79,11 @@
               </div>
 
               <br />
-
-        
             </div>
           </div>
         </div>
       </div>
     </div>
-
-
 
     <div v-if="substr > 0" class="container-fluid mt--7">
       <div class="row">
@@ -236,7 +228,7 @@
                                       downloadVentaContado(
                                         pagorecibido,
                                         total_cambio,
-                                         detallegeneralventa.total[0].cliId
+                                        detallegeneralventa.total[0].cliId
                                       )
                                     "
                                     class="btn btn-primary mt-2"
@@ -352,7 +344,7 @@
                                       downloadVentaTransferencia(
                                         pagorecibidotransferencia,
                                         detalletransferencia,
-                                       detallegeneralventa.total[0].cliId
+                                        detallegeneralventa.total[0].cliId
                                       )
                                     "
                                     class="btn btn-primary mt-2"
@@ -379,7 +371,7 @@
 
             <!-- modal venta al transferencia -->
 
- <!-- modal venta abonos -->
+            <!-- modal venta abonos -->
 
             <div
               class="modal fade"
@@ -391,9 +383,7 @@
               <div class="modal-dialog modal-md" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title">
-                      Terminar venta como abono
-                    </h5>
+                    <h5 class="modal-title">Terminar venta como abono</h5>
                     <button
                       type="button"
                       class="close"
@@ -404,107 +394,97 @@
                     </button>
                   </div>
                   <div class="modal-body">
-                    <div class="container ">
-                  
-                     
+                    <div class="container">
+                      <form action="">
+                        <div class="mb-3">
+                          <p class="dis fw-bold mb-2">Fecha maxima</p>
+                          <input
+                            class="form-control"
+                            type="date"
+                            v-model="fechamaxima"
+                          />
+                        </div>
 
-                          <form action="">
- <div class="mb-3">
-      <p class="dis fw-bold mb-2">Fecha maxima</p>
- <input
-                                class="form-control"
-                                type="date"
-                                v-model="fechamaxima">
-     </div>
+                        <div class="mb-3">
+                          <p class="dis fw-bold mb-2">Cantidad recibida</p>
+                          <input
+                            class="form-control"
+                            type="number"
+                            v-model="pagorecibido"
+                          />
+                        </div>
+                        <div class="mb-3"></div>
+                        <div>
+                          <div class="address">
+                            <div class="d-flex flex-column dis">
+                              <div
+                                class="
+                                  d-flex
+                                  align-items-center
+                                  justify-content-between
+                                  mb-2
+                                "
+                              >
+                                <p>Total</p>
+                                <p>
+                                  <span class="fas fa-dollar-sign"></span>
+                                  {{
+                                    parseFloat(totalesventa.total).toFixed(2)
+                                  }}
+                                </p>
+                              </div>
+                              <div
+                                class="
+                                  d-flex
+                                  align-items-center
+                                  justify-content-between
+                                  mb-2
+                                "
+                              >
+                                <p>Abono</p>
+                                <p>
+                                  <span class="fas fa-dollar-sign"></span
+                                  >{{ pagorecibido }}
+                                </p>
+                              </div>
+                              <div
+                                class="
+                                  d-flex
+                                  align-items-center
+                                  justify-content-between
+                                  mb-2
+                                "
+                              >
+                                <p>Saldo</p>
+                                <p>
+                                  <span class="fas fa-dollar-sign"></span
+                                  >{{ parseFloat(total_saldo).toFixed(2) }}
+                                </p>
+                              </div>
 
-                            <div class="mb-3">
-                              <p class="dis fw-bold mb-2">Cantidad recibida</p>
-                              <input
-                                class="form-control"
-                                type="number"
-                                v-model="pagorecibido"
-                              />
-                            </div>
-                            <div class="mb-3">
-                         
-
-
-                            </div>
-                            <div>
-                              <div class="address">
-                                <div class="d-flex flex-column dis">
-                                  <div
-                                    class="
-                                      d-flex
-                                      align-items-center
-                                      justify-content-between
-                                      mb-2
-                                    "
-                                  >
-                                    <p>Total</p>
-                                    <p>
-                                      <span class="fas fa-dollar-sign"></span>
-                                      {{
-                                        parseFloat(totalesventa.total).toFixed(
-                                          2
-                                        )
-                                      }}
-                                    </p>
-                                  </div>
-                                        <div
-                                    class="
-                                      d-flex
-                                      align-items-center
-                                      justify-content-between
-                                      mb-2
-                                    "
-                                  >
-                                    <p>Abono</p>
-                                    <p>
-                                      <span class="fas fa-dollar-sign"></span
-                                      >{{ pagorecibido }}
-                                    </p>
-                                  </div>
-                                  <div
-                                    class="
-                                      d-flex
-                                      align-items-center
-                                      justify-content-between
-                                      mb-2
-                                    "
-                                  >
-                                    <p>Saldo</p>
-                                    <p>
-                                      <span class="fas fa-dollar-sign"></span
-                                      >{{ parseFloat(total_saldo).toFixed(2) }}
-                                    </p>
-                                  </div>
-                                     
-<!-- {{detallegeneralventa}} -->
-                                  <div
-                                    v-if="fechamaxima && pagorecibido"
-                                    @click="
-                                      downloadVentaAbono(
-                                        pagorecibido,
-                                        fechamaxima,
-                                           detallegeneralventa.total[0].cliId
-                                      )
-                                    "
-                                    class="btn btn-primary mt-2"
-                                  >
-                                    <span class="fas fa-dollar-sign px-1"></span
-                                    >Terminar Venta
-                                  </div>
-                                  <div v-else class="btn btn-primary mt-2">
-                                    <span class="fas fa-dollar-sign px-1"></span
-                                    >Terminar Venta
-                                  </div>
-                                </div>
+                              <!-- {{detallegeneralventa}} -->
+                              <div
+                                v-if="fechamaxima && pagorecibido"
+                                @click="
+                                  downloadVentaAbono(
+                                    pagorecibido,
+                                    fechamaxima,
+                                    detallegeneralventa.total[0].cliId
+                                  )
+                                "
+                                class="btn btn-primary mt-2"
+                              >
+                                <span class="fas fa-dollar-sign px-1"></span
+                                >Terminar Venta
+                              </div>
+                              <div v-else class="btn btn-primary mt-2">
+                                <span class="fas fa-dollar-sign px-1"></span
+                                >Terminar Venta
                               </div>
                             </div>
-                          </form>
-                      
-               
+                          </div>
+                        </div>
+                      </form>
                     </div>
                   </div>
                   <div class="modal-footer"></div>
@@ -512,12 +492,105 @@
               </div>
             </div>
 
-            <!-- modal venta al transferencia -->
+            <!-- modal venta al abonos -->
+  <!-- modal venta al cheque -->
+            <div
+              class="modal fade"
+              id="ModalVentaCheque"
+              tabindex="-1"
+              role="dialog"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-md" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Terminar venta como cheque</h5>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="container">
+                      <form action="">
+                        <div class="mb-3">
+                          <p class="dis fw-bold mb-2">Fecha maxima</p>
+                          <input
+                            class="form-control"
+                            type="date"
+                            v-model="fechamaximacheque"
+                          />
+                        </div>
+
+                        <div class="mb-3">
+                          <p class="dis fw-bold mb-2">Detalle cheque</p>
+                          <input
+                            class="form-control"
+                            type="text"
+                            v-model="detallecheque"
+                          />
+                        </div>
+                        <div class="mb-3"></div>
+                        <div>
+                          <div class="address">
+                            <div class="d-flex flex-column dis">
+                              <div
+                                class="
+                                  d-flex
+                                  align-items-center
+                                  justify-content-between
+                                  mb-2
+                                "
+                              >
+                                <p>Cantidad de pago</p>
+                                <p>
+                                  <span class="fas fa-dollar-sign"></span>
+                                  {{
+                                    parseFloat(totalesventa.total).toFixed(2)
+                                  }}
+                                </p>
+                              </div>
+                        
+
+                              <!-- {{detallegeneralventa}} -->
+                              <div
+                                v-if="fechamaximacheque && detallecheque"
+                                @click="
+                                  downloadVentaCheque(
+                                    fechamaximacheque,
+                                    detallecheque,
+                                    detallegeneralventa.total[0].cliId
+                                  )
+                                "
+                                class="btn btn-primary mt-2"
+                              >
+                                <span class="fas fa-dollar-sign px-1"></span
+                                >Terminar Venta
+                              </div>
+                              <div v-else class="btn btn-primary mt-2">
+                                <span class="fas fa-dollar-sign px-1"></span
+                                >Terminar Venta
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <div class="modal-footer"></div>
+                </div>
+              </div>
+            </div>
 
 
 
 
-         <!-- modal observaciones generales  -->
+
+            <!-- modal observaciones generales  -->
 
             <div
               class="modal fade"
@@ -529,9 +602,7 @@
               <div class="modal-dialog modal-md" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title">
-                      Observaciones Generales
-                    </h5>
+                    <h5 class="modal-title">Observaciones Generales</h5>
                     <button
                       type="button"
                       class="close"
@@ -543,24 +614,20 @@
                   </div>
                   <div class="modal-body">
                     <div class="container d-lg-flex">
-                  
-                    
-                        <b-form-textarea
-                          id="textarea"
-                          v-model="observacion"
-                          placeholder="Espacio para nota general de la venta"
-                          rows="6"
-                          max-rows="6"
-                        ></b-form-textarea><br/>
-                            <b-button
+                      <b-form-textarea
+                        id="textarea"
+                        v-model="observacion"
+                        placeholder="Espacio para nota general de la venta"
+                        rows="6"
+                        max-rows="6"
+                      ></b-form-textarea
+                      ><br />
+                      <b-button
                         @click="updateObservacion(observacion)"
                         size="sm"
                         variant="success"
                         >Guardar</b-button
                       >
-                   
-             
-                  
                     </div>
                   </div>
                   <div class="modal-footer"></div>
@@ -568,9 +635,7 @@
               </div>
             </div>
 
-            <!-- modal venta al transferencia -->
-
-
+            <!-- modal venta observaciones -->
 
             <div class="col-12"></div>
 
@@ -621,7 +686,7 @@
               </table>
             </div>
 
-            <b-container  class="bv-example-row">
+            <b-container class="bv-example-row">
               <b-row>
                 <b-col></b-col>
                 <b-col></b-col>
@@ -680,20 +745,24 @@
                       ><i class="fas fa-wallet"></i
                       >Transferencia</b-dropdown-item
                     >
-                     <b-dropdown-item
+                    <b-dropdown-item
                       data-toggle="modal"
                       data-target="#ModalVentaAbono"
                       ><i class="fas fa-comments-dollar"></i
                       >Abono</b-dropdown-item
                     >
-                      <b-dropdown-item
+                       <b-dropdown-item
+                      data-toggle="modal"
+                      data-target="#ModalVentaCheque"
+                      ><i class="fas fa-money-check"></i
+                      >Cheque</b-dropdown-item
+                    >
+                    <b-dropdown-item
                       data-toggle="modal"
                       data-target="#ModalObservacionesGenerales"
                       ><i class="fas fa-paper-plane"></i
                       >Observaciones</b-dropdown-item
                     >
-
-                    
 
                     <b-dropdown-item @click="deleteVenta"
                       ><i class="fas fa-ban"></i>Eliminar Venta</b-dropdown-item
@@ -736,7 +805,6 @@ export default {
     return {
       fecha: moment().format("MMMM Do YYYY"),
       cliente: "",
-      modeupdate: false,
       clienteupdate: "",
       formadepagoupdate: "",
       infocliente: [],
@@ -752,15 +820,14 @@ export default {
       filter: null,
       formadepago: "",
       substr: "",
-      fechamaxima:"",
-      saldo:"",
+      fechamaxima: "",
+      fechamaximacheque:"",
+      detallecheque:"",
+      saldo: "",
     };
   },
   watch: {
-    // whenever question changes, this function will run
-    clienteupdate: function (newClient, oldQuestion) {
-      console.log(JSON.stringify(newClient.id));
-
+    clienteupdate: function (newClient, oldClient) {
       this.actualizarVenta(newClient.id);
     },
   },
@@ -773,16 +840,15 @@ export default {
 
       return tt;
     },
-      total_saldo: function () {
+    total_saldo: function () {
       //console.log(this.productosSelected.tarVenta + "valor unitario");
       let total = this.totalesventa.total;
       let pagorecibido = this.pagorecibido;
       let tt = total - pagorecibido;
-      this.saldo= tt;
+      this.saldo = tt;
 
       return tt;
     },
-    
   },
   created() {
     this.myFunction();
@@ -792,8 +858,7 @@ export default {
     this.getInformacionVenta();
     this.totalesVenta();
     this.detalleGeneralVenta();
-
-      },
+  },
   methods: {
     updateDatos() {
       this.getInformacionVenta();
@@ -827,6 +892,8 @@ export default {
           confirmButtonText: "Si",
         })
         .then((result) => {
+
+
           /* Read more about isConfirmed, isDenied below */
           if (result.isConfirmed) {
             VentaServices.deleteVenta(this.substr)
@@ -839,6 +906,9 @@ export default {
               .catch((error) => {
                 console.log(error);
               });
+
+
+
           }
         });
     },
@@ -866,9 +936,8 @@ export default {
       VentaServices.detalleGeneralVenta(this.substr)
         .then((response) => {
           this.detallegeneralventa = response.data.data;
-       //   this.detallegeneralventa = this.detallegeneralventa.shift();
-       this.clienteupdate=this.detallegeneralventa['cliente'];
-       //   console.log(this.detallegeneralventa['cliente']);
+          //   en caso que exista informacion de venta asignamos el cliente
+          this.clienteupdate = this.detallegeneralventa["cliente"];
         })
         .catch((error) => {
           console.log(error);
@@ -886,17 +955,77 @@ export default {
         .then((response) => {
           let mensaje = response.data.data;
           if (mensaje == 200) {
-            this.detalleVenta();
-            this.totalDashboardVentas();
+
+
+   this.$swal
+        .fire({
+          title: "Su venta ha sido guardada, Desea imprimir la factura?",
+          showCancelButton: true,
+          confirmButtonText: "Si",
+        })
+        .then((result) => {
+
+
+   if (result.isConfirmed) {
+
+           let routeData = server + resource + `download-venta/` + this.substr;
+      window.open(routeData);
+
+
+          }
+        });
+
+
+
+
+            
           }
         })
         .catch((error) => {
           console.log(error);
         });
 
-      let routeData = server + resource + `download-venta/` + this.substr;
-      window.open(routeData);
+  
     },
+
+downloadVentaCheque(fecha,detalle,cliId){
+  let data = {
+        venId: this.substr,
+        total: this.totalesventa.total,
+        fechamaxima: fecha,
+        cheque: detalle,
+        cliId: cliId,
+      };
+    VentaServices.registrarPagoCheque(data)
+        .then((response) => {
+          let mensaje = response.data.data;
+          if (mensaje == 200) {
+   this.$swal
+        .fire({
+          title: "Su venta ha sido guardada, Desea imprimir la factura?",
+          showCancelButton: true,
+          confirmButtonText: "Si",
+        })
+        .then((result) => {
+
+
+   if (result.isConfirmed) {
+
+           let routeData = server + resource + `download-venta/` + this.substr;
+      window.open(routeData);
+
+
+          }
+        });
+
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+
+},
 
     downloadVentaTransferencia(pago, detalle, cliId) {
       let data = {
@@ -910,42 +1039,76 @@ export default {
         .then((response) => {
           let mensaje = response.data.data;
           if (mensaje == 200) {
-            this.detalleVenta();
-            this.totalDashboardVentas();
+            
+               this.$swal
+        .fire({
+          title: "Su venta ha sido guardada, Desea imprimir la factura?",
+          showCancelButton: true,
+          confirmButtonText: "Si",
+        })
+        .then((result) => {
+
+
+   if (result.isConfirmed) {
+
+           let routeData = server + resource + `download-venta/` + this.substr;
+      window.open(routeData);
+
+
+          }
+        });
+
           }
         })
         .catch((error) => {
           console.log(error);
         });
 
-      let routeData = server + resource + `download-venta/` + this.substr;
-      window.open(routeData);
+
     },
 
-downloadVentaAbono(pago,fechamaxima,cliId){
-       let data = {
-            venId: this.substr,
-     
+    downloadVentaAbono(pago, fechamaxima, cliId) {
+      let data = {
+        venId: this.substr,
+
         fechamaxima: fechamaxima,
         total: this.totalesventa.total,
         abono: pago,
         cliId: cliId,
-        saldo:this.saldo,
+        saldo: this.saldo,
       };
-            VentaServices.registrarPagoAbono(data)
+      VentaServices.registrarPagoAbono(data)
         .then((response) => {
           let mensaje = response.data.data;
           if (mensaje == 200) {
+
+   this.$swal
+        .fire({
+          title: "Su venta ha sido guardada, Desea imprimir la factura?",
+          showCancelButton: true,
+          confirmButtonText: "Si",
+        })
+        .then((result) => {
+
+
+   if (result.isConfirmed) {
+ let routeData = server + resource + `download-venta/` + this.substr;
+      window.open(routeData);
+
+
+
+          }
+        });
+
+
           }
         })
         .catch((error) => {
           console.log(error);
         });
 
-      let routeData = server + resource + `download-venta/` + this.substr;
-      window.open(routeData);
-},
-
+ 
+    },
 
     totalesVenta() {
       VentaServices.totalesVenta(this.substr)
@@ -974,31 +1137,6 @@ downloadVentaAbono(pago,fechamaxima,cliId){
         });
     },
 
-    updatecliente() {},
-
-    createVenta() {
-      let data = {
-        cliId: this.cliente["id"],
-      };
-
-      VentaServices.createVenta(data)
-        .then((response) => {
-          let mensaje = response.data.data;
-
-          this.substr = mensaje;
-          this.totalesVenta();
-          this.detalleGeneralVenta();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-
-    updateVenta() {
-      this.modeupdate = true;
-      this.camposactivos = true;
-    },
-
     actualizarVenta(cliente) {
       let data = {
         cliId: cliente,
@@ -1008,8 +1146,7 @@ downloadVentaAbono(pago,fechamaxima,cliId){
       VentaServices.updateVenta(data)
         .then((response) => {
           let mensaje = response.data.data;
-      this.detalleGeneralVenta();
-    
+          this.detalleGeneralVenta();
         })
         .catch((error) => {
           console.log(error);
@@ -1018,7 +1155,6 @@ downloadVentaAbono(pago,fechamaxima,cliId){
     myFunction: function () {
       this.substr = this.$route.path;
       this.substr = this.substr.substring(11);
-             console.log(this.substr+'venta');
     },
   },
 };

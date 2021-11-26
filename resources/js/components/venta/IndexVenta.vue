@@ -181,7 +181,7 @@
             <div class="col-12"></div>
 
             <div class="table-responsive">
-              <table class="table align-items-center table-flush">
+              <table  class="table align-items-center table-flush">
                 <thead class="thead-light">
                   <tr>
                     <th scope="col">Cliente</th>
@@ -264,7 +264,8 @@
                       >
                         <i class="fas fa-trash" title="Eliminar venta"></i>
                       </a>
-                         <a
+                 <!--      {{item}} -->
+                         <a v-if="item.tipo == 'Abono' "
                         class="btn btn-sm btn-icon-only text-light"
                         data-toggle="modal"
                         data-target="#ModalAbonos"

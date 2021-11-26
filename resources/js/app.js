@@ -20,12 +20,25 @@ import Vue from 'vue'
 
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
+import 'dtoaster/dist/dtoaster.css'
+import DToaster from 'dtoaster'
+
+Vue.use(DToaster, {
+  position: 'top-right', //toasts container position on the screen
+  containerOffset: '45px', //toasts container offset from top/bottom of the screen
+})
+
+// Import one of the available themes
+//import 'vue-toast-notification/dist/theme-default.css';
+
+
 // Import Bootstrap an BootstrapVue CSS files (order is important)
 /* import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css' */
 
 // Make BootstrapVue available throughout your project
 Vue.use(BootstrapVue)
+
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
 
@@ -79,6 +92,7 @@ Vue.component('compras', require('./components/compra/IndexCompra.vue').default)
 Vue.component('edit-compra', require('./components/compra/EditCompra.vue').default);
 
 Vue.component('reportes', require('./components/reporte/IndexReporte.vue').default);
+Vue.component('reporte-cliente', require('./components/reporte/ReporteCliente.vue').default);
 
 
 Vue.component('modal-venta-producto', require('./components/venta/ModalVentaProducto.vue').default);

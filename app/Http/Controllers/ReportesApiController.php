@@ -32,10 +32,8 @@ class ReportesApiController extends ApiResponseController
         $end_date = Carbon::parse($fechahasta)
         ->toDateTimeString();
         $info_venta= Venta :: select ('ventas.id','pagos.tipo','pagos.total','ventas.fecha','ventas.observacion',
-        'clientes.nombre','clientes.ruc','clientes.direccion','clientes.telefono',
-        DB::raw("(SELECT sum(detalle_ventas.cantidad*detalle_ventas.precioUnitario) FROM detalle_ventas
-        WHERE ventas.id=detalle_ventas.venId
-        ) AS total"),
+        'clientes.nombre','clientes.ruc','clientes.direccion','clientes.telefono'
+      
         )
       ->whereBetween(DB::raw('DATE(ventas.fecha)'), [$start_date, $end_date])
        ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
