@@ -109,12 +109,26 @@ this.email="";
         .then((response) => {
           let mensaje = response.data.data;
           if (mensaje == 200) {
-            this.clearfields();
             this.$emit("updateProveedores");
+                 this.$swal
+        .fire({
+  icon: 'success',
+  title: 'Proveedor agregado',
+  showConfirmButton: false,
+  timer: 1500
+})
+
           }
         })
         .catch((error) => {
-          console.log(error);
+          this.$swal
+        .fire({
+  icon: 'error',
+  title: 'Proveedor no agregado',
+  showConfirmButton: false,
+  timer: 1500
+})
+
         });
     },
          onlyNumber ($event) {

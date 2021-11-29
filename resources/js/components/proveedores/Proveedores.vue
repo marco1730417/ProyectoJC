@@ -118,19 +118,15 @@
         </div>
       </div>
 
-      <vue-perfect-scrollbar
-        :class="
-          infoproveedor.lenght > 0 || infoproveedor.lenght < 7 ? 'inactive' : ''
-        "
-        class="scroll dashboard dashboard-list-with-thumbs"
-        :settings="{ suppressScrollX: true, wheelPropagation: false }"
-      >
+   
         <b-table
           :items="infoproveedor"
           :fields="fields"
           :filter="filter"
           responsive="sm"
-        >
+        >   <template #cell(index)="data">
+              {{ data.index + 1 }}
+            </template>
           <template #cell(nombre)="data">
             <small class="mb-0 mr-2">{{ data.item.nombre }}</small>
           </template>
@@ -173,7 +169,7 @@
             </b-button>
           </template>
         </b-table>
-      </vue-perfect-scrollbar>
+    
     </b-card>
   </div>
 </template>
@@ -195,6 +191,13 @@ export default {
       infoeditproveedor: [],
       filter: null,
       fields: [
+            {
+            key: "index",
+            label: "Item",
+            sortable: false,
+            sortDirection: "desc",
+            tdClass: "index",
+          },
         {
           key: "nombre",
           label: "Proveedor",
@@ -241,14 +244,15 @@ export default {
   },
   methods: {
     updateProveedores() {
-      this.getAllProveedores();
+    
 
-      $("#ModalNuevoProveedor").modal("hide");
+ /*      $('#ModalNuevoProveedor').modal("hide");
+  */       location.reload();
     },
     updateProveedoresUpdate() {
-      this.getAllProveedores();
+        location.reload();
 
-      $("#ModalEditProveedor").modal("hide");
+ /*      $("#ModalEditProveedor").modal("hide"); */
     },
     openModalEditProveedor(infoproveedor) {
       this.infoeditproveedor = infoproveedor;
@@ -286,7 +290,6 @@ this.$swal
         .catch((error) => {
          this.$swal
         .fire({
-  position: 'top-end',
   icon: 'error',
   title: 'Este proveedor tiene una compra asociada',
   showConfirmButton: false,

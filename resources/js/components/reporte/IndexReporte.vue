@@ -66,7 +66,7 @@
                       </div>
                       <div class="col-md-8">
                      <!--     {{infoventa}}  -->
-                        <b-table
+                        <b-table v-if="infoventa"
                           striped
                           hover
                           :items="infoventa.ventas_por_fecha"
@@ -79,7 +79,7 @@
                
                 </div>
               </div>
-                 <table class="table">
+                 <table v-if="infoventa" class="table">
 <thead>
     <tr>
         <th>Total Contado</th>

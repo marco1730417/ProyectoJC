@@ -109,7 +109,7 @@
               
               <div class="form-group row">
                 <label for="password" class="col-sm-6 col-form-label"
-                  >Precio Especial</label
+                  >Precio especial x 25 /15 mtrs</label
                 >
                 <div class="col-sm-6">
                   <input

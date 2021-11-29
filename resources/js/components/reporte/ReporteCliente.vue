@@ -38,7 +38,7 @@
       <p>Seleccione el cliente</p>
    <b-container fluid>
  
-   <b-row class="my-1">
+
       Cliente
                         <v-select
                           label="nombre"
@@ -47,12 +47,9 @@
                           @click="reporteVentas"
                           required
                         ></v-select>
-                          </b-row>
      <b-row class="my-1">
  <br/>
-    <b-col class="text-center" sm="12">
-      <b-button size="sm" @click="reporteVentas" variant="primary">Generar</b-button>
-    </b-col>
+ 
   </b-row>
   </b-container>
 

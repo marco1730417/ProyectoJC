@@ -105,11 +105,26 @@ this.email="";
         .then((response) => {
           let mensaje = response.data.data;
           if (mensaje == 200) {
-            this.$emit("updateClientes");
+            this.$emit("updateProveedores");
+
+                        this.$swal
+        .fire({
+  icon: 'success',
+  title: 'Proveedor actualizado',
+  showConfirmButton: false,
+  timer: 1500
+})
           }
         })
         .catch((error) => {
-          console.log(error);
+                     this.$swal
+        .fire({
+  icon: 'success',
+  title: 'Proveedor no actualizado',
+  showConfirmButton: false,
+  timer: 1500
+})
+
         });
     },
          onlyNumber ($event) {
