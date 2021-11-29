@@ -77,7 +77,7 @@ Vue.component('compras', require('./components/compra/IndexCompra.vue').default)
 Vue.component('edit-compra', require('./components/compra/EditCompra.vue').default);
 
 Vue.component('reportes', require('./components/reporte/IndexReporte.vue').default);
-Vue.component('reporte-cliente', require('./components/reporte/ReporteCliente.vue').default);
+Vue.component('reporte-clientes', require('./components/reporte/ReporteCliente.vue').default);
 
 
 Vue.component('modal-venta-producto', require('./components/venta/ModalVentaProducto.vue').default);

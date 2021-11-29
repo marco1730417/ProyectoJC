@@ -4,95 +4,133 @@
       <div class="container-fluid">
         <div class="header-body">
           <!-- Card stats -->
-     <div class="row">
-       
-
-            <div  class="col-xl-6 col-lg-6">
-       
-            </div>
-
-       
+          <div class="row">
+            <div class="col-xl-6 col-lg-6"></div>
           </div>
         </div>
       </div>
     </div>
 
-
-
- <div  class="container-fluid mt--7">
+    <div class="container-fluid mt--7">
       <div class="row">
         <div class="col">
           <div class="card shadow">
             <div class="card-header border-0">
               <div class="row align-items-center">
-             
                 <div class="col-12 text-left">
-             
-<div class="container">
-  <h3 class="text-center">Reportes de ventas</h3>
+                  <div class="container">
+                    <h3 class="text-center">Reportes de ventas</h3>
 
+                    <div class="row">
+                      <div class="col-md-4">
+                        <p>Seleccione la fecha</p>
+                        <b-container fluid>
+                          <b-row class="my-1">
+                            <b-col sm="4">
+                              <label for="input-small">Desde:</label>
+                            </b-col>
+                            <b-col sm="8">
+                              <b-form-input
+                                id="input-small"
+                                size="sm"
+                                type="date"
+                                v-model="fechadesde"
+                              ></b-form-input>
+                            </b-col>
+                          </b-row>
+                          <b-row class="my-1">
+                            <b-col sm="4">
+                              <label for="input-small">Hasta:</label>
+                            </b-col>
+                            <b-col sm="8">
+                              <b-form-input
+                                id="input-small"
+                                size="sm"
+                                type="date"
+                                v-model="fechahasta"
+                              ></b-form-input>
+                            </b-col>
+                          </b-row>
+                          <b-row class="my-1">
+                            <br />
+                            <b-col class="text-center" sm="12">
+                              <b-button
+                                size="sm"
+                                @click="reporteVentas"
+                                variant="primary"
+                                >Generar</b-button
+                              >
+                            </b-col>
+                          </b-row>
+                        </b-container>
+                      </div>
+                      <div class="col-md-8">
+                     <!--     {{infoventa}}  -->
+                        <b-table
+                          striped
+                          hover
+                          :items="infoventa.ventas_por_fecha"
+                          :fields="fields"
+                        ></b-table>
+                      </div>
+                    </div>
+                  </div>
 
-  <div class="row">
-    <div class="col-md-4">
-      
-      <p>Seleccione la fecha</p>
-   <b-container fluid>
- 
-   <b-row class="my-1">
-    <b-col sm="4">
-      <label for="input-small">Desde:</label>
-    </b-col>
-      <b-col sm="8">
-      <b-form-input id="input-small" size="sm" type="date" v-model="fechadesde" ></b-form-input>
-    </b-col>
-   </b-row>
-      <b-row class="my-1">
-    <b-col sm="4">
-      <label for="input-small">Hasta:</label>
-    </b-col>
-      <b-col sm="8">
-      <b-form-input id="input-small" size="sm" type="date" v-model="fechahasta" ></b-form-input>
-    </b-col>
-   </b-row>
-     <b-row class="my-1">
- <br/>
-    <b-col class="text-center" sm="12">
-      <b-button size="sm" @click="reporteVentas" variant="primary">Generar</b-button>
-    </b-col>
-  </b-row>
-  </b-container>
-
-    
-    </div>
-    <div class="col-md-8">
- <!-- {{infoventa}} -->
-    <b-table striped hover :items="infoventa" :fields="fields"></b-table>
-  
-  
-      </div>
-
-
-    </div>
-  </div>
-</div>
+               
                 </div>
               </div>
-            </div>
+                 <table class="table">
+<thead>
+    <tr>
+        <th>Total Contado</th>
+        <th>Total Transferencia</th>
+ <th>Total Abonos </th>
+        <th>Total Cheque</th>
 
-   
        
+    </tr>
+</thead>
+<tbody>
+    <tr>
        
+        <td> 
 
-            <!--  {{totalesventa}} -->
+                 {{ parseFloat(infoventa.ventas_contado).toFixed(2) }}
+                       
+        </td>  
+        <td> 
 
-            <div class="card-footer py-4">
-              <nav class="d-flex justify-content-end" aria-label="..."></nav>
+                 {{ parseFloat(infoventa.ventas_transferencia).toFixed(2) }}
+                       
+        </td> 
+        <td> 
+
+                 {{ parseFloat(infoventa.ventas_abono).toFixed(2) }}
+                       
+        </td>
+           <td> 
+
+                 {{ parseFloat(infoventa.ventas_cheque).toFixed(2) }}
+                       
+        </td>
+     
+    
+    </tr>
+
+</tbody>
+</table>
             </div>
+          </div>
+
+          <!--  {{totalesventa}} -->
+
+          <div class="card-footer py-4">
+            <nav class="d-flex justify-content-end" aria-label="..."></nav>
           </div>
         </div>
       </div>
     </div>
-
+  </div>
 </template>
 
 
@@ -119,7 +157,6 @@ export default {
   },
   data() {
     return {
-
       fields: [
         {
           key: "nombre",
@@ -128,9 +165,16 @@ export default {
           sortDirection: "desc",
           tdClass: "list-item-enddate",
         },
-  {
+        {
           key: "fecha",
           label: "Fecha",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "list-item-enddate",
+        },
+            {
+          key: "tipo",
+          label: "Metodo Pago",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate",
@@ -144,22 +188,18 @@ export default {
         },
       ],
       fechadesde: "",
-        fechahasta: "",
+      fechahasta: "",
       cliente: "",
-      infoventa:"",
-    
+      infoventa: "",
+
       producto: "",
     };
   },
-  created() {
-  },
+  created() {},
 
-  mounted() {
-
-  },
+  mounted() {},
   methods: {
-   
-        onlyNumber($event) {
+    onlyNumber($event) {
       //console.log($event.keyCode); //keyCodes value
       let keyCode = $event.keyCode ? $event.keyCode : $event.which;
       if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) {
@@ -169,7 +209,7 @@ export default {
     },
 
     reporteVentas() {
-      ReporteServices.reporteVentas(this.fechadesde,this.fechahasta)
+      ReporteServices.reporteVentas(this.fechadesde, this.fechahasta)
         .then((response) => {
           this.infoventa = response.data.data;
         })
@@ -177,8 +217,6 @@ export default {
           console.log(error);
         });
     },
-
-
   },
 };
 </script>

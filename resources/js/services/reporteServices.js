@@ -20,5 +20,10 @@ export default {
         let url = server + resource + 'reporte-ventas';
         return Axios.get(url + "/" + fechadesde+ "/" + fechahasta);
     },
+    reporteVentasporCliente(cliId) {
+        //console.log(Axios.get(url));
+        let url = server + resource + 'reporte-por-cliente';
+        return Axios.get(url + "/" + cliId);
+    },
  
 }

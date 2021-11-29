@@ -27,4 +27,6 @@ class DetalleVenta extends Model
         return $venta_parciales;
 
 }
+
+
 }

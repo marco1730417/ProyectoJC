@@ -39,21 +39,15 @@
    <b-container fluid>
  
    <b-row class="my-1">
-    <b-col sm="4">
-      <label for="input-small">Desde:</label>
-    </b-col>
-      <b-col sm="8">
-      <b-form-input id="input-small" size="sm" type="date" v-model="fechadesde" ></b-form-input>
-    </b-col>
-   </b-row>
-      <b-row class="my-1">
-    <b-col sm="4">
-      <label for="input-small">Hasta:</label>
-    </b-col>
-      <b-col sm="8">
-      <b-form-input id="input-small" size="sm" type="date" v-model="fechahasta" ></b-form-input>
-    </b-col>
-   </b-row>
+      Cliente
+                        <v-select
+                          label="nombre"
+                          v-model="cliente"
+                          :options="infocliente"
+                          @click="reporteVentas"
+                          required
+                        ></v-select>
+                          </b-row>
      <b-row class="my-1">
  <br/>
     <b-col class="text-center" sm="12">
@@ -66,7 +60,7 @@
     </div>
     <div class="col-md-8">
  <!-- {{infoventa}} -->
-    <b-table striped hover :items="infoventa" :fields="fields"></b-table>
+    <b-table striped hover :items="infoventascliente" :fields="fields"></b-table>
   
   
       </div>
@@ -146,16 +140,21 @@ export default {
       fechadesde: "",
         fechahasta: "",
       cliente: "",
-      infoventa:"",
-    
+      infoventascliente:"",
+    infocliente:"",
       producto: "",
     };
+  },
+   watch: {
+    cliente: function (newClient, oldClient) {
+      this.reporteVentas(newClient.id);
+    },
   },
   created() {
   },
 
   mounted() {
-
+this.getAllClientes();
   },
   methods: {
    
@@ -167,11 +166,20 @@ export default {
         $event.preventDefault();
       }
     },
-
-    reporteVentas() {
-      ReporteServices.reporteVentas(this.fechadesde,this.fechahasta)
+      getAllClientes() {
+      ClienteServices.getAllClientes()
         .then((response) => {
-          this.infoventa = response.data.data;
+          this.infocliente = response.data.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    reporteVentas(id) {
+      ReporteServices.reporteVentasporCliente(id)
+        .then((response) => {
+          this.infoventascliente = response.data.data;
         })
         .catch((error) => {
           console.log(error);

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\api\ApiResponseController;
 use App\Models\Compras;
 use App\Models\DetalleCompras;
+use App\Models\DetalleVenta;
+use App\Models\Pago;
 use App\Models\Proveedores;
 use App\Models\Producto;
 use Illuminate\Support\Facades\DB;
@@ -31,22 +33,88 @@ class ReportesApiController extends ApiResponseController
         ->toDateTimeString();
         $end_date = Carbon::parse($fechahasta)
         ->toDateTimeString();
+
         $info_venta= Venta :: select ('ventas.id','pagos.tipo','pagos.total','ventas.fecha','ventas.observacion',
         'clientes.nombre','clientes.ruc','clientes.direccion','clientes.telefono'
-      
         )
       ->whereBetween(DB::raw('DATE(ventas.fecha)'), [$start_date, $end_date])
        ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
         ->leftJoin('pagos', 'ventas.id', '=', 'pagos.venId')
         ->get();
+ 
+        $contado= Pago::select(
+                                  
+            db::raw('(pagos.pago) as parcial')
+          )
+  ->leftJoin('ventas as ventas','pagos.venId','=','ventas.id')
+  ->where('pagos.tipo','Contado')
+  ->whereBetween(DB::raw('DATE(ventas.fecha)'), [$start_date, $end_date])
+      
+->get();
+$contado_valor= $contado->sum('parcial');
+$transferencia= Pago::select(
+                                  
+    db::raw('(pagos.pago) as parcial')
+  )
+->leftJoin('ventas as ventas','pagos.venId','=','ventas.id')
+->where('pagos.tipo','Transferencia')
+->whereBetween(DB::raw('DATE(ventas.fecha)'), [$start_date, $end_date])
+
+->get();
+$transferencia_valor= $transferencia->sum('parcial');
+$abono= Pago::select(
+                                  
+    db::raw('(pagos.pago) as parcial')
+  )
+->leftJoin('ventas as ventas','pagos.venId','=','ventas.id')
+->where('pagos.tipo','Abono')
+->whereBetween(DB::raw('DATE(ventas.fecha)'), [$start_date, $end_date])
+
+->get();
+$abono_valor= $abono->sum('parcial');
+$cheque= Pago::select(
+                                  
+    db::raw('(pagos.pago) as parcial')
+  )
+->leftJoin('ventas as ventas','pagos.venId','=','ventas.id')
+->where('pagos.tipo','Cheque')
+->whereBetween(DB::raw('DATE(ventas.fecha)'), [$start_date, $end_date])
+
+->get();
+$cheque_valor= $cheque->sum('parcial');
 
 
-
+$totales_venta = [
+    'ventas_por_fecha' => $info_venta,
+    'ventas_contado' =>     ($contado_valor),
+    'ventas_transferencia' =>     ($transferencia_valor),
+    'ventas_abono' =>     ($abono_valor),
+    'ventas_cheque' =>     ($cheque_valor),
+    
+    
+    
+    
+  ];
     
       
-        return $this->successResponse($info_venta);
+        return $this->successResponse($totales_venta);
     }
      
+    public function reporteVentasporCLiente($cliId)
+
+    {
+        $ventas_cliente= Venta :: select ('ventas.id','pagos.tipo','pagos.total','ventas.fecha','ventas.observacion',
+        'clientes.nombre','clientes.ruc','clientes.direccion','clientes.telefono'
+        )
+       ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
+       ->leftJoin('pagos', 'ventas.id', '=', 'pagos.venId')
+     ->where('clientes.id',$cliId)
+        ->get();
+
+
+      
+        return $this->successResponse($ventas_cliente);
+    }
 
 }
 
