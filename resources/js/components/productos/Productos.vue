@@ -1,11 +1,8 @@
 <template>
   <div>
-
-
     <b-card>
       <div class="card-title mb-0">
         <div class="d-flex">
-
           <div class="w-50">
             <b-form-group inline size="sm">
               <b-form-input
@@ -20,39 +17,36 @@
             </b-form-group>
 
             <!--          Modal agregar nuevo producto -->
-
           </div>
           <!--          Modal agregar nuevo producto -->
 
-
-
-            <div
-              class="modal fade"
-              id="ModalNuevoProducto"
-              tabindex="-1"
-              role="dialog"
-              aria-hidden="true"
-            >
-              <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title">Registrar nuevo producto</h5>
-                    <button
-                      type="button"
-                      class="close"
-                      data-dismiss="modal"
-                      aria-label="Close"
-                    >
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <modal-nuevo-producto @updateProducto="updateProducto" />
-                  </div>
-                  <div class="modal-footer"></div>
+          <div
+            class="modal fade"
+            id="ModalNuevoProducto"
+            tabindex="-1"
+            role="dialog"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Registrar nuevo producto</h5>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
                 </div>
+                <div class="modal-body">
+                  <modal-nuevo-producto @updateProducto="updateProducto" />
+                </div>
+                <div class="modal-footer"></div>
               </div>
             </div>
+          </div>
 
           <!--          Modal agregar editar producto -->
 
@@ -89,7 +83,7 @@
 
           <!--          Modal agregar nuevo producto -->
 
-       <!--    <b-button
+          <!--    <b-button
             size="xs"
             variant="primary"
             data-toggle="modal"
@@ -97,84 +91,102 @@
             >Nuevo Producto</b-button
           >
  -->
-   <div class="col-4 text-right">
-                  <a
-                    href=""
-                    class="btn btn-sm btn-primary"
-                    data-toggle="modal"
-                    data-target="#ModalNuevoProducto"
-                    >Nuevo Producto</a
-                  >  </div>
-
+          <div class="col-4 text-right">
+            <a
+              href=""
+              class="btn btn-sm btn-primary"
+              data-toggle="modal"
+              data-target="#ModalNuevoProducto"
+              >Nuevo Producto</a
+            >
+          </div>
         </div>
       </div>
 
-      <div class="col-md-6 float-right">
+      <div class="col-md-6 float-right"></div>
+      <b-table
+        id="my-table"
+        sticky-header
+        striped
+        show-empty
+        small
+        fixed
+        hover
+        :items="infoproducto"
+        :fields="fields"
+        :per-page="perPage"
+        :current-page="currentPage"
+        responsive="sm"
+      >
+        <template #cell(index)="data">
+          <small> {{ data.index + 1 }} </small>
+        </template>
+        <template #cell(nombre)="data">
+          <small class="mb-0 mr-2">{{ data.item.nombre }}</small>
+        </template>
+
+        <template #cell(descripcion)="data">
+          <small class="mb-0 mr-2">{{ data.item.descripcion }}</small>
+        </template>
+        <template #cell(unidades)="data">
+          <small class="mb-0 mr-2">{{ data.item.unidades }}</small>
+        </template>
+
+        <template #cell(PrecioVenta1)="data">
+          <b-badge variant="outline" class="p-1" size="sm">{{
+            data.item.PrecioVenta1
+          }}</b-badge>
+        </template>
+
+        <template #cell(PrecioVenta2)="data">
+          <b-badge variant="outline" class="p-1" size="sm">{{
+            data.item.PrecioVenta2
+          }}</b-badge>
+        </template>
+
+        <template #cell(Utilidad)="data">
+          <b-badge variant="outline" class="p-1" size="sm">{{
+            data.item.Utilidad
+          }}</b-badge>
+        </template>
+
+        <template #cell(actions)="data">
+          <b-button
+            variant="outline-info default actions"
+            size="sm"
+            data-toggle="tooltip"
+            data-placement="top"
+            title="save"
+            @click="openModalEditProducto(data.item)"
+          >
+            <i class="fas fa-save"></i>
+          </b-button>
+
+          <b-button
+            variant="outline-danger default actions"
+            size="sm"
+            data-toggle="tooltip"
+            data-placement="top"
+            title="save"
+            @click="DeleteProducto(data.item.id)"
+          >
+            <i class="fas fa-trash"></i>
+          </b-button>
+        </template>
+      </b-table>
+      <!-- PAGINACION -->
+      <div v-if="rows > 5">
+        <b-pagination
+          class="text-center"
+          v-model="currentPage"
+          :total-rows="rows"
+          :per-page="perPage"
+          aria-controls="my-table"
+          size="sm"
+          align="center"
+        ></b-pagination>
       </div>
-       <b-table
-          :items="infoproducto"
-          :fields="fields"
-          :filter="filter"
-          
- responsive="sm"
-        >
-        
-          <template #cell(nombre)="data">
-            <small class="mb-0 mr-2">{{ data.item.nombre }}</small>
-          </template>
-         
-          <template #cell(descripcion)="data">
-            <small class="mb-0 mr-2">{{ data.item.descripcion }}</small>
-          </template>
-          <template #cell(unidades)="data">
-            <small class="mb-0 mr-2">{{ data.item.unidades }}</small>
-          </template>
-
-         
-          <template #cell(PrecioVenta1)="data">
-            <b-badge variant="outline" class="p-1" size="sm">{{
-              data.item.PrecioVenta1
-            }}</b-badge>
-          </template>
-          
-      <template #cell(PrecioVenta2)="data">
-            <b-badge variant="outline" class="p-1" size="sm">{{
-              data.item.PrecioVenta2
-            }}</b-badge>
-          </template>
-                    
-      <template #cell(Utilidad)="data">
-            <b-badge variant="outline" class="p-1" size="sm">{{
-              data.item.Utilidad
-            }}</b-badge>
-          </template>
-         
-
-          <template #cell(actions)="data">
-            <b-button
-              variant="outline-info default actions"
-              size="sm"
-              data-toggle="tooltip"
-              data-placement="top"
-              title="save"
-              @click="openModalEditProducto(data.item)"
-            >
-              <i class="fas fa-save"></i>
-            </b-button>
-
-            <b-button
-              variant="outline-danger default actions"
-              size="sm"
-              data-toggle="tooltip"
-              data-placement="top"
-              title="save"
-              @click="DeleteProducto(data.item.id)"
-            >
-              <i class="fas fa-trash"></i>
-            </b-button>
-          </template>
-        </b-table>
-     
+      <!-- FIN PAGINACION -->
     </b-card>
   </div>
 </template>
@@ -182,7 +194,6 @@
 
 <script>
 import ProductoServices from "../../services/productoServices";
-
 
 import { BootstrapVue } from "bootstrap-vue";
 import ModalNuevoProducto from "./ModalNuevoProducto.vue";
@@ -196,10 +207,18 @@ export default {
       loading: false,
       infoeditproducto: [],
       filter: null,
-      
+      perPage: 10,
+      currentPage: 1,
       fields: [
+        {
+          key: "index",
+          label: "Item",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "index",
+        },
 
-   /*      {
+        /*      {
           key: "id",
           label: "Id",
           sortable: false,
@@ -213,7 +232,7 @@ export default {
           sortDirection: "desc",
           tdClass: "list-item-enddate",
         },
-     
+
         {
           key: "descripcion",
           label: "Descripcion",
@@ -229,7 +248,7 @@ export default {
           sortDirection: "desc",
           tdClass: "list-item-enddate",
         },
-           {
+        {
           key: "PrecioVenta1",
           label: "Precio metro",
           sortable: false,
@@ -237,23 +256,20 @@ export default {
           tdClass: "list-item-enddate text-center",
         },
 
-          {
+        {
           key: "PrecioVenta2",
           label: "Precio rollo",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate text-center",
         },
-       {
+        {
           key: "Utilidad",
           label: "Utilidad",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate text-center",
         },
- 
-
-     
 
         { key: "actions", label: "Acciones", tdClass: "text-center" },
       ],
@@ -262,12 +278,16 @@ export default {
   mounted() {
     this.getAllProductos();
   },
+  computed: {
+    //Paginación
+    rows() {
+      return this.infoproducto.length;
+    },
+  },
   methods: {
     updateProducto() {
       $("#ModalNuevoProducto").modal("hide");
-     this.getAllProductos();
-
-     
+      this.getAllProductos();
     },
 
     updateProductosUpdate() {
@@ -291,9 +311,7 @@ export default {
     },
 
     DeleteProducto(id) {
-    
-    
-       this.$swal
+      this.$swal
         .fire({
           title: "Estas seguro de eliminar este producto?",
           showCancelButton: true,
@@ -302,31 +320,19 @@ export default {
         .then((result) => {
           /* Read more about isConfirmed, isDenied below */
           if (result.isConfirmed) {
-          ProductoServices.DeleteProducto(id)
-        .then((response) => {
-          let mensaje = response.data.data;
-          if (mensaje == 200) {
-            this.getAllProductos();
+            ProductoServices.DeleteProducto(id)
+              .then((response) => {
+                let mensaje = response.data.data;
+                if (mensaje == 200) {
+                  this.getAllProductos();
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+              });
           }
-        })
-        .catch((error) => {
-          console.log(error);
         });
-          }
-        });
-    
-    
-    
-    
-    
-    
-    
     },
-
-
-
-
-
   },
 };
 </script>

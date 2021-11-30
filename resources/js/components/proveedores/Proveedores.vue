@@ -120,12 +120,14 @@
 
    
         <b-table
+           id="my-table"
           :items="infoproveedor"
           :fields="fields"
-          :filter="filter"
           responsive="sm"
+  :per-page="perPage"
+        :current-page="currentPage"
         >   <template #cell(index)="data">
-              {{ data.index + 1 }}
+                    <small> {{ data.index + 1 }} </small> 
             </template>
           <template #cell(nombre)="data">
             <small class="mb-0 mr-2">{{ data.item.nombre }}</small>
@@ -169,6 +171,19 @@
             </b-button>
           </template>
         </b-table>
+            <!-- PAGINACION -->
+      <div v-if="rows > 2">
+        <b-pagination
+          class="text-center"
+          v-model="currentPage"
+          :total-rows="rows"
+          :per-page="perPage"
+          aria-controls="my-table"
+          size="sm"
+          align="center"
+        ></b-pagination>
+      </div>
+      <!-- FIN PAGINACION -->
     
     </b-card>
   </div>
@@ -189,6 +204,9 @@ export default {
       infoproveedor: [],
       loading: false,
       infoeditproveedor: [],
+         perPage: 10,
+      currentPage: 1,
+  
       filter: null,
       fields: [
             {
@@ -241,6 +259,12 @@ export default {
   },
   mounted() {
     this.getAllProveedores();
+  },
+    computed: {
+    //Paginación
+    rows() {
+      return this.infoproveedor.length;
+    },
   },
   methods: {
     updateProveedores() {
