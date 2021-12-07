@@ -121,10 +121,23 @@ this.email="";
           let mensaje = response.data.data;
           if (mensaje == 200) {
             this.$emit("updateClientes");
+                              this.$swal
+        .fire({
+  icon: 'success',
+  title: 'Cliente actualizado',
+  showConfirmButton: false,
+  timer: 1500
+})
           }
         })
         .catch((error) => {
-          console.log(error);
+                   this.$swal
+        .fire({
+  icon: 'success',
+  title: 'Cliente no actualizado',
+  showConfirmButton: false,
+  timer: 1500
+})
         });
     },
          onlyNumber ($event) {

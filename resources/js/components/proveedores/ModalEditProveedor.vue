@@ -6,6 +6,7 @@
         <b-form-input
           id="input-2"
           v-model="infoeditproveedor.nombre"
+                :maxlength="maxnombre"
           placeholder="Ingrese el nombre"
           required
         ></b-form-input>
@@ -15,6 +16,7 @@
         <b-form-input
           id="input-2"
           v-model="infoeditproveedor.ruc"
+            :maxlength="maxruc"
           placeholder="Ingrese Ruc"
            @keypress="onlyNumber"
           
@@ -23,13 +25,14 @@
       </b-form-group>
       <b-form-group
         id="input-group-2"
-        label="Telefono:"
+        label="Telefono"
         label-for="input-2"
       >
         <b-form-input
           id="input-2"
           v-model="infoeditproveedor.telefono"
-          placeholder="Enter telefono"
+            :maxlength="maxtelefono"
+          placeholder="Ingrese telefono"
            @keypress="onlyNumber"
           required
         ></b-form-input>
@@ -44,7 +47,7 @@
           id="input-1"
           v-model="infoeditproveedor.email"
           type="email"
-          placeholder="Enter email"
+          placeholder="Ingrese el  email"
           required
         ></b-form-input>
       </b-form-group>
@@ -52,6 +55,7 @@
         <b-form-textarea
           id="textarea"
           v-model="infoeditproveedor.direccion"
+           :maxlength="maxdireccion"
           placeholder="Ingrese la direccion"
           rows="3"
           max-rows="6"
@@ -59,7 +63,13 @@
       </b-form-group>
      <!--  {{infoeditproveedor}}
  -->
-      <b-button  size="sm"  variant="primary" @click="UpdateProveedor(infoeditproveedor)">Actualizar</b-button>
+     <!--  <b-button  size="sm"  variant="primary" @click="UpdateProveedor(infoeditproveedor)">Actualizar</b-button>
+
+ -->
+    <b-button v-if="infoeditproveedor.nombre&&infoeditproveedor.ruc" size="md"  variant="primary" @click="UpdateProveedor(infoeditproveedor)">Actualizar</b-button>
+      
+      <b-button v-else  size="md"  variant="primary" disabled>Actualizar</b-button>
+
     </b-form>
   </div>
     </div>
@@ -75,6 +85,10 @@ export default {
   props:['infoeditproveedor'],
   data() {
     return {
+        maxruc: 13,
+      maxnombre: 50,
+      maxtelefono: 10,
+      maxdireccion: 150,
       show: true,
       cliente: "",
       infocliente: [],

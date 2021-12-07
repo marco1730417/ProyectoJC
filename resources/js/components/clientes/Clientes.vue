@@ -120,6 +120,7 @@
           :items="infocliente"
           :fields="fields"
           :filter="filter"
+          show-empty
           responsive="sm"
           :per-page="perPage"
           :current-page="currentPage"

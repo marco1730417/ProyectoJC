@@ -123,6 +123,8 @@
            id="my-table"
           :items="infoproveedor"
           :fields="fields"
+            :filter="filter"
+        show-empty
           responsive="sm"
   :per-page="perPage"
         :current-page="currentPage"
@@ -130,22 +132,27 @@
                     <small> {{ data.index + 1 }} </small> 
             </template>
           <template #cell(nombre)="data">
-            <small class="mb-0 mr-2">{{ data.item.nombre }}</small>
+       <!--      <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
+            {{ data.item.nombre }}
           </template>
           <template #cell(ruc)="data">
-            <small class="mb-0 mr-2">{{ data.item.ruc }}</small>
+           <!--  <small class="mb-0 mr-2">{{ data.item.ruc }}</small> -->
+            {{ data.item.ruc }}
           </template>
           <template #cell(direccion)="data">
-            <small class="mb-0 mr-2">{{ data.item.direccion }}</small>
+ <!--            <small class="mb-0 mr-2">{{ data.item.direccion }}</small> -->
+            {{ data.item.direccion }}
           </template>
           <template #cell(telefono)="data">
-            <small class="mb-0 mr-2">{{ data.item.telefono }}</small>
+          <!--   <small class="mb-0 mr-2">{{ data.item.telefono }}</small> -->
+            {{ data.item.telefono }}
           </template>
 
           <template #cell(email)="data">
-            <b-badge variant="outline" class="p-1" size="sm">{{
+           <!--  <b-badge variant="outline" class="p-1" size="sm">{{
               data.item.email
-            }}</b-badge>
+            }}</b-badge> -->
+            {{ data.item.email }}
           </template>
           <template #cell(actions)="data">
             <b-button
@@ -270,13 +277,13 @@ export default {
     updateProveedores() {
     
 
- /*      $('#ModalNuevoProveedor').modal("hide");
-  */       location.reload();
+      $('#ModalNuevoProveedor').modal("hide");
+         location.reload();
     },
     updateProveedoresUpdate() {
         location.reload();
 
- /*      $("#ModalEditProveedor").modal("hide"); */
+       $("#ModalEditProveedor").modal("hide"); 
     },
     openModalEditProveedor(infoproveedor) {
       this.infoeditproveedor = infoproveedor;

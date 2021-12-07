@@ -125,12 +125,29 @@ this.email="";
         .then((response) => {
           let mensaje = response.data.data;
           if (mensaje == 200) {
-            this.clearfields();
-            this.$emit("updateClientes");
-          }
+        
+        
+        
+        this.$emit("updateClientes");
+                        this.$swal
+        .fire({
+  icon: 'success',
+  title: 'Cliente agregado',
+  showConfirmButton: false,
+  timer: 1500
+})
+        
+        
+        }
         })
         .catch((error) => {
-          console.log(error);
+          this.$swal
+        .fire({
+  icon: 'error',
+  title: 'Cliente no agregado',
+  showConfirmButton: false,
+  timer: 1500
+})
         });
     },
          onlyNumber ($event) {
