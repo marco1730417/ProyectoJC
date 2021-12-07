@@ -60,7 +60,7 @@
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title">Edit Cliente</h5>
+                  <h5 class="modal-title">Actualizar informacion de cliente</h5>
                   <button
                     type="button"
                     class="close"
@@ -81,20 +81,17 @@
             </div>
           </div>
 
-          <!--          Modal agregar nuevo cliente -->
+   
 
-
-      <div class="col-4 text-right">
-                  <a
-                    href=""
-                    class="btn btn-sm btn-primary"
-                    data-toggle="modal"
-                    data-target="#ModalNuevoCliente"
-                    >Nuevo Cliente</a
-                  >  </div>
-
-
-
+          <div class="col-4 text-right">
+            <a
+              href=""
+              class="btn btn-sm btn-primary"
+              data-toggle="modal"
+              data-target="#ModalNuevoCliente"
+              >Nuevo Cliente</a
+            >
+          </div>
         </div>
       </div>
 
@@ -118,36 +115,40 @@
         </div>
       </div>
 
-      <vue-perfect-scrollbar
-        :class="
-          infocliente.lenght > 0 || infocliente.lenght < 7 ? 'inactive' : ''
-        "
-        class="scroll dashboard dashboard-list-with-thumbs"
-        :settings="{ suppressScrollX: true, wheelPropagation: false }"
-      >
+
         <b-table
           :items="infocliente"
           :fields="fields"
           :filter="filter"
           responsive="sm"
+          :per-page="perPage"
+          :current-page="currentPage"
         >
+          <template #cell(index)="data">
+            <small> {{ data.index + 1 }} </small>
+          </template>
           <template #cell(nombre)="data">
-            <small class="mb-0 mr-2">{{ data.item.nombre }}</small>
+            <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
+            {{ data.item.nombre }}
           </template>
           <template #cell(ruc)="data">
-            <small class="mb-0 mr-2">{{ data.item.ruc }}</small>
+            <!--  <small class="mb-0 mr-2">{{ data.item.ruc }}</small> -->
+            {{ data.item.ruc }}
           </template>
           <template #cell(direccion)="data">
-            <small class="mb-0 mr-2">{{ data.item.direccion }}</small>
+            <!--    <small class="mb-0 mr-2">{{ data.item.direccion }}</small> -->
+            {{ data.item.direccion }}
           </template>
           <template #cell(telefono)="data">
-            <small class="mb-0 mr-2">{{ data.item.telefono }}</small>
+            <!--    <small class="mb-0 mr-2">{{ data.item.telefono }}</small> -->
+            {{ data.item.telefono }}
           </template>
 
           <template #cell(email)="data">
-            <b-badge variant="outline" class="p-1" size="sm">{{
+            <!--     <b-badge variant="outline" class="p-1" size="sm">{{
               data.item.email
-            }}</b-badge>
+            }}</b-badge> -->
+            {{ data.item.email }}
           </template>
           <template #cell(actions)="data">
             <b-button
@@ -173,9 +174,24 @@
             </b-button>
           </template>
         </b-table>
-      </vue-perfect-scrollbar>
+        <!-- PAGINACION -->
+        <div v-if="rows > 2">
+          <b-pagination
+            class="text-center"
+            v-model="currentPage"
+            :total-rows="rows"
+            :per-page="perPage"
+            aria-controls="my-table"
+            size="sm"
+            align="center"
+          ></b-pagination>
+        </div>
+        <!-- FIN PAGINACION -->
+
     </b-card>
+  
   </div>
+  
 </template>
 
 
@@ -193,8 +209,18 @@ export default {
       infocliente: [],
       loading: false,
       infoeditcliente: [],
+      perPage: 10,
+      currentPage: 1,
+
       filter: null,
       fields: [
+        {
+          key: "index",
+          label: "Item",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "index",
+        },
         {
           key: "nombre",
           label: "Cliente",
@@ -236,6 +262,12 @@ export default {
       ],
     };
   },
+  computed: {
+    //Paginación
+    rows() {
+      return this.infocliente.length;
+    },
+  },
   mounted() {
     this.getAllClientes();
   },
@@ -244,11 +276,13 @@ export default {
       this.getAllClientes();
 
       $("#ModalNuevoCliente").modal("hide");
+      location.reload();
     },
     updateClientsUpdate() {
       this.getAllClientes();
 
       $("#ModalEditCliente").modal("hide");
+      location.reload();
     },
     openModalEditCliente(infocliente) {
       this.infoeditcliente = infocliente;
@@ -266,11 +300,7 @@ export default {
     },
 
     DeleteCliente(id) {
-
-
-
-
-this.$swal
+      this.$swal
         .fire({
           title: "Estas seguro de eliminar este cliente?",
           showCancelButton: true,
@@ -279,29 +309,19 @@ this.$swal
         .then((result) => {
           /* Read more about isConfirmed, isDenied below */
           if (result.isConfirmed) {
-           ClienteServices.DeleteCliente(id)
-        .then((response) => {
-          let mensaje = response.data.data;
-          if (mensaje == 200) {
-            this.getAllClientes();
+            ClienteServices.DeleteCliente(id)
+              .then((response) => {
+                let mensaje = response.data.data;
+                if (mensaje == 200) {
+                  this.getAllClientes();
+                  location.reload();
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+              });
           }
-        })
-        .catch((error) => {
-          console.log(error);
         });
-
-          }
-        });
-    
-
-
-
-
-
-
-
-
-
     },
   },
 };

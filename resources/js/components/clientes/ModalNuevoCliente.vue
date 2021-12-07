@@ -6,15 +6,18 @@
         <b-form-input
           id="input-2"
           v-model="nombre"
+             :maxlength="maxnombre"
+     
           placeholder="Ingrese el nombre"
           required
         ></b-form-input>
     <!--     {{ nombre }} -->
       </b-form-group>
-           <b-form-group id="input-group-3"   label="Ruc:" label-for="input-3"  >
+           <b-form-group id="input-group-3"   label="Ruc" label-for="input-3"  >
         <b-form-input
           id="input-2"
           v-model="ruc"
+          :maxlength="maxruc"
           placeholder="Ingrese Ruc"
            @keypress="onlyNumber"
           
@@ -23,13 +26,15 @@
       </b-form-group>
       <b-form-group
         id="input-group-2"
-        label="Telefono:"
+        label="Telefono"
         label-for="input-2"
       >
         <b-form-input
           id="input-2"
           v-model="telefono"
-          placeholder="Enter telefono"
+            :maxlength="maxtelefono"
+        
+          placeholder="Ingrese un  telefono"
            @keypress="onlyNumber"
           required
         ></b-form-input>
@@ -44,7 +49,7 @@
           id="input-1"
           v-model="email"
           type="email"
-          placeholder="Enter email"
+          placeholder="Ingrese el  email"
           required
         ></b-form-input>
       </b-form-group>
@@ -52,13 +57,17 @@
         <b-form-textarea
           id="textarea"
           v-model="direccion"
+                 :maxlength="maxdireccion"
+     
           placeholder="Ingrese la direccion"
           rows="3"
           max-rows="6"
         ></b-form-textarea>
       </b-form-group>
 
-      <b-button  size="sm"  variant="primary" @click="createNewClient()">Guardar</b-button>
+      <b-button v-if="nombre&&ruc" size="md" class="float-center"  variant="primary" @click="createNewClient()">Guardar</b-button>
+      <b-button v-else  size="md" class="float-center"  variant="primary" disabled >Guardar</b-button>
+      
     </b-form>
   </div>
     </div>
@@ -70,12 +79,18 @@ import ClienteServices from "../../services/clienteServices";
 import vSelect from "vue-select";
 import { BootstrapVue } from "bootstrap-vue";
 Vue.use(BootstrapVue);
+
 export default {
     components: {
     "v-select": vSelect,
   },
   data() {
     return {
+      maxruc: 13,
+      maxnombre: 50,
+      maxtelefono: 10,
+      maxdireccion: 150,
+      
       show: true,
       cliente: "",
       infocliente: [],
@@ -87,7 +102,7 @@ export default {
     };
   },
   mounted() {
-    console.log("Component mounted.");
+/*     console.log("Component mounted."); */
   },
   methods: {
       clearfields(){

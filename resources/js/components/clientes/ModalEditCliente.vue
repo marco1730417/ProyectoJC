@@ -6,15 +6,19 @@
         <b-form-input
           id="input-2"
           v-model="infoeditcliente.nombre"
+              :maxlength="maxnombre"
+     
           placeholder="Ingrese el nombre"
           required
         ></b-form-input>
     <!--     {{ nombre }} -->
       </b-form-group>
-           <b-form-group id="input-group-3"   label="Ruc:" label-for="input-3"  >
+           <b-form-group id="input-group-3"   label="Ruc" label-for="input-3"  >
         <b-form-input
           id="input-2"
           v-model="infoeditcliente.ruc"
+            :maxlength="maxruc"
+        
           placeholder="Ingrese Ruc"
            @keypress="onlyNumber"
           
@@ -23,12 +27,14 @@
       </b-form-group>
       <b-form-group
         id="input-group-2"
-        label="Telefono:"
+        label="Telefono"
         label-for="input-2"
       >
         <b-form-input
           id="input-2"
           v-model="infoeditcliente.telefono"
+             :maxlength="maxtelefono"
+        
           placeholder="Enter telefono"
            @keypress="onlyNumber"
           required
@@ -52,6 +58,8 @@
         <b-form-textarea
           id="textarea"
           v-model="infoeditcliente.direccion"
+          :maxlength="maxdireccion"
+     
           placeholder="Ingrese la direccion"
           rows="3"
           max-rows="6"
@@ -59,7 +67,9 @@
       </b-form-group>
      <!--  {{infoeditcliente}}
  -->
-      <b-button  size="sm"  variant="primary" @click="UpdateCliente(infoeditcliente)">Actualizar</b-button>
+      <b-button v-if="infoeditcliente.nombre&&infoeditcliente.ruc" size="sm"  variant="primary" @click="UpdateCliente(infoeditcliente)">Actualizar</b-button>
+      
+      <b-button v-else  size="sm"  variant="primary" disabled>Actualizar</b-button>
     </b-form>
   </div>
     </div>
@@ -75,6 +85,11 @@ export default {
   props:['infoeditcliente'],
   data() {
     return {
+         maxruc: 13,
+      maxnombre: 50,
+      maxtelefono: 10,
+      maxdireccion: 150,
+   
       show: true,
       cliente: "",
       infocliente: [],
@@ -86,7 +101,7 @@ export default {
     };
   },
   mounted() {
-    console.log("Component mounted.");
+  /*   console.log("Component mounted."); */
   },
   methods: {
       clearfields(){
