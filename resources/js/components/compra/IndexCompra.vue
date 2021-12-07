@@ -181,7 +181,8 @@
           </template>
           <template #cell(fecha)="data">
             <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
-            {{ data.item.fecha }}
+         <!--    {{ data.item.fecha }} -->
+              {{ moment(data.item.fecha , "YYYY-MM-DD").format("MMM DD YYYY, ddd")}}
            <!--    {{ moment(data.item.fecha).format("MMM DD YYYY, ddd") }} -->
           </template>
               <template #cell(nombre)="data">
@@ -267,7 +268,9 @@ const server = Conf.server;
 
 import { BootstrapVue } from "bootstrap-vue";
 import vSelect from "vue-select";
-
+    import moment from "moment";
+    moment.locale('es');
+    Vue.prototype.moment = moment;
 Vue.use(BootstrapVue);
 
 export default {

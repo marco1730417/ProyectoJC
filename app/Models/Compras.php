@@ -16,7 +16,7 @@ class Compras extends Model
      */
     protected $fillable = [
        'fecha', 'prvId',
-        'total', 'valoriva','comprobante','descriptivo'
+        'total', 'valoriva','comprobante','descriptivo','subtotal','subtotalcero','subtotaliva','descuento'
         
         
     ];

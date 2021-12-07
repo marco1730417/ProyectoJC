@@ -48,7 +48,10 @@ class CompraApiController extends ApiResponseController
         ,'proveedores.nombre','proveedores.ruc','proveedores.telefono','proveedores.email'
         ) 
 
-            ->leftJoin('proveedores', 'compras.prvId', '=', 'proveedores.id')->get();
+            ->leftJoin('proveedores', 'compras.prvId', '=', 'proveedores.id')
+            ->orderBy('compras.fecha','desc')
+     
+            ->get();
        
         return $this->successResponse($compras);
     }
@@ -77,7 +80,16 @@ class CompraApiController extends ApiResponseController
         $update_compra->prvId =  $data['prvId'];;
         $update_compra->total =  $data['total'];;
         $update_compra->total =  $data['total'];;
-        $update_compra->comprobante =  $data['comprobante'];;
+        $update_compra->comprobante =  $data['comprobante'];
+
+        $update_compra->subtotal =  $data['subtotal'];
+        $update_compra->subtotalcero =  $data['subtotalcero'];
+        $update_compra->subtotaliva =  $data['subtotaldoce'];
+        $update_compra->valoriva =  $data['valoriva'];
+        $update_compra->descuento =  $data['descuento'];
+        
+        
+
         $update_compra->update();
 
         if (!$update_compra) return $this->errorResponse(500);
