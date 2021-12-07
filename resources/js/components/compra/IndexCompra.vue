@@ -113,6 +113,7 @@
 
     <!-- 
 {{venId}} -->
+ 
 
     <div class="container-fluid mt--7">
       <div class="row">
@@ -123,96 +124,126 @@
                 <div class="col-8">
                   <h3 class="mb-0">Compra</h3>
                 </div>
-                <div class="col-4 text-right">
-                  <!--      <button class="btn btn-sm btn-primary"
-                     @click="nuevacompra"> Nueva Compra</button> 
-                     
-                     
-                      -->
-                  <a
+           
+         
+              </div>
+
+
+
+
+
+  <div class="row">
+                <div class="col-8">
+                   <b-form-input
+                style="height: calc(1.3em + 0.5rem + 2px); font-size: 0.75rem"
+                class="float-right"
+                id="filter-input"
+                v-model="filter"
+                type="search"
+                size="sm"
+                placeholder="Buscar Cliente"
+              ></b-form-input>
+                </div>
+           
+              <div class="col-4">
+                    <a
                     href="#"
                     @click="gotoNuevaCompra()"
                     class="badge badge-primary"
                     >Nueva Compra</a
                   >
                 </div>
+           
+           
+          
               </div>
+
+
+
+
+
+
             </div>
 
             <div class="col-12"></div>
 
-            <div class="table-responsive">
-              <table class="table align-items-center table-flush">
-                <thead class="thead-light">
-                  <tr>
-                    <th scope="col">Proveedor</th>
-                    <th scope="col">Fecha</th>
-                    <th scope="col">Valor Iva</th>
-                    <th scope="col">Total</th>
+   <b-table
+          :items="detallecompra"
+          :fields="fields"
+          :filter="filter"
+          show-empty
+          responsive="sm"
+          :per-page="perPage"
+          :current-page="currentPage"
+        >
+          <template #cell(index)="data">
+            <small> {{ data.index + 1 }} </small>
+          </template>
+          <template #cell(fecha)="data">
+            <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
+            {{ data.item.fecha }}
+           <!--    {{ moment(data.item.fecha).format("MMM DD YYYY, ddd") }} -->
+          </template>
+              <template #cell(nombre)="data">
+            <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
+            {{ data.item.nombre }}
+          </template>
+          <template #cell(ruc)="data">
+            <!--  <small class="mb-0 mr-2">{{ data.item.ruc }}</small> -->
+            {{ data.item.ruc }}
+          </template>
+          <template #cell(direccion)="data">
+            <!--    <small class="mb-0 mr-2">{{ data.item.direccion }}</small> -->
+            {{ data.item.direccion }}
+          </template>
+          <template #cell(valoriva)="data">
+            <!--    <small class="mb-0 mr-2">{{ data.item.telefono }}</small> -->
+            {{ data.item.valoriva }}
+          </template>
 
-                    <th scope="col">Accion</th>
-                  </tr>
-                </thead>
+          <template #cell(total)="data">
+            <!--     <b-badge variant="outline" class="p-1" size="sm">{{
+              data.item.email
+            }}</b-badge> -->
+            {{ data.item.total }}
+          </template>
+          <template #cell(actions)="data">
+            <b-button
+              variant="outline-info default actions"
+              size="sm"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="save"
+            @click="gotoEditCompra(data.item.id)"
+            >
+              <i class="fas fa-edit"></i>
+            </b-button>
 
-                <!--  {{detallecompra}}  -->
-                <tbody>
-                  <tr v-for="item in detallecompra">
-                    <td>
-
-<!-- {{item}} -->
-                      <a
-                        href="#"
-                        @click="gotoEditCompra(item.id)"
-                        class="badge badge-primary"
-                        >{{ item.nombre }}</a
-                      >
-          
-                    </td>
-                    <td>
-                      <!-- 
-                   {{ moment(item.fecha).format( "MMM DD YYYY, ddd" ) }} -->
-
-                      {{ item.fecha }}
-                    </td>
-
-                    <td>{{ item.valoriva }}</td>
-                    <td>{{ item.total }}</td>
-                
-                    <td class="text-center">
-                      <a
-                        class="btn btn-sm btn-icon-only text-light"
-                        @click="gotoEditCompra(item.id)"
-                        role="button"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        <i class="fas fa-file" title="PDF"></i>
-                      </a>
-                        <a
-                        class="btn btn-sm btn-icon-only text-light"
-                        @click="deleteCompra(item.id)"
-                        role="button"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        <i class="fas fa-trash" title="Borrar compra"></i>
-                      </a>
-                     
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <!--          Modal agregar editar producto -->
-        
-
-              <!--          Modal agregar editar producto -->
-                 <!--          Modal agregar editar producto -->
-         
-
-              <!--          Modal agregar editar producto -->
-            </div>
+            <b-button
+              variant="outline-danger default actions"
+              size="sm"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="save"
+         @click="deleteCompra(data.item.id)"
+            >
+              <i class="fas fa-trash"></i>
+            </b-button>
+          </template>
+        </b-table>
+           <!-- PAGINACION -->
+        <div v-if="rows > 2">
+          <b-pagination
+            class="text-center"
+            v-model="currentPage"
+            :total-rows="rows"
+            :per-page="perPage"
+            aria-controls="my-table"
+            size="sm"
+            align="center"
+          ></b-pagination>
+        </div>
+        <!-- FIN PAGINACION -->
 
             <!--  {{totalescompra}} -->
 
@@ -233,7 +264,7 @@ import Conf from "../../services/conf.js";
 
 const resource = "api/compra/";
 const server = Conf.server;
-import moment from "moment";
+
 import { BootstrapVue } from "bootstrap-vue";
 import vSelect from "vue-select";
 
@@ -245,18 +276,64 @@ export default {
   },
   data() {
     return {
+     
+   perPage: 10,
+      currentPage: 1,
+      filter: null,
     
-      fecha: moment().format("MMMM Do YYYY"),
+       fields: [
+        {
+          key: "index",
+          label: "Item",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "index",
+        },
+     
+        {
+          key: "fecha",
+          label: "Fecha",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "list-item-enddate",
+        },
+           {
+          key: "nombre",
+          label: "Proveedor",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "list-item-enddate",
+        },
+        {
+          key: "valoriva",
+          label: "Valor Iva",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "list-item-enddate",
+        },
+              {
+          key: "total",
+          label: "Total",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "list-item-enddate",
+        },
+
+ 
+        { key: "actions", label: "Acciones", tdClass: "text-center" },
+      ],
       detallecompra: [],
       totalcompras: "",
       infocompra: [],
     };
   },
     computed: {
-   
-   
-    
+    //Paginación
+    rows() {
+      return this.detallecompra.length;
+    },
   },
+  
   mounted() {
     this.getCompras();
 
