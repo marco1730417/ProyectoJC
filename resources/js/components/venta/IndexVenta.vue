@@ -110,7 +110,6 @@
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>
@@ -120,7 +119,37 @@
 {{venId}} -->
 
     <div class="container-fluid mt--7">
+
+<!--   <div class="row">
+                <div class="col-8">
+                   <b-form-input
+                style="height: calc(1.3em + 0.5rem + 2px); font-size: 0.75rem"
+                class="float-right"
+                id="filter-input"
+                v-model="filter"
+                type="search"
+                size="sm"
+                placeholder="Buscar Compra"
+              ></b-form-input>
+                </div>
+           
+              <div class="col-4">
+                    <a
+                    href="#"
+                    @click="gotoNuevaVenta()"
+                    class="badge badge-primary"
+                    >Nueva Venta</a
+                  >
+                </div>
+           
+           
+          
+              </div> -->
+
+
       <div class="row">
+   
+           
         <div class="col">
           <div class="card shadow">
             <div class="card-header border-0">
@@ -128,12 +157,19 @@
                 <div class="col-8">
                   <h3 class="mb-0">Venta</h3>
                 </div>
+                       <div class="col-8">
+                   <b-form-input
+                style="height: calc(1.3em + 0.5rem + 2px); font-size: 0.75rem"
+                class="float-right"
+                id="filter-input"
+                v-model="filter"
+                type="search"
+                size="sm"
+                placeholder="Buscar Venta"
+              ></b-form-input>
+                </div>
                 <div class="col-4 text-right">
-                  <!--      <button class="btn btn-sm btn-primary"
-                     @click="nuevaventa"> Nueva Venta</button> 
-                     
-                     
-                      -->
+              
                   <a
                     href="#"
                     @click="gotoNuevaVenta()"
@@ -147,104 +183,84 @@
             <div class="col-12"></div>
 
             <div class="table-responsive">
-              <table  class="table align-items-center table-flush">
-                <thead class="thead-light">
-                  <tr>
-                    <th scope="col">Cliente</th>
-                    <th scope="col">Fecha</th>
-                    <th scope="col">Metodo pago</th>
-                    <th scope="col">Observaciones</th>
-
-                    <th scope="col">Valor</th>
-
-                    <th scope="col">Accion</th>
-                  </tr>
-                </thead>
-
-                <!--  {{detalleventa}}  -->
-                <tbody>
-                  <tr v-for="item in detalleventa">
-                    <td>
-                      <!-- <router-link to="/nuevaventa" target="_blank">Contact</router-link>
- -->
-                      <!-- <button @click="gotoVenta" >+</button>
-     -->
-                      <!--  <router-link to="/nuevaventa" target="_blank">Contact</router-link>
- -->
-                      <!-- <router-link :to="{name: 'nuevaventa', params: { venId: 101 }   } ">Places, but 101</router-link>
-  -->
-
-                      <a
-                        href="#"
-                        @click="gotoEditVenta(item.id)"
-                        class="badge badge-primary"
-                        >{{ item.nombre }}</a
-                      >
-                      <!--   <router-link :to="{ name: 'editventa', params: { id: item.id }  } " target="_blank">
-  
-    {{ item.id }}
-
-</router-link>  -->
-                    </td>
-                    <td>
-                      <!-- 
-                   {{ moment(item.fecha).format( "MMM DD YYYY, ddd" ) }} -->
-
-                      {{ item.fecha }}
-                    </td>
-
-                    <td>{{ item.tipo }}</td>
-                    <td>{{ item.observacion }}</td>
-                    <td>
-                      $
-                      {{ parseFloat(item.totales).toFixed(2) }}
-                    </td>
-                    <td class="text-center">
-                      <a
-                        class="btn btn-sm btn-icon-only text-light"
-                        @click="downloadVenta(item.id)"
-                        role="button"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        <i class="fas fa-file" title="PDF"></i>
-                      </a>
-                      <a
-                        class="btn btn-sm btn-icon-only text-light"
-                        data-toggle="modal"
+             <b-table
+          :items="detalleventa"
+          :fields="fields1"
+          :filter="filter"
+          show-empty
+          responsive="sm"
+          :per-page="perPage"
+          :current-page="currentPage"
+        >
+          <template #cell(index)="data">
+            <small> {{ data.index + 1 }} </small>
+          </template>
+          <template #cell(fecha)="data">
+            <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
+            <!--  {{ data.item.fecha }} -->
+              {{ moment(data.item.fecha , "YYYY-MM-DD").format("MMM DD YYYY, ddd")}} 
+           <!--    {{ moment(data.item.fecha).format("MMM DD YYYY, ddd") }} -->
+          
+          </template>
+              <template #cell(nombre)="data">
+            <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
+            {{ data.item.nombre }}
+          </template>
+              <template #cell(observacion)="data">
+            <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
+            {{ data.item.observacion }}
+          </template>
+    
+    
+          <template #cell(actions)="data">
+            <b-button
+              variant="outline-info default actions"
+              data-toggle="modal"
                         data-target="#ModalVentaObservaciones"
-                        @click="captureitem(item)"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        <i class="fas fa-eye" title="Eliminar venta"></i>
-                      </a>
-                      <a
-                        class="btn btn-sm btn-icon-only text-light"
-                        @click="deleteVenta(item.id)"
-                        role="button"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        <i class="fas fa-trash" title="Eliminar venta"></i>
-                      </a>
-                 <!--      {{item}} -->
-                         <a v-if="item.tipo == 'Abono' "
-                        class="btn btn-sm btn-icon-only text-light"
-                        data-toggle="modal"
+              size="sm"
+              title="observaciones"
+          
+            >
+              <i class="fas fa-eye"></i>
+            </b-button>
+
+            <b-button
+              variant="outline-danger default actions"
+              size="sm"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="save"
+         @click="deleteVenta(data.item.id)"
+            >
+              <i class="fas fa-trash"></i>
+            </b-button>
+            <b-button
+              variant="outline-danger default actions"
+              size="sm"
+             data-toggle="modal"
                         data-target="#ModalAbonos"
                         @click="obtenerabonos(item.id)"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        <i class="fas fa-dollar-sign" title="Abonos"></i>
-                      </a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              data-placement="top"
+              title="save"
+            >
+              <i class="fas fa-dollar-sign" title="Abonos"></i>
+            </b-button>
+            
+          </template>
+        </b-table>
+             <!-- PAGINACION -->
+        <div v-if="rows > 2">
+          <b-pagination
+            class="text-center"
+            v-model="currentPage"
+            :total-rows="rows"
+            :per-page="perPage"
+            aria-controls="my-table"
+            size="sm"
+            align="center"
+          ></b-pagination>
+        </div>
+        <!-- FIN PAGINACION -->
               <!--          Modal agregar editar producto -->
               <div
                 class="modal fade"
@@ -292,7 +308,7 @@
               </div>
 
               <!--          Modal agregar editar producto -->
-                 <!--          Modal agregar editar producto -->
+              <!--          Modal agregar editar producto -->
               <div
                 class="modal fade"
                 id="ModalAbonos"
@@ -314,97 +330,99 @@
                       </button>
                     </div>
                     <div class="modal-body">
-                <!--   {{infoabonos}} -->
-  <div> <h5>Total a cobrar : $ {{infoabonos.totalcobrar}}  </h5><h5>Fecha maxima :  {{infoabonos.fechamaxima}}  </h5>
-    <b-progress :value="infoabonos.total_abonos" :max="infoabonos.totalcobrar" show-progress animated></b-progress>
-    <b-table striped hover :items="infoabonos.detalle_venta" :fields="fields"></b-table>
+                      <!--   {{infoabonos}} -->
+                      <div>
+                        <h5>Total a cobrar : $ {{ infoabonos.totalcobrar }}</h5>
+                        <h5>Fecha maxima : {{ infoabonos.fechamaxima }}</h5>
+                        <b-progress
+                          :value="infoabonos.total_abonos"
+                          :max="infoabonos.totalcobrar"
+                          show-progress
+                          animated
+                        ></b-progress>
+                        <b-table
+                          striped
+                          hover
+                          :items="infoabonos.detalle_venta"
+                          :fields="fields"
+                        ></b-table>
 
-    <form action="">
+                        <form action="">
+                          <div class="mb-3">
+                            <p class="dis fw-bold mb-2">Cantidad recibida</p>
+                            <input
+                              class="form-control"
+                              type="number"
+                              v-model="pagorecibido"
+                            />
+                          </div>
+                          <div class="mb-3"></div>
+                          <div>
+                            <div class="address">
+                              <div class="d-flex flex-column dis">
+                                <div
+                                  class="
+                                    d-flex
+                                    align-items-center
+                                    justify-content-between
+                                    mb-2
+                                  "
+                                >
+                                  <p>Total</p>
+                                  <p>
+                                    <span class="fas fa-dollar-sign"></span>
+                                    {{
+                                      parseFloat(infoabonos.saldo).toFixed(2)
+                                    }}
+                                  </p>
+                                </div>
+                                <div
+                                  class="
+                                    d-flex
+                                    align-items-center
+                                    justify-content-between
+                                    mb-2
+                                  "
+                                >
+                                  <p>Abono</p>
+                                  <p>
+                                    <span class="fas fa-dollar-sign"></span
+                                    >{{ pagorecibido }}
+                                  </p>
+                                </div>
+                                <div
+                                  class="
+                                    d-flex
+                                    align-items-center
+                                    justify-content-between
+                                    mb-2
+                                  "
+                                >
+                                  <p>Saldo</p>
+                                  <p>
+                                    <span class="fas fa-dollar-sign"></span>
+                                    {{ parseFloat(total_saldo).toFixed(2) }}
+                                  </p>
+                                </div>
 
-
-                            <div class="mb-3">
-                              <p class="dis fw-bold mb-2">Cantidad recibida</p>
-                              <input
-                                class="form-control"
-                                type="number"
-                                v-model="pagorecibido"
-                              />
-                            </div>
-                            <div class="mb-3">
-                         
-
-
-                            </div>
-                            <div>
-                              <div class="address">
-                                <div class="d-flex flex-column dis">
-                                  <div
-                                    class="
-                                      d-flex
-                                      align-items-center
-                                      justify-content-between
-                                      mb-2
-                                    "
-                                  >
-                                    <p>Total</p>
-                                    <p>
-                                      <span class="fas fa-dollar-sign"></span>
-                                      {{
-                                        parseFloat(infoabonos.saldo).toFixed(
-                                          2
-                                        )
-                                      }}
-                                    </p>
-                                  </div>
-                                        <div
-                                    class="
-                                      d-flex
-                                      align-items-center
-                                      justify-content-between
-                                      mb-2
-                                    "
-                                  >
-                                    <p>Abono</p>
-                                    <p>
-                                      <span class="fas fa-dollar-sign"></span
-                                      >{{ pagorecibido }}
-                                    </p>
-                                  </div>
-                                  <div
-                                    class="
-                                      d-flex
-                                      align-items-center
-                                      justify-content-between
-                                      mb-2
-                                    "
-                                  >
-                                    <p>Saldo</p>
-                                    <p>
-                                      <span class="fas fa-dollar-sign"></span
-                                      > {{ parseFloat(total_saldo).toFixed(2) }} 
-                                    </p>
-                                  </div>
-                                     
-
-                                  <div
-                                    v-if=" pagorecibido"
-                                    @click="registrarabono(pagorecibido,infoabonos.detalle_venta)"
-                              
-                                    class="btn btn-primary mt-2"
-                                  >
-                                    <span class="fas fa-dollar-sign px-1"></span
-                                    >Guardar Abono
-                                  </div>
-                             
+                                <div
+                                  v-if="pagorecibido"
+                                  @click="
+                                    registrarabono(
+                                      pagorecibido,
+                                      infoabonos.detalle_venta
+                                    )
+                                  "
+                                  class="btn btn-primary mt-2"
+                                >
+                                  <span class="fas fa-dollar-sign px-1"></span
+                                  >Guardar Abono
                                 </div>
                               </div>
                             </div>
-                          </form>
-                      
-</div>
-
-
-
+                          </div>
+                        </form>
+                      </div>
                     </div>
                     <div class="modal-footer"></div>
                   </div>
@@ -436,10 +454,11 @@ import Conf from "../../services/conf.js";
 
 const resource = "api/venta/";
 const server = Conf.server;
-import moment from "moment";
+
 import { BootstrapVue } from "bootstrap-vue";
 import vSelect from "vue-select";
-
+    import moment from "moment";
+    moment.locale('es');
 Vue.use(BootstrapVue);
 
 export default {
@@ -448,17 +467,55 @@ export default {
   },
   data() {
     return {
-           fields: [
-        
-          {
-            key: 'abono',
-            label: 'Abono',
-          },
-               {
-            key: 'fecha',
-            label: 'Fecha',
-          }
-        ],
+ perPage: 10,
+      currentPage: 1,
+      filter: null,
+    
+  fields1: [
+        {
+          key: "index",
+          label: "Item",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "index",
+        },
+      {
+          key: "fecha",
+          label: "Fecha",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "list-item-enddate",
+        },
+        {
+          key: "nombre",
+          label: "Cliente",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "list-item-enddate",
+        },
+           {
+          key: "observacion",
+          label: "Nota",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "list-item-enddate",
+        },
+   
+ 
+        { key: "actions", label: "Acciones", tdClass: "text-center" },
+      ],
+
+
+      fields: [
+        {
+          key: "abono",
+          label: "Abono",
+        },
+        {
+          key: "fecha",
+          label: "Fecha",
+        },
+      ],
       fecha: moment().format("MMMM Do YYYY"),
       cliente: "",
       infocliente: [],
@@ -468,50 +525,46 @@ export default {
       infoventa: [],
       text: "",
       formadepago: "",
-      infoabonos:"",
-      pagorecibido:"",
-      saldo:"",
+      infoabonos: "",
+      pagorecibido: "",
+      saldo: "",
     };
   },
-    computed: {
-   
-      total_saldo: function () {
-   
+  computed: {
+    total_saldo: function () {
       let total = this.infoabonos.saldo;
       let pagorecibido = this.pagorecibido;
       let tt = total - pagorecibido;
-      this.saldo= tt;
+      this.saldo = tt;
 
       return tt;
     },
-    
+       rows() {
+      return this.detalleventa.length;
+    },
   },
   mounted() {
     this.detalleVenta();
     this.totalDashboardVentas();
   },
   methods: {
-    registrarabono(pago,info){
-
+    registrarabono(pago, info) {
       let data = {
         info: info,
         pago: pago,
-        saldo:this.saldo,
- 
+        saldo: this.saldo,
       };
       VentaServices.registrarabono(data)
         .then((response) => {
           let mensaje = response.data.data;
           if (mensaje == 200) {
-        this.obtenerabonos();
+            this.obtenerabonos();
           }
         })
         .catch((error) => {
           console.log(error);
         });
-
-
-          },
+    },
     updateObservacion(id, texto) {
       let data = {
         id: id,
@@ -532,12 +585,10 @@ export default {
     captureitem(item) {
       this.infoventa = item;
     },
-    obtenerabonos(id){
- VentaServices.getInformacionPagosVenta(id)
+    obtenerabonos(id) {
+      VentaServices.getInformacionPagosVenta(id)
         .then((response) => {
           this.infoabonos = response.data.data;
-
-
         })
         .catch((error) => {
           console.log(error);

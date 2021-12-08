@@ -117,6 +117,8 @@
 
 
         <b-table
+          sticky-header
+        striped
           :items="infocliente"
           :fields="fields"
           :filter="filter"

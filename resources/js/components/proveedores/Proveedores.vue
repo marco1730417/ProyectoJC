@@ -120,6 +120,8 @@
 
    
         <b-table
+          sticky-header
+        striped
            id="my-table"
           :items="infoproveedor"
           :fields="fields"

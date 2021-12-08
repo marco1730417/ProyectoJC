@@ -394,10 +394,34 @@ if($new_detalle){
       
     }
 
-
-
-    
     public function detalleVenta()
+    {
+
+      
+        $info_venta= Venta :: select ('ventas.id','ventas.fecha','ventas.observacion',
+        
+        'clientes.nombre','clientes.ruc','clientes.direccion','clientes.telefono',
+        
+        DB::raw("(SELECT sum(detalle_ventas.cantidad*detalle_ventas.precioUnitario) FROM detalle_ventas
+        WHERE ventas.id=detalle_ventas.venId
+        ) AS total"),
+        )
+  
+     
+
+        ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
+        ->orderBy('ventas.fecha', 'desc')
+       
+        ->get();
+       
+        return $this->successResponse($info_venta);
+    }
+    
+    /* 
+Esta api muestra metodos de pagos asociados y por ende en ocasiones muestra dos valores en la vista principal y por eso se ha decidido que mejor
+se evite poner esta accion y unificar campos en una unica api */
+    
+    public function detalleVentav1()
     {
 
       
