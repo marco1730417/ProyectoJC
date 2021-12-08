@@ -57,7 +57,8 @@
                   for="lname"
                   class="col-sm-12 col-form-label"
                   >Su utilidad x metro es $
-                  {{ this.PrecioVenta1 - this.preciocompra }}
+                  <!-- {{ this.PrecioVenta1 - this.preciocompra }} -->
+                     {{ parseFloat(this.PrecioVenta1 - this.preciocompra).toFixed(2) }}
                 </label>
               </div>
             </div>

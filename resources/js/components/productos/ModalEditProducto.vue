@@ -63,7 +63,8 @@
                   for="lname"
                   class="col-sm-12 col-form-label"
                   >Su utilidad x metro es $
-                  {{ infoeditproducto.PrecioVenta1 - infoeditproducto.preciocompra }}
+           <!--        {{ infoeditproducto.PrecioVenta1 - infoeditproducto.preciocompra }} -->
+                    {{ parseFloat(infoeditproducto.PrecioVenta1 - infoeditproducto.preciocompra).toFixed(2) }}
                 </label>
               </div>
 
