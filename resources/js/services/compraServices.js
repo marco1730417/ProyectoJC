@@ -40,4 +40,9 @@ export default {
         let url = server + resource + "delete-compra";
         return Axios.post(url+ '/' + id);
     },
+    
+    deleteDetalleCompra(id) {
+        let url = server + resource + "delete-detalle-compra";
+        return Axios.post(url+ '/' + id);
+    },
 }

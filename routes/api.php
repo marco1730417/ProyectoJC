@@ -64,6 +64,7 @@ Route::group(['prefix' => 'compras'], function () {
     Route::post('add-productos-compra', [CompraApiController::class, 'addProductosCompra']);
     Route::get('get-informacion-compra/{comId}',  [CompraApiController::class, 'getInformacionCompra']);
     Route::post('delete-compra/{id}', [CompraApiController::class, 'deleteCompra']);
+    Route::post('delete-detalle-compra/{id}', [CompraApiController::class, 'deleteDetalleCompra']);
   
 });
 

@@ -12,8 +12,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Pagination\PaginationState;
 use Illuminate\Support\Facades\Config;
-use PDF
- ;
+use PDF;
 
 class CompraApiController extends ApiResponseController
 {
@@ -22,37 +21,45 @@ class CompraApiController extends ApiResponseController
      *
      * @return \Illuminate\Http\Response
      */
-/* 
+    /* 
      api que trae todo el datalle de compras incluido los productos */
 
     public function getInformacionHeaderCompras($id)
     {
         $detalle_compras = Compras::findOrFail($id);
 
-       
-         $proveedor_actual= Proveedores::findOrFail($detalle_compras->prvId);
 
-         $informacion_header=[
+        $proveedor_actual = Proveedores::findOrFail($detalle_compras->prvId);
+
+        $informacion_header = [
             'detalle_compra' => $detalle_compras,
             'proveedor' => $proveedor_actual
-         ];
+        ];
 
-           
+
         return $this->successResponse($informacion_header);
     }
-/* 
+    /* 
     api que trae las compras con sus detalles basicos */
     public function getCompras()
     {
-        $compras = Compras:: select('compras.id','compras.fecha','compras.total','compras.valoriva','compras.comprobante'
-        ,'proveedores.nombre','proveedores.ruc','proveedores.telefono','proveedores.email'
-        ) 
+        $compras = Compras::select(
+            'compras.id',
+            'compras.fecha',
+            'compras.total',
+            'compras.valoriva',
+            'compras.comprobante',
+            'proveedores.nombre',
+            'proveedores.ruc',
+            'proveedores.telefono',
+            'proveedores.email'
+        )
 
             ->leftJoin('proveedores', 'compras.prvId', '=', 'proveedores.id')
-            ->orderBy('compras.fecha','desc')
-     
+            ->orderBy('compras.fecha', 'desc')
+
             ->get();
-       
+
         return $this->successResponse($compras);
     }
 
@@ -60,9 +67,9 @@ class CompraApiController extends ApiResponseController
     crear una compra */
     public function createNuevaCompra()
     {
-        
+
         $new_compra = new Compras;
-        
+
         $new_compra->save();
 
         if (!$new_compra) return $this->errorResponse(500);
@@ -71,11 +78,11 @@ class CompraApiController extends ApiResponseController
     }
     public function updatecompra(Request $request)
     {
-     
+
         $data = request()->all();
 
 
-        $update_compra =  Compras::findOrFail($data['comId']) ;
+        $update_compra =  Compras::findOrFail($data['comId']);
         $update_compra->fecha =  $data['fecha'];;
         $update_compra->prvId =  $data['prvId'];;
         $update_compra->total =  $data['total'];;
@@ -87,8 +94,8 @@ class CompraApiController extends ApiResponseController
         $update_compra->subtotaliva =  $data['subtotaldoce'];
         $update_compra->valoriva =  $data['valoriva'];
         $update_compra->descuento =  $data['descuento'];
-        
-        
+
+
 
         $update_compra->update();
 
@@ -100,28 +107,50 @@ class CompraApiController extends ApiResponseController
 
     public function addProductosCompra(Request $request)
     {
-       
+
 
         $data = request()->all();
-        $new_detalle_compras = new DetalleCompras;
-        $new_detalle_compras->comId =  $data['comId'];
-        $new_detalle_compras->proId =  $data['proId'];
-        $new_detalle_compras->cantidad =  $data['cantidad'];
-        $new_detalle_compras->precio =  $data['precio'];
-        $new_detalle_compras->save();
+        $tipo =  $data['tipo'];
+        if ($tipo === 'rollo') {
 
-        $update_stock =  Producto::findOrFail($data['proId']) ;
-        $update_stock->unidades =  $new_detalle_compras->cantidad+ $update_stock->unidades;
-        $update_stock->update();
+            $new_detalle_compras = new DetalleCompras;
+            $new_detalle_compras->comId =  $data['comId'];
+            $new_detalle_compras->proId =  $data['proId'];
+            $new_detalle_compras->cantidad =  $data['cantidad'] * $data['rollos'];
+            $new_detalle_compras->precio =  $data['precio'];
+            $new_detalle_compras->tipo =  $data['tipo'];
+            $new_detalle_compras->rollos =  $data['rollos'];
 
-      
+            $new_detalle_compras->save();
+
+            $update_stock =  Producto::findOrFail($data['proId']);
+            $update_stock->unidades =  $new_detalle_compras->cantidad + $update_stock->unidades;
+            $update_stock->update();
+        }
+
+        if ($tipo === 'metro') {
+
+            $new_detalle_compras = new DetalleCompras;
+            $new_detalle_compras->comId =  $data['comId'];
+            $new_detalle_compras->proId =  $data['proId'];
+            $new_detalle_compras->cantidad =  $data['cantidad'];
+            $new_detalle_compras->precio =  $data['precio'];
+            $new_detalle_compras->tipo =  $data['tipo'];
+            $new_detalle_compras->rollos =  $data['rollos'];
+
+            $new_detalle_compras->save();
+
+            $update_stock =  Producto::findOrFail($data['proId']);
+            $update_stock->unidades =  $new_detalle_compras->cantidad + $update_stock->unidades;
+            $update_stock->update();
+        }
 
         if (!$new_detalle_compras) return $this->errorResponse(500);
 
         return $this->successResponse(200);
     }
-    
-  
+
+
     public function getInformacionCompra($comId)
     {
         $detalle_compra = DetalleCompras::select(
@@ -129,17 +158,22 @@ class CompraApiController extends ApiResponseController
             'detalle_compras.id',
             'detalle_compras.cantidad',
             'detalle_compras.precio',
+            'detalle_compras.rollos',
+
+            'detalle_compras.tipo',
+
             'productos.unidades',
             'productos.nombre as proNombre',
             'productos.descripcion as proDescripcion',
-            
+
+
             'compras.fecha',
             'compras.comprobante',
             'proveedores.nombre'
-            
-            
 
-       
+
+
+
         )
             ->leftJoin('compras', 'detalle_compras.comId', '=', 'compras.id')
             ->leftJoin('productos', 'detalle_compras.proId', '=', 'productos.id')
@@ -151,16 +185,33 @@ class CompraApiController extends ApiResponseController
 
     public function deleteCompra($comId)
     {
-     DetalleCompras::where('comId',$comId)->delete();
-       $compra = Compras :: findOrFail($comId)->delete();  
+        $infodetalle=  DetalleCompras::where('comId', $comId)->get();
 
-       if (!$compra) return $this->errorResponse(500);
-       return $this->successResponse(200);
+        $collection = collect($infodetalle);
+        $collection->each(function ($item, $key) {
+        $update_producto = Producto::findOrFail($item->proId);
+        $update_producto->unidades = $update_producto->unidades - $item->cantidad;
+        $update_producto->update();
+        DetalleCompras::where('comId', $item->comId)->delete();
+
+        });
+        Compras::where('id', $comId)->delete();
+      /*   $compra = DetalleCompras::findOrFail($comId);
+        $compra->delete();
+ */
+         if (!$collection) return $this->errorResponse(500); 
+        return $this->successResponse(200);
     }
-
-    
-
+    public function deleteDetalleCompra($id)
+    {
+        $infodetalle = DetalleCompras::findOrFail($id);
+        $update_producto = Producto::findOrFail($infodetalle->proId);
+        $update_producto->unidades = $update_producto->unidades - $infodetalle->cantidad;
+        $update_producto->update();
+ 
+         $detalle_delete = DetalleCompras::findOrFail($id);
+        $detalle_delete->delete();
+        if (!$detalle_delete) return $this->errorResponse(500); 
+        return $this->successResponse(200);
+    }
 }
-
-
-

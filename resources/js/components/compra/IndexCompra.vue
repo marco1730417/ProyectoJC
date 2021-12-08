@@ -46,7 +46,7 @@
                   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">
-                        Clientes activos
+                        Proveedor
                       </h5>
                       <span class="h2 font-weight-bold mb-0">
                     asdasd</span
@@ -81,7 +81,7 @@
                   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">
-                        Mejor Compra
+                        Compras de este mes
                       </h5>
                       <span class="h2 font-weight-bold mb-0">
                    121221
@@ -141,7 +141,7 @@
                 v-model="filter"
                 type="search"
                 size="sm"
-                placeholder="Buscar Cliente"
+                placeholder="Buscar Compra"
               ></b-form-input>
                 </div>
            
@@ -184,6 +184,11 @@
          <!--    {{ data.item.fecha }} -->
               {{ moment(data.item.fecha , "YYYY-MM-DD").format("MMM DD YYYY, ddd")}}
            <!--    {{ moment(data.item.fecha).format("MMM DD YYYY, ddd") }} -->
+          
+          </template>
+              <template #cell(comprobante)="data">
+            <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
+            {{ data.item.comprobante }}
           </template>
               <template #cell(nombre)="data">
             <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
@@ -198,7 +203,6 @@
             {{ data.item.direccion }}
           </template>
           <template #cell(valoriva)="data">
-            <!--    <small class="mb-0 mr-2">{{ data.item.telefono }}</small> -->
             {{ data.item.valoriva }}
           </template>
 
@@ -206,7 +210,7 @@
             <!--     <b-badge variant="outline" class="p-1" size="sm">{{
               data.item.email
             }}</b-badge> -->
-            {{ data.item.total }}
+           $ {{ data.item.total }}
           </template>
           <template #cell(actions)="data">
             <b-button
@@ -292,7 +296,13 @@ export default {
           sortDirection: "desc",
           tdClass: "index",
         },
-     
+      {
+          key: "comprobante",
+          label: "Comprobante",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "list-item-enddate",
+        },
         {
           key: "fecha",
           label: "Fecha",
@@ -307,13 +317,13 @@ export default {
           sortDirection: "desc",
           tdClass: "list-item-enddate",
         },
-        {
+     /*    {
           key: "valoriva",
           label: "Valor Iva",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate",
-        },
+        }, */
               {
           key: "total",
           label: "Total",
@@ -356,8 +366,16 @@ export default {
             CompraServices.deleteCompra(id)
               .then((response) => {
                 let mensaje = response.data.data;
-                if (mensaje == 200) {
-                  window.location.href = "../compra/";
+                if (mensaje == 200) {a
+                    this.$swal.fire({
+              icon: "success",
+              title: "Compra eliminada y stock actualizado",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+             /*  window.location.href = "../compra/"; */
+             this.getCompras();
+                
                 }
               })
               .catch((error) => {

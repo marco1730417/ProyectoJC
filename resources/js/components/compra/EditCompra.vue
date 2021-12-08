@@ -22,7 +22,7 @@
                     <h3 class="text-center">Informacion de compra</h3>
 
                     <div class="row">
-                      <div class="col-md-6">
+                      <div class="col-md-5">
                         <p>Informacion de la compra</p>
                         <b-container fluid>
                           <b-row class="my-1">
@@ -66,7 +66,7 @@
                               ></b-form-input>
                             </b-col>
                           </b-row>
-                           <b-row class="my-1">
+                          <b-row class="my-1">
                             <b-col sm="4">
                               <label for="input-small">SubTotal:</label>
                             </b-col>
@@ -75,11 +75,12 @@
                                 id="input-small"
                                 size="sm"
                                 @keypress="onlyNumber"
+                                type="number"
                                 v-model="subtotal"
                               ></b-form-input>
                             </b-col>
                           </b-row>
-                                   <b-row class="my-1">
+                          <b-row class="my-1">
                             <b-col sm="4">
                               <label for="input-small">Descuentos:</label>
                             </b-col>
@@ -87,14 +88,14 @@
                               <b-form-input
                                 id="input-small"
                                 size="sm"
+                                 type="number"
                                 @keypress="onlyNumber"
                                 v-model="descuento"
                               ></b-form-input>
                             </b-col>
                           </b-row>
-                               
-                      
-                                   <b-row class="my-1">
+
+                          <b-row class="my-1">
                             <b-col sm="4">
                               <label for="input-small">SubTotal 0:</label>
                             </b-col>
@@ -102,12 +103,13 @@
                               <b-form-input
                                 id="input-small"
                                 size="sm"
+                                 type="number"
                                 @keypress="onlyNumber"
                                 v-model="subtotalcero"
                               ></b-form-input>
                             </b-col>
                           </b-row>
-                              <b-row class="my-1">
+                          <b-row class="my-1">
                             <b-col sm="4">
                               <label for="input-small">SubTotal 12:</label>
                             </b-col>
@@ -115,12 +117,13 @@
                               <b-form-input
                                 id="input-small"
                                 size="sm"
-                                @keypress="onlyNumber"
+                                
+                                 type="number"                                @keypress="onlyNumber"
                                 v-model="subtotaldoce"
                               ></b-form-input>
                             </b-col>
                           </b-row>
-                                   <b-row class="my-1">
+                          <b-row class="my-1">
                             <b-col sm="4">
                               <label for="input-small">Valor iva:</label>
                             </b-col>
@@ -130,6 +133,7 @@
                                 size="sm"
                                 @keypress="onlyNumber"
                                 v-model="valoriva"
+                                 type="number"
                               ></b-form-input>
                             </b-col>
                           </b-row>
@@ -143,6 +147,7 @@
                                 size="sm"
                                 @keypress="onlyNumber"
                                 v-model="totalcompra"
+                                 type="number"
                               ></b-form-input>
                             </b-col>
                           </b-row>
@@ -175,20 +180,61 @@
                               ></v-select>
                             </b-col>
                           </b-row>
+
                           <b-row class="my-1">
                             <b-col sm="4">
-                              <label for="input-small">Cantidad:</label>
+                              <label for="input-small">Tipo de compra:</label>
+                            </b-col>
+                            <b-col sm="8">
+                              <div>
+                                <b-form-group>
+                                  <b-form-radio
+                                    v-model="tipocompra"
+                                    value="rollo"
+                                    >Rollo
+                                  </b-form-radio>
+                                  <b-form-radio
+                                    v-model="tipocompra"
+                                    value="metro"
+                                    >Metros</b-form-radio
+                                  >
+                                </b-form-group>
+                              </div>
+                            </b-col>
+                          </b-row>
+                          <b-row v-if="tipocompra === 'rollo'" class="my-1">
+                            <b-col sm="4">
+                              <label for="input-small">Numero de rollos:</label>
                             </b-col>
                             <b-col sm="8">
                               <b-form-input
                                 id="input-small"
                                 @keypress="onlyNumber"
                                 size="sm"
-                                v-model="cantidad"
+                                v-model="rollos"
+                                type="number"
                               ></b-form-input>
                             </b-col>
                           </b-row>
-                          <b-row class="my-1">
+
+                          <b-row v-if="tipocompra" class="my-1">
+                            <b-col sm="4">
+                              <label for="input-small"
+                                >Cantidad de metros
+                              </label>
+                            </b-col>
+                            <b-col sm="8">
+                              <b-form-input
+                                id="input-small"
+                                @keypress="onlyNumber"
+                                size="sm"
+                                type="number"
+                                v-model="cantidad"
+                              ></b-form-input>
+                              <small v-if="tipocompra === 'rollo'">Favor ingrese la cantidad de metros por rollo</small>
+                            </b-col>
+                          </b-row>
+                          <b-row v-if="tipocompra" class="my-1">
                             <b-col sm="4">
                               <label for="input-small">Precio:</label>
                             </b-col>
@@ -221,14 +267,72 @@
                           </b-row>
                         </b-container>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-7">
                         <!--  {{detallecompra}} -->
                         <b-table
                           striped
                           hover
                           :items="detallecompra"
                           :fields="fields"
-                        ></b-table>
+                        >
+<template #cell(index)="data">
+              <small> {{ data.index + 1 }} </small>
+            </template>
+               <template #cell(proNombre)="data">
+              <small v-if="data.item.proDescripcion"
+                >
+               
+                {{ data.item.proNombre }}
+              </small>
+              <small v-else> No data </small>
+            </template>
+              <template #cell(rollos)="data">
+              <small v-if="data.item.rollos"
+                >
+               
+                {{ data.item.rollos }}
+              </small>
+              <small v-else>0 </small>
+            </template>
+              <template #cell(cantidad)="data">
+              <small v-if="data.item.cantidad"
+                >
+               
+                {{ data.item.cantidad }}
+              </small>
+              <small v-else> No data </small>
+            </template>
+                 <template #cell(unidades)="data">
+              <small v-if="data.item.unidades"
+                >
+               
+                {{ data.item.unidades }}
+              </small>
+              <small v-else> No data </small>
+            </template>
+                <template #cell(precio)="data">
+              <small v-if="data.item.precio"
+                >
+               
+               $ {{ data.item.precio }}
+              </small>
+              <small v-else> No data </small>
+            </template>
+                     <template #cell(actions)="data">
+      
+
+            <b-button
+              variant="outline-danger default actions"
+              size="sm"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="save"
+              @click="deleteDetalleCompra(data.item.id)"
+            >
+              <i class="fas fa-trash"></i>
+            </b-button>
+          </template>
+                        </b-table>
                         <!-- <b-alert v-if="producto" variant="success" show>El producto {{producto.nombre}}  tiene actualmente {{producto.unidades}} mtrs en stock  </b-alert>     
      -->
                       </div>
@@ -305,6 +409,13 @@ export default {
   data() {
     return {
       fields: [
+ /* {
+          key: "index",
+          label: "#",
+          sortable: false,
+          sortDirection: "Dates",
+          tdClass: "index",
+        }, */
         {
           key: "proDescripcion",
           label: "Producto",
@@ -312,33 +423,50 @@ export default {
           sortDirection: "desc",
           tdClass: "list-item-enddate",
         },
-        {
-          key: "cantidad",
-          label: "Cantidad",
+            {
+          key: "rollos",
+          label: "Rollos",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate",
         },
         {
+          key: "cantidad",
+          label: "Metros",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "list-item-enddate",
+        },
+     /*    {
           key: "unidades",
           label: "Stock",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate",
+        }, */
+           {
+          key: "precio",
+          label: "Precio",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "list-item-enddate",
         },
+         { key: "actions", label: "Accion", tdClass: "text-center" },
       ],
-
+         
+      tipocompra: "",
       fecha: "",
+      rollos:"",
       cliente: "",
       totalcompra: "",
-      subtotalcero:"",
-      subtotaldoce:"",
-      descuento:"",
-      subtotal:"",
+      subtotalcero: "",
+      subtotaldoce: "",
+      descuento: "",
+      subtotal: "",
       modeupdate: false,
       proveedor: "",
       formadepagoupdate: "",
-      valoriva:"",
+      valoriva: "",
       infoproveedor: [],
       loading: false,
       infoeditcliente: [],
@@ -400,7 +528,44 @@ export default {
         $event.preventDefault();
       }
     },
+    deleteDetalleCompra(id) {
+ 
+    this.$swal
+        .fire({
+          title: "Estas seguro de eliminar esta compra?",
+          showCancelButton: true,
+          confirmButtonText: "SI",
+        })
+        .then((result) => {
+          /* Read more about isConfirmed, isDenied below */
+          if (result.isConfirmed) {
+            CompraServices.deleteDetalleCompra(id)
+              .then((response) => {
+                let mensaje = response.data.data;
+                if (mensaje == 200) {
+          
+             this.$swal.fire({
+              icon: "success",
+              title: "Compra eliminada y stock actualizado",
+              showConfirmButton: false,
+              timer: 1500,
+            });
 
+  this.getInformacionCompra();
+
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          }
+        });
+
+
+
+
+        
+    },
     updateCompra() {
       let data = {
         comId: this.comId,
@@ -411,37 +576,29 @@ export default {
         subtotal: this.subtotal,
         subtotalcero: this.subtotalcero,
         subtotaldoce: this.subtotaldoce,
-       valoriva: this.valoriva,
-       descuento:this.descuento,
+        valoriva: this.valoriva,
+        descuento: this.descuento,
       };
       CompraServices.updateCompra(data)
         .then((response) => {
           let mensaje = response.data.data;
 
-  if (mensaje == 200) {
-        
-
-                              this.$swal
-        .fire({
-  icon: 'success',
-  title: 'Informacion de compra actualizada',
-  showConfirmButton: false,
-  timer: 1500
-} ) }
-
-
-
-
-
+          if (mensaje == 200) {
+            this.$swal.fire({
+              icon: "success",
+              title: "Informacion de compra actualizada",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
         })
         .catch((error) => {
-                     this.$swal
-        .fire({
-  icon: 'success',
-  title: 'Cliente no actualizado',
-  showConfirmButton: false,
-  timer: 1500
-})
+          this.$swal.fire({
+            icon: "success",
+            title: "Cliente no actualizado",
+            showConfirmButton: false,
+            timer: 1500,
+          });
         });
     },
 
@@ -452,6 +609,8 @@ export default {
         proId: this.producto["id"],
         cantidad: this.cantidad,
         precio: this.precio,
+        tipo:this.tipocompra,
+        rollos:this.rollos,
       };
       CompraServices.addProductosCompra(data)
         .then((response) => {
@@ -461,18 +620,17 @@ export default {
           this.cantidad = "";
           this.precio = "";
           this.producto = "";
-           if (mensaje == 200) {
-        
-
-                              this.$swal
-        .fire({
-  icon: 'success',
-  title: 'Stock actualizado',
-  showConfirmButton: false,
-  timer: 1500
-} ) }
-
-
+          this.rollos = "";
+          this.tipo = "";
+          
+          if (mensaje == 200) {
+            this.$swal.fire({
+              icon: "success",
+              title: "Stock actualizado",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -487,6 +645,8 @@ export default {
           console.log(error);
         });
     },
+/* 
+    INformacion de la parte superior */
     getInformacionHeaderCompras() {
       CompraServices.getInformacionHeaderCompras(this.comId)
         .then((response) => {
@@ -499,11 +659,11 @@ export default {
             this.totalcompra = this.detallegeneralcompra.detalle_compra.total;
             this.subtotal = this.detallegeneralcompra.detalle_compra.subtotal;
             this.valoriva = this.detallegeneralcompra.detalle_compra.valoriva;
-            this.subtotalcero = this.detallegeneralcompra.detalle_compra.subtotalcero;
-            this.subtotaldoce = this.detallegeneralcompra.detalle_compra.subtotaliva;
+            this.subtotalcero =
+              this.detallegeneralcompra.detalle_compra.subtotalcero;
+            this.subtotaldoce =
+              this.detallegeneralcompra.detalle_compra.subtotaliva;
             this.descuento = this.detallegeneralcompra.detalle_compra.descuento;
-            
-            
           }
         })
         .catch((error) => {
