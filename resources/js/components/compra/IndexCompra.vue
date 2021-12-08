@@ -14,7 +14,7 @@
                         Compras Totales
                       </h5>
                       <span class="h2 font-weight-bold mb-0">
-                 123123
+                 $100000
                       </span>
                     </div>
                     <div class="col-auto">
@@ -49,7 +49,7 @@
                         Proveedor
                       </h5>
                       <span class="h2 font-weight-bold mb-0">
-                    asdasd</span
+                    Miduvi</span
                       >
                     </div>
                     <div class="col-auto">
@@ -81,10 +81,10 @@
                   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">
-                        Compras de este mes
+                        Compras Diciembre
                       </h5>
                       <span class="h2 font-weight-bold mb-0">
-                   121221
+                      $100000
                       </span>
                     </div>
                     <div class="col-auto">
@@ -366,7 +366,8 @@ export default {
             CompraServices.deleteCompra(id)
               .then((response) => {
                 let mensaje = response.data.data;
-                if (mensaje == 200) {a
+                if (mensaje == 200) {
+                  
                     this.$swal.fire({
               icon: "success",
               title: "Compra eliminada y stock actualizado",

@@ -203,10 +203,7 @@ export default {
 
  this.$swal
         .fire({
-
-
-  position: 'top-end',
-  icon: 'success',
+ icon: 'success',
   title: 'Tu producto ha sido actualizado',
   showConfirmButton: false,
   timer: 1500

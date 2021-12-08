@@ -22,7 +22,7 @@
                     <h3 class="text-center">Informacion de compra</h3>
 
                     <div class="row">
-                      <div class="col-md-5">
+                      <div class="col-md-6">
                         <p>Informacion de la compra</p>
                         <b-container fluid>
                           <b-row class="my-1">
@@ -165,7 +165,12 @@
                           </b-row>
                         </b-container>
 
-                        <p>Productos adquiridos</p>
+             
+                      
+                      </div>
+                      <div class="col-md-6">
+             
+                <p>Productos adquiridos</p>
                         <b-container fluid>
                           <b-row class="my-1">
                             <b-col sm="4">
@@ -265,11 +270,33 @@
                               >
                             </b-col>
                           </b-row>
+
+
+
+
+
+
+
+                          
                         </b-container>
                       </div>
-                      <div class="col-md-7">
-                        <!--  {{detallecompra}} -->
-                        <b-table
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+      <div class="row">
+                      <div class="col-md-12">
+                        <p>Detalle General de la compra</p>
+                        <b-container fluid>
+                            <b-table
                           striped
                           hover
                           :items="detallecompra"
@@ -333,10 +360,16 @@
             </b-button>
           </template>
                         </b-table>
-                        <!-- <b-alert v-if="producto" variant="success" show>El producto {{producto.nombre}}  tiene actualmente {{producto.unidades}} mtrs en stock  </b-alert>     
-     -->
+                        </b-container>
+
+             
+                      
                       </div>
+                 
                     </div>
+
+
+
                   </div>
                 </div>
               </div>
@@ -409,13 +442,13 @@ export default {
   data() {
     return {
       fields: [
- /* {
+ {
           key: "index",
           label: "#",
           sortable: false,
           sortDirection: "Dates",
           tdClass: "index",
-        }, */
+        },
         {
           key: "proDescripcion",
           label: "Producto",
@@ -437,13 +470,13 @@ export default {
           sortDirection: "desc",
           tdClass: "list-item-enddate",
         },
-     /*    {
+     {
           key: "unidades",
           label: "Stock",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate",
-        }, */
+        }, 
            {
           key: "precio",
           label: "Precio",
@@ -456,17 +489,17 @@ export default {
          
       tipocompra: "",
       fecha: "",
-      rollos:"",
+      rollos:0,
       cliente: "",
-      totalcompra: "",
-      subtotalcero: "",
-      subtotaldoce: "",
-      descuento: "",
-      subtotal: "",
+      totalcompra: 0,
+      subtotalcero: 0,
+      subtotaldoce: 0,
+      descuento: 0,
+      subtotal: 0,
       modeupdate: false,
       proveedor: "",
       formadepagoupdate: "",
-      valoriva: "",
+      valoriva: 0,
       infoproveedor: [],
       loading: false,
       infoeditcliente: [],

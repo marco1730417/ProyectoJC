@@ -50,7 +50,8 @@ Route::group(['prefix' => 'producto'], function () {
     Route::get('get-productos', [ProductoApiController::class, 'getAllProductos']);
     Route::post('add-producto', [ProductoApiController::class, 'createNewProducto']);
     Route::post('update-producto', [ProductoApiController::class, 'UpdateProducto']);
-    
+    Route::post('delete-producto/{id}', [ProductoApiController::class, 'deleteProducto']);
+   
 
 });
 

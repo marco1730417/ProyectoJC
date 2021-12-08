@@ -133,7 +133,7 @@ this.email="";
         .catch((error) => {
                    this.$swal
         .fire({
-  icon: 'success',
+  icon: 'error',
   title: 'Cliente no actualizado',
   showConfirmButton: false,
   timer: 1500

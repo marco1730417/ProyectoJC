@@ -110,6 +110,8 @@
         striped
         show-empty
         small
+          :filter="filter"
+        
         fixed
         hover
         :items="infoproducto"
@@ -126,29 +128,37 @@
         </template>
 
         <template #cell(descripcion)="data">
-          <small class="mb-0 mr-2">{{ data.item.descripcion }}</small>
+          {{ data.item.descripcion }}
+         <!--  <small class="mb-0 mr-2">{{ data.item.descripcion }}</small> -->
         </template>
         <template #cell(unidades)="data">
-          <small class="mb-0 mr-2">{{ data.item.unidades }}</small>
+          {{ data.item.unidades }}
+        <!--   <small class="mb-0 mr-2">{{ data.item.unidades }}</small> -->
         </template>
 
         <template #cell(PrecioVenta1)="data">
-          <b-badge variant="outline" class="p-1" size="sm">{{
+    <!--       <b-badge variant="outline" class="p-1" size="sm">{{
             data.item.PrecioVenta1
-          }}</b-badge>
-        </template>
+          }}</b-badge>  -->
+          {{
+            data.item.PrecioVenta1
+          }}
+                  </template>
 
         <template #cell(PrecioVenta2)="data">
-          <b-badge variant="outline" class="p-1" size="sm">{{
+        <!--   <b-badge variant="outline" class="p-1" size="sm">{{
             data.item.PrecioVenta2
-          }}</b-badge>
+          }}</b-badge> -->
+          {{
+            data.item.PrecioVenta2
+          }}
         </template>
 
-        <template #cell(Utilidad)="data">
+         <template #cell(Utilidad)="data">
           <b-badge variant="outline" class="p-1" size="sm">{{
             data.item.Utilidad
           }}</b-badge>
-        </template>
+        </template> 
 
         <template #cell(actions)="data">
           <b-button
@@ -225,14 +235,14 @@ export default {
           sortDirection: "desc",
           tdClass: "list-item-enddate",
         }, */
-        {
+   /*      {
           key: "nombre",
           label: "Producto",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate",
         },
-
+ */
         {
           key: "descripcion",
           label: "Descripcion",
@@ -243,7 +253,7 @@ export default {
 
         {
           key: "unidades",
-          label: "Unidades",
+          label: "Stock",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate",
@@ -263,13 +273,13 @@ export default {
           sortDirection: "desc",
           tdClass: "list-item-enddate text-center",
         },
-        {
+     /*    {
           key: "Utilidad",
           label: "Utilidad",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate text-center",
-        },
+        }, */
 
         { key: "actions", label: "Acciones", tdClass: "text-center" },
       ],
@@ -324,11 +334,27 @@ export default {
               .then((response) => {
                 let mensaje = response.data.data;
                 if (mensaje == 200) {
+
+
+
+       this.$swal.fire({
+              icon: "success",
+              title: "Producto eliminado",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+
                   this.getAllProductos();
                 }
               })
               .catch((error) => {
-                console.log(error);
+                             this.$swal
+        .fire({
+  icon: 'error',
+  title: 'Este producto forma parte de una venta o compra asociada',
+  showConfirmButton: false,
+  timer: 1500
+})
               });
           }
         });
