@@ -373,8 +373,8 @@ export default {
               showConfirmButton: false,
               timer: 1500,
             });
-             /*  window.location.href = "../compra/"; */
-             this.getCompras();
+               window.location.href = "../compra/"; 
+           //  this.getCompras();
                 
                 }
               })
