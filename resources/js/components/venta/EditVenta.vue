@@ -690,23 +690,27 @@
             <!--  <small class="mb-0 mr-2">{{ data.item.ruc }}</small> -->
             {{ data.item.descripcion }}
           </template>
+         
+          <template #cell(precioUnitario)="data">
+          
+                  $ 
+             {{ parseFloat( data.item.precioUnitario).toFixed(2) }}
 
+          </template>
           <template #cell(descuento)="data">
             <!--  <small class="mb-0 mr-2">{{ data.item.ruc }}</small> -->
-            {{ data.item.descuento }}
+        
+             $ 
+             {{ parseFloat( data.item.descuento).toFixed(2) }}
           </template>
 
           
-         
-          <template #cell(precioUnitario)="data">
-            {{ data.item.precioUnitario }}
-          </template>
+
 
           <template #cell(subTotal)="data">
-            <!--     <b-badge variant="outline" class="p-1" size="sm">{{
-              data.item.email
-            }}</b-badge> -->
-           $ {{ data.item.subTotal }}
+         
+           $ 
+             {{ parseFloat( data.item.subTotal).toFixed(2) }}
           </template>
           <template #cell(actions)="data">
      

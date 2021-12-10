@@ -15,8 +15,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Pagination\PaginationState;
 use Illuminate\Support\Facades\Config;
-use PDF
- ;
+use PDF;
 
 class VentaApiController extends ApiResponseController
 {
@@ -76,7 +75,7 @@ class VentaApiController extends ApiResponseController
 
         $new_pago = new Pago;
         $new_pago->venId = $data['venId'];
-     
+
         $new_pago->fecha = $fecha;
         $new_pago->tipo = "Transferencia";
         $new_pago->cliId =  $data['cliId'];
@@ -101,7 +100,7 @@ class VentaApiController extends ApiResponseController
 
         $new_pago = new Pago;
         $new_pago->venId = $data['venId'];
-     
+
         $new_pago->fecha = $fecha;
         $new_pago->tipo = "Abono";
         $new_pago->cliId =  $data['cliId'];
@@ -135,7 +134,7 @@ class VentaApiController extends ApiResponseController
         $new_pago->saldo =  $data['total'];
         $new_pago->fechamaxima =  $data['fechamaxima'];
         $new_pago->cheque =  $data['cheque'];
-        
+
 
         $new_pago->save();
 
@@ -153,7 +152,7 @@ class VentaApiController extends ApiResponseController
         $data = request()->all();
 
 
-        $update_venta =  Venta::findOrFail($data['venId']) ;
+        $update_venta =  Venta::findOrFail($data['venId']);
         $update_venta->cliId =  $data['cliId'];;
 
         $update_venta->update();
@@ -176,9 +175,9 @@ class VentaApiController extends ApiResponseController
 
         $precioUnitarioOpcion = $data['precioUnitario'];
         $proId = $data['proId'];
-        $precioEspecial=$data['precioEspecial'];
-        $descuento=$data['descuento'];
-        
+        $precioEspecial = $data['precioEspecial'];
+        $descuento = $data['descuento'];
+
         $infoproducto = Producto::findOrFail($proId);
         if ($precioUnitarioOpcion == 1) {
             $valorPrecio = $infoproducto->PrecioVenta1;
@@ -187,7 +186,7 @@ class VentaApiController extends ApiResponseController
 
         if ($precioUnitarioOpcion == 2) {
             $valorPrecio = $infoproducto->PrecioVenta2;
-            $metrostotales = $metrosrollo*$data['cantidad'];
+            $metrostotales = $metrosrollo * $data['cantidad'];
         }
 
         if ($precioUnitarioOpcion == 3) {
@@ -206,16 +205,16 @@ class VentaApiController extends ApiResponseController
         $new_detalle->venId =  $data['venId'];
         $new_detalle->metrostotales =  $metrostotales;
         $new_detalle->opcion =  $precioUnitarioOpcion;
-        $new_detalle->descuento =  $descuento ? :0;
-        
-        
+        $new_detalle->descuento =  $descuento ?: 0;
+
+
         $new_detalle->save();
 
-if($new_detalle){
-    $actualizar_cantidad_producto= Producto::findOrFail($proId);
-    $actualizar_cantidad_producto->unidades = $actualizar_cantidad_producto->unidades - $metrostotales;
-    $actualizar_cantidad_producto->update(); 
-}
+        if ($new_detalle) {
+            $actualizar_cantidad_producto = Producto::findOrFail($proId);
+            $actualizar_cantidad_producto->unidades = $actualizar_cantidad_producto->unidades - $metrostotales;
+            $actualizar_cantidad_producto->update();
+        }
 
         if (!$new_detalle) return $this->errorResponse(500);
 
@@ -259,57 +258,56 @@ if($new_detalle){
             ->leftJoin('ventas', 'pagos.venId', '=', 'ventas.id')
             ->leftJoin('clientes', 'pagos.cliId', '=', 'clientes.id')
             ->where('venId', $venId)->get();
-         $total_abonos= Pago::where('pagos.venId', $venId)->sum('pagos.abono');
-        $saldo= $detalle_venta[0]['total'] - $total_abonos;
- $totalcobrar= $detalle_venta[0]['total'];
- $fechamaxima= $detalle_venta[0]['fechamaxima'];
- 
+        $total_abonos = Pago::where('pagos.venId', $venId)->sum('pagos.abono');
+        $saldo = $detalle_venta[0]['total'] - $total_abonos;
+        $totalcobrar = $detalle_venta[0]['total'];
+        $fechamaxima = $detalle_venta[0]['fechamaxima'];
 
-        $info_pago_abono= [
+
+        $info_pago_abono = [
             'detalle_venta' => $detalle_venta,
             'total_abonos' =>     $total_abonos,
             'fechamaxima' => $fechamaxima,
             'saldo' => $saldo,
             'totalcobrar' => $totalcobrar,
 
-          ];
+        ];
 
         return $this->successResponse($info_pago_abono);
     }
 
     public function deleteVentav1($venId)
     {
-        Pago::where('venId',$venId)->delete();
-        DetalleVenta::where('venId',$venId)->delete();
-       $venta = Venta :: findOrFail($venId)->delete();  
+        Pago::where('venId', $venId)->delete();
+        DetalleVenta::where('venId', $venId)->delete();
+        $venta = Venta::findOrFail($venId)->delete();
 
-       if (!$venta) return $this->errorResponse(500);
-       return $this->successResponse(200);
+        if (!$venta) return $this->errorResponse(500);
+        return $this->successResponse(200);
     }
 
     public function deleteVenta($venId)
     {
-        $infodetalle=  DetalleVenta::where('venId', $venId)->get();
+        $infodetalle =  DetalleVenta::where('venId', $venId)->get();
 
         $collection = collect($infodetalle);
         $collection->each(function ($item, $key) {
-        $update_producto = Producto::findOrFail($item->proId);
-        $update_producto->unidades = $update_producto->unidades + $item->cantidad;
-        $update_producto->update();
-        DetalleVenta::where('venId', $item->venId)->delete();
-
+            $update_producto = Producto::findOrFail($item->proId);
+            $update_producto->unidades = $update_producto->unidades + $item->cantidad;
+            $update_producto->update();
+            DetalleVenta::where('venId', $item->venId)->delete();
         });
         Venta::where('id', $venId)->delete();
-         if (!$collection) return $this->errorResponse(500); 
+        if (!$collection) return $this->errorResponse(500);
         return $this->successResponse(200);
     }
 
     public function deleteDetalleVenta($id)
-    {        
-        $infodetalle=DetalleVenta::findOrFail($id);
-        $update_producto= Producto::findOrFail($infodetalle->proId);
-        $update_producto->unidades = $update_producto->unidades + $infodetalle->cantidad ;
-        $update_producto->update(); 
+    {
+        $infodetalle = DetalleVenta::findOrFail($id);
+        $update_producto = Producto::findOrFail($infodetalle->proId);
+        $update_producto->unidades = $update_producto->unidades + $infodetalle->cantidad;
+        $update_producto->update();
 
         $detalle_delete = DetalleVenta::findOrFail($id);
         $detalle_delete->delete();
@@ -317,71 +315,87 @@ if($new_detalle){
         return $this->successResponse(200);
     }
 
-    public function totalesVenta($venId)
-    {
-
-      
-        $parciales = DetalleVenta::queryVentaParcial($venId)->get();
-        $descuentos= DetalleVenta::queryDescuentos($venId)->get();
-        $descuentos_total=$descuentos->sum('descuentos');
-        $subtotal = $parciales->sum('parcial');
-        $subtotal_sin_impuestos = $subtotal-$descuentos_total;
-        
-        $iva = 12;
-        $valor_iva = $subtotal*$iva/100;
-        $total = $subtotal+$valor_iva;
-
-        $totales_venta = [
-                                'subtotalprecio' => $subtotal,
-                                'descuentos'=>$descuentos_total,
-                                'subtotal_sin_impuestos' => $subtotal_sin_impuestos,
-                               
-                                'iva' =>     round($iva),
-                                'valorIva' => $valor_iva,
-                                'total' => $total
-                              ];
-
-        //return $this->successResponse($totales_cotizacion);
-          
-        $total_venta=collect($totales_venta);
-        return $total_venta ;
-    }
 
     public function detalleGeneralVenta($venId)
     {
 
-      
-        $info_venta= Venta :: select ('ventas.id','ventas.fecha','clientes.nombre','clientes.ruc',
-        'clientes.id as cliId',
-        'clientes.direccion','clientes.telefono','ventas.metodopago'
-        )
-        ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
-        ->where('ventas.id', $venId)->get();
 
-        $info_cliente= Cliente::select ('clientes.id','clientes.nombre','clientes.ruc','clientes.direccion','clientes.telefono','clientes.email',
-        'clientes.created_at','clientes.updated_at')
-        ->leftJoin('ventas', 'ventas.cliId', '=', 'clientes.id')
-        ->where('ventas.id',$venId)
-        ->get();
+        $info_venta = Venta::select(
+            'ventas.id',
+            'ventas.fecha',
+            'clientes.nombre',
+            'clientes.ruc',
+            'clientes.id as cliId',
+            'clientes.direccion',
+            'clientes.telefono',
+            'ventas.metodopago'
+        )
+            ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
+            ->where('ventas.id', $venId)->get();
+
+        $info_cliente = Cliente::select(
+            'clientes.id',
+            'clientes.nombre',
+            'clientes.ruc',
+            'clientes.direccion',
+            'clientes.telefono',
+            'clientes.email',
+            'clientes.created_at',
+            'clientes.updated_at'
+        )
+            ->leftJoin('ventas', 'ventas.cliId', '=', 'clientes.id')
+            ->where('ventas.id', $venId)
+            ->get();
 
         $informacion_venta = [
             'cliente' => $info_cliente,
             'total' => $info_venta
         ];
 
-       
+
 
         return $this->successResponse($informacion_venta);
+    }
+
+    public function totalesVenta($venId)
+    {
+
+
+        $parciales = DetalleVenta::queryVentaParcial($venId)->get();
+        $descuentos = DetalleVenta::queryDescuentos($venId)->get();
+        $descuentos_total = $descuentos->sum('descuentos');
+        $subtotal = $parciales->sum('parcial');
+        $subtotal_sin_impuestos = $subtotal - $descuentos_total;
+
+        $iva = 12;
+        $valor_iva = $subtotal * $iva / 100;
+        $total = $subtotal + $valor_iva;
+
+        $totales_venta = [
+            'subtotalprecio' => $subtotal,
+            'descuentos' => $descuentos_total,
+            'subtotal_sin_impuestos' => $subtotal_sin_impuestos,
+            'iva' =>     round($iva),
+            'valorIva' => $valor_iva,
+            'total' => $total
+        ];
+
+        //return $this->successResponse($totales_cotizacion);
+
+        $total_venta = collect($totales_venta);
+        return $total_venta;
     }
 
 
     public function downloadVenta($venId)
     {
- 
+
         $detalle_venta = DetalleVenta::select(
             'detalle_ventas.cantidad',
             'detalle_ventas.id',
             'detalle_ventas.precioUnitario',
+            'detalle_ventas.opcion',
+            'detalle_ventas.descuento',
             'productos.nombre',
             'productos.descripcion',
             db::raw('detalle_ventas.cantidad*detalle_ventas.precioUnitario as subTotal'),
@@ -392,96 +406,113 @@ if($new_detalle){
             ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
             ->where('venId', $venId)->get();
 
-            $parciales = DetalleVenta::queryVentaParcial($venId)->get();
-            $subtotal = $parciales->sum('parcial');
-            $iva = 12;
-            $valor_iva = $subtotal*$iva/100;
-            $total = $subtotal+$valor_iva;
-    
-            $totales_venta = [
-                                    'subtotal' => $subtotal,
-                                    'iva' =>     round($iva),
-                                    'valorIva' => $valor_iva,
-                                    'total' => $total
-                                  ];
-    
-            //return $this->successResponse($totales_cotizacion);
-              
-            $total_venta=collect($totales_venta);
+        $parciales = DetalleVenta::queryVentaParcial($venId)->get();
+        $descuentos = DetalleVenta::queryDescuentos($venId)->get();
+        $descuentos_total = $descuentos->sum('descuentos');
+        $subtotal = $parciales->sum('parcial');
+        $subtotal_sin_impuestos = $subtotal - $descuentos_total;
+        $iva = 12;
+        $valor_iva = $subtotal * $iva / 100;
+        $total = $subtotal + $valor_iva;
+
+        $totales_venta = [
+            'subtotalprecio' => $subtotal,
+            'descuentos' => $descuentos_total,
+            'subtotal_sin_impuestos' => $subtotal_sin_impuestos,
+            'iva' =>     round($iva),
+            'valorIva' => $valor_iva,
+            'total' => $total
+        ];
+
+        //return $this->successResponse($totales_cotizacion);
+
+        $total_venta = collect($totales_venta);
 
 
-            $info_venta= Venta :: select ('ventas.id','ventas.fecha','clientes.nombre','clientes.ruc','clientes.direccion','clientes.telefono','ventas.metodopago')
+        $info_venta = Venta::select('ventas.id', 'ventas.fecha', 'clientes.nombre', 'clientes.ruc', 'clientes.direccion', 'clientes.telefono', 'ventas.metodopago')
             ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
             ->where('ventas.id', $venId)->get();
 
-     
- 
-      //  $pdf = PDF::loadView('venta.ventapdf', $data);
-        $pdf = PDF::loadView('venta.ventapdf',  ["detalle_venta" => $detalle_venta, "total_venta" => $total_venta, "info_venta"=> $info_venta ],['format' => 'A4']);
-    
-        return $pdf->download('venta.pdf'); 
-      
-      
+
+
+        //  $pdf = PDF::loadView('venta.ventapdf', $data);
+        $pdf = PDF::loadView('venta.ventapdf',  ["detalle_venta" => $detalle_venta, "total_venta" => $total_venta, "info_venta" => $info_venta], ['format' => 'A4']);
+
+        return $pdf->download('venta.pdf');
     }
 
     public function detalleVenta()
     {
 
-      
-        $info_venta= Venta :: select ('ventas.id','ventas.fecha','ventas.observacion',
-        
-        'clientes.nombre','clientes.ruc','clientes.direccion','clientes.telefono',
-        
-        DB::raw("(SELECT sum(detalle_ventas.cantidad*detalle_ventas.precioUnitario) FROM detalle_ventas
+
+        $info_venta = Venta::select(
+            'ventas.id',
+            'ventas.fecha',
+            'ventas.observacion',
+
+            'clientes.nombre',
+            'clientes.ruc',
+            'clientes.direccion',
+            'clientes.telefono',
+
+            DB::raw("(SELECT sum(detalle_ventas.cantidad*detalle_ventas.precioUnitario) FROM detalle_ventas
         WHERE ventas.id=detalle_ventas.venId
         ) AS total"),
         )
-  
-     
 
-        ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
-        ->orderBy('ventas.fecha', 'desc')
-       
-        ->get();
-       
+
+
+            ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
+            ->orderBy('ventas.fecha', 'desc')
+
+            ->get();
+
         return $this->successResponse($info_venta);
     }
-    
+
     /* 
 Esta api muestra metodos de pagos asociados y por ende en ocasiones muestra dos valores en la vista principal y por eso se ha decidido que mejor
 se evite poner esta accion y unificar campos en una unica api */
-    
+
     public function detalleVentav1()
     {
 
-      
-        $info_venta= Venta :: select ('ventas.id','pagos.tipo','pagos.total as totales','ventas.fecha','ventas.observacion',
-        
-        'clientes.nombre','clientes.ruc','clientes.direccion','clientes.telefono',
-        
-        DB::raw("(SELECT sum(detalle_ventas.cantidad*detalle_ventas.precioUnitario) FROM detalle_ventas
+
+        $info_venta = Venta::select(
+            'ventas.id',
+            'pagos.tipo',
+            'pagos.total as totales',
+            'ventas.fecha',
+            'ventas.observacion',
+
+            'clientes.nombre',
+            'clientes.ruc',
+            'clientes.direccion',
+            'clientes.telefono',
+
+            DB::raw("(SELECT sum(detalle_ventas.cantidad*detalle_ventas.precioUnitario) FROM detalle_ventas
         WHERE ventas.id=detalle_ventas.venId
         ) AS total"),
         )
-  
-     
 
-        ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
-        ->leftJoin('pagos', 'ventas.id', '=', 'pagos.venId')
-        ->orderBy('ventas.fecha', 'desc')
-       
-        ->get();
-       
+
+
+            ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
+            ->leftJoin('pagos', 'ventas.id', '=', 'pagos.venId')
+            ->orderBy('ventas.fecha', 'desc')
+
+            ->get();
+
         return $this->successResponse($info_venta);
     }
 
-        
+
     public function totalDashboardVentas()
     {
 
-      
+
         $venta_parciales = DetalleVenta::select(
-                                  
+
             db::raw('(detalle_ventas.cantidad*detalle_ventas.precioUnitario) as parcial')
         )->get();
         $subtotal = $venta_parciales->sum('parcial');
@@ -489,40 +520,43 @@ se evite poner esta accion y unificar campos en una unica api */
         $numero_clientes = Venta::distinct('cliId')->count('cliId');
 
 
-        $max_venta= Venta :: select (
-        DB::raw("(SELECT sum(detalle_ventas.cantidad*detalle_ventas.precioUnitario) FROM detalle_ventas
+        $max_venta = Venta::select(
+            DB::raw("(SELECT sum(detalle_ventas.cantidad*detalle_ventas.precioUnitario) FROM detalle_ventas
         WHERE ventas.id=detalle_ventas.venId
         ) AS total"),
-        ) ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')->get();
-        ;
+        )->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')->get();;
 
-/* $max_venta= Pago::max('total'); */
+        /* $max_venta= Pago::max('total'); */
 
         $maxima_venta = $max_venta->max('total');
         // se aplican valores sin iva Si funcionan las lineas de abajo para mostrar el valor maximo con iva
         $iva = 12;
-        $valor_iva = $maxima_venta*$iva/100;
-        $maxima = $maxima_venta+$valor_iva;
+        $valor_iva = $maxima_venta * $iva / 100;
+        $maxima = $maxima_venta + $valor_iva;
 
-        $numero_productos=Producto::count('id');
+        $numero_productos = Producto::count('id');
 
- $productos_stock= Producto::where('unidades','<',10)->orderBy('unidades')-> get();
-  
- $productos_mas_vendidos= DetalleVenta::select('proId', 'productos.nombre',  
-    DB::raw("(SELECT count(detalle_ventas.proId) FROM detalle_ventas
+        $productos_stock = Producto::where('unidades', '<', 10)->orderBy('unidades')->get();
+
+        $productos_mas_vendidos = DetalleVenta::select(
+            'proId',
+            'productos.nombre',
+            DB::raw("(SELECT count(detalle_ventas.proId) FROM detalle_ventas
         ) AS total"),
-    )
-    ->leftJoin('productos', 'productos.id', '=', 'detalle_ventas.proId')
-    ->groupBy('proId')->orderBy('total')->take(5)->get();
- 
-    $mejores_clientes= Venta::select('cliId', 'clientes.nombre',  
-    DB::raw("(SELECT count(ventas.cliId) FROM ventas
-        ) AS total"),
-    )
-    ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
-    ->groupBy('cliId')->orderBy('total')->take(5)->get();
+        )
+            ->leftJoin('productos', 'productos.id', '=', 'detalle_ventas.proId')
+            ->groupBy('proId')->orderBy('total')->take(5)->get();
 
-  /*   $ventas_mes= Venta::select(
+        $mejores_clientes = Venta::select(
+            'cliId',
+            'clientes.nombre',
+            DB::raw("(SELECT count(ventas.cliId) FROM ventas
+        ) AS total"),
+        )
+            ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
+            ->groupBy('cliId')->orderBy('total')->take(5)->get();
+
+        /*   $ventas_mes= Venta::select(
         DB::raw("(SELECT sum(detalle_ventas.cantidad*detalle_ventas.precioUnitario) FROM detalle_ventas
         WHERE ventas.id=detalle_ventas.venId
         ) AS total"),
@@ -531,7 +565,7 @@ se evite poner esta accion y unificar campos en una unica api */
             )   ->groupBy('months' )
                 ->get();  */
 
-/* 
+        /* 
                 $ventas_mes=                DB::table('ventas')
                 ->select(DB::raw('DATE(created_at) as date'),
                 DB::raw("(SELECT sum(detalle_ventas.cantidad*detalle_ventas.precioUnitario) FROM detalle_ventas
@@ -540,7 +574,7 @@ se evite poner esta accion y unificar campos en una unica api */
                  )
                 ->groupBy('date')
                 ->get(); */
-           /*      $ventas_mes = Venta::where('created_at', '>=', \Carbon\Carbon::now->subMonth())
+        /*      $ventas_mes = Venta::where('created_at', '>=', \Carbon\Carbon::now->subMonth())
                 ->groupBy('date')
                 ->orderBy('date', 'DESC')
                 ->get(array(
@@ -555,32 +589,33 @@ se evite poner esta accion y unificar campos en una unica api */
             'subtotal' => $subtotal,
             'cliente' =>     $numero_clientes,
             'max_venta' => $max_venta,
-            'numero_productos'=>$numero_productos,
-            'productos_stock'=> $productos_stock,
-            'productos_mas_vendidos'=> $productos_mas_vendidos,
-            'mejores_clientes'=> $mejores_clientes,
-            
-          
-          ];
+            'numero_productos' => $numero_productos,
+            'productos_stock' => $productos_stock,
+            'productos_mas_vendidos' => $productos_mas_vendidos,
+            'mejores_clientes' => $mejores_clientes,
 
-  
+
+        ];
+
+
         return $this->successResponse($info_dashboard);
     }
 
 
 
-    public function UpdateObservacion(Request $request){
-     
-        $data = request()->all(); 
-     
+    public function UpdateObservacion(Request $request)
+    {
+
+        $data = request()->all();
+
         $id = $data['id'];
         $observacion = $data['observacion'];
-        
-   
+
+
 
         $venta_update = Venta::findOrFail($id);
         $venta_update->observacion = $observacion;
-        $venta_update->update(); 
+        $venta_update->update();
 
 
         if (!$venta_update) return $this->errorResponse(500);
@@ -588,24 +623,25 @@ se evite poner esta accion y unificar campos en una unica api */
     }
 
 
-    public function registrarabono(Request $request){
-     
+    public function registrarabono(Request $request)
+    {
+
 
         $carbon = new \Carbon\Carbon();
         $fecha = $carbon->now();
 
 
-        $data = request()->all(); 
+        $data = request()->all();
         $info = $data['info'];
-        $total= $info[0]['total'];
-        $fechamaxima= $info[0]['fechamaxima'];
+        $total = $info[0]['total'];
+        $fechamaxima = $info[0]['fechamaxima'];
 
-        $venId= $info[0]['venId'];
-        $cliId= $info[0]['cliId'];
-        $fechamaxima= $info[0]['fechamaxima'];
+        $venId = $info[0]['venId'];
+        $cliId = $info[0]['cliId'];
+        $fechamaxima = $info[0]['fechamaxima'];
         $pago = $data['pago'];
         $saldo = $data['saldo'];
-        
+
 
 
         $new_pago = new Pago;
@@ -626,10 +662,4 @@ se evite poner esta accion y unificar campos en una unica api */
 
         return $this->successResponse(200);
     }
-
-
-  
-    }
-
-
-
+}

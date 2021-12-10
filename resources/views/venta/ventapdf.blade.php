@@ -1,142 +1,228 @@
-
-
-
 @extends('layouts.pdf_layouts')
 
 @section('styleCSS')
 
 @endsection
 <style>
-
-td {
+    td {
         font-size: 7px;
-       padding-left: 5px;
+        padding-left: 1px;
         padding-bottom: 3px;
 
-           
-      }
-      th {
+
+    }
+
+    th {
         font-size: 10px;
         font-weight: bold;
-       
-       padding-left: 1px;
-        padding-bottom: 3px;
 
-           
-      }
+        padding-left: 4px;
+        padding-bottom: 15px;
 
-.padding {
-    padding: 5rem !important
-}
+    }
 
-.card {
-    margin-bottom: 20px;
-    border: none;
-    -webkit-box-shadow: 0px 1px 2px 1px rgba(154, 154, 204, 0.22);
-    -moz-box-shadow: 0px 1px 2px 1px rgba(154, 154, 204, 0.22);
-    box-shadow: 0px 1px 2px 1px rgba(154, 154, 204, 0.22)
-}
+    .padding {
+        padding: 3rem !important
+    }
 
-.card-header {
-    background-color: #fff;
-    border-bottom: 1px solid #e6e6f2
-}
-
-h3 {
-    font-size: 10px
-}
-
-h5 {
-    font-size: 7px;
-    line-height: 10px;
-    color: #3d405c;
-    margin: 0px 0px 15px 0px;
-    font-family: 'Circular Std Medium'
-}
-
-.text-dark {
-   
-    font-size: 8px;
-}
+    .card {
+        width: 700px !important;
+        margin-bottom: 50px;
+        border: none;
+        -webkit-box-shadow: 0px 1px 2px 1px rgba(154, 154, 204, 0.22);
+        -moz-box-shadow: 0px 1px 2px 1px rgba(154, 154, 204, 0.22);
+        box-shadow: 0px 1px 2px 1px rgba(154, 154, 204, 0.22)
+    }
 
 
-    
-    </style>
+    h3 {
+        font-size: 10px
+    }
+
+    h5 {
+        font-size: 7px;
+        line-height: 10px;
+        color: #3d405c;
+        margin: 0px 0px 15px 0px;
+        font-family: 'Circular Std Medium'
+    }
+
+    small {
+        font-size: 5px;
+
+        font-family: 'Circular Std Medium'
+    }
+
+    .text-dark {
+
+        font-size: 8px;
+    }
+</style>
 @section('content')
-<div class="offset-xl-2 col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12 padding">
-     <div class="card">
-   
-         <div class="card-body">
-             <div class="row mb-4">
-   
-                 <div class="col-sm-6 ">
-                     <h5 class="text-dark mb-1">Cliente :  {{$info_venta[0]['nombre'] }}</h5>
-                     <h5 class="text-dark mb-1">Ruc:  {{$info_venta[0]['ruc'] }}</h5>
-                     <h5 class="text-dark mb-1">Direccion: {{$info_venta[0]['direccion'] }}</h5>
-                     <h5 class="text-dark mb-1">Fecha: {{$info_venta[0]['fecha'] }}</h5>
-                     
-                  
-                 </div>
-         
-            
-             </div>
-             <div class="table-responsive-sm">
-                 <table class="table table-striped">
-                     <thead>
-                         <tr>
-                             <th>Codigo</th>
-                             <th>Descripcion</th>
-                             <th class="right">Precio Uni</th>
-                             <th class="center">Cantidad</th>
-                             <th class="right">Total</th>
-                         </tr>
-                     </thead>
-                     <tbody>
-                     @foreach ($detalle_venta as $item)  
-                         <tr>
-                             <td >{{$item['nombre']}}</td>
-                             <td class="left">{{$item['descripcion']}}</td>
-                             <td class="right">{{$item['precioUnitario']}}</td>
-                             <td class="center">{{$item['cantidad']}}</td>
-                             <td class="right">{{$item['subTotal']}}</td>
-                         </tr>
-                         @endforeach
-                     </tbody>
-                 </table>
-             </div>
-             <div class="row">
-                 <div class="col-md-4 col-sm-5">
-                 </div>
-                 <div class="col-md-4 col-sm-5 ml-auto">
-                  <table class="table table-clear">
-                         <tbody>
-                             <tr>
-                                 <td >
-                                     <h5 class="text-dark">Subtotal        </h5>
-                                 </td>
-                                 <td class="right"><strong class="text-dark"> $ @php echo(number_format($total_venta['subtotal'],2));@endphp</strong></td>
-                             </tr>
-                        
-                             <tr>
-                                 <td >
-                                 <h5 class="text-dark">Iva  @php echo(number_format($total_venta['iva'],2));@endphp %</h5>
-                                 </td>
-                                 <td class="right">   <strong class="text-dark"> $ @php echo(number_format($total_venta['valorIva'],2));@endphp</strong></td>
-                             </tr>
-                             <tr>
-                                 <td >
-                                     <strong class="text-dark">Total</strong> </td>
-                                 <td class="right">
-                                     <strong class="text-dark">$           @php echo(number_format($total_venta['total'],2));@endphp</strong>
-                                 </td>
-                             </tr>
-                         </tbody>
-                     </table> 
-           
-                 </div>
-             </div>
-         </div>
+<div class="offset-xl-2 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 padding">
+    <div class="card">
 
-     </div>
- </div>
+        <div class="card-body">
+            <div class="row ">
+
+                <div class="col-sm-12 ">
+
+                    <div class="d-inline p-2 "> <small>Razon Social {{$info_venta[0]['nombre'] }} </small> </div>
+                    <div class="d-inline p-2 "> <small> Ruc:{{$info_venta[0]['ruc'] }}</small> </div> <br />
+                    <div class="d-inline p-2 "> <small>Direccion:{{$info_venta[0]['direccion'] }} </small> </div>
+                    <div class="d-inline p-2 "> <small>Fecha:{{$info_venta[0]['fecha'] }} </small> </div>
+                    <div class="d-inline p-2 "> <small>Telf:{{$info_venta[0]['telefono'] }} </small> </div>
+                </div>
+
+
+
+
+            </div>
+
+
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Cod</th>
+                        <th>Cant</th>
+                        <th>Descripcion</th>
+                        <th>Unidad</th>
+                        <th>Precio</th>
+                        <th>Desc</th>
+                        <th>PT</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($detalle_venta as $item)
+                    <tr>
+                        <td>{{$item['nombre']}}</td>
+                        <td class="center">{{$item['cantidad']}}</td>
+                        <td class="left">{{$item['descripcion']}}</td>
+                        <td class="left">
+
+                            @if ($item['opcion'] == 2)
+                            RL
+                            @else
+                            M
+                            @endif
+
+
+
+                        </td>
+                        <td class="right ">{{$item['precioUnitario']}}</td>
+                        <td class="right">{{$item['descuento']}}</td>
+                        <td class="right">{{$item['subTotal']}}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+
+
+            <div class="row">
+
+
+                <div class="col-lg-4 col-sm-5 ml-auto">
+                    <table class="table table-clear">
+                        <tbody>
+                            <tr>
+                                <td class="left">
+                                    <strong>SUBTOTAL PRECIO</strong>
+                                </td>
+                                <td class="right">$@php echo(number_format($total_venta['subtotalprecio'],2));@endphp</td>
+                            </tr>
+                            <tr>
+                                <td class="left">
+                                    <strong>DESCUENTO</strong>
+                                </td>
+                                <td class="right">$@php echo(number_format($total_venta['descuentos'],2));@endphp</td>
+                            </tr>
+                            <tr>
+                                <td class="left">
+                                    <strong>SUBTOTAL SIN IMPUESTOS</strong>
+                                </td>
+                                <td class="right">$@php echo(number_format($total_venta['subtotal_sin_impuestos'],2));@endphp</td>
+                            </tr>
+                            <tr>
+                                <td class="left">
+                                    <strong>VALOR IVA 12% </strong>
+                                </td>
+                                <td class="right">
+                                    <strong>$@php echo(number_format($total_venta['valorIva'],2));@endphp</strong>
+                                </td>
+
+                            <tr>
+                                <td class="left">
+                                    <strong>VALOR TOTAL </strong>
+                                </td>
+                                <td class="right">
+                                    <strong>$@php echo(number_format($total_venta['total'],2));@endphp</strong>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+
+            <!--  <div class="row"> -->
+
+            <!--     <div class="col-md-4 col-sm-5 ml-auto">
+                    <table class="table table-clear">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <h5 class="text-dark">SUBTOTAL PRECIO </h5>
+                                </td>
+                                <td class="right"><strong class="text-dark"> $ @php echo(number_format($total_venta['subtotalprecio'],2));@endphp</strong></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h5 class="text-dark">DESCUENTO </h5>
+                                </td>
+                                <td class="right"><strong class="text-dark"> $ @php echo(number_format($total_venta['descuentos'],2));@endphp</strong></td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <h5 class="text-dark">SUBTOTAL SIN IMPUESTOS </h5>
+                                </td>
+                                <td class="right"><strong class="text-dark"> $ @php echo(number_format($total_venta['subtotal_sin_impuestos'],2));@endphp</strong></td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <h5 class="text-dark">SUBTOTAL 12% </h5>
+                                </td>
+                                <td class="right"><strong class="text-dark"> $ @php echo(number_format($total_venta['subtotal_sin_impuestos'],2));@endphp</strong></td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <h5 class="text-dark">VALOR IVA 12% </h5>
+                                </td>
+                                <td class="right"><strong class="text-dark"> $ @php echo(number_format($total_venta['valorIva'],2));@endphp</strong></td>
+                            </tr>
+
+
+                            <tr>
+                                <td>
+                                    <h5 class="text-dark">VALOR TOTAL </h5>
+                                </td>
+                                <td class="right"><strong class="text-dark"> $ @php echo(number_format($total_venta['total'],2));@endphp</strong></td>
+                            </tr>
+
+
+
+                        </tbody>
+                    </table>
+
+                </div> -->
+
+            <!--      </div> -->
+        </div>
+
+    </div>
+</div>
 @endsection

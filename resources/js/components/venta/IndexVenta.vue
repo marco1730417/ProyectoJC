@@ -235,9 +235,18 @@
      <b-button
               variant="outline-warning default actions"
               size="sm"
+                      @click="downloadVenta(data.item.id)"
+              data-placement="top"
+              title="Descargar"
+            >
+              <i class="fas fa-file" title="Abonos"></i>
+            </b-button>
+              <b-button
+              variant="outline-warning default actions"
+              size="sm"
              data-toggle="modal"
                         data-target="#ModalAbonos"
-                        @click="obtenerabonos(item.id)"
+                        @click="obtenerabonos(data.item.id)"
               data-placement="top"
               title="save"
             >
