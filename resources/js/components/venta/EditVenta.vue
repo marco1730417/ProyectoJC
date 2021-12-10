@@ -1,5 +1,6 @@
 <template>
   <div class="main-content">
+    
     <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
       <div class="container-fluid">
         <div class="header-body">
@@ -84,6 +85,28 @@
         </div>
       </div>
     </div>
+<div id="ModalVentaProducto" class="modal" tabindex="-1">
+  <div   class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <modal-venta-producto
+                            @updateVenta="updateDatos"
+                            :venta="substr"
+                          />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 
     <div v-if="substr > 0" class="container-fluid mt--7">
       <div class="row">
@@ -103,17 +126,12 @@
                     ><i class="fas fa-search"></i>Buscar Productos</a
                   >
 
-                  <div
-                    class="modal fade"
-                    id="ModalVentaProducto"
-                    tabindex="-1"
-                    role="dialog"
-                    aria-hidden="true"
-                  >
-                    <div class="modal-dialog" role="document">
-                      <div class="modal-content">
+         <!--     <div
+              id="ModalVentaProducto"
+              class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
                         <div class="modal-header">
-                          <!--      <h5 class="modal-title"> Cliente {{cliente.nombre}} - Fecha {{fecha}}  </h5> -->
                           <h5 class="modal-title">Nuevo Item</h5>
                           <button
                             type="button"
@@ -134,6 +152,9 @@
                       </div>
                     </div>
                   </div>
+ -->
+
+                  
                 </div>
               </div>
             </div>
@@ -639,53 +660,67 @@
 
             <div class="col-12"></div>
 
-            <div class="table-responsive">
-              <table class="table align-items-center table-flush">
-                <thead class="thead-light">
-                  <tr>
-                    <th scope="col">Producto</th>
-                    <th scope="col">Descripcion</th>
-                    <th scope="col">Cantidad</th>
-                    <th scope="col">Precio Unitario</th>
-                    <th scope="col">SubTotal</th>
+            <b-table
+          :items="detalleventa"
+          :fields="fields"
+          :filter="filter"
+          show-empty
+          responsive="sm"
+          :per-page="perPage"
+          :current-page="currentPage"
+        >
+          <template #cell(index)="data">
+            <small> {{ data.index + 1 }} </small>
+          </template>
+      
+              <template #cell(nombre)="data">
+            <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
+            {{ data.item.nombre }}
+          </template>
+              <template #cell(cantidad)="data">
+            <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
+            {{ data.item.cantidad }}
+          </template>
+          <template #cell(descripcion)="data">
+            <!--  <small class="mb-0 mr-2">{{ data.item.ruc }}</small> -->
+            {{ data.item.descripcion }}
+          </template>
+          <template #cell(opcion)="data">
+            <!--    <small class="mb-0 mr-2">{{ data.item.direccion }}</small> -->
+          <!--   {{ data.item.opcion }} -->
+<h6 v-if="data.item.opcion===2" >
+RL
+</h6>
+<h6 v-else >
+MT
+</h6>
 
-                    <th scope="col">Accion</th>
-                  </tr>
-                </thead>
 
-                <!--  {{detalleventa}}  -->
-                <tbody>
-                  <tr v-for="item in detalleventa">
-                    <td>{{ item.nombre }}</td>
-                    <td>{{ item.descripcion }}</td>
-                    <td>{{ item.cantidad }}</td>
-                    <td>
-                      {{ parseFloat(item.precioUnitario).toFixed(2) }}
-                    </td>
+          </template>
+          <template #cell(precioUnitario)="data">
+            {{ data.item.precioUnitario }}
+          </template>
 
-                    <td>
-                      {{ parseFloat(item.subTotal).toFixed(2) }}
-                    </td>
-                    <td class="text-center">
-                      <a
-                        class="btn btn-sm btn-icon-only text-light"
-                        href="#"
-                        role="button"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        <i
-                          class="fas fa-trash"
-                          @click="deleteDetalleVenta(item.id)"
-                        ></i>
-                      </a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
+          <template #cell(subTotal)="data">
+            <!--     <b-badge variant="outline" class="p-1" size="sm">{{
+              data.item.email
+            }}</b-badge> -->
+           $ {{ data.item.subTotal }}
+          </template>
+          <template #cell(actions)="data">
+     
+            <b-button
+              variant="outline-danger default actions"
+              size="sm"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="save"
+         @click="deleteDetalleVenta(data.item.id)"
+            >
+              <i class="fas fa-trash"></i>
+            </b-button>
+          </template>
+        </b-table>
             <b-container class="bv-example-row">
               <b-row>
                 <b-col></b-col>
@@ -768,6 +803,7 @@
                       ><i class="fas fa-ban"></i>Eliminar Venta</b-dropdown-item
                     >
                   </b-dropdown>
+                  
                 </div>
               </div>
             </div>
@@ -803,6 +839,75 @@ export default {
   },
   data() {
     return {
+       perPage: 10,
+      currentPage: 1,
+      filter: null,
+    
+       fields: [
+        {
+          key: "index",
+          label: "#",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "index",
+        },
+      {
+          key: "nombre",
+          label: "Producto",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "list-item-enddate",
+        },
+            {
+          key: "cantidad",
+          label: "Cantidad",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "list-item-enddate",
+        },
+
+        {
+          key: "descripcion",
+          label: "Descripcion",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "list-item-enddate",
+        },
+           {
+          key: "opcion",
+          label: "Unidad",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "list-item-enddate",
+        },
+           {
+          key: "precioUnitario",
+          label: "Precio",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "list-item-enddate",
+        },
+          {
+          key: "subTotal",
+          label: "Precio Total",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "list-item-enddate",
+        },
+       /*   {
+          key: "Desc",
+          label: "Desc",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "list-item-enddate",
+        },
+       
+         */
+       
+    
+ 
+        { key: "actions", label: "Acciones", tdClass: "text-center" },
+      ],
       fecha: moment().format("MMMM Do YYYY"),
       cliente: "",
       clienteupdate: "",

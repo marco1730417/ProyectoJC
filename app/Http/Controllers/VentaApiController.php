@@ -203,6 +203,8 @@ class VentaApiController extends ApiResponseController
         $new_detalle->proId =  $data['proId'];
         $new_detalle->venId =  $data['venId'];
         $new_detalle->metrostotales =  $metrostotales;
+        $new_detalle->opcion =  $precioUnitarioOpcion;
+        
         $new_detalle->save();
 
 if($new_detalle){
@@ -221,6 +223,8 @@ if($new_detalle){
         $detalle_venta = DetalleVenta::select(
             'detalle_ventas.cantidad',
             'detalle_ventas.id',
+            'detalle_ventas.opcion',
+            
             
             'detalle_ventas.precioUnitario',
             'productos.nombre',
@@ -270,7 +274,7 @@ if($new_detalle){
         return $this->successResponse($info_pago_abono);
     }
 
-    public function deleteVenta($venId)
+    public function deleteVentav1($venId)
     {
         Pago::where('venId',$venId)->delete();
         DetalleVenta::where('venId',$venId)->delete();
@@ -280,6 +284,22 @@ if($new_detalle){
        return $this->successResponse(200);
     }
 
+    public function deleteVenta($venId)
+    {
+        $infodetalle=  DetalleVenta::where('venId', $venId)->get();
+
+        $collection = collect($infodetalle);
+        $collection->each(function ($item, $key) {
+        $update_producto = Producto::findOrFail($item->proId);
+        $update_producto->unidades = $update_producto->unidades + $item->cantidad;
+        $update_producto->update();
+        DetalleVenta::where('venId', $item->venId)->delete();
+
+        });
+        Venta::where('id', $venId)->delete();
+         if (!$collection) return $this->errorResponse(500); 
+        return $this->successResponse(200);
+    }
 
     public function deleteDetalleVenta($id)
     {        

@@ -168,7 +168,7 @@
                 placeholder="Buscar Venta"
               ></b-form-input>
                 </div>
-                <div class="col-4 text-right">
+                <div class="col-4">
               
                   <a
                     href="#"
@@ -213,6 +213,15 @@
     
     
           <template #cell(actions)="data">
+               <b-button
+              variant="outline-success default actions"
+              @click="gotoEditVenta(data.item.id)"
+              size="sm"
+              title="venta"
+          
+            >
+              <i class="fas fa-arrow-circle-right"></i>
+            </b-button>
             <b-button
               variant="outline-info default actions"
               data-toggle="modal"
@@ -223,19 +232,8 @@
             >
               <i class="fas fa-eye"></i>
             </b-button>
-
-            <b-button
-              variant="outline-danger default actions"
-              size="sm"
-              data-toggle="tooltip"
-              data-placement="top"
-              title="save"
-         @click="deleteVenta(data.item.id)"
-            >
-              <i class="fas fa-trash"></i>
-            </b-button>
-            <b-button
-              variant="outline-danger default actions"
+     <b-button
+              variant="outline-warning default actions"
               size="sm"
              data-toggle="modal"
                         data-target="#ModalAbonos"
@@ -246,6 +244,17 @@
               <i class="fas fa-dollar-sign" title="Abonos"></i>
             </b-button>
             
+            <b-button
+              variant="outline-danger default actions"
+              size="sm"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="Eliminar"
+         @click="deleteVenta(data.item.id)"
+            >
+              <i class="fas fa-trash"></i>
+            </b-button>
+       
           </template>
         </b-table>
              <!-- PAGINACION -->
@@ -502,7 +511,7 @@ export default {
         },
    
  
-        { key: "actions", label: "Acciones", tdClass: "text-center" },
+        { key: "actions", label: "Acciones",   tdClass: "list-item-enddate", },
       ],
 
 

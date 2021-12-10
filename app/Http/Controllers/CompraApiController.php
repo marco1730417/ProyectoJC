@@ -196,9 +196,6 @@ class CompraApiController extends ApiResponseController
 
         });
         Compras::where('id', $comId)->delete();
-      /*   $compra = DetalleCompras::findOrFail($comId);
-        $compra->delete();
- */
          if (!$collection) return $this->errorResponse(500); 
         return $this->successResponse(200);
     }
