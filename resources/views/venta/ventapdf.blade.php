@@ -120,7 +120,23 @@
 
 
             <div class="row">
+       <!--      <div class="col-xs-6">
+            <TABLE border="1"
+>
+Informacion Adicional
+<tr>
+    <th>Abono</th>
+    <td>0</td>
+  </tr>
+  <tr>
+    <th>Saldo</th>
+    <td>0</td>
+  </tr>
 
+</TABLE>
+            
+</div> -->
+            <div class="col-xs-6">
 
                 <div class="col-lg-4 col-sm-5 ml-auto">
                     <table class="table table-clear">
@@ -163,64 +179,9 @@
                     </table>
 
                 </div>
-
+                </div>
             </div>
 
-            <!--  <div class="row"> -->
-
-            <!--     <div class="col-md-4 col-sm-5 ml-auto">
-                    <table class="table table-clear">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <h5 class="text-dark">SUBTOTAL PRECIO </h5>
-                                </td>
-                                <td class="right"><strong class="text-dark"> $ @php echo(number_format($total_venta['subtotalprecio'],2));@endphp</strong></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h5 class="text-dark">DESCUENTO </h5>
-                                </td>
-                                <td class="right"><strong class="text-dark"> $ @php echo(number_format($total_venta['descuentos'],2));@endphp</strong></td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <h5 class="text-dark">SUBTOTAL SIN IMPUESTOS </h5>
-                                </td>
-                                <td class="right"><strong class="text-dark"> $ @php echo(number_format($total_venta['subtotal_sin_impuestos'],2));@endphp</strong></td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <h5 class="text-dark">SUBTOTAL 12% </h5>
-                                </td>
-                                <td class="right"><strong class="text-dark"> $ @php echo(number_format($total_venta['subtotal_sin_impuestos'],2));@endphp</strong></td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <h5 class="text-dark">VALOR IVA 12% </h5>
-                                </td>
-                                <td class="right"><strong class="text-dark"> $ @php echo(number_format($total_venta['valorIva'],2));@endphp</strong></td>
-                            </tr>
-
-
-                            <tr>
-                                <td>
-                                    <h5 class="text-dark">VALOR TOTAL </h5>
-                                </td>
-                                <td class="right"><strong class="text-dark"> $ @php echo(number_format($total_venta['total'],2));@endphp</strong></td>
-                            </tr>
-
-
-
-                        </tbody>
-                    </table>
-
-                </div> -->
-
-            <!--      </div> -->
         </div>
 
     </div>
