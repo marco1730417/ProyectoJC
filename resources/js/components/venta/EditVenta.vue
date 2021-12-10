@@ -102,7 +102,6 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
@@ -679,24 +678,26 @@
           </template>
               <template #cell(cantidad)="data">
             <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
-            {{ data.item.cantidad }}
+   
+            <div v-if="data.item.opcion===2" >
+         {{ data.item.cantidad }}   [rll]
+</div>
+<div v-else >
+         {{ data.item.cantidad }}   [m]
+</div>
           </template>
           <template #cell(descripcion)="data">
             <!--  <small class="mb-0 mr-2">{{ data.item.ruc }}</small> -->
             {{ data.item.descripcion }}
           </template>
-          <template #cell(opcion)="data">
-            <!--    <small class="mb-0 mr-2">{{ data.item.direccion }}</small> -->
-          <!--   {{ data.item.opcion }} -->
-<h6 v-if="data.item.opcion===2" >
-RL
-</h6>
-<h6 v-else >
-MT
-</h6>
 
-
+          <template #cell(descuento)="data">
+            <!--  <small class="mb-0 mr-2">{{ data.item.ruc }}</small> -->
+            {{ data.item.descuento }}
           </template>
+
+          
+         
           <template #cell(precioUnitario)="data">
             {{ data.item.precioUnitario }}
           </template>
@@ -732,19 +733,37 @@ MT
                         <thead class="thead-dark"></thead>
                         <tbody>
                           <tr>
-                            <td>SubTotal</td>
+                            <td>SUBTOTAL PRECIO</td>
                             <td>
-                              {{ parseFloat(totalesventa.subtotal).toFixed(2) }}
+                              {{ parseFloat(totalesventa.subtotalprecio).toFixed(2) }}
+                            </td>
+                          </tr>
+                            <tr>
+                            <td>DESCUENTO</td>
+                            <td>
+                              {{ parseFloat(totalesventa.descuentos).toFixed(2) }}
+                            </td>
+                          </tr>
+                             <tr>
+                            <td>SUBTOTAL SIN IMPUESTOS</td>
+                            <td>
+                              {{ parseFloat(totalesventa.subtotal_sin_impuestos).toFixed(2) }}
+                            </td>
+                          </tr>
+                                <tr>
+                            <td>SUBTOTAL 12%</td>
+                            <td>
+                              {{ parseFloat(totalesventa.subtotal_sin_impuestos).toFixed(2) }}
                             </td>
                           </tr>
                           <tr>
-                            <td>Iva ({{ totalesventa.iva }})</td>
+                            <td>VALOR IVA 12%</td>
                             <td>
                               {{ parseFloat(totalesventa.valorIva).toFixed(2) }}
                             </td>
                           </tr>
                           <tr>
-                            <td>Total</td>
+                            <td>VALOR TOTAL</td>
                             <td>
                               {{ parseFloat(totalesventa.total).toFixed(2) }}
                             </td>
@@ -844,13 +863,13 @@ export default {
       filter: null,
     
        fields: [
-        {
+     /*    {
           key: "index",
           label: "#",
           sortable: false,
           sortDirection: "desc",
           tdClass: "index",
-        },
+        }, */
       {
           key: "nombre",
           label: "Producto",
@@ -873,16 +892,23 @@ export default {
           sortDirection: "desc",
           tdClass: "list-item-enddate",
         },
-           {
+   /*         {
           key: "opcion",
           label: "Unidad",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate",
-        },
+        }, */
            {
           key: "precioUnitario",
           label: "Precio",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "list-item-enddate",
+        },
+                {
+          key: "descuento",
+          label: "Descuento",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate",

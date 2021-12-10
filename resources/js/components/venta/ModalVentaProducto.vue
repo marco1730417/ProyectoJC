@@ -12,8 +12,8 @@
           :options="infoproducto"
           required
         ></v-select>
-        <small v-if="producto">
-          {{ producto.descripcion }} - Disponible # {{ producto.unidades }} mtrs
+        <small v-if="producto"> 
+          {{ producto.descripcion }} - <strong> Stock # {{ producto.unidades }} mtrs</strong> 
         </small>
       </div>
 
@@ -177,7 +177,7 @@
           </div>
         </div>
       </div>
-         <div class="col-12">
+         <div v-if="producto" class="col-12">
         <div class="card p-3">
           <div class="card-body border p-0">
             <p>
@@ -197,14 +197,44 @@
                 aria-expanded="true"
                 aria-controls="collapseExample"
               >
-                <span class="fw-bold">Descuento Extra  </span>
+                <span class="fw-bold">Descuento Extra    </span>
               </a>
             </p>
             <div class="collapse show p-3 pt-0" id="collapseExample">
-         
+
+              <div  class="col-sm-4">
+                    <label
+                      for="lname"
+                      class="col-sm-6 col-form-label text-center"
+                      >Descuento</label
+                    >
+                    <input
+                      v-model="descuento"
+                      @keypress="onlyNumber"
+                      type="number"
+                      class="form-control"
+                      id="metrosrollo"
+                    />
+                  </div>
+                  
+              <div  class="col-sm-4">
+                    <label
+                      for="lname"
+                      class="col-sm-6 col-form-label text-center"
+                      >El descuento total es {{descuento*cantidad}}  </label
+                    >
+                
+                  </div>
+
+
             </div>
           </div>
         </div>
+
+ 
+
+
+
       </div>
 
       <div v-if="precioUnitario == 1 || precioUnitario == 3" class="col-12">
@@ -255,9 +285,9 @@ export default {
       status: "not_accepted",
       producto: "",
       infoproducto: [],
-      cantidad: "",
+      cantidad: 0,
       precioUnitario: "",
-      descuento: "",
+      descuento: 0,
       proId: "",
       unidades: "",
       iva: "",
@@ -307,11 +337,13 @@ export default {
       }
     },
     clearfields() {
-      this.cantidad = "";
+      this.cantidad = 0;
       this.precioUnitario = "";
       this.producto = "";
-      this.metrosrollo = "";
+      this.metrosrollo = 0;
       this.precioEspecial = "";
+      this.descuento = 0;
+      
     },
     getAllProductos() {
       ProductoServices.getAllProductos()
@@ -330,6 +362,8 @@ export default {
         venId: this.venta,
         metrosrollo: this.metrosrollo,
         precioEspecial: 0,
+        descuento:this.descuento,
+
       };
       VentaServices.createDetalleVenta(data)
         .then((response) => {

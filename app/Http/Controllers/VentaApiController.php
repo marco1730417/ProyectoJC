@@ -177,6 +177,8 @@ class VentaApiController extends ApiResponseController
         $precioUnitarioOpcion = $data['precioUnitario'];
         $proId = $data['proId'];
         $precioEspecial=$data['precioEspecial'];
+        $descuento=$data['descuento'];
+        
         $infoproducto = Producto::findOrFail($proId);
         if ($precioUnitarioOpcion == 1) {
             $valorPrecio = $infoproducto->PrecioVenta1;
@@ -204,6 +206,8 @@ class VentaApiController extends ApiResponseController
         $new_detalle->venId =  $data['venId'];
         $new_detalle->metrostotales =  $metrostotales;
         $new_detalle->opcion =  $precioUnitarioOpcion;
+        $new_detalle->descuento =  $descuento ? :0;
+        
         
         $new_detalle->save();
 
@@ -224,8 +228,7 @@ if($new_detalle){
             'detalle_ventas.cantidad',
             'detalle_ventas.id',
             'detalle_ventas.opcion',
-            
-            
+            'detalle_ventas.descuento',
             'detalle_ventas.precioUnitario',
             'productos.nombre',
             'productos.descripcion',
@@ -319,13 +322,20 @@ if($new_detalle){
 
       
         $parciales = DetalleVenta::queryVentaParcial($venId)->get();
+        $descuentos= DetalleVenta::queryDescuentos($venId)->get();
+        $descuentos_total=$descuentos->sum('descuentos');
         $subtotal = $parciales->sum('parcial');
+        $subtotal_sin_impuestos = $subtotal-$descuentos_total;
+        
         $iva = 12;
         $valor_iva = $subtotal*$iva/100;
         $total = $subtotal+$valor_iva;
 
         $totales_venta = [
-                                'subtotal' => $subtotal,
+                                'subtotalprecio' => $subtotal,
+                                'descuentos'=>$descuentos_total,
+                                'subtotal_sin_impuestos' => $subtotal_sin_impuestos,
+                               
                                 'iva' =>     round($iva),
                                 'valorIva' => $valor_iva,
                                 'total' => $total
