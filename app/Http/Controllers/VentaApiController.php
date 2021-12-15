@@ -562,6 +562,14 @@ se evite poner esta accion y unificar campos en una unica api */
             ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
             ->groupBy('cliId')->orderBy('total')->take(5)->get();
 
+            $frutas= Pago::select(
+                DB::raw('sum(total) as sum'),
+                DB::raw("DATE_FORMAT(created_at,'%M %Y') as months")
+            )
+                ->groupBy('months')
+                ->get();
+                $collection = collect($frutas);
+
         /*   $ventas_mes= Venta::select(
         DB::raw("(SELECT sum(detalle_ventas.cantidad*detalle_ventas.precioUnitario) FROM detalle_ventas
         WHERE ventas.id=detalle_ventas.venId
@@ -599,6 +607,7 @@ se evite poner esta accion y unificar campos en una unica api */
             'productos_stock' => $productos_stock,
             'productos_mas_vendidos' => $productos_mas_vendidos,
             'mejores_clientes' => $mejores_clientes,
+            'meses'=> $collection
 
 
         ];

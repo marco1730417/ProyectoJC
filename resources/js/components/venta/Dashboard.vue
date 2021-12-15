@@ -392,6 +392,11 @@ export default {
       VentaServices.totalDashboardVentas()
         .then((response) => {
           this.totalventas = response.data.data;
+        //  this.series.data= this.totalventas['meses']['months']
+         chart.updateSeries([{
+    name: 'Sales',
+    data:  this.totalventas['meses']
+  }])
         })
         .catch((error) => {
           console.log(error);

@@ -172,20 +172,7 @@ export default {
           sortDirection: "desc",
           tdClass: "list-item-enddate",
         },
-            {
-          key: "tipo",
-          label: "Metodo Pago",
-          sortable: false,
-          sortDirection: "desc",
-          tdClass: "list-item-enddate",
-        },
-        {
-          key: "total",
-          label: "Total",
-          sortable: false,
-          sortDirection: "desc",
-          tdClass: "list-item-enddate",
-        },
+    
       ],
       fechadesde: "",
       fechahasta: "",
