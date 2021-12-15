@@ -121,6 +121,11 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('pago.index') }}">
+                        <i class="ni ni-palette text-blue"></i> {{ __('Pagos Pendientes') }}
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('reporte.index') }}">
                         <i class="ni ni-palette text-blue"></i> {{ __('Reporte Ventas') }}
                     </a>

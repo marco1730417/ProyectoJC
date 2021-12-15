@@ -50,6 +50,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('nuevaventa', ['as' => 'venta.nuevaventa', 'uses' => 'App\Http\Controllers\VentaController@nuevaventa']);
 	Route::get('editventa/{id} ', ['as' => 'venta.editventa', 'uses' => 'App\Http\Controllers\VentaController@editventa']);
 	Route::get('editcompra/{id} ', ['as' => 'compra.editcompra', 'uses' => 'App\Http\Controllers\CompraController@editcompra']);
+	Route::get('pago', ['as' => 'pago.index', 'uses' => 'App\Http\Controllers\PagoController@index']);
 	
 	
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);

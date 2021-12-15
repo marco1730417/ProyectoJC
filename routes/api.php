@@ -9,6 +9,7 @@ use App\Http\Controllers\ProveedoresApiController;
 
 use App\Http\Controllers\CompraApiController;
 use App\Http\Controllers\ReportesApiController;
+use App\Http\Controllers\PagoApiController;
 
 
 
@@ -55,6 +56,12 @@ Route::group(['prefix' => 'producto'], function () {
 
 });
 
+Route::group(['prefix' => 'pagos'], function () {
+    Route::get('get-pagos-pendientes', [PagoApiController::class, 'PagosPendientes']);
+
+   
+
+});
 
 Route::group(['prefix' => 'compras'], function () {
     Route::get('get-informacion-header-compras/{comId} ', [CompraApiController::class, 'getInformacionHeaderCompras']);
