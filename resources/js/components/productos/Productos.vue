@@ -296,14 +296,16 @@ export default {
   },
   methods: {
     updateProducto() {
-      $("#ModalNuevoProducto").modal("hide");
-      this.getAllProductos();
+   /*    $("#ModalNuevoProducto").modal("hide");
+      this.getAllProductos(); */
+      location.reload();
     },
 
     updateProductosUpdate() {
-      this.getAllProductos();
+    /*   this.getAllProductos();
 
-      $("#ModalEditProducto").modal("hide");
+      $("#ModalEditProducto").modal("hide"); */
+         location.reload();
     },
     openModalEditProducto(infoproducto) {
       this.infoeditproducto = infoproducto;

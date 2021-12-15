@@ -276,6 +276,7 @@ class VentaApiController extends ApiResponseController
         return $this->successResponse($info_pago_abono);
     }
 
+    
     public function deleteVentav1($venId)
     {
         Pago::where('venId', $venId)->delete();
@@ -458,7 +459,12 @@ class VentaApiController extends ApiResponseController
             DB::raw("(SELECT sum(detalle_ventas.cantidad*detalle_ventas.precioUnitario) FROM detalle_ventas
         WHERE ventas.id=detalle_ventas.venId
         ) AS total"),
+        DB::raw("(SELECT count(pagos.id) FROM pagos
+        WHERE ventas.id=pagos.venId
+        and pagos.tipo='Abono'
+        ) AS pagoabonos"),
         )
+        
 
 
 

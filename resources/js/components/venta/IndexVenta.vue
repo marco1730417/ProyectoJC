@@ -228,6 +228,7 @@
                         data-target="#ModalVentaObservaciones"
               size="sm"
               title="observaciones"
+              @click="captureitem(data.item)"
           
             >
               <i class="fas fa-eye"></i>
@@ -241,14 +242,25 @@
             >
               <i class="fas fa-file" title="Abonos"></i>
             </b-button>
-              <b-button
+              <b-button v-if="data.item.pagoabonos>0"
               variant="outline-warning default actions"
               size="sm"
              data-toggle="modal"
                         data-target="#ModalAbonos"
                         @click="obtenerabonos(data.item.id)"
               data-placement="top"
-              title="save"
+              title="Abonos"
+            >
+              <i class="fas fa-balance-scale" title="Abonos"></i>
+            </b-button>
+                <b-button 
+              variant="outline-warning default actions"
+              size="sm"
+             data-toggle="modal"
+                        data-target="#ModalPagos"
+                        @click="captureventa(data.item.id)"
+              data-placement="top"
+              title="Pagos"
             >
               <i class="fas fa-dollar-sign" title="Abonos"></i>
             </b-button>
@@ -310,7 +322,7 @@
                         max-rows="6"
                       ></b-form-textarea>
                       <br />
-
+<!-- {{infoventa}} -->
                       <b-button
                         @click="
                           updateObservacion(infoventa.id, infoventa.observacion)
@@ -350,8 +362,9 @@
                     <div class="modal-body">
                       <!--   {{infoabonos}} -->
                       <div>
-                        <h5>Total a cobrar : $ {{ infoabonos.totalcobrar }}</h5>
-                        <h5>Fecha maxima : {{ infoabonos.fechamaxima }}</h5>
+                      <!--   <h5>Total a cobrar : $ {{ infoabonos.totalcobrar }}</h5> -->
+                       <h5>Total a cobrar : ${{ parseFloat(infoabonos.totalcobrar).toFixed(2) }}</h5>
+                           <h5>Fecha maxima :  {{ moment(infoabonos.fechamaxima , "YYYY-MM-DD").format("MMM DD YYYY, ddd")}} </h5>
                         <b-progress
                           :value="infoabonos.total_abonos"
                           :max="infoabonos.totalcobrar"
@@ -363,7 +376,16 @@
                           hover
                           :items="infoabonos.detalle_venta"
                           :fields="fields"
-                        ></b-table>
+                        >
+                              <template #cell(fecha)="data">
+            <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
+            <!--  {{ data.item.fecha }} -->
+              {{ moment(data.item.fecha , "YYYY-MM-DD").format("MMM DD YYYY, ddd")}} 
+           <!--    {{ moment(data.item.fecha).format("MMM DD YYYY, ddd") }} -->
+          
+          </template>
+                        
+                        </b-table>
 
                         <form action="">
                           <div class="mb-3">
@@ -406,6 +428,9 @@
                                   <p>
                                     <span class="fas fa-dollar-sign"></span
                                     >{{ pagorecibido }}
+                                     <!--  {{
+                                      parseFloat(pagorecibido).toFixed(2)
+                                    }} -->
                                   </p>
                                 </div>
                                 <div
@@ -441,6 +466,34 @@
                           </div>
                         </form>
                       </div>
+                    </div>
+                    <div class="modal-footer"></div>
+                  </div>
+                </div>
+              </div>
+                    <!--          Modal agregar editar producto -->
+              <div
+                class="modal fade"
+                id="ModalPagos"
+                tabindex="-1"
+                role="dialog"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog modal-lg" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Pagos</h5>
+                      <button
+                        type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                 <modal-pagos-venta :venId="venta" ></modal-pagos-venta>
                     </div>
                     <div class="modal-footer"></div>
                   </div>
@@ -546,6 +599,7 @@ export default {
       infoabonos: "",
       pagorecibido: "",
       saldo: "",
+       venta:"",
     };
   },
   computed: {
@@ -566,6 +620,9 @@ export default {
     this.totalDashboardVentas();
   },
   methods: {
+    	    captureventa(id){
+this.venta=id;
+    },
     registrarabono(pago, info) {
       let data = {
         info: info,
@@ -575,8 +632,14 @@ export default {
       VentaServices.registrarabono(data)
         .then((response) => {
           let mensaje = response.data.data;
-          if (mensaje == 200) {
-            this.obtenerabonos();
+      if (mensaje == 200) {
+                              this.$swal
+        .fire({
+  icon: 'success',
+  title: 'Abono registrado',
+  showConfirmButton: false,
+  timer: 1500
+})
           }
         })
         .catch((error) => {

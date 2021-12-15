@@ -83,6 +83,7 @@ Vue.component('reporte-clientes', require('./components/reporte/ReporteCliente.v
 Vue.component('modal-venta-producto', require('./components/venta/ModalVentaProducto.vue').default);
 Vue.component('ventas', require('./components/venta/IndexVenta.vue').default);
 Vue.component('dashboard', require('./components/venta/Dashboard.vue').default);
+Vue.component('modal-pagos-venta', require('./components/venta/ModalPagosVenta.vue').default);
 
 
 /**

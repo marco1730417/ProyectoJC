@@ -186,7 +186,7 @@ export default {
     };
   },
   mounted() {
-    console.log("Component mounted.");
+  //  console.log("Component mounted.");
   },
   methods: {
     clearfields() {
@@ -219,10 +219,23 @@ export default {
       ProductoServices.createNewProducto(data)
         .then((response) => {
           let mensaje = response.data.data;
-          if (mensaje == 200) {
-            this.clearfields();
+     
+
+     if (mensaje == 200) {
+
+ this.$swal
+        .fire({
+ icon: 'success',
+  title: 'Tu producto ha sido creado',
+  showConfirmButton: false,
+  timer: 1500
+})
+
             this.$emit("updateProducto");
           }
+
+
+
         })
         .catch((error) => {
           console.log(error);
