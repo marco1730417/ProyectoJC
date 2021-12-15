@@ -122,7 +122,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('pago.index') }}">
-                        <i class="ni ni-palette text-blue"></i> {{ __('Pagos Pendientes') }}
+                        <i class="ni ni-calendar-grid-58 text-blue"></i> {{ __('Pagos Pendientes') }}
                     </a>
                 </li>
                 <li class="nav-item">
