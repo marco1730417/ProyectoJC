@@ -6,6 +6,7 @@
       >
       <div class="col-sm-12">
         <i @click="clear" class="fas fa-eraser"></i>
+
         <v-select
           label="descripcion"
           v-model="producto"
@@ -13,12 +14,14 @@
           required
         ></v-select>
         <small v-if="producto"> 
-          {{ producto.descripcion }} - <strong> Stock # {{ producto.unidades }} mtrs</strong> 
+            <strong class="text-info"> Codigo:  </strong>  {{ producto.nombre }}
+        <strong class="text-info"> Stock:  </strong>  {{ producto.unidades }} mtrs
+       
         </small>
       </div>
 
       <div class="col-12">
-        <div class="card p-3">
+        <div v-if="producto" class="card p-3">
           <div class="card-body border p-0">
             <p>
               <a
@@ -155,14 +158,14 @@
                             <label
                               v-if="total_metro_rollo == false"
                               for="lname"
-                              class="col-sm-12 col-form-label text-center"
+                              class="col-sm-12 col-form-label text-danger "
                               >No existe suficiente stock (Existen maximo
                               {{ producto.unidades }} mtrs )</label
                             >
                             <label
                               v-if="validacion_metro == false"
                               for="lname"
-                              class="col-sm-12 col-form-label text-center"
+                              class="col-sm-12 col-form-label text-danger "
                               >No existe suficiente stock (Existen maximo
                               {{ producto.unidades }} mtrs )</label
                             >
@@ -412,7 +415,6 @@ export default {
 };
 </script>
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
 
 * {
   margin: 0;

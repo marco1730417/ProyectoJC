@@ -117,7 +117,7 @@
           
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('venta.index') }}">
-                        <i class="ni ni-planet text-blue"></i> {{ __('Ventas') }}
+                        <i class="ni ni-cart text-blue"></i> {{ __('Ventas') }}
                     </a>
                 </li>
                 <li class="nav-item">
@@ -127,12 +127,12 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('reporte.index') }}">
-                        <i class="ni ni-palette text-blue"></i> {{ __('Reporte Ventas') }}
+                        <i class="ni ni-planet text-blue"></i> {{ __('Reporte Ventas') }}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('reporte.reportecliente') }}">
-                        <i class="ni ni-palette text-blue"></i> {{ __('Reporte Clientes') }}
+                        <i class="ni ni-satisfied text-blue"></i> {{ __('Reporte Clientes') }}
                     </a>
                 </li>
 

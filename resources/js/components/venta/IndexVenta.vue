@@ -204,7 +204,12 @@
           </template>
               <template #cell(nombre)="data">
             <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
-            {{ data.item.nombre }}
+<!--             <small> </small> -->
+             <div class="left" id="center">
+            <small> {{ data.item.nombre }}<br/></small>
+            <small> {{data.item.ruc}}</small>
+              
+        </div>
           </template>
               <template #cell(observacion)="data">
             <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
