@@ -65,8 +65,9 @@
                         </b-container>
                       </div>
                       <div class="col-md-8">
-                     <!--     {{infoventa}}  -->
-                        <b-table v-if="infoventa"
+                        <!--     {{infoventa}}  -->
+                        <b-table
+                          v-if="infoventa"
                           striped
                           hover
                           :items="infoventa.ventas_por_fecha"
@@ -75,50 +76,47 @@
                       </div>
                     </div>
                   </div>
-
-               
                 </div>
               </div>
-                 <table v-if="infoventa" class="table">
-<thead>
-    <tr>
-        <th>Total Contado</th>
-        <th>Total Transferencia</th>
- <th>Total Abonos </th>
-        <th>Total Cheque</th>
-
-       
-    </tr>
-</thead>
-<tbody>
-    <tr>
-       
-        <td> 
-
-                 {{ parseFloat(infoventa.ventas_contado).toFixed(2) }}
-                       
-        </td>  
-        <td> 
-
-                 {{ parseFloat(infoventa.ventas_transferencia).toFixed(2) }}
-                       
-        </td> 
-        <td> 
-
-                 {{ parseFloat(infoventa.ventas_abono).toFixed(2) }}
-                       
-        </td>
-           <td> 
-
-                 {{ parseFloat(infoventa.ventas_cheque).toFixed(2) }}
-                       
-        </td>
-     
-    
-    </tr>
-
-</tbody>
-</table>
+              <table v-if="infoventa" class="table">
+                <thead>
+                  <tr>
+                    <th>Total Contado</th>
+                    <th>Total Transferencia</th>
+                    <th>Total Abonos</th>
+                    <th>Total Cheque</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      {{ parseFloat(infoventa.ventas_contado).toFixed(2) }}
+                    </td>
+                    <td>
+                      {{
+                        parseFloat(infoventa.ventas_transferencia).toFixed(2)
+                      }}
+                    </td>
+                    <td>
+                      {{ parseFloat(infoventa.ventas_abono).toFixed(2) }}
+                    </td>
+                    <td>
+                      {{ parseFloat(infoventa.ventas_cheque).toFixed(2) }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <!-- <button @click="downloadVenta">Descargar pdf</button> -->
+              <b-col class="text-center" sm="12">
+                <b-button
+                  v-if="fechadesde && fechahasta"
+                  size="sm"
+                  @click="downloadVenta"
+                  variant="warning"
+                  ><i class="fas fa-file" title="Reporte"></i> Descargar
+                  PDF</b-button
+                >
+              </b-col>
             </div>
           </div>
 
@@ -144,7 +142,7 @@ import ProveedorServices from "../../services/proveedorServices";
 import Conf from "../../services/conf.js";
 import ProductoServices from "../../services/productoServices";
 
-const resource = "api/venta/";
+const resource = "api/reportes/";
 const server = Conf.server;
 import moment from "moment";
 import { BootstrapVue } from "bootstrap-vue";
@@ -159,6 +157,13 @@ export default {
     return {
       fields: [
         {
+          key: "id",
+          label: "#",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "index",
+        },
+  {
           key: "nombre",
           label: "Cliente",
           sortable: false,
@@ -172,7 +177,6 @@ export default {
           sortDirection: "desc",
           tdClass: "list-item-enddate",
         },
-    
       ],
       fechadesde: "",
       fechahasta: "",
@@ -186,6 +190,16 @@ export default {
 
   mounted() {},
   methods: {
+    downloadVenta() {
+      let routeData =
+        server +
+        resource +
+        `download-reporte-venta/` +
+        this.fechadesde +
+        "/" +
+        this.fechahasta;
+      window.open(routeData);
+    },
     onlyNumber($event) {
       //console.log($event.keyCode); //keyCodes value
       let keyCode = $event.keyCode ? $event.keyCode : $event.which;

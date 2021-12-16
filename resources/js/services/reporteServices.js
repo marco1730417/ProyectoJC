@@ -25,5 +25,9 @@ export default {
         let url = server + resource + 'reporte-por-cliente';
         return Axios.get(url + "/" + cliId);
     },
- 
+    downloadReporteVenta(fechadesde,fechahasta){
+        let url = server + resource + 'download-reporte-venta';
+        return Axios.get(url + "/" + fechadesde+ "/" + fechahasta);
+    }
+   
 }

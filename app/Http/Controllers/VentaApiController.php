@@ -399,8 +399,8 @@ class VentaApiController extends ApiResponseController
             'detalle_ventas.descuento',
             'productos.nombre',
             'productos.descripcion',
-            db::raw('detalle_ventas.cantidad*detalle_ventas.precioUnitario as subTotal'),
-
+            db::raw('detalle_ventas.cantidad*detalle_ventas.precioUnitario as subTotal')
+      
         )
             ->leftJoin('ventas', 'detalle_ventas.id', '=', 'ventas.id')
             ->leftJoin('productos', 'detalle_ventas.proId', '=', 'productos.id')
@@ -433,13 +433,14 @@ class VentaApiController extends ApiResponseController
         $info_venta = Venta::select('ventas.id', 'ventas.fecha', 'clientes.nombre', 'clientes.ruc', 'clientes.direccion', 'clientes.telefono', 'ventas.metodopago')
             ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
             ->where('ventas.id', $venId)->get();
-
-
+/* return $info_venta[0]['nombre'];
+ */
 
         //  $pdf = PDF::loadView('venta.ventapdf', $data);
         $pdf = PDF::loadView('venta.ventapdf',  ["detalle_venta" => $detalle_venta, "total_venta" => $total_venta, "info_venta" => $info_venta], ['format' => 'A4']);
 
-        return $pdf->download('venta.pdf');
+      //  return $pdf->download('venta.pdf');
+        return $pdf->download($venId.$info_venta[0]['nombre'].'- venta.pdf');
     }
 
     public function detalleVenta()

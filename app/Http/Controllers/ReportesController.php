@@ -21,6 +21,10 @@ class ReportesController extends Controller
     {
         return view ('reporte.index');
     }
+    public function reporteventas()
+    {
+        return view ('reporte.reporteventapdf');
+    }
     public function reportecliente()
     {
         return view ('reporte.reportecliente');

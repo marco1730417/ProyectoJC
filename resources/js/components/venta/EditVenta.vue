@@ -14,14 +14,30 @@
                   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">
-                        Cliente
+                        Cliente - Nombre
                         <v-select
                           label="nombre"
                           v-model="clienteupdate"
                           :options="infocliente"
                           @click="actualizarVenta"
                           required
-                        ></v-select>
+                        >
+                 
+                        </v-select>
+                      </h5>
+                    </div>
+                           <div class="col">
+                      <h5 class="card-title text-uppercase text-muted mb-0">
+                        Cliente - Ruc
+                        <v-select
+                          label="ruc"
+                          v-model="clienteupdate"
+                          :options="infocliente"
+                          @click="actualizarVenta"
+                          required
+                        >
+                 
+                        </v-select>
                       </h5>
                     </div>
                     <div class="col-auto">
@@ -73,6 +89,11 @@
                     <span class="text-warning mr-2"
                       ><i class="fas fa-user"></i>
                       {{ detallegeneralventa.total[0].nombre }}
+                      
+                    </span>   <span class="text-info mr-2"
+                      ><i class="fas fa-user"></i>
+                      {{ detallegeneralventa.total[0].ruc }}
+                      
                     </span>
                     <span class="text-nowrap">{{ fecha }}</span>
                   </p>

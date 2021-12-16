@@ -192,9 +192,9 @@
           :per-page="perPage"
           :current-page="currentPage"
         >
-          <template #cell(index)="data">
+     <!--      <template #cell(index)="data">
             <small> {{ data.index + 1 }} </small>
-          </template>
+          </template> -->
           <template #cell(fecha)="data">
             <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
             <!--  {{ data.item.fecha }} -->
@@ -549,8 +549,8 @@ export default {
     
   fields1: [
         {
-          key: "index",
-          label: "Item",
+          key: "id",
+          label: "#",
           sortable: false,
           sortDirection: "desc",
           tdClass: "index",
