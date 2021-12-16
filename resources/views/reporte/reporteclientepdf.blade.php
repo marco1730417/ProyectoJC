@@ -65,10 +65,9 @@
         <div class="card-body">
             <div class="row ">
 
-            <h5>Reporte de ventas Fecha Inicio @php echo($start_date);@endphp - Fecha Final @php echo($end_date);@endphp </h5> </br>
 
-      
-         
+
+
             </div>
 
 
@@ -80,16 +79,21 @@
                      
                     <th>Cliente</th>
                         <th>Fecha</th>
+                        <th>Total</th>
                     
                     </tr>
                 </thead>
                 <tbody>
-                @foreach ($info_venta as $item)
+                @foreach ($ventas_cliente as $item)
                     <tr>
                     <td>{{$item['id']}}</td>
                     <td>{{$item['nombre']}}</td>
-                        <td class="center">{{$item['fecha']}}</td>
+                    <td>{{$item['fecha']}}</td>
+                    <td>{{$item['total']}}</td>
+                   
+                   
                     </tr>
+                    
                     @endforeach
                 </tbody>
             </table>
@@ -100,40 +104,7 @@
             <div class="col-xs-6">
 
                 <div class="col-lg-4 col-sm-5 ml-auto">
-                <table class="table table-clear">
-                        <tbody>
-                            <tr>
-                                <td class="left">
-                                    <strong>TOTAL CONTADO</strong>
-                                </td>
-                              
-                                <td class="right">$@php echo($contado_valor);@endphp</td>
-                            </tr>
-                            <tr>
-                                <td class="left">
-                                    <strong>TOTAL TRANSFERENCIAS</strong>
-                                </td>
-                              
-                                <td class="right">$@php echo($transferencia_valor);@endphp</td>
-                            </tr>
-                            <tr>
-                                <td class="left">
-                                    <strong>TOTAL CHEQUES</strong>
-                                </td>
-                              
-                                <td class="right">$@php echo($cheque_valor);@endphp</td>
-                            </tr>
-                    
-                            <tr>
-                                <td class="left">
-                                    <strong>TOTAL ABONOS</strong>
-                                </td>
-                              
-                                <td class="right">$@php echo($abono_valor);@endphp</td>
-                            </tr>
-                    
-                        </tbody>
-                    </table>
+        
 
                 </div>
                 </div>

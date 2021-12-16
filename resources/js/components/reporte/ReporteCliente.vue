@@ -59,7 +59,16 @@
  <!-- {{infoventa}} -->
     <b-table striped hover :items="infoventascliente" :fields="fields"></b-table>
   
-  
+          <b-col class="text-center" sm="12">
+                <b-button
+                  v-if="cliente "
+                  size="sm"
+                  @click="downloadReporteCliente"
+                  variant="warning"
+                  ><i class="fas fa-file" title="Reporte"></i> Descargar
+                  PDF</b-button
+                >
+              </b-col>
       </div>
 
 
@@ -97,7 +106,7 @@ import ProveedorServices from "../../services/proveedorServices";
 import Conf from "../../services/conf.js";
 import ProductoServices from "../../services/productoServices";
 
-const resource = "api/venta/";
+const resource = "api/reportes/";
 const server = Conf.server;
 import moment from "moment";
 import { BootstrapVue } from "bootstrap-vue";
@@ -140,11 +149,13 @@ export default {
       infoventascliente:"",
     infocliente:"",
       producto: "",
+      clientecapturado:"",
     };
   },
    watch: {
     cliente: function (newClient, oldClient) {
       this.reporteVentas(newClient.id);
+      this.clientecapturado=newClient.id;
     },
   },
   created() {
@@ -181,6 +192,15 @@ this.getAllClientes();
         .catch((error) => {
           console.log(error);
         });
+    },
+
+        downloadReporteCliente() {
+      let routeData =
+        server +
+        resource +
+        `download-reporte-cliente/` +
+        this.clientecapturado;
+      window.open(routeData);
     },
 
 
