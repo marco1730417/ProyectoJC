@@ -127,9 +127,9 @@
           :per-page="perPage"
           :current-page="currentPage"
         >
-          <template #cell(index)="data">
+       <!--    <template #cell(index)="data">
             <small> {{ data.index + 1 }} </small>
-          </template>
+          </template> -->
           <template #cell(nombre)="data">
             <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
             {{ data.item.nombre }}
@@ -218,7 +218,7 @@ export default {
       filter: null,
       fields: [
         {
-          key: "index",
+          key: "id",
           label: "Item",
           sortable: false,
           sortDirection: "desc",
