@@ -86,6 +86,7 @@ Vue.component('dashboard', require('./components/venta/Dashboard.vue').default);
 Vue.component('modal-pagos-venta', require('./components/venta/ModalPagosVenta.vue').default);
 
 Vue.component('pagos-pendientes', require('./components/pagos/PagosPendientes.vue').default);
+Vue.component('retencion-venta', require('./components/venta/ModalRetencion.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

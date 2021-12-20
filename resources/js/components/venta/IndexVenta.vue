@@ -75,7 +75,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-xl-3 col-lg-6">
+<!--             <div class="col-xl-3 col-lg-6">
               <div class="card card-stats mb-4 mb-xl-0">
                 <div class="card-body">
                   <div class="row">
@@ -101,15 +101,10 @@
                       </div>
                     </div>
                   </div>
-                  <!--    <p class="mt-3 mb-0 text-muted text-sm">
-                    <span class="text-warning mr-2"
-                      ><i class="fas fa-arrow-down"></i> 1.10%</span
-                    >
-                    <span class="text-nowrap">Since yesterday</span>
-                  </p> -->
+         
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -120,31 +115,7 @@
 
     <div class="container-fluid mt--7">
 
-<!--   <div class="row">
-                <div class="col-8">
-                   <b-form-input
-                style="height: calc(1.3em + 0.5rem + 2px); font-size: 0.75rem"
-                class="float-right"
-                id="filter-input"
-                v-model="filter"
-                type="search"
-                size="sm"
-                placeholder="Buscar Compra"
-              ></b-form-input>
-                </div>
-           
-              <div class="col-4">
-                    <a
-                    href="#"
-                    @click="gotoNuevaVenta()"
-                    class="badge badge-primary"
-                    >Nueva Venta</a
-                  >
-                </div>
-           
-           
-          
-              </div> -->
+
 
 
       <div class="row">

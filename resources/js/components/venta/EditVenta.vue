@@ -88,11 +88,12 @@
                   <p class="mt-3 mb-0 text-muted text-sm">
                     <span class="text-warning mr-2"
                       ><i class="fas fa-user"></i>
-                      {{ detallegeneralventa.total[0].nombre }}
+                    
+                   {{    totaldetallegeneral.nombre}}
                       
                     </span>   <span class="text-info mr-2"
                       ><i class="fas fa-user"></i>
-                      {{ detallegeneralventa.total[0].ruc }}
+                          {{    totaldetallegeneral.ruc}}
                       
                     </span>
                     <span class="text-nowrap">{{ fecha }}</span>
@@ -269,9 +270,10 @@
                                       downloadVentaContado(
                                         pagorecibido,
                                         total_cambio,
-                                        detallegeneralventa.total[0].cliId
+                                        totaldetallegeneral.cliId
                                       )
                                     "
+                                    
                                     class="btn btn-primary mt-2"
                                   >
                                     <span class="fas fa-dollar-sign px-1"></span
@@ -385,7 +387,7 @@
                                       downloadVentaTransferencia(
                                         pagorecibidotransferencia,
                                         detalletransferencia,
-                                        detallegeneralventa.total[0].cliId
+                                        totaldetallegeneral.cliId
                                       )
                                     "
                                     class="btn btn-primary mt-2"
@@ -503,14 +505,14 @@
                                 </p>
                               </div>
 
-                              <!-- {{detallegeneralventa}} -->
+                             <!--   {{totaldetallegeneral.cliId}}  -->
                               <div
                                 v-if="fechamaxima && pagorecibido"
                                 @click="
                                   downloadVentaAbono(
                                     pagorecibido,
                                     fechamaxima,
-                                    detallegeneralventa.total[0].cliId
+                                    totaldetallegeneral.cliId
                                   )
                                 "
                                 class="btn btn-primary mt-2"
@@ -535,6 +537,127 @@
 
             <!-- modal venta al abonos -->
   <!-- modal venta al cheque -->
+            <div
+              class="modal fade"
+              id="ModalVentaCheque"
+              tabindex="-1"
+              role="dialog"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-md" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Terminar venta como cheque o credito</h5>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="container">
+                      <form action="">
+                        <div class="mb-3">
+                          <p class="dis fw-bold mb-2">Fecha maxima</p>
+                          <input
+                            class="form-control"
+                            type="date"
+                            v-model="fechamaximacheque"
+                          />
+                        </div>
+
+                        <div class="mb-3">
+                          <p class="dis fw-bold mb-2">Detalle cheque</p>
+                          <input
+                            class="form-control"
+                            type="text"
+                            v-model="detallecheque"
+                          />
+                        </div>
+                        <div class="mb-3"></div>
+                        <div>
+                          <div class="address">
+                            <div class="d-flex flex-column dis">
+                              <div
+                                class="
+                                  d-flex
+                                  align-items-center
+                                  justify-content-between
+                                  mb-2
+                                "
+                              >
+                                <p>Cantidad de pago</p>
+                                <p>
+                                  <span class="fas fa-dollar-sign"></span>
+                                  {{
+                                    parseFloat(totalesventa.total).toFixed(2)
+                                  }}
+                                </p>
+                              </div>
+                        
+
+                              <!-- {{detallegeneralventa}} -->
+                              <div
+                                v-if="fechamaximacheque && detallecheque"
+                                @click="
+                                  downloadVentaCheque(
+                                    fechamaximacheque,
+                                    detallecheque,
+                                    totaldetallegeneral.cliId
+                                  )
+                                "
+                                class="btn btn-primary mt-2"
+                              >
+                                <span class="fas fa-dollar-sign px-1"></span
+                                >Terminar Venta
+                              </div>
+                              <div v-else class="btn btn-primary mt-2">
+                                <span class="fas fa-dollar-sign px-1"></span
+                                >Terminar Venta
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <div class="modal-footer"></div>
+                </div>
+              </div>
+            </div>
+              <!-- modal retencion -->
+            <div
+              class="modal fade"
+              id="ModalRetencion"
+              tabindex="-1"
+              role="dialog"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-md" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Registrar Retencion</h5>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+              <retencion-venta :venId="substr" ></retencion-venta>
+                  </div>
+                  <div class="modal-footer"></div>
+                </div>
+              </div>
+            </div>
+
+  <!-- modal venta al credito -->
             <div
               class="modal fade"
               id="ModalVentaCheque"
@@ -604,7 +727,7 @@
                                   downloadVentaCheque(
                                     fechamaximacheque,
                                     detallecheque,
-                                    detallegeneralventa.total[0].cliId
+                                    totaldetallegeneral.cliId
                                   )
                                 "
                                 class="btn btn-primary mt-2"
@@ -626,8 +749,6 @@
                 </div>
               </div>
             </div>
-
-
 
 
 
@@ -836,11 +957,22 @@
                       ><i class="fas fa-money-check"></i
                       >Cheque</b-dropdown-item
                     >
+                          <b-dropdown-item
+                      data-toggle="modal"
+                      data-target="#ModalVentaCheque"
+                      ><i class="fas fa-bell"></i>Credito</b-dropdown-item
+                    >
                     <b-dropdown-item
                       data-toggle="modal"
                       data-target="#ModalObservacionesGenerales"
                       ><i class="fas fa-paper-plane"></i
                       >Observaciones</b-dropdown-item
+                    >
+                        <b-dropdown-item
+                      data-toggle="modal"
+                      data-target="#ModalRetencion"
+                      ><i class="fas fa-cube"></i
+                      >Retencion</b-dropdown-item
                     >
 
                     <b-dropdown-item @click="deleteVenta"
@@ -979,7 +1111,9 @@ export default {
       fechamaxima: "",
       fechamaximacheque:"",
       detallecheque:"",
+      observacion:"",
       saldo: "",
+      totaldetallegeneral:[],
     };
   },
   watch: {
@@ -1094,6 +1228,9 @@ export default {
           this.detallegeneralventa = response.data.data;
           //   en caso que exista informacion de venta asignamos el cliente
           this.clienteupdate = this.detallegeneralventa["cliente"];
+          this.totaldetallegeneral= this.detallegeneralventa.total;
+          this.totaldetallegeneral= this.totaldetallegeneral[0];
+          
         })
         .catch((error) => {
           console.log(error);
@@ -1283,13 +1420,26 @@ downloadVentaCheque(fecha,detalle,cliId){
       VentaServices.updateObservacion(data)
         .then((response) => {
           let mensaje = response.data.data;
+          console.log(mensaje+'mensajeee');
           if (mensaje == 200) {
-            this.detalleVenta();
-            this.totalDashboardVentas();
+           this.$swal
+        .fire({
+  icon: 'success',
+  title: 'Observacion registrada',
+  showConfirmButton: false,
+  timer: 1500
+})
+
           }
         })
         .catch((error) => {
-          console.log(error);
+              this.$swal
+        .fire({
+  icon: 'error',
+  title: 'Observacion no agregado',
+  showConfirmButton: false,
+  timer: 1500
+})
         });
     },
 

@@ -11,6 +11,7 @@ use App\Models\Pago;
 use Illuminate\Support\Facades\DB;
 use App\Models\DetalleVenta;
 use App\Models\Producto;
+use App\Models\Retencion;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Pagination\PaginationState;
@@ -115,6 +116,30 @@ class VentaApiController extends ApiResponseController
         if (!$new_pago) return $this->errorResponse(500);
 
         return $this->successResponse(200);
+    }
+    public function registrarRetencion(Request $request)
+    {
+        $carbon = new \Carbon\Carbon();
+        $fecha = $carbon->now();
+
+        $data = request()->all();
+        $new_retencion = new Retencion();
+        $new_retencion->venId = $data['venId'];
+        $new_retencion->fecha = $fecha;
+        $new_retencion->retencioniva = $data['retencioniva'];
+        $new_retencion->impuestorenta = $data['impuestorenta'];
+        $new_retencion->save();
+
+        if (!$new_retencion) return $this->errorResponse(500);
+
+        return $this->successResponse(200);
+    }
+    public function retencionporventa($venId)
+    {
+        $retenciones= Retencion::where('venId',$venId)->get();
+        if (!$retenciones) return $this->errorResponse(500);
+
+        return $this->successResponse($retenciones);
     }
     public function registrarPagoCheque(Request $request)
     {

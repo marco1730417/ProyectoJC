@@ -221,7 +221,7 @@ export default {
       currentPage: 1,
       fields: [
         {
-          key: "index",
+          key: "id",
           label: "Item",
           sortable: false,
           sortDirection: "desc",
