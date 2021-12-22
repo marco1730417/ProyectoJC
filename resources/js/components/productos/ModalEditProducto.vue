@@ -32,7 +32,7 @@
               </div>
             </div>
 
-            <div class="form-group row">
+        <!--     <div class="form-group row">
               <label for="lname" class="col-sm-4 col-form-label">Iva</label>
               <div class="col-sm-8">
                 <div class="row">
@@ -52,19 +52,25 @@
                       0
                     </b-form-radio>
                   </b-form-group>
-                  <!--     {{iva}} -->
                 </div>
               </div>
-            </div>
+            </div> -->
 
                  <div class="form-group row">
+                         <label
+                  v-if="infoeditproducto.PrecioVenta1 "
+                  for="lname"
+                  class="col-sm-12 col-form-label"
+                  >El precio con IVA es de                   <!-- {{ this.PrecioVenta1 - this.preciocompra }} -->
+                    <strong> $ {{ parseFloat(infoeditproducto.PrecioVenta1*1.12).toFixed(2) }} </strong>  
+                </label>
                 <label
                   v-if="infoeditproducto.PrecioVenta1 && infoeditproducto.preciocompra"
                   for="lname"
                   class="col-sm-12 col-form-label"
-                  >Su utilidad x metro es $
+                  >Su utilidad x metro es
            <!--        {{ infoeditproducto.PrecioVenta1 - infoeditproducto.preciocompra }} -->
-                    {{ parseFloat(infoeditproducto.PrecioVenta1 - infoeditproducto.preciocompra).toFixed(2) }}
+                 <strong> $ {{ parseFloat(infoeditproducto.PrecioVenta1 - infoeditproducto.preciocompra).toFixed(2) }} </strong>  
                 </label>
               </div>
 

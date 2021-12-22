@@ -35,30 +35,44 @@
                 </div>
               </div>
 
-              <div class="form-group row">
+ <!--              <div class="form-group row">
                 <label for="lname" class="col-sm-4 col-form-label">Iva</label>
                 <div class="col-sm-8">
-                  <div class="row">
-                    <b-form-group id="input-group-2" label-for="input-2">
+                  <div class="row"> -->
+                <!--     <b-form-group id="input-group-2" label-for="input-2">
                       <b-form-radio v-model="iva" name="some-radios" value="12">
                         12
                       </b-form-radio>
                       <b-form-radio v-model="iva" name="some-radios" value="0">
                         0
                       </b-form-radio>
-                    </b-form-group>
+                    </b-form-group> -->
                     <!--     {{iva}} -->
+<!--  <h2 v-if="this.PrecioVenta1" >El precio con iva es de <b-badge> {{this.PrecioVenta1*1.12}} </b-badge></h2> -->
+<!--   <b-alert   v-if="this.PrecioVenta1" variant="success" show>PRECIO CON IVA 
+
+      
+   $ {{ parseFloat(this.PrecioVenta1*1.12).toFixed(2) }}
+  </b-alert> -->
+<!-- 
                   </div>
                 </div>
-              </div>
+              </div> -->
               <div class="form-group row">
+                 <label
+                  v-if="this.PrecioVenta1 "
+                  for="lname"
+                  class="col-sm-12 col-form-label"
+                  >El precio con IVA es de                   <!-- {{ this.PrecioVenta1 - this.preciocompra }} -->
+                    <strong> $ {{ parseFloat(this.PrecioVenta1*1.12).toFixed(2) }} </strong>  
+                </label>
                 <label
                   v-if="this.PrecioVenta1 && this.preciocompra"
                   for="lname"
                   class="col-sm-12 col-form-label"
-                  >Su utilidad x metro es $
+                  >Su utilidad x metro es 
                   <!-- {{ this.PrecioVenta1 - this.preciocompra }} -->
-                     {{ parseFloat(this.PrecioVenta1 - this.preciocompra).toFixed(2) }}
+                <strong>${{ parseFloat(this.PrecioVenta1 - this.preciocompra).toFixed(2) }} </strong>     
                 </label>
               </div>
             </div>
@@ -75,7 +89,7 @@
                     type="text"
                     class="form-control"
                     id="preciocompra"
-                  />
+                  /> 
                 </div>
               </div>
               <div class="form-group row">
@@ -104,7 +118,7 @@
                     type="text"
                     class="form-control"
                     id="PrecioVenta2"
-                  />
+                  /> 
                 </div>
               </div>
               
@@ -119,7 +133,7 @@
                     type="text"
                     class="form-control"
                     id="PrecioVenta3"
-                  /> <small> Este precio debe ser por metro </small>
+                  /> 
                 </div>
               </div>
             </div>
@@ -176,7 +190,7 @@ export default {
       codigo: "",
       descripcion: "",
       unidades: "",
-      iva: "",
+      iva: 12,
       PrecioVenta1: "",
       PrecioVenta2: "",
       PrecioVenta3:"",
