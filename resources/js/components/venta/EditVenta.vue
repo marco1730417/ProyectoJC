@@ -775,22 +775,7 @@
                     </button>
                   </div>
                   <div class="modal-body">
-                    <div class="container d-lg-flex">
-                      <b-form-textarea
-                        id="textarea"
-                        v-model="observacion"
-                        placeholder="Espacio para nota general de la venta"
-                        rows="6"
-                        max-rows="6"
-                      ></b-form-textarea
-                      ><br />
-                      <b-button
-                        @click="updateObservacion(observacion)"
-                        size="sm"
-                        variant="success"
-                        >Guardar</b-button
-                      >
-                    </div>
+                 <observacion-venta :venId="substr" ></observacion-venta>
                   </div>
                   <div class="modal-footer"></div>
                 </div>
@@ -1111,7 +1096,6 @@ export default {
       fechamaxima: "",
       fechamaximacheque:"",
       detallecheque:"",
-      observacion:"",
       saldo: "",
       totaldetallegeneral:[],
     };
@@ -1412,36 +1396,7 @@ downloadVentaCheque(fecha,detalle,cliId){
           console.log(error);
         });
     },
-    updateObservacion(texto) {
-      let data = {
-        id: this.substr,
-        observacion: texto,
-      };
-      VentaServices.updateObservacion(data)
-        .then((response) => {
-          let mensaje = response.data.data;
-          console.log(mensaje+'mensajeee');
-          if (mensaje == 200) {
-           this.$swal
-        .fire({
-  icon: 'success',
-  title: 'Observacion registrada',
-  showConfirmButton: false,
-  timer: 1500
-})
 
-          }
-        })
-        .catch((error) => {
-              this.$swal
-        .fire({
-  icon: 'error',
-  title: 'Observacion no agregado',
-  showConfirmButton: false,
-  timer: 1500
-})
-        });
-    },
 
     actualizarVenta(cliente) {
       let data = {

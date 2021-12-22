@@ -47,6 +47,14 @@ class PagoApiController extends ApiResponseController
         return $this->successResponse($pagos);
     }
 
+    public function deletePago($id)
+    {        
+        $pago = Pago::findOrFail($id);
+        $pago->delete();
+        if (!$pago) return $this->errorResponse(500);
+        return $this->successResponse(200);
+    }
+
 
 
 

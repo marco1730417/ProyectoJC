@@ -58,7 +58,8 @@ Route::group(['prefix' => 'producto'], function () {
 
 Route::group(['prefix' => 'pagos'], function () {
     Route::get('get-pagos-pendientes', [PagoApiController::class, 'PagosPendientes']);
-
+    Route::post('delete-pago/{id}', [PagoApiController::class, 'deletePago']);
+ 
    
 
 });
@@ -116,6 +117,7 @@ Route::group(['prefix' => 'venta'], function () {
    
     Route::post('registrar-retencion', [VentaApiController::class, 'registrarRetencion']);
     Route::get('retencion-venta/{venId}',  [VentaApiController::class, 'retencionporventa']);
+    Route::get('observacion-venta/{venId}',  [VentaApiController::class, 'observacionporventa']);
    
 
     Route::get('totales-dashboard-ventas',  [VentaApiController::class, 'totalDashboardVentas']);

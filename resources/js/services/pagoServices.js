@@ -18,6 +18,9 @@ export default {
     },
 
 
-    
+    deletePago(id) {
+        let url = server + resource + "delete-pago";
+        return Axios.post(url+ '/' + id);
+    },
 
 }

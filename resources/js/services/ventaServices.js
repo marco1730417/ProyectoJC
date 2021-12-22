@@ -76,6 +76,10 @@ export default {
         let url = server + resource + 'retencion-venta';
         return Axios.get(url + "/" + venId);
     },
+    observacionporventa(venId) {
+        let url = server + resource + 'observacion-venta';
+        return Axios.get(url + "/" + venId);
+    },
     registrarPagoTransferencia(data) {
         let url = server + resource + "registrar-pago-transferencia";
         return Axios.post(url, data);

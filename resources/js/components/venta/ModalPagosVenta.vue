@@ -3,7 +3,9 @@
     <div class="card-body">
       <div class="container">
 <!-- {{infopagosventa.detalle_venta}} -->
-<b-table striped hover :items="infopagosventa.detalle_venta" :fields="fields">
+<b-table      show-empty
+          responsive="sm"
+      striped hover :items="infopagosventa.detalle_venta" :fields="fields">
 
      <template #cell(fecha)="data">
             <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
@@ -23,6 +25,24 @@
           </template>
 
 
+
+            <template #cell(actions)="data">
+      
+<!--  {{data.item}} -->
+            <b-button
+              variant="outline-danger default actions"
+              size="sm"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="Eliminar"
+         @click="deletePago(data.item.id)"
+            >
+              <i class="fas fa-trash"></i>
+            </b-button>
+       
+          </template>
+
+
 </b-table>
       </div>
     </div>
@@ -32,6 +52,8 @@
 
 <script>
 import VentaServices from "../../services/ventaServices";
+
+import pagoServices from "../../services/pagoServices";
 import { BootstrapVue } from "bootstrap-vue";
 Vue.use(BootstrapVue);
     import moment from "moment";
@@ -58,6 +80,8 @@ export default {
           key: "total",
           label: "Total",
         },
+        
+        { key: "actions", label: "Acciones",   tdClass: "list-item-enddate", },
       ],
       
     };
@@ -88,7 +112,7 @@ export default {
 
  
   mounted() {
-    console.log("Component mounted.");
+  //  console.log("Component mounted.");
   //  this.getInformacionPagosVenta1();
   },
   methods: {
@@ -113,6 +137,19 @@ export default {
       VentaServices.getInformacionPagosVenta(id)
         .then((response) => {
           this.infopagosventa = response.data.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+        deletePago(id) {
+      pagoServices.deletePago(id)
+        .then((response) => {
+          let mensaje = response.data.data;
+          if (mensaje == 200) {
+  location.reload();
+  
+      }
         })
         .catch((error) => {
           console.log(error);

@@ -141,6 +141,13 @@ class VentaApiController extends ApiResponseController
 
         return $this->successResponse($retenciones);
     }
+    public function observacionporventa($venId)
+    {
+        $observacion= Venta::where('id',$venId)->pluck('observacion');
+        if (!$observacion) return $this->errorResponse(500);
+
+        return $this->successResponse($observacion);
+    }
     public function registrarPagoCheque(Request $request)
     {
         $carbon = new \Carbon\Carbon();
@@ -270,6 +277,7 @@ class VentaApiController extends ApiResponseController
     public function getInformacionPagosVenta($venId)
     {
         $detalle_venta = Pago::select(
+            'pagos.id',
             'pagos.tipo',
             'pagos.total',
             'pagos.pago',
