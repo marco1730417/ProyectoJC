@@ -598,12 +598,17 @@ se evite poner esta accion y unificar campos en una unica api */
 
             $frutas= Pago::select(
                 DB::raw('sum(total) as sum'),
-                DB::raw("DATE_FORMAT(created_at,'%M %Y') as months")
+                DB::raw("DATE_FORMAT(fecha,'%M %Y') as months")
             )
                 ->groupBy('months')
                 ->get();
                 $collection = collect($frutas);
+            /*     $squares = array_map(function($mes) {
+                    return $mes['sum']*1;
+                }, $frutas);
 
+                return $squares;
+ */
         /*   $ventas_mes= Venta::select(
         DB::raw("(SELECT sum(detalle_ventas.cantidad*detalle_ventas.precioUnitario) FROM detalle_ventas
         WHERE ventas.id=detalle_ventas.venId

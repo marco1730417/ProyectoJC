@@ -158,7 +158,8 @@
                     </div>
                     <div class="card-body">
                         <!-- Chart -->
-                  
+                  <!-- {{series[0].data[0]}} -->
+                  <small>{{options}} </small> 
   <apexchart width="700" type="bar" :options="options" :series="series"></apexchart>
 </div>
                  
@@ -222,14 +223,15 @@
                             <tbody>
                                 <tr v-for="item in totalventas['productos_stock'] ">
                                     <th scope="row">
-                                       {{item.nombre}}
+                                       {{item.descripcion}}
                                     </th>
                                  
                                     <td>
                                        {{item.unidades}}
                                     </td>
                                         <td>
-                                       {{item.updated_at}}
+                                     
+                                          {{ moment(item.updated_at , "YYYY-MM-DD").format("MMM DD YYYY, ddd")}} 
                                     </td>
                                  
                                 </tr>
@@ -291,7 +293,8 @@ import Conf from "../../services/conf.js";
 
 const resource = "api/venta/";
 const server = Conf.server;
-import moment from "moment";
+ import moment from "moment";
+    moment.locale('es');
 import { BootstrapVue } from "bootstrap-vue";
 import vSelect from "vue-select";
 
@@ -313,17 +316,22 @@ export default {
       text: "",
       formadepago: "",
       venId: 10,
+      categorias:[],
+      mensual:[],
        options: {
         chart: {
           id: 'vuechart-example'
         },
         xaxis: {
-          categories: ['Enero', 'Febrero', 'Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
+       categories: []
+     //  categories: ['Enero', 'Febrero', 'Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
+     
         }
       },
       series: [{
         name: 'series-1',
-        data: [30, 40, 45, 50, 49, 60, 70, 91]
+      //  data: [10, 40, 45, 50, 49, 60, 70, 91]
+       data:[], 
       }]
     };
   },
@@ -392,16 +400,26 @@ export default {
       VentaServices.totalDashboardVentas()
         .then((response) => {
           this.totalventas = response.data.data;
-        //  this.series.data= this.totalventas['meses']['months']
+       this.meses= this.totalventas.meses;
+    //   console.log(this.meses);
+     for (let i = 0; i < this.meses.length; i++) {
+      //   this.data.series.push(this.meses[i].sum);
+       this.options.xaxis.categories.push(this.meses[i].months); 
+      this.series[0].data.push(this.meses[i].sum);
+     //   this.mensual.push(this.meses[i].sum);
+ 
+     }    
+       /* this.options.xaxis.categories.push(this.categorias); */
+     //this.series[0].data.push(this.mensual);
+       
+       //  this.series.data= this.totalventas['meses']['months']
     
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    nuevaventa() {
-      window.location.href = "../nuevaventa/";
-    },
+  
   },
 };
 </script>
