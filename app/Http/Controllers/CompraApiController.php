@@ -224,8 +224,15 @@ class CompraApiController extends ApiResponseController
         $total_compras= Compras::sum('total');
         $max_compra= Compras::max('total');
 
-      $proveedor="XXX";
-
+     // $proveedor="XXX";
+      $proveedor = Compras::select(
+        'prvId',
+        'proveedores.nombre',
+        DB::raw("(SELECT count(compras.prvId) FROM compras where compras.prvId = proveedores.id 
+    ) AS total"),
+    )
+        ->leftJoin('proveedores', 'compras.prvId', '=', 'proveedores.id')
+        ->orderBy('total','desc')->take(1)->get();
 
    
      

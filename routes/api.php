@@ -83,7 +83,8 @@ Route::group(['prefix' => 'reportes'], function () {
     Route::get('reporte-por-cliente/{cliId}', [ReportesApiController::class, 'reporteVentasporCLiente']);
     Route::get('download-reporte-venta/{fechainicio}/{fechafinal} ',  [ReportesApiController::class, 'downloadReporteVenta']);
     Route::get('download-reporte-cliente/{cliId} ',  [ReportesApiController::class, 'downloadReporteCliente']);
-   
+    Route::get('reporte-compras/{fechadesde}/{fechahasta}', [ReportesApiController::class, 'reporteCompras']);
+    
   
 });
 

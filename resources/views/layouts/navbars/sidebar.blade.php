@@ -131,6 +131,11 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('reporte.reportecompras') }}">
+                        <i class="ni ni-planet text-blue"></i> {{ __('Reporte Compras') }}
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('reporte.reportecliente') }}">
                         <i class="ni ni-satisfied text-blue"></i> {{ __('Reporte Clientes') }}
                     </a>

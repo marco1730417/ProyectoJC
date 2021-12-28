@@ -609,7 +609,7 @@ se evite poner esta accion y unificar campos en una unica api */
         ) AS total"),
         )
             ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
-            ->groupBy('cliId')->orderBy('total')->take(5)->get();
+            ->groupBy('cliId')->orderBy('total')->take(1)->get();
 
             $frutas= Pago::select(
                 DB::raw('sum(total) as sum'),

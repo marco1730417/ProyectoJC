@@ -251,6 +251,47 @@ $cheque_valor = collect($cheque_valor);
 
     }
 
+
+
+
+
+
+
+    public function reporteCompras($fechadesde, $fechahasta)
+    {
+    
+        $start_date = Carbon::parse($fechadesde)
+        ->toDateTimeString();
+        $end_date = Carbon::parse($fechahasta)
+        ->toDateTimeString();
+
+        $info_compra= Compras :: select ('compras.id' ,'compras.fecha','compras.total',
+        'proveedores.nombre','proveedores.ruc'
+        )
+      ->whereBetween(DB::raw('DATE(compras.fecha)'), [$start_date, $end_date])
+       ->leftJoin('proveedores', 'compras.prvId', '=', 'proveedores.id')
+        //->leftJoin('pagos', 'ventas.id', '=', 'pagos.venId')
+        ->get();
+ 
+
+
+$totales_compra = [
+    'compras_por_fecha' => $info_compra,
+    
+    
+  ];
+    
+      
+        return $this->successResponse($totales_compra);
+    }
+
+
+
+
+
+
+
+
 }
 
 

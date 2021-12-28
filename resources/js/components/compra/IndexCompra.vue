@@ -14,7 +14,7 @@
                         Compras Totales
                       </h5>
                       <span class="h2 font-weight-bold mb-0">
-                 {{totalcompras.total_compras}}
+              $   {{totalcompras.total_compras}}
                       </span>
                     </div>
                     <div class="col-auto">
@@ -46,10 +46,10 @@
                   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">
-                        Proveedor
+                       Mejor Proveedor
                       </h5>
                       <span class="h2 font-weight-bold mb-0">
-                    Miduvi</span
+                    {{totalcompras.proveedor[0].nombre}}</span
                       >
                     </div>
                     <div class="col-auto">
@@ -84,7 +84,7 @@
                         Compras Maxima
                       </h5>
                       <span class="h2 font-weight-bold mb-0">
-                  {{totalcompras.max_compra}}
+              $    {{totalcompras.max_compra}}
                       </span>
                     </div>
                     <div class="col-auto">
