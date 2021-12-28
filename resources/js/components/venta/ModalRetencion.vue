@@ -49,9 +49,9 @@
               <!--   {{totaldetallegeneral.cliId}}  -->
               <div
                 @click="deleteRetencion(retencion.id)"
-                class="btn btn-primary mt-2"
+                class="btn btn-warning mt-2"
               >
-                <span class="fas fa-dollar-sign px-1"></span>Delete Retencion
+                <span class="fas fa-trash"></span>Borrar Retencion
               </div>
              </div>
           </div>
