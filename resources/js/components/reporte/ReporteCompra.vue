@@ -79,17 +79,6 @@
                 </div>
               </div>
  
-              <!-- <button @click="downloadVenta">Descargar pdf</button> -->
-              <b-col class="text-center" sm="12">
-                <b-button
-                  v-if="fechadesde && fechahasta"
-                  size="sm"
-                  @click="downloadVenta"
-                  variant="warning"
-                  ><i class="fas fa-print" title="Reporte"></i> Descargar
-                  PDF</b-button
-                >
-              </b-col>
             </div>
           </div>
 
@@ -131,14 +120,14 @@ export default {
       fields: [
         {
           key: "id",
-          label: "#",
+          label: "# Compra",
           sortable: false,
           sortDirection: "desc",
           tdClass: "index",
         },
   {
           key: "nombre",
-          label: "Cliente",
+          label: "Proveedor",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate",
@@ -146,6 +135,13 @@ export default {
         {
           key: "fecha",
           label: "Fecha",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "list-item-enddate",
+        },
+            {
+          key: "comprobante",
+          label: "Comprobante",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate",

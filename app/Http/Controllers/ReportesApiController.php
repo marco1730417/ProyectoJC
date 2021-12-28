@@ -266,7 +266,7 @@ $cheque_valor = collect($cheque_valor);
         ->toDateTimeString();
 
         $info_compra= Compras :: select ('compras.id' ,'compras.fecha','compras.total',
-        'proveedores.nombre','proveedores.ruc'
+        'proveedores.nombre','proveedores.ruc','compras.comprobante'
         )
       ->whereBetween(DB::raw('DATE(compras.fecha)'), [$start_date, $end_date])
        ->leftJoin('proveedores', 'compras.prvId', '=', 'proveedores.id')
