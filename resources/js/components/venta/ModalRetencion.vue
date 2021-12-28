@@ -32,16 +32,28 @@
             >
               <!--   {{totaldetallegeneral.cliId}}  -->
               <div
-                v-if="retencioniva && impuestorenta"
+                v-if="retencioniva "
                 @click="GuardarRetencion()"
                 class="btn btn-primary mt-2"
               >
                 <span class="fas fa-dollar-sign px-1"></span>Guardar Retencion
               </div>
-              <div v-else class="btn btn-primary mt-2">
+              <div v-else class="btn btn-secondary mt-2">
                 <span class="fas fa-dollar-sign px-1"></span>Guardar Retencion
               </div>
             </div>
+                       <div
+             v-else
+              class="d-flex align-items-center justify-content-between mb-2"
+            >
+              <!--   {{totaldetallegeneral.cliId}}  -->
+              <div
+                @click="deleteRetencion(retencion.id)"
+                class="btn btn-primary mt-2"
+              >
+                <span class="fas fa-dollar-sign px-1"></span>Delete Retencion
+              </div>
+             </div>
           </div>
         </div>
       </div>
@@ -98,6 +110,29 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+        });
+    },
+  deleteRetencion(id) {
+      this.$swal
+        .fire({
+          title: "Estas seguro de eliminar esta retencion?",
+          showCancelButton: true,
+          confirmButtonText: "SI",
+        })
+        .then((result) => {
+          /* Read more about isConfirmed, isDenied below */
+          if (result.isConfirmed) {
+            VentaServices.deleteRetencion(id)
+              .then((response) => {
+                let mensaje = response.data.data;
+                if (mensaje == 200) {
+              location.reload();
+              }
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          }
         });
     },
 

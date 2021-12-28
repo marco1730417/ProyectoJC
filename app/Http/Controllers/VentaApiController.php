@@ -324,6 +324,13 @@ class VentaApiController extends ApiResponseController
         if (!$venta) return $this->errorResponse(500);
         return $this->successResponse(200);
     }
+    public function deleteRetencion($retId)
+    {
+        $retencion = Retencion::findOrFail($retId)->delete();
+
+        if (!$retencion) return $this->errorResponse(500);
+        return $this->successResponse(200);
+    }
 
     public function deleteVenta($venId)
     {
@@ -340,6 +347,7 @@ class VentaApiController extends ApiResponseController
         if (!$collection) return $this->errorResponse(500);
         return $this->successResponse(200);
     }
+
 
     public function deleteDetalleVenta($id)
     {

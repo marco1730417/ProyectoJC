@@ -95,7 +95,8 @@ Route::group(['prefix' => 'venta'], function () {
     Route::post('update-venta', [VentaApiController::class, 'updateVenta']);
     Route::post('registrar-abono', [VentaApiController::class, 'registrarabono']);
   
-
+    Route::post('delete-retencion/{id}', [VentaApiController::class, 'deleteRetencion']);
+ 
 
     Route::post('create-detalle-venta', [VentaApiController::class, 'createDetalleVenta']);
     Route::get('get-informacion-venta/{venId}',  [VentaApiController::class, 'getInformacionVenta']);

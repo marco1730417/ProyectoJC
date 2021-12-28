@@ -104,5 +104,9 @@ export default {
         let url = server + resource + "delete-venta";
         return Axios.post(url+ '/' + id);
     },
+    deleteRetencion(id) {
+        let url = server + resource + "delete-retencion";
+        return Axios.post(url+ '/' + id);
+    },
  
 }
