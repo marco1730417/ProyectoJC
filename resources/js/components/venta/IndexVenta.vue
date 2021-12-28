@@ -216,7 +216,7 @@
               data-placement="top"
               title="Descargar"
             >
-              <i class="fas fa-file" title="Abonos"></i>
+              <i class="fas fa-print" title="Abonos"></i>
             </b-button>
               <b-button v-if="data.item.pagoabonos>0"
               variant="outline-warning default actions"

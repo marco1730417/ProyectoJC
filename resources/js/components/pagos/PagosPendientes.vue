@@ -51,6 +51,22 @@
         </template>
 
 
+      <template #cell(actions)="data">
+      <!--   {{data.item}} -->
+               <b-button
+              variant="outline-success default actions"
+              @click="changestatus(data.item.pagId)"
+              size="sm"
+              title="venta"
+          
+            > 
+              <i class="fas fa-check"></i>
+            </b-button>
+
+       
+          </template>
+
+
       </b-table>
             <!-- PAGINACION -->
       <div v-if="rows > 5">
@@ -109,6 +125,13 @@ export default {
       perPage: 10,
       currentPage: 1,
       fields: [
+                  {
+          key: "id",
+          label: "# Venta",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "list-item-enddate",
+        },
                      {
           key: "nombre",
           label: "Cliente",
@@ -139,7 +162,7 @@ export default {
           sortDirection: "desc",
           tdClass: "list-item-enddate",
         },
-    
+        { key: "actions", label: "Acciones", tdClass: "text-center" },
       ],
       fechadesde: "",
       fechahasta: "",
@@ -161,6 +184,53 @@ export default {
     this.PagosPendientes();
   },
   methods: {
+
+    /*         changestatus(id) {
+      pagoServices.updatePago(id)
+        .then((response) => {
+          let mensaje = response.data.data;
+          if (mensaje == 200) {
+  location.reload();
+  
+      }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+ */
+
+
+
+    changestatus(id) {
+      this.$swal
+        .fire({
+          title: "Venta cancelada en su totalidad?",
+          showCancelButton: true,
+          confirmButtonText: "SI",
+        })
+        .then((result) => {
+          /* Read more about isConfirmed, isDenied below */
+          if (result.isConfirmed) {
+            pagoServices.updatePago(id)
+              .then((response) => {
+                let mensaje = response.data.data;
+                if (mensaje == 200) {
+                  location.reload();
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          }
+        });
+    },
+
+
+
+
+
+
     onlyNumber($event) {
       //console.log($event.keyCode); //keyCodes value
       let keyCode = $event.keyCode ? $event.keyCode : $event.which;

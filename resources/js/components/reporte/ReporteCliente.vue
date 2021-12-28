@@ -65,7 +65,7 @@
                   size="sm"
                   @click="downloadReporteCliente"
                   variant="warning"
-                  ><i class="fas fa-file" title="Reporte"></i> Descargar
+                  ><i class="fas fa-print" title="Reporte"></i> Descargar
                   PDF</b-button
                 >
               </b-col>

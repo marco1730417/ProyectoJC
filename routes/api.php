@@ -59,6 +59,7 @@ Route::group(['prefix' => 'producto'], function () {
 Route::group(['prefix' => 'pagos'], function () {
     Route::get('get-pagos-pendientes', [PagoApiController::class, 'PagosPendientes']);
     Route::post('delete-pago/{id}', [PagoApiController::class, 'deletePago']);
+    Route::post('update-pago/{id}', [PagoApiController::class, 'cambioestadoPago']);
  
    
 

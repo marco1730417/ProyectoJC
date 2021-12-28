@@ -32,17 +32,21 @@ class PagoApiController extends ApiResponseController
             'pagos.total',
             'pagos.pago',
             'ventas.fecha',
+            'ventas.id',
             'pagos.abono',
             'pagos.fechamaxima',
             'pagos.saldo',
             'pagos.fecha',
             'pagos.venId',
+            'pagos.id as pagId',
             'pagos.cliId','clientes.nombre','clientes.telefono','clientes.ruc'
         )
             ->leftJoin('ventas', 'pagos.venId', '=', 'ventas.id')
             ->leftJoin('clientes', 'pagos.cliId', '=', 'clientes.id')
-            ->whereDate('pagos.fechamaxima', '=', Carbon::today()->toDateString())
-            ->get();
+          //  ->whereDate('pagos.fechamaxima', '=', Carbon::today()->toDateString())
+          ->where('pagos.estado',0)  
+          ->orderBy('pagos.fechamaxima')
+          ->get();
   
         return $this->successResponse($pagos);
     }
@@ -51,6 +55,16 @@ class PagoApiController extends ApiResponseController
     {        
         $pago = Pago::findOrFail($id);
         $pago->delete();
+        if (!$pago) return $this->errorResponse(500);
+        return $this->successResponse(200);
+    }
+
+    public function cambioestadoPago($id)
+    {        
+        $pago = Pago::findOrFail($id);
+        $pago->estado = 1;
+        $pago->update();
+
         if (!$pago) return $this->errorResponse(500);
         return $this->successResponse(200);
     }
