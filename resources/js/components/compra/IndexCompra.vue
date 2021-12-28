@@ -14,7 +14,7 @@
                         Compras Totales
                       </h5>
                       <span class="h2 font-weight-bold mb-0">
-                 $100000
+                 {{totalcompras.total_compras}}
                       </span>
                     </div>
                     <div class="col-auto">
@@ -81,10 +81,10 @@
                   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">
-                        Compras Diciembre
+                        Compras Maxima
                       </h5>
                       <span class="h2 font-weight-bold mb-0">
-                      $100000
+                  {{totalcompras.max_compra}}
                       </span>
                     </div>
                     <div class="col-auto">
@@ -336,7 +336,7 @@ export default {
         { key: "actions", label: "Acciones", tdClass: "text-center" },
       ],
       detallecompra: [],
-      totalcompras: "",
+      totalcompras: [],
       infocompra: [],
     };
   },
@@ -349,10 +349,19 @@ export default {
   
   mounted() {
     this.getCompras();
+    this.totalDashboardCompras();
 
   },
   methods: {
-
+    totalDashboardCompras() {
+      CompraServices.totalDashboardCompras()
+        .then((response) => {
+          this.totalcompras = response.data.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
  deleteCompra(id) {
       this.$swal
         .fire({

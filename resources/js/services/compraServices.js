@@ -45,4 +45,9 @@ export default {
         let url = server + resource + "delete-detalle-compra";
         return Axios.post(url+ '/' + id);
     },
+    
+    totalDashboardCompras() {
+        let url = server + resource + 'totales-dashboard-compras';
+        return Axios.get(url);
+    },
 }

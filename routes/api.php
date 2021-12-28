@@ -75,7 +75,7 @@ Route::group(['prefix' => 'compras'], function () {
     Route::get('get-informacion-compra/{comId}',  [CompraApiController::class, 'getInformacionCompra']);
     Route::post('delete-compra/{id}', [CompraApiController::class, 'deleteCompra']);
     Route::post('delete-detalle-compra/{id}', [CompraApiController::class, 'deleteDetalleCompra']);
-  
+    Route::get('totales-dashboard-compras',  [CompraApiController::class, 'totalDashboardCompras']);
 });
 
 Route::group(['prefix' => 'reportes'], function () {

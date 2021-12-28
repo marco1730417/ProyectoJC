@@ -211,4 +211,46 @@ class CompraApiController extends ApiResponseController
         if (!$detalle_delete) return $this->errorResponse(500); 
         return $this->successResponse(200);
     }
+
+
+
+
+
+    public function totalDashboardCompras()
+    {
+
+
+      
+        $total_compras= Compras::sum('total');
+        $max_compra= Compras::max('total');
+
+      $proveedor="XXX";
+
+
+   
+     
+
+        $info_dashboard = [
+            'total_compras' => $total_compras,
+            'proveedor' =>     $proveedor,
+            'max_compra' => $max_compra,
+            
+
+
+        ];
+
+
+        return $this->successResponse($info_dashboard);
+    }
+
+
+
+
+
+
+
+
+
+
+
 }
