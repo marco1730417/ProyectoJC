@@ -59,6 +59,7 @@ class VentaApiController extends ApiResponseController
         $new_pago->vuelto =  $data['vuelto'];
         $new_pago->pago =  $data['pago'];
         $new_pago->total =  $data['total'];
+        $new_pago->estado = 1;
 
         $new_pago->save();
 
@@ -83,7 +84,7 @@ class VentaApiController extends ApiResponseController
         $new_pago->pago =  $data['pago'];
         $new_pago->numtransf =  $data['numtransf'];
         $new_pago->total =  $data['total'];
-
+        $new_pago->estado = 1;
         $new_pago->save();
 
         if (!$new_pago) return $this->errorResponse(500);
@@ -110,6 +111,32 @@ class VentaApiController extends ApiResponseController
         $new_pago->saldo =  $data['saldo'];
         $new_pago->total =  $data['total'];
         $new_pago->fechamaxima =  $data['fechamaxima'];
+        $new_pago->estado = 0;
+        $new_pago->save();
+
+        if (!$new_pago) return $this->errorResponse(500);
+
+        return $this->successResponse(200);
+    }
+    public function registrarPagoCheque(Request $request)
+    {
+        $carbon = new \Carbon\Carbon();
+        $fecha = $carbon->now();
+
+        $data = request()->all();
+
+
+        $new_pago = new Pago;
+        $new_pago->venId = $data['venId'];
+        $new_pago->fecha = $fecha;
+        $new_pago->tipo = "Cheque";
+        $new_pago->cliId =  $data['cliId'];
+        $new_pago->pago = 0;
+        $new_pago->total =  $data['total'];
+        $new_pago->saldo =  $data['total'];
+        $new_pago->fechamaxima =  $data['fechamaxima'];
+        $new_pago->cheque =  $data['cheque'];
+        $new_pago->estado = 0;
 
         $new_pago->save();
 
@@ -117,6 +144,7 @@ class VentaApiController extends ApiResponseController
 
         return $this->successResponse(200);
     }
+
     public function registrarRetencion(Request $request)
     {
         $carbon = new \Carbon\Carbon();
@@ -148,33 +176,7 @@ class VentaApiController extends ApiResponseController
 
         return $this->successResponse($observacion);
     }
-    public function registrarPagoCheque(Request $request)
-    {
-        $carbon = new \Carbon\Carbon();
-        $fecha = $carbon->now();
-
-        $data = request()->all();
-
-
-        $new_pago = new Pago;
-        $new_pago->venId = $data['venId'];
-        $new_pago->fecha = $fecha;
-        $new_pago->tipo = "Cheque";
-        $new_pago->cliId =  $data['cliId'];
-        $new_pago->pago = 0;
-        $new_pago->total =  $data['total'];
-        $new_pago->saldo =  $data['total'];
-        $new_pago->fechamaxima =  $data['fechamaxima'];
-        $new_pago->cheque =  $data['cheque'];
-
-
-        $new_pago->save();
-
-        if (!$new_pago) return $this->errorResponse(500);
-
-        return $this->successResponse(200);
-    }
-
+ 
 
     public function updateVenta(Request $request)
     {
@@ -290,7 +292,10 @@ class VentaApiController extends ApiResponseController
         )
             ->leftJoin('ventas', 'pagos.venId', '=', 'ventas.id')
             ->leftJoin('clientes', 'pagos.cliId', '=', 'clientes.id')
-            ->where('venId', $venId)->get();
+            ->where('venId', $venId)
+            ->where('pagos.tipo','=','Abono')
+            
+            ->get();
         $total_abonos = Pago::where('pagos.venId', $venId)->sum('pagos.abono');
         $saldo = $detalle_venta[0]['total'] - $total_abonos;
         $totalcobrar = $detalle_venta[0]['total'];
@@ -557,6 +562,8 @@ se evite poner esta accion y unificar campos en una unica api */
         )->get();
         $subtotal = $venta_parciales->sum('parcial');
 
+        $total_de_ventas= Pago::sum('total');
+
         $numero_clientes = Venta::distinct('cliId')->count('cliId');
 
 
@@ -639,7 +646,7 @@ se evite poner esta accion y unificar campos en una unica api */
  */
 
         $info_dashboard = [
-            'subtotal' => $subtotal,
+            'subtotal' => $total_de_ventas,
             'cliente' =>     $numero_clientes,
             'max_venta' => $max_venta,
             'numero_productos' => $numero_productos,
