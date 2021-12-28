@@ -66,6 +66,7 @@
                       </div>
                       <div class="col-md-8">
                         <!--     {{infocompra}}  -->
+                        <!-- {{total_compras}} -->
                         <b-table
                           v-if="infocompra"
                           striped
@@ -73,12 +74,28 @@
                           :items="infocompra.compras_por_fecha"
                           :fields="fields"
                         ></b-table>
+
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
- 
+      <table v-if="infocompra" class="table">
+                <thead>
+                  <tr>
+                    <th>Total Compras</th>
+                   </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                     <!--  {{ parseFloat(infoventa.compras_por_fecha).toFixed(2) }} -->
+              $    {{   infocompra.total_compras}}
+                    </td>
+         
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
 

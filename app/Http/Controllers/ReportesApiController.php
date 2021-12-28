@@ -272,11 +272,29 @@ $cheque_valor = collect($cheque_valor);
        ->leftJoin('proveedores', 'compras.prvId', '=', 'proveedores.id')
         //->leftJoin('pagos', 'ventas.id', '=', 'pagos.venId')
         ->get();
- 
+ /* 
+        $totales= Compras::sum(
+                                  'total'
+        )
+->whereBetween(DB::raw('DATE(compras.fecha)'), [$start_date, $end_date])
+    
+->get(); */
+
+
+$totales= Compras::select(
+                                  
+  db::raw('(compras.total) as parcial')
+)
+->whereBetween(DB::raw('DATE(compras.fecha)'), [$start_date, $end_date])
+
+->get();
+$total_valor= $totales->sum('parcial');
+
 
 
 $totales_compra = [
     'compras_por_fecha' => $info_compra,
+    'total_compras'=>$total_valor
     
     
   ];
