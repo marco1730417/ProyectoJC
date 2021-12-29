@@ -21,16 +21,11 @@
         padding-top: 110px;
         font-family: Arial, sans-serif !important;
         margin: 5px;
-       /*  font-size: 0.75rem !important;
-        color: #8f8f8f !important;
-        */ border: 2px solid rgb(241, 240, 240);
-    }
-    p {
-        font-size: 9px;
+        font-size: 1.2rem !important;
+        border: 2px solid rgb(241, 240, 240);
     }
 
     td {
-        font-size: 9px;
         padding-left: 1px;
         padding-bottom: 3px;
 
@@ -38,7 +33,6 @@
     }
 
     th {
-        font-size: 9px;
         font-weight: bold;
 
         padding-left: 4px;
@@ -46,31 +40,6 @@
 
     }
 
-   /*  .padding {
-        padding: 3rem !important
-    } */
-
-    .card {
-        width: 700px !important;
-        margin-bottom: 50px;
-        border: none;
-        -webkit-box-shadow: 0px 1px 2px 1px rgba(154, 154, 204, 0.22);
-        -moz-box-shadow: 0px 1px 2px 1px rgba(154, 154, 204, 0.22);
-        box-shadow: 0px 1px 2px 1px rgba(154, 154, 204, 0.22)
-    }
-
-
-    h3 {
-        font-size: 10px
-    }
-
-    h5 {
-        font-size: 7px;
-        line-height: 10px;
-        color: #3d405c;
-        margin: 0px 0px 15px 0px;
-        font-family: 'Circular Std Medium'
-    }
     .column {
   float: left;
   width: 40%;
@@ -82,16 +51,7 @@
   clear: both;
 }
 
-/*     small {
-        font-size: 10px;
 
-        font-family: 'Circular Std Medium'
-    } */
-
-    .text-dark {
-
-        font-size: 8px;
-    }
 </style>
 @section('content')
 
