@@ -117,6 +117,7 @@
 
 
         <b-table
+        id="my-table"
           sticky-header
         striped
           :items="infocliente"

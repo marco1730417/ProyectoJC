@@ -228,21 +228,7 @@ export default {
           tdClass: "index",
         },
 
-        /*      {
-          key: "id",
-          label: "Id",
-          sortable: false,
-          sortDirection: "desc",
-          tdClass: "list-item-enddate",
-        }, */
-   /*      {
-          key: "nombre",
-          label: "Producto",
-          sortable: false,
-          sortDirection: "desc",
-          tdClass: "list-item-enddate",
-        },
- */
+     
         {
           key: "descripcion",
           label: "Descripcion",
