@@ -96,7 +96,9 @@
                           {{    totaldetallegeneral.ruc}}
                       
                     </span>
-                    <span class="text-nowrap">{{ fecha }}</span>
+                    <span class="text-nowrap"><i class="fas fa-calendar"></i>{{ fecha }}</span> </br>
+                         <span class="text-nowrap"><i class="fas fa-home"></i>{{ totaldetallegeneral.direccion }}</span> 
+             
                   </p>
                 </div>
               </div>

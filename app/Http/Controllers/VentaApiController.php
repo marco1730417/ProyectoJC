@@ -335,7 +335,10 @@ class VentaApiController extends ApiResponseController
     public function deleteVenta($venId)
     {
         $infodetalle =  DetalleVenta::where('venId', $venId)->get();
-
+        $pagos_asociados= Pago::where('venId',$venId)->get();
+        $collectionpagos = collect($pagos_asociados);
+        
+        
         $collection = collect($infodetalle);
         $collection->each(function ($item, $key) {
             $update_producto = Producto::findOrFail($item->proId);
