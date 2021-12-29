@@ -4,8 +4,33 @@
 
 @endsection
 <style>
+       @page {
+        size: A4 ;
+        margin: 0.1%;
+        font-size: 5pt;
+        font-family: Arial, sans-serif !important;
+    }
+    @page :left {
+        margin: 1mm;
+    }
+
+    @page :right {
+        margin: 1mm;
+    }
+    body {
+        padding-top: 110px;
+        font-family: Arial, sans-serif !important;
+        margin: 5px;
+       /*  font-size: 0.75rem !important;
+        color: #8f8f8f !important;
+        */ border: 2px solid rgb(241, 240, 240);
+    }
+    p {
+        font-size: 9px;
+    }
+
     td {
-        font-size: 7px;
+        font-size: 9px;
         padding-left: 1px;
         padding-bottom: 3px;
 
@@ -13,7 +38,7 @@
     }
 
     th {
-        font-size: 10px;
+        font-size: 9px;
         font-weight: bold;
 
         padding-left: 4px;
@@ -21,9 +46,9 @@
 
     }
 
-    .padding {
+   /*  .padding {
         padding: 3rem !important
-    }
+    } */
 
     .card {
         width: 700px !important;
@@ -46,12 +71,22 @@
         margin: 0px 0px 15px 0px;
         font-family: 'Circular Std Medium'
     }
+    .column {
+  float: left;
+  width: 40%;
+}
 
-    small {
-        font-size: 5px;
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/*     small {
+        font-size: 10px;
 
         font-family: 'Circular Std Medium'
-    }
+    } */
 
     .text-dark {
 
@@ -59,22 +94,41 @@
     }
 </style>
 @section('content')
+
 <div class="offset-xl-2 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 padding">
     <div class="card">
 
         <div class="card-body">
             <div class="row ">
-
+<!-- 
                 <div class="col-sm-12 ">
 
-                    <div class="d-inline p-2 "> <small>Razon Social {{$info_venta[0]['nombre'] }} </small> </div>
-                    <div class="d-inline p-2 "> <small> Ruc:{{$info_venta[0]['ruc'] }}</small> </div> <br />
-                    <div class="d-inline p-2 "> <small>Direccion:{{$info_venta[0]['direccion'] }} </small> </div>
-                    <div class="d-inline p-2 "> <small>Fecha:{{$info_venta[0]['fecha'] }} </small> </div>
-                    <div class="d-inline p-2 "> <small>Telf:{{$info_venta[0]['telefono'] }} </small> </div>
+                    <div class="d-inline p-2 "> Razon Social {{$info_venta[0]['nombre'] }} </div>
+                    <div class="d-inline p-2 " >  Ruc:{{$info_venta[0]['ruc'] }} </div> <br />
+                    <div class="d-inline p-2 "> Direccion:{{$info_venta[0]['direccion'] }}  </div>
+                    <div class="d-inline p-2 "> Fecha:{{$info_venta[0]['fecha'] }}  </div>
+                    <div class="d-inline p-2 "> Telf:{{$info_venta[0]['telefono'] }} </div>
                 </div>
 
+ -->   <div class="column">
 
+    <p> <b> Nombre: </b> {{$info_venta[0]['nombre'] }} </p>
+    <p> <b>Direccion: </b>  {{$info_venta[0]['direccion'] }} </p>
+ 
+  </div>
+  <div class="column"  >
+
+  <p> <b>Ruc: </b>  {{$info_venta[0]['ruc'] }} </p>
+   <p> <b>Telefono: </b>  {{$info_venta[0]['telefono'] }} </p>
+    
+  </div>
+  <div class="column"  >
+
+  <p> <b>Fecha </b>  {{$info_venta[0]['fecha'] }} </p> 
+  
+</div>
+
+ 
 
 
             </div>
@@ -88,9 +142,9 @@
                         <th>Cant</th>
                         <th>Descripcion</th>
                         <th>Unidad</th>
-                        <th>Precio</th>
-                        <th>Desc</th>
-                        <th>PT</th>
+                        <th  class="text-right ">Precio</th>
+                        <th  class="text-right ">Desc</th>
+                        <th  class="text-right ">Precio Total</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -110,9 +164,16 @@
 
 
                         </td>
-                        <td class="right ">{{$item['precioUnitario']}}</td>
-                        <td class="right">{{$item['descuento']}}</td>
-                        <td class="right">{{$item['subTotal']}}</td>
+                        <td class="text-right "><!-- {{$item['precioUnitario']}} -->
+                        $@php echo(number_format($item['precioUnitario'],2));@endphp
+                        </td>
+                        <td class="text-right"><!-- {{$item['descuento']}} -->
+                        $@php echo(number_format($item['descuento'],2));@endphp
+                        </td>
+                        <td class="text-right"><!-- {{$item['subTotal']}} -->
+                        $@php echo(number_format($item['subTotal'],2));@endphp
+                      
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>
