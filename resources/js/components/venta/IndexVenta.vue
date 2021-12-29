@@ -696,19 +696,7 @@ this.venta=id;
           console.log(error);
         });
     },
-    nuevaventa() {
-      window.location.href = "../nuevaventa/";
-    },
-    gotoVenta(id) {
-      const userId = id;
-      /* this.$router.push({ name: 'nuevaventa', params: { venId:userId }})
-       */
-      let routeData = this.$router.resolve({
-        name: "nuevaventa",
-        params: { venId: userId },
-      });
-      window.open(routeData.href, "_blank");
-    },
+    
     gotoEditVenta(id) {
       const userId = id;
       /* this.$router.push({ name: 'nuevaventa', params: { venId:userId }})
@@ -717,7 +705,9 @@ this.venta=id;
         name: "editventa",
         params: { id: userId },
       });
-      window.open(routeData.href, "_blank");
+      //window.open(routeData.href, "_blank");
+      window.open(routeData.href, "_self");
+      
     },
     gotoNuevaVenta() {
       VentaServices.createNuevaVenta()
@@ -728,7 +718,9 @@ this.venta=id;
             name: "editventa",
             params: { id: mensaje },
           });
-          window.open(routeData.href, "_blank");
+        //  window.open(routeData.href, "_blank");
+         window.open(routeData.href, "_self");
+        
         })
         .catch((error) => {
           console.log(error);
