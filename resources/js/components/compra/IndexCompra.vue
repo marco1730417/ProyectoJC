@@ -48,7 +48,7 @@
                       <h5 class="card-title text-uppercase text-muted mb-0">
                        Mejor Proveedor
                       </h5>
-                      <span class="h2 font-weight-bold mb-0">
+                      <span v-if="totalcompras.proveedor[0]" class="h2 font-weight-bold mb-0">
                     {{totalcompras.proveedor[0].nombre}}</span
                       >
                     </div>
@@ -419,7 +419,7 @@ export default {
         name: "editcompra",
         params: { id: comId },
       });
-      window.open(routeData.href, "_blank");
+      window.open(routeData.href, "_self");
     },
     gotoNuevaCompra() {
       CompraServices.createNuevaCompra()
@@ -430,7 +430,7 @@ export default {
             name: "editcompra",
             params: { id: mensaje },
           });
-          window.open(routeData.href, "_blank");
+          window.open(routeData.href, "_self");
         })
         .catch((error) => {
           console.log(error);
