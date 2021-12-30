@@ -238,7 +238,7 @@
               data-placement="top"
               title="Pagos"
             >
-              <i class="fas fa-dollar-sign" title="Abonos"></i>
+              <i class="fas fa-dollar-sign" title="Pagos"></i>
             </b-button>
             
             <b-button
@@ -246,10 +246,10 @@
               size="sm"
               data-toggle="tooltip"
               data-placement="top"
-              title="Eliminar"
+              title="Anular"
          @click="deleteVenta(data.item.id)"
             >
-              <i class="fas fa-trash"></i>
+              <i class="fas fa-window-close"></i>
             </b-button>
        
           </template>
