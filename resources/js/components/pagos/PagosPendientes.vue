@@ -19,68 +19,65 @@
               <div class="row align-items-center">
                 <div class="col-12 text-left">
                   <div class="container">
-                    <h3 class="text-center">Pagos Pendientes- {{fecha}}</h3>
- 
+                    <h3 class="text-center">Pagos Pendientes- {{ fecha }}</h3>
                   </div>
-
-               
                 </div>
               </div>
-      <!--  {{pagospendientes}} -->
-        <b-table
-        id="my-table"
-        sticky-header
-        striped
-        show-empty
-        small
-          :filter="filter"
-        
-        fixed
-        hover
-        :items="pagospendientes"
-        :fields="fields"
-        :per-page="perPage"
-        :current-page="currentPage"
-        responsive="sm"
-      >
-        <template #cell(index)="data">
-          <small> {{ data.index + 1 }} </small>
-        </template>
-        <template #cell(nombre)="data">
-          <small class="mb-0 mr-2">{{ data.item.nombre }}</small>
-        </template>
+              <!--  {{pagospendientes}} -->
+              <b-table
+                id="my-table"
+                sticky-header
+                striped
+                show-empty
+                small
+                :filter="filter"
+                fixed
+                hover
+                :items="pagospendientes"
+                :fields="fields"
+                :per-page="perPage"
+                :current-page="currentPage"
+                responsive="sm"
+              >
+                <template #cell(index)="data">
+                  <small> {{ data.index + 1 }} </small>
+                </template>
+                <template #cell(nombre)="data">
+                  <small class="mb-0 mr-2">{{ data.item.nombre }}</small>
+                </template>
+                <template #cell(venfecha)="data">
+                  {{
+                    moment(data.item.venfecha).format(
+                      "MMM DD YYYY, ddd, h:mm:ss a"
+                    )
+                  }}
+                </template>
 
-
-      <template #cell(actions)="data">
-      <!--   {{data.item}} -->
-               <b-button
-              variant="outline-success default actions"
-              @click="changestatus(data.item.pagId)"
-              size="sm"
-              title="venta"
-          
-            > 
-              <i class="fas fa-check"></i>
-            </b-button>
-
-       
-          </template>
-
-
-      </b-table>
-            <!-- PAGINACION -->
-      <div v-if="rows > 5">
-        <b-pagination
-          class="text-center"
-          v-model="currentPage"
-          :total-rows="rows"
-          :per-page="perPage"
-          aria-controls="my-table"
-          size="sm"
-          align="center"
-        ></b-pagination>
-      </div>
-      <!-- FIN PAGINACION -->
+                <template #cell(actions)="data">
+                  <!--   {{data.item}} -->
+                  <b-button
+                    variant="outline-success default actions"
+                    @click="changestatus(data.item.pagId)"
+                    size="sm"
+                    title="venta"
+                  >
+                    <i class="fas fa-check"></i>
+                  </b-button>
+                </template>
+              </b-table>
+              <!-- PAGINACION -->
+              <div v-if="rows > 5">
+                <b-pagination
+                  class="text-center"
+                  v-model="currentPage"
+                  :total-rows="rows"
+                  :per-page="perPage"
+                  aria-controls="my-table"
+                  size="sm"
+                  align="center"
+                ></b-pagination>
+              </div>
+              <!-- FIN PAGINACION -->
             </div>
           </div>
 
@@ -112,7 +109,6 @@ import moment from "moment";
 import { BootstrapVue } from "bootstrap-vue";
 import vSelect from "vue-select";
 
-
 Vue.use(BootstrapVue);
 export default {
   components: {
@@ -121,33 +117,33 @@ export default {
   data() {
     return {
       fecha: moment().format("MMMM Do YYYY"),
-        filter: null,
+      filter: null,
       perPage: 10,
       currentPage: 1,
       fields: [
-                  {
+        {
           key: "id",
           label: "# Venta",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate",
         },
-                     {
+        {
           key: "nombre",
           label: "Cliente",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate",
         },
-   
-              {
-          key: "fecha",
+
+        {
+          key: "venfecha",
           label: "Fecha Venta",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate",
         },
-    
+
         {
           key: "fechamaxima",
           label: "Fecha Maxima",
@@ -155,7 +151,7 @@ export default {
           sortDirection: "desc",
           tdClass: "list-item-enddate",
         },
-             {
+        {
           key: "total",
           label: "Total",
           sortable: false,
@@ -180,11 +176,9 @@ export default {
     },
   },
   mounted() {
-
     this.PagosPendientes();
   },
   methods: {
-
     /*         changestatus(id) {
       pagoServices.updatePago(id)
         .then((response) => {
@@ -200,8 +194,6 @@ export default {
     },
  */
 
-
-
     changestatus(id) {
       this.$swal
         .fire({
@@ -212,7 +204,8 @@ export default {
         .then((result) => {
           /* Read more about isConfirmed, isDenied below */
           if (result.isConfirmed) {
-            pagoServices.updatePago(id)
+            pagoServices
+              .updatePago(id)
               .then((response) => {
                 let mensaje = response.data.data;
                 if (mensaje == 200) {
@@ -226,11 +219,6 @@ export default {
         });
     },
 
-
-
-
-
-
     onlyNumber($event) {
       //console.log($event.keyCode); //keyCodes value
       let keyCode = $event.keyCode ? $event.keyCode : $event.which;
@@ -241,7 +229,8 @@ export default {
     },
 
     PagosPendientes() {
-      pagoServices.PagosPendientes()
+      pagoServices
+        .PagosPendientes()
         .then((response) => {
           this.pagospendientes = response.data.data;
         })
