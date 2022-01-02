@@ -169,7 +169,7 @@
           <template #cell(fecha)="data">
             <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
             <!--  {{ data.item.fecha }} -->
-              {{ moment(data.item.fecha , "YYYY-MM-DD").format("MMM DD YYYY, ddd")}} 
+              {{ moment(data.item.fecha ).format("MMM DD YYYY, ddd, h:mm:ss a")}} 
            <!--    {{ moment(data.item.fecha).format("MMM DD YYYY, ddd") }} -->
           
           </template>
@@ -356,7 +356,7 @@
                               <template #cell(fecha)="data">
             <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
             <!--  {{ data.item.fecha }} -->
-              {{ moment(data.item.fecha , "YYYY-MM-DD").format("MMM DD YYYY, ddd")}} 
+              {{ moment(data.item.fecha , "YYYY-MM-DD, h:mm:ss a").format("MMM DD YYYY, ddd, h:mm:ss a")}} 
            <!--    {{ moment(data.item.fecha).format("MMM DD YYYY, ddd") }} -->
           
           </template>
