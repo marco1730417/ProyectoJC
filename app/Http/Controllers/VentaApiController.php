@@ -26,6 +26,59 @@ class VentaApiController extends ApiResponseController
      * @return \Illuminate\Http\Response
      */
 
+    public function createDetalleVenta(Request $request)
+    {
+
+        $data = request()->all();
+
+        //$metrosrollo = $data['metrosrollo']; // cantidad de metros totales cuando se venda por rollo
+
+        $precioUnitarioOpcion = $data['precioUnitario'];
+        $proId = $data['proId'];
+
+        $descuento = $data['descuento'];
+
+        $infoproducto = Producto::findOrFail($proId);
+        if ($precioUnitarioOpcion == 1) {
+            $valorPrecio = $infoproducto->PrecioVenta1;
+            $metrostotales = $data['cantidad'];
+        }
+
+        if ($precioUnitarioOpcion == 2) {
+            $valorPrecio = $infoproducto->PrecioVenta2;
+            $metrostotales = $infoproducto->metrosrollo * $data['cantidad'];
+        }
+
+        if ($precioUnitarioOpcion == 3) {
+            $valorPrecio = $infoproducto->PrecioVenta3;
+            $metrostotales = $data['cantidad'];
+        }
+      
+
+        $new_detalle = new DetalleVenta();
+        $new_detalle->cantidad = $data['cantidad'];
+        $new_detalle->precioUnitario = $valorPrecio;
+        $new_detalle->proId =  $data['proId'];
+        $new_detalle->venId =  $data['venId'];
+        $new_detalle->metrostotales =  $metrostotales;
+        $new_detalle->opcion =  $precioUnitarioOpcion;
+        $new_detalle->descuento =  $descuento ?: 0;
+
+
+        $new_detalle->save();
+
+        if ($new_detalle) {
+            $actualizar_cantidad_producto = Producto::findOrFail($proId);
+            $actualizar_cantidad_producto->unidades = $actualizar_cantidad_producto->unidades - $metrostotales;
+            $actualizar_cantidad_producto->update();
+        }
+
+        if (!$new_detalle) return $this->errorResponse(500);
+
+        return $this->successResponse(200);
+    }
+
+
 
     public function createNuevaVenta()
     {
@@ -41,25 +94,37 @@ class VentaApiController extends ApiResponseController
         return $this->successResponse($new_venta->id);
     }
 
+    //api para guardar pagos al contado
 
 
     public function registrarPagoContado(Request $request)
     {
         $carbon = new \Carbon\Carbon();
         $fecha = $carbon->now();
-
         $data = request()->all();
+        $total=$data['total'];
+        $pago=$data['pago'];
+        $vuelto=$data['vuelto'];
+        
+        $format_vuelto = number_format($vuelto, 2);
+        $format_total = number_format($total, 2);
+        $format_pago = number_format($pago, 2);
+        $estado=0;
 
+        if( $format_pago>=$format_total )
+        $estado=1;  //1 el pago ha sido completo
+        if( $format_pago<$format_total )
+        $estado=0;  // el pago esta incompleto
 
         $new_pago = new Pago;
         $new_pago->venId = $data['venId'];
         $new_pago->fecha = $fecha;
         $new_pago->tipo = "Contado";
         $new_pago->cliId =  $data['cliId'];
-        $new_pago->vuelto =  $data['vuelto'];
-        $new_pago->pago =  $data['pago'];
-        $new_pago->total =  $data['total'];
-        $new_pago->estado = 1;
+        $new_pago->vuelto =  $format_vuelto;
+        $new_pago->pago =  $format_pago;
+        $new_pago->total =  $format_total;
+        $new_pago->estado = $estado;
 
         $new_pago->save();
 
@@ -73,7 +138,16 @@ class VentaApiController extends ApiResponseController
         $fecha = $carbon->now();
 
         $data = request()->all();
+        $total=$data['total'];
+        $pago=$data['pago'];
+        $format_total = number_format($total, 2);
+        $format_pago = number_format($pago, 2);
+        $estado=0;
 
+        if( $format_pago>=$format_total )
+        $estado=1;
+        if( $format_pago<$format_total )
+        $estado=0;
 
         $new_pago = new Pago;
         $new_pago->venId = $data['venId'];
@@ -81,10 +155,12 @@ class VentaApiController extends ApiResponseController
         $new_pago->fecha = $fecha;
         $new_pago->tipo = "Transferencia";
         $new_pago->cliId =  $data['cliId'];
-        $new_pago->pago =  $data['pago'];
+       
+        $new_pago->pago =  $format_pago;
+        $new_pago->total =  $format_total;
+        
         $new_pago->numtransf =  $data['numtransf'];
-        $new_pago->total =  $data['total'];
-        $new_pago->estado = 1;
+        $new_pago->estado = $estado;
         $new_pago->save();
 
         if (!$new_pago) return $this->errorResponse(500);
@@ -98,6 +174,20 @@ class VentaApiController extends ApiResponseController
         $fecha = $carbon->now();
 
         $data = request()->all();
+        $total=$data['total'];
+        $abono=$data['abono'];
+        $saldo=$data['saldo'];
+
+        $format_saldo = number_format($saldo, 2);
+      
+        $format_total = number_format($total, 2);
+        $format_abono = number_format($abono, 2);
+        $estado=0;
+
+        if( $format_abono>=$format_total )
+        $estado=1;
+        if( $format_abono<$format_total )
+        $estado=0;
 
 
         $new_pago = new Pago;
@@ -106,12 +196,12 @@ class VentaApiController extends ApiResponseController
         $new_pago->fecha = $fecha;
         $new_pago->tipo = "Abono";
         $new_pago->cliId =  $data['cliId'];
-        $new_pago->pago =  $data['abono'];
-        $new_pago->abono =  $data['abono'];
-        $new_pago->saldo =  $data['saldo'];
-        $new_pago->total =  $data['total'];
+        $new_pago->pago =  $format_abono;
+        $new_pago->abono =  $format_abono;
+        $new_pago->saldo =  $format_saldo;
+        $new_pago->total =  $format_total;
         $new_pago->fechamaxima =  $data['fechamaxima'];
-        $new_pago->estado = 0;
+        $new_pago->estado = $estado;
         $new_pago->save();
 
         if (!$new_pago) return $this->errorResponse(500);
@@ -200,7 +290,7 @@ class VentaApiController extends ApiResponseController
         return $this->successResponse(200);
     }
 
-    public function createDetalleVenta(Request $request)
+    public function createDetalleVentabackup(Request $request)
     {
 
         $data = request()->all();
@@ -265,6 +355,10 @@ class VentaApiController extends ApiResponseController
             'detalle_ventas.precioUnitario',
             'productos.nombre',
             'productos.descripcion',
+            'productos.uniPrecioVenta1',
+            'productos.uniPrecioVenta2',
+            'productos.uniPrecioVenta3',
+            
             db::raw('detalle_ventas.cantidad*detalle_ventas.precioUnitario as subTotal'),
 
         )
@@ -277,6 +371,43 @@ class VentaApiController extends ApiResponseController
     }
 
     public function getInformacionPagosVenta($venId)
+    {
+        $detalle_venta = Pago::select(
+            'pagos.id',
+            'pagos.tipo',
+            'pagos.total',
+            'pagos.pago',
+            'pagos.abono',
+            'pagos.fechamaxima',
+            'pagos.saldo',
+            'pagos.fecha',
+            'pagos.venId',
+            'pagos.cliId'
+        )
+            ->leftJoin('ventas', 'pagos.venId', '=', 'ventas.id')
+            ->leftJoin('clientes', 'pagos.cliId', '=', 'clientes.id')
+            ->where('venId', $venId)
+         //   ->where('pagos.tipo','=','Abono')
+            
+            ->get();
+        $total_abonos = Pago::where('pagos.venId', $venId)->sum('pagos.abono');
+        $saldo = $detalle_venta[0]['total'] - $total_abonos;
+        $totalcobrar = $detalle_venta[0]['total'];
+        $fechamaxima = $detalle_venta[0]['fechamaxima'];
+
+
+        $info_pago_abono = [
+            'detalle_venta' => $detalle_venta,
+            'total_abonos' =>     $total_abonos,
+            'fechamaxima' => $fechamaxima,
+            'saldo' => $saldo,
+            'totalcobrar' => $totalcobrar,
+
+        ];
+
+        return $this->successResponse($info_pago_abono);
+    }
+    public function getInformacionPagosVentaAbonos($venId)
     {
         $detalle_venta = Pago::select(
             'pagos.id',
@@ -315,15 +446,8 @@ class VentaApiController extends ApiResponseController
     }
 
     
-    public function deleteVentav1($venId)
-    {
-        Pago::where('venId', $venId)->delete();
-        DetalleVenta::where('venId', $venId)->delete();
-        $venta = Venta::findOrFail($venId)->delete();
 
-        if (!$venta) return $this->errorResponse(500);
-        return $this->successResponse(200);
-    }
+
     public function deleteRetencion($retId)
     {
         $retencion = Retencion::findOrFail($retId)->delete();
@@ -452,6 +576,10 @@ class VentaApiController extends ApiResponseController
             'detalle_ventas.descuento',
             'productos.nombre',
             'productos.descripcion',
+            'productos.uniPrecioVenta1',
+            'productos.uniPrecioVenta2',
+            'productos.uniPrecioVenta3',
+
             db::raw('detalle_ventas.cantidad*detalle_ventas.precioUnitario as subTotal')
       
         )
@@ -708,15 +836,34 @@ se evite poner esta accion y unificar campos en una unica api */
 
 
         $data = request()->all();
+        ///primero sacamos la venta
         $info = $data['info'];
+        $venId = $info[0]['venId'];
+        // obtenemos el ultimo saldo pendiente
+        $saldo_anterior= Pago::where('venId',$venId)->get()->last();
+        $saldo_anterior=$saldo_anterior->saldo;
+      //  return $saldo_anterior->saldo;
+
         $total = $info[0]['total'];
         $fechamaxima = $info[0]['fechamaxima'];
-
-        $venId = $info[0]['venId'];
+       // $saldo_anterior = $info[0]['saldo'];
+      
         $cliId = $info[0]['cliId'];
-        $fechamaxima = $info[0]['fechamaxima'];
         $pago = $data['pago'];
-        $saldo = $data['saldo'];
+        $saldo_actual = $data['saldo'];
+        $total=$info[0]['total'];
+        
+        $format_total = number_format($total, 2);
+        $format_pago = number_format($pago, 2);
+        $saldo_anterior = number_format($saldo_anterior, 2);
+        $saldo_actual = number_format($saldo_actual, 2);
+      
+        $estado=0;
+
+        if( $format_pago>=$saldo_anterior )
+        $estado=1;  //1 el pago ha sido completo
+        if( $format_pago<$saldo_anterior )
+        $estado=0;  // el pago esta incompleto
 
 
 
@@ -726,11 +873,13 @@ se evite poner esta accion y unificar campos en una unica api */
         $new_pago->tipo = "Abono";
         $new_pago->venId =  $venId;
 
-        $new_pago->pago =  $pago;
-        $new_pago->abono =  $pago;
-        $new_pago->saldo =  $saldo;
+        $new_pago->pago =  $format_pago;
+        $new_pago->abono =  $format_pago;
+        $new_pago->saldo =  $saldo_actual;
         $new_pago->total =  $total;
         $new_pago->fechamaxima =  $fechamaxima;
+        $new_pago->estado =  $estado;
+        
 
         $new_pago->save();
 

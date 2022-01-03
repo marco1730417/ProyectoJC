@@ -246,7 +246,7 @@ export default {
         },
         {
           key: "PrecioVenta1",
-          label: "Precio metro",
+          label: "PV1",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate text-center",
@@ -254,7 +254,7 @@ export default {
 
         {
           key: "PrecioVenta2",
-          label: "Precio rollo",
+          label: "PV2",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate text-center",

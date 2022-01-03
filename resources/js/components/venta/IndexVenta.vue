@@ -216,7 +216,7 @@
               data-placement="top"
               title="Descargar"
             >
-              <i class="fas fa-print" title="Abonos"></i>
+              <i class="fas fa-print" title="Descargar"></i>
             </b-button>
               <b-button v-if="data.item.pagoabonos>0"
               variant="outline-warning default actions"
@@ -615,7 +615,8 @@ this.venta=id;
   title: 'Abono registrado',
   showConfirmButton: false,
   timer: 1500
-})
+});
+location.reload();
           }
         })
         .catch((error) => {
@@ -643,7 +644,7 @@ this.venta=id;
       this.infoventa = item;
     },
     obtenerabonos(id) {
-      VentaServices.getInformacionPagosVenta(id)
+      VentaServices.getInformacionPagosVentaAbonos(id)
         .then((response) => {
           this.infoabonos = response.data.data;
         })
@@ -654,7 +655,7 @@ this.venta=id;
     deleteVenta(id) {
       this.$swal
         .fire({
-          title: "Estas seguro de eliminar esta venta?",
+          title: "Estas seguro de anular esta venta?",
           showCancelButton: true,
           confirmButtonText: "SI",
         })

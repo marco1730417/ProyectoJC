@@ -52,6 +52,13 @@
                     )
                   }}
                 </template>
+                     <template #cell(fechamaxima)="data">
+                  {{
+                    moment(data.item.fechamaxima).format(
+                      "MMM DD YYYY, ddd, h:mm:ss a"
+                    )
+                  }}
+                </template>
 
                 <template #cell(actions)="data">
                   <!--   {{data.item}} -->

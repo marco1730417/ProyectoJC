@@ -57,7 +57,10 @@
     </div>
     <div class="col-md-8">
  <!-- {{infoventa}} -->
-    <b-table striped hover :items="infoventascliente" :fields="fields"></b-table>
+    <b-table striped hover :items="infoventascliente" :fields="fields">
+
+      
+    </b-table>
   
           <b-col class="text-center" sm="12">
                 <b-button
@@ -158,9 +161,6 @@ export default {
       this.clientecapturado=newClient.id;
     },
   },
-  created() {
-  },
-
   mounted() {
 this.getAllClientes();
   },

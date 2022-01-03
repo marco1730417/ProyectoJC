@@ -19,7 +19,6 @@
                           label="nombre"
                           v-model="clienteupdate"
                           :options="infocliente"
-                          @click="actualizarVenta"
                           required
                         >
                  
@@ -33,7 +32,6 @@
                           label="ruc"
                           v-model="clienteupdate"
                           :options="infocliente"
-                          @click="actualizarVenta"
                           required
                         >
                  
@@ -102,9 +100,47 @@
                   </p>
                 </div>
               </div>
+ 
+ 
+  <div v-if="infoventascliente.length>0" class="card card-stats mb-4 mb-xl-0">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col">
+                      <h5 class="card-title text-uppercase text-muted mb-0">
+                        Observaciones
+                      </h5>
+                      <span class="h2 font-weight-bold mb-0">
+                      </span>
+                    </div>
+              
+                  </div>
+                  <p class="mt-3 mb-0 text-muted text-sm">
+             
+                  </p>
+                         <span class="text-warning mr-2"
+                      ><i class="fas fa-user"></i>
+                    Este cliente adeuda valores por ventas con los siguientes detalles.    </span>  </br>
+                    <b-list-group>
+  <b-list-group-item v-for="item in infoventascliente" :key="item.id" class="d-flex justify-content-between align-items-center">
+  Venta: {{item.venId }} - Observaciones {{item.observaciones}}
+    <b-badge variant="primary" pill>{{item.fecha}}</b-badge>
+  </b-list-group-item>
+
+
+</b-list-group>
+                   <!--     {{infoventascliente}} -->
+                
+             
+                </div>
+              </div>
 
               <br />
             </div>
+
+
+
+
+
           </div>
         </div>
       </div>
@@ -807,13 +843,17 @@
           </template>
               <template #cell(cantidad)="data">
             <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
+            <div v-if="data.item.opcion===1" >
+         {{ data.item.cantidad }}     {{ data.item.uniPrecioVenta1 }}  
+</div>
    
             <div v-if="data.item.opcion===2" >
-         {{ data.item.cantidad }}   [rll]
+         {{ data.item.cantidad }}     {{ data.item.uniPrecioVenta2 }}  
 </div>
-<div v-else >
-         {{ data.item.cantidad }}   [m]
+  <div v-if="data.item.opcion===3" >
+         {{ data.item.cantidad }}     {{ data.item.uniPrecioVenta3 }}  
 </div>
+
           </template>
           <template #cell(descripcion)="data">
             <!--  <small class="mb-0 mr-2">{{ data.item.ruc }}</small> -->
@@ -923,8 +963,8 @@
                     <b-dropdown-item
                       data-toggle="modal"
                       data-target="#ModalVentaContado"
-                      ><i class="fas fa-dollar-sign"></i> Al
-                      contado</b-dropdown-item
+                      ><i class="fas fa-dollar-sign"></i> 
+                      Contado</b-dropdown-item
                     >
                     <b-dropdown-item
                       data-toggle="modal"
@@ -961,10 +1001,10 @@
                       ><i class="fas fa-cube"></i
                       >Retencion</b-dropdown-item
                     >
-
+<!-- 
                     <b-dropdown-item @click="deleteVenta"
                       ><i class="fas fa-ban"></i>Eliminar Venta</b-dropdown-item
-                    >
+                    > -->
                   </b-dropdown>
                   
                 </div>
@@ -988,6 +1028,8 @@
 import VentaServices from "../../services/ventaServices";
 import ClienteServices from "../../services/clienteServices";
 import Conf from "../../services/conf.js";
+import ReporteServices from "../../services/reporteServices";
+
 
 const resource = "api/venta/";
 const server = Conf.server;
@@ -1100,13 +1142,18 @@ export default {
       detallecheque:"",
       saldo: "",
       totaldetallegeneral:[],
+      infoventascliente:[]
     };
   },
   watch: {
     clienteupdate: function (newClient, oldClient) {
       this.actualizarVenta(newClient.id);
+           
     },
-  },
+ /*     clienteupdate: function (newValue, oldValue) {
+      this.reporteVentasCliente(newValue.id);
+    }, */
+   },
   computed: {
     total_cambio: function () {
       //console.log(this.productosSelected.tarVenta + "valor unitario");
@@ -1136,6 +1183,16 @@ export default {
     this.detalleGeneralVenta();
   },
   methods: {
+        reporteVentasCliente(id) {
+      ReporteServices.reporteDeudasporCliente(id)
+        .then((response) => {
+          this.infoventascliente = response.data.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
     updateDatos() {
       this.getInformacionVenta();
       this.totalesVenta();
@@ -1163,7 +1220,7 @@ export default {
     deleteVenta() {
       this.$swal
         .fire({
-          title: "Estas seguro de eliminar esta venta?",
+          title: "Estas seguro de anular esta venta?",
           showCancelButton: true,
           confirmButtonText: "Si",
         })
@@ -1216,7 +1273,8 @@ export default {
           this.clienteupdate = this.detallegeneralventa["cliente"];
           this.totaldetallegeneral= this.detallegeneralventa.total;
           this.totaldetallegeneral= this.totaldetallegeneral[0];
-          
+           this.reporteVentasCliente(this.clienteupdate[0].id);
+       //   console.log(JSON.stringify(this.clienteupdate[0].id));
         })
         .catch((error) => {
           console.log(error);
@@ -1251,7 +1309,12 @@ export default {
       window.open(routeData);
 
 
+    window.location.href='/venta/';
           }
+          else
+          
+    window.location.href='/venta/';
+    
         });
 
 
@@ -1293,8 +1356,12 @@ downloadVentaCheque(fecha,detalle,cliId){
            let routeData = server + resource + `download-venta/` + this.substr;
       window.open(routeData);
 
-
+       
+    window.location.href='/venta/';
           }
+          else
+          
+    window.location.href='/venta/';
         });
 
           }
@@ -1334,7 +1401,11 @@ downloadVentaCheque(fecha,detalle,cliId){
       window.open(routeData);
 
 
+    window.location.href='/venta/';
           }
+          else
+          
+    window.location.href='/venta/';
         });
 
           }
@@ -1375,8 +1446,11 @@ downloadVentaCheque(fecha,detalle,cliId){
       window.open(routeData);
 
 
-
+    window.location.href='/venta/';
           }
+          else
+          
+    window.location.href='/venta/';
         });
 
 
@@ -1410,6 +1484,7 @@ downloadVentaCheque(fecha,detalle,cliId){
         .then((response) => {
           let mensaje = response.data.data;
           this.detalleGeneralVenta();
+           this.reporteVentasCliente(cliente);
         })
         .catch((error) => {
           console.log(error);

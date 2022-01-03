@@ -16,7 +16,7 @@
         <small v-if="producto"> 
             <strong class="text-info"> Codigo:  </strong>  {{ producto.nombre }}
         <strong class="text-info"> Stock:  </strong>  {{ producto.unidades }} mtrs
-       
+<!--        {{producto}} -->
         </small>
       </div>
 
@@ -60,21 +60,6 @@
                       id="cantidad"
                     />
                   </div>
-                  <div v-if="precioUnitario == 2" class="col-sm-8">
-                    <label
-                      for="lname"
-                      class="col-sm-12 col-form-label text-center"
-                      >Metros x rollo</label
-                    >
-                    <input
-                      v-model="metrosrollo"
-                      @keypress="onlyNumber"
-                      type="number"
-                      class="form-control"
-                      id="metrosrollo"
-                    />
-                    <small>Favor ingrese cuantos metros tiene cada rollo</small>
-                  </div>
               
                   <div v-if="status === 'accepted'" class="col-sm-8">
                     <label
@@ -106,7 +91,7 @@
                             <b-row v-if="producto.PrecioVenta1" class="my-1">
                               <b-col sm="9  ">
                                 <label for="input-none"
-                                  >Precio x metro ( $
+                                  >Precio x {{producto.uniPrecioVenta1}} ( $
                                   {{ producto.PrecioVenta1 }})
                                 </label>
                               </b-col>
@@ -122,7 +107,7 @@
                             <b-row v-if="producto.PrecioVenta2" class="my-1">
                               <b-col sm="9">
                                 <label for="input-none"
-                                  >Precio x rollo ( $
+                                  >Precio x {{producto.uniPrecioVenta2}} ( $
                                   {{ producto.PrecioVenta2 }})
                                 </label>
                               </b-col>
@@ -139,7 +124,7 @@
                             <b-row v-if="producto.PrecioVenta3" class="my-1">
                               <b-col sm="9">
                                 <label for="input-none"
-                                  >Precio x (25/15m) ( $
+                                  >Precio esp x {{producto.uniPrecioVenta3}} ( $
                                   {{ producto.PrecioVenta3 }})
                                 </label>
                               </b-col>
@@ -168,6 +153,13 @@
                               class="col-sm-12 col-form-label text-danger "
                               >No existe suficiente stock (Existen maximo
                               {{ producto.unidades }} mtrs )</label
+                            >
+                               <label
+                              v-if="precioUnitario == 2"
+                              for="lname"
+                              class="col-sm-12 col-form-label text-info "
+                              >Cantidad de {{producto.uniPrecioVenta1}}  por {{producto.uniPrecioVenta2}} es de {{producto.metrosrollo}}  
+                           </label
                             >
                           </div>
                         </div>
@@ -240,10 +232,10 @@
 
       </div>
 
-      <div v-if="precioUnitario == 1 || precioUnitario == 3" class="col-12">
+      <div v-if="precioUnitario == 1 || precioUnitario == 3 " class="col-12">
         <div
           v-if="
-            producto && cantidad && precioUnitario && validacion_metro === true
+            producto && cantidad && precioUnitario && validacion_metro === true  
           "
           @click="createDetalleVenta(producto.id)"
           class="btn btn-primary payment"
@@ -251,14 +243,12 @@
           Agregar Producto
         </div>
       </div>
-
       <div v-if="precioUnitario == 2" class="col-12">
         <div
           v-if="
             producto &&
             cantidad &&
             precioUnitario &&
-            metrosrollo &&
             total_metro_rollo === true
           "
           @click="createDetalleVenta(producto.id)"
@@ -267,6 +257,7 @@
           Agregar Producto
         </div>
       </div>
+
     </div>
   </div>
 </template>
@@ -306,10 +297,10 @@ export default {
   computed: {
     total_metro_rollo: function () {
       //console.log(this.productosSelected.tarVenta + "valor unitario");
-      if (this.cantidad > 0 && this.metrosrollo > 0) {
+      if (this.cantidad > 0 && this.precioUnitario==2 ) {
         let stock = this.producto.unidades;
         let totalxrollo =
-          parseFloat(this.cantidad) * parseFloat(this.metrosrollo);
+          parseFloat(this.cantidad) * parseFloat(this.producto.metrosrollo);
         if (stock < totalxrollo) return false;
         if (stock >= totalxrollo) return true;
       }
@@ -363,8 +354,6 @@ export default {
         precioUnitario: this.precioUnitario,
         proId: id,
         venId: this.venta,
-        metrosrollo: this.metrosrollo,
-        precioEspecial: 0,
         descuento:this.descuento,
 
       };
@@ -381,28 +370,7 @@ export default {
           console.log(error);
         });
     },
-    createDetalleVentaEspecial(id) {
-      let data = {
-        cantidad: this.cantidad,
-        precioUnitario: this.precioUnitario,
-        proId: id,
-        venId: this.venta,
-        metrosrollo: this.metrosrollo,
-        precioEspecial: this.precioEspecial,
-      };
-      VentaServices.createDetalleVenta(data)
-        .then((response) => {
-          let mensaje = response.data.data;
-          if (mensaje == 200) {
-            this.$emit("updateVenta");
-            this.clearfields();
-            this.getAllProductos();
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
+
     onlyNumber($event) {
       //console.log($event.keyCode); //keyCodes value
       let keyCode = $event.keyCode ? $event.keyCode : $event.which;

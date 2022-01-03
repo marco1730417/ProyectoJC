@@ -188,36 +188,35 @@ $cheque_valor = collect($cheque_valor);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
      
     public function reporteVentasporCLiente($cliId)
 
     {
-        $ventas_cliente= Venta :: select ('ventas.id','pagos.tipo','pagos.total','ventas.fecha','ventas.observacion',
-        'clientes.nombre','clientes.ruc','clientes.direccion','clientes.telefono'
+      $ventas_cliente= Venta :: select ('ventas.id','pagos.tipo','pagos.total','ventas.fecha','ventas.observacion',
+      'clientes.nombre','clientes.ruc','clientes.direccion','clientes.telefono'
+      )
+     ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
+     ->leftJoin('pagos', 'ventas.id', '=', 'pagos.venId')
+   ->where('clientes.id',$cliId)
+      ->get();
+
+
+      
+        return $this->successResponse($ventas_cliente);
+    }
+         
+    public function reporteDeudasporCliente($cliId)
+
+    {
+        $ventas_cliente= Pago :: select ('pagos.id','pagos.tipo','pagos.total','ventas.fecha','ventas.observacion','pagos.pago',
+        'clientes.nombre','clientes.ruc','ventas.id as venId'
         )
-       ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
-       ->leftJoin('pagos', 'ventas.id', '=', 'pagos.venId')
+       ->leftJoin('clientes', 'pagos.cliId', '=', 'clientes.id')
+       ->leftJoin('ventas', 'pagos.venId', '=', 'ventas.id')
+       
      ->where('clientes.id',$cliId)
+     ->where('pagos.estado',0)
+     
         ->get();
 
 

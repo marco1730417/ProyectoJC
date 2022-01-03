@@ -49,6 +49,10 @@ export default {
         let url = server + resource + 'get-informacion-pagos-venta';
         return Axios.get(url + "/" + venId);
     },
+    getInformacionPagosVentaAbonos(venId) {
+        let url = server + resource + 'get-informacion-pagos-venta-abonos';
+        return Axios.get(url + "/" + venId);
+    },
     downloadVenta(venId) {
         let url = server + resource + 'download-venta';
         return Axios.get(url + "/" + venId);

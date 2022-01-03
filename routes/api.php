@@ -84,6 +84,7 @@ Route::group(['prefix' => 'reportes'], function () {
     Route::get('download-reporte-venta/{fechainicio}/{fechafinal} ',  [ReportesApiController::class, 'downloadReporteVenta']);
     Route::get('download-reporte-cliente/{cliId} ',  [ReportesApiController::class, 'downloadReporteCliente']);
     Route::get('reporte-compras/{fechadesde}/{fechahasta}', [ReportesApiController::class, 'reporteCompras']);
+    Route::get('reporte-deudas-cliente/{cliId}', [ReportesApiController::class, 'reporteDeudasporCliente']);
     
   
 });
@@ -105,6 +106,7 @@ Route::group(['prefix' => 'venta'], function () {
     Route::get('totales-venta/{venId}',  [VentaApiController::class, 'totalesVenta']);
     Route::get('download-venta/{venId}',  [VentaApiController::class, 'downloadVenta']);
     Route::get('get-informacion-pagos-venta/{venId}',  [VentaApiController::class, 'getInformacionPagosVenta']);
+    Route::get('get-informacion-pagos-venta-abonos/{venId}',  [VentaApiController::class, 'getInformacionPagosVentaAbonos']);
     
     
 

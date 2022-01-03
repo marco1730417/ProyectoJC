@@ -1,169 +1,271 @@
 <template>
-  <div class="card">
-    <div class="card-body">
-      <form>
-        <div class="row">
-          <div class="col-6">
-            <!--left side -->
-            <div class="form-group row">
-              <label for="fname" class="col-sm-4 col-form-label">Nombre</label>
-              <div class="col-sm-8">
-                <input
-                  v-model="infoeditproducto.nombre"
-                  type="text"
-                  class="form-control"
-                  required
-                  id="nombre"
-                />
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label for="lname" class="col-sm-4 col-form-label"
-                >Unidades</label
+  <div class="container">
+    <div class="row">
+<!--    {{infoeditproducto}} -->
+    <div class="col-12">
+        <div  class="card p-3">
+          <div class="card-body border p-0">
+            <p>
+              <a
+                class="
+                  btn btn-primary
+                  p-2
+                  w-100
+                  h-100
+                  d-flex
+                  align-items-center
+                  justify-content-between
+                "
+                data-bs-toggle="collapse"
+                href="#collapseExample"
+                role="button"
+                aria-expanded="true"
+                aria-controls="collapseExample"
               >
-              <div class="col-sm-8">
-                <input
-                  v-model="infoeditproducto.unidades"
-                  type="text"
-                  class="form-control"
-                  id="unidades"
-                /><small>Favor ingresar unidades en metros</small>
-              </div>
-            </div>
-
-        <!--     <div class="form-group row">
-              <label for="lname" class="col-sm-4 col-form-label">Iva</label>
-              <div class="col-sm-8">
-                <div class="row">
-                  <b-form-group id="input-group-2" label-for="input-2">
-                    <b-form-radio
-                      v-model="infoeditproducto.iva"
-                      name="some-radios"
-                      value="12"
-                    >
-                      12
-                    </b-form-radio>
-                    <b-form-radio
-                      v-model="infoeditproducto.iva"
-                      name="some-radios"
-                      value="0"
-                    >
-                      0
-                    </b-form-radio>
-                  </b-form-group>
+                <span class="fw-bold">Informacion General</span>
+              </a>
+            </p>
+            <div class="collapse show p-3 pt-0" id="collapseExample">
+              <div  class="row">
+                <div class="col-lg-12 mb-lg-0 mb-3">
+              
+              <b-row class="my-1">
+    <b-col sm="2">
+      <label for="input-small">Codigo:</label>
+    </b-col>
+    <b-col sm="10">
+      <b-form-input  v-model="infoeditproducto.nombre" id="input-small" size="sm" placeholder="Ingrese el codigo"></b-form-input>
+    </b-col>
+  </b-row>
+  <b-row class="my-1">
+    <b-col sm="2">
+      <label for="input-small">Descripcion:</label>
+    </b-col>
+    <b-col sm="10">
+      <b-form-input  v-model="infoeditproducto.descripcion" id="input-small" size="sm" placeholder="Ingrese la descripcion"></b-form-input>
+    </b-col>
+  </b-row>
                 </div>
+            
               </div>
-            </div> -->
-
-                 <div class="form-group row">
-                         <label
-                  v-if="infoeditproducto.PrecioVenta1 "
-                  for="lname"
-                  class="col-sm-12 col-form-label"
-                  >El precio con IVA es de                   <!-- {{ this.PrecioVenta1 - this.preciocompra }} -->
-                    <strong> $ {{ parseFloat(infoeditproducto.PrecioVenta1*1.12).toFixed(2) }} </strong>  
-                </label>
-                <label
-                  v-if="infoeditproducto.PrecioVenta1 && infoeditproducto.preciocompra"
-                  for="lname"
-                  class="col-sm-12 col-form-label"
-                  >Su utilidad x metro es
-           <!--        {{ infoeditproducto.PrecioVenta1 - infoeditproducto.preciocompra }} -->
-                 <strong> $ {{ parseFloat(infoeditproducto.PrecioVenta1 - infoeditproducto.preciocompra).toFixed(2) }} </strong>  
-                </label>
-              </div>
-
+            </div>
           </div>
+        </div>
+      </div>
 
-          <div class="col-6">
-            <div class="form-group row">
-              <label for="email" class="col-sm-6 col-form-label"
-                >Precio de compra
-              </label>
-              <div class="col-sm-6">
-                <input
-                  @keypress="onlyNumber"
-                  v-model="infoeditproducto.preciocompra"
-                  type="text"
-                  class="form-control"
-                  id="preciocompra"
-                />
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="email" class="col-sm-6 col-form-label"
-                >Precio x metro
-              </label>
-              <div class="col-sm-6">
-                <input
-                  @keypress="onlyNumber"
-                  v-model="infoeditproducto.PrecioVenta1"
-                  type="text"
-                  class="form-control"
-                  id="PrecioVenta1"
-                />
-              </div>
-            </div>
 
-            <div class="form-group row">
-              <label for="password" class="col-sm-6 col-form-label"
-                >Precio x rollo</label
+
+
+
+      <div class="col-12">
+        <div  class="card p-3">
+          <div class="card-body border p-0">
+            <p>
+              <a
+                class="
+                  btn btn-primary
+                  p-2
+                  w-100
+                  h-100
+                  d-flex
+                  align-items-center
+                  justify-content-between
+                "
+                data-bs-toggle="collapse"
+                href="#collapseExample"
+                role="button"
+                aria-expanded="true"
+                aria-controls="collapseExample"
               >
-              <div class="col-sm-6">
-                <input
-                  @keypress="onlyNumber"
-                  v-model="infoeditproducto.PrecioVenta2"
-                  type="text"
-                  class="form-control"
-                  id="PrecioVenta2"
-                />
-              </div>
-            </div>
-                     <div class="form-group row">
-             <label for="password" class="col-sm-6 col-form-label"
-                  >Precio especial x 25 /15 mtrs</label
-                >
-                <div class="col-sm-6">
-                  <input
-                    @keypress="onlyNumber"
+                <span class="fw-bold">Precios</span>
+              </a>
+            </p>
+            <div class="collapse show p-3 pt-0" id="collapseExample">
+              <div  class="row">
+                <div class="col-lg-4 mb-lg-0 mb-3">
+                  <label
+                    for="lname"
+                    class="col-sm-12 col-form-label text-center"
+                    >PV1</label
+                  >
+                  <div class="col-sm-12">
+                    <input
+                    v-model="infoeditproducto.PrecioVenta1"
+                      @keypress="onlyNumber"
+                      type="number"
+                      class="form-control"
+                      id="cantidad"
+                    />
+               <!--       <small
+                  v-if="PrecioVenta1 "
+                  for="lname"
+                  class="col-sm-12 col-form-label"
+                  >Precio IVA: $ {{ parseFloat(PrecioVenta1*1.12).toFixed(2) }}
+                </small> -->
+                  </div>
+            
+                   <label
+                    for="lname"
+                    class="col-sm-12 col-form-label text-center"
+                    >PV2</label
+                  >
+                  <div class="col-sm-12">
+                    <input
+                    v-model="infoeditproducto.PrecioVenta2"
+                      @keypress="onlyNumber"
+                      type="number"
+                      class="form-control"
+                      id="cantidad"
+                    />
+                       
+                  </div> 
+                        <label
+                    for="lname"
+                    class="col-sm-12 col-form-label text-center"
+                    >PV3</label
+                  >
+                  <div class="col-sm-12">
+                    <input
                     v-model="infoeditproducto.PrecioVenta3"
-                    type="text"
-                    class="form-control"
-                    id="PrecioVenta3"
-                  /> <small> Este precio aplica por metro </small>
+                      @keypress="onlyNumber"
+                      type="number"
+                      class="form-control"
+                      id="cantidad"
+                    />
+                  </div>
+             
+                </div>
+                <div class="col-lg-8 mb-lg-0 mb-3">
+                  <form action="" class="form">
+                    <div class="row">
+                      <div  class="col-8">
+                        <!--left side -->
+                        <div class="form-group row">
+
+
+    <div class="col-lg-12 mb-lg-0 mb-3">
+  
+    <b-form-group label="Escoja la unidad para el PV1" >
+  <b-form-radio-group  id="radio-group-1"  
+    name="radio-sub-component1">
+    <b-form-radio v-for="item in options"  v-model="infoeditproducto.uniPrecioVenta1" :key="item.value" :value="item.value" >{{item.text}}</b-form-radio>
+<!-- {{selectedpv1}} -->
+  </b-form-radio-group>
+</b-form-group>
+                </div>
+       <div class="col-lg-12 mb-lg-0 mb-3">
+    
+    <b-form-group label="Escoja la unidad para el PV2" >
+  <b-form-radio-group  id="radio-group-2"  
+    name="radio-sub-component2">
+    <b-form-radio v-for="item in options"  v-model="infoeditproducto.uniPrecioVenta2" :key="item.value" :value="item.value" >{{item.text}}</b-form-radio>
+<!-- {{selectedpv2}} -->
+  </b-form-radio-group>
+</b-form-group>
+                </div>
+                     <div class="col-lg-12 mb-lg-0 mb-3">
+    
+    <b-form-group label="Escoja la unidad para el PV3" >
+  <b-form-radio-group  id="radio-group-2"  
+    name="radio-sub-component3">
+    <b-form-radio v-for="item in options"  v-model="infoeditproducto.uniPrecioVenta3" :key="item.value" :value="item.value" >{{item.text}}</b-form-radio>
+<!-- {{selectedpv3}} -->
+  </b-form-radio-group>
+</b-form-group>
+                </div>
+                
+
+
+
+             
+
+
+                    
+                        </div>
+                      </div>
+                    </div>
+                  </form>
                 </div>
               </div>
-          </div>
-          <!--right side -->
-        </div>
-        <div class="row">
-          <label for="password2" class="col-sm-12 col-form-label"
-            >Descripcion</label
-          >
-          <div class="col-sm-12">
-            <input
-              v-model="infoeditproducto.descripcion"
-              type="text"
-              class="form-control"
-              id="descripcion"
-            />
+            </div>
           </div>
         </div>
-        <br />
-        <div class="row">
-          <div class="col-sm-12 text-center">
-            <b-button
-              size="md"
-              variant="primary"
-              @click="UpdateProducto(infoeditproducto)"
-              >Guardar</b-button
-            >
+      </div>
+<!-- 
+      UNIDADES -->
+         <div class="col-12">
+        <div class="card p-3">
+          <div class="card-body border p-0">
+            <p>
+              <a
+                class="
+                  btn btn-primary
+                  p-2
+                  w-100
+                  h-100
+                  d-flex
+                  align-items-center
+                  justify-content-between
+                "
+                data-bs-toggle="collapse"
+                href="#collapseExample"
+                role="button"
+                aria-expanded="true"
+                aria-controls="collapseExample"
+              >
+                <span class="fw-bold">Cantidades    </span>
+              </a>
+            </p>
+            <div class="collapse show p-3 pt-0" id="collapseExample">
+
+          <b-container fluid>
+ 
+  <b-row class="my-1">
+    <b-col sm="5">
+      <label for="input-small">Cantidad total de {{infoeditproducto.uniPrecioVenta1}} :</label>
+    </b-col>
+    <b-col sm="7">
+      <b-form-input  v-model="infoeditproducto.unidades" id="input-small" size="md" :placeholder="'Ingrese el numero total de '+selectedpv1"></b-form-input>
+    </b-col>
+  </b-row>
+
+     <b-row class="my-1">
+    <b-col sm="5">
+      <label for="input-small">Cantidad de {{infoeditproducto.uniPrecioVenta1}} por cada {{infoeditproducto.uniPrecioVenta2}}   :</label>
+    </b-col>
+    <b-col sm="7">
+      <b-form-input  v-model="infoeditproducto.metrosrollo" id="input-small" size="md" :placeholder="'Ingrese el numero de '+selectedpv1+'por cada '+selectedpv2" ></b-form-input>
+    </b-col>
+  </b-row>
+<!--   {{infoeditproducto}} -->
+
+</b-container>
+
+                  
+     
+
+
+            </div>
           </div>
         </div>
 
-        <!-- form for teacher/student-->
-      </form>
+ 
+
+
+
+      </div>
+
+      
+      <div  class="col-12 text-center ">
+        <div
+        v-if="infoeditproducto.unidades && infoeditproducto.PrecioVenta1 && infoeditproducto.nombre"
+        
+          @click="UpdateProducto(infoeditproducto)"
+          class="btn btn-primary payment"
+        >
+          Editar Producto
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -178,6 +280,22 @@ export default {
   props: ["infoeditproducto"],
   data() {
     return {
+         selectedpv1: "",
+        selectedpv2:"",
+        selectedpv3: "",
+        metrosrollo:"",
+          uniPrecioVenta1:"",
+      uniPrecioVenta2:"",
+      uniPrecioVenta3:"",
+    
+      rollos:"",
+        options: [
+          { text: 'mt', value: 'mt' },
+          { text: 'rll', value: 'rll' },
+          { text: 'u', value: 'u' },
+          { text: 'cj', value: 'cj' },
+          
+        ],
       show: true,
       producto: "",
       infoproducto: [],

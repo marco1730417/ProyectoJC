@@ -203,7 +203,14 @@
                                     value="metro"
                                     >Metros</b-form-radio
                                   >
-                                </b-form-group>
+                 <!--                </b-form-group>
+                                   <b-form-group  >
+  <b-form-radio-group  id="radio-group-1"  
+    name="radio-sub-component1">
+    <b-form-radio v-for="item in options"  v-model="tipocompra" :value="item.value" >{{item.text}}</b-form-radio>
+ {{selectedpv1}} 
+  </b-form-radio-group>-->
+</b-form-group> 
                               </div>
                             </b-col>
                           </b-row>
@@ -441,6 +448,13 @@ export default {
   },
   data() {
     return {
+         options: [
+          { text: 'mt', value: 'mt' },
+          { text: 'rll', value: 'rll' },
+          { text: 'u', value: 'u' },
+          { text: 'cj', value: 'cj' },
+          
+        ],
       fields: [
  {
           key: "index",

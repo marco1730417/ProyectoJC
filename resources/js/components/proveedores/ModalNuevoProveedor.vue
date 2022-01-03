@@ -18,9 +18,8 @@
           id="input-2"
           v-model="ruc"
             :maxlength="maxruc"
-        
-          placeholder="Ingrese Ruc"
            @keypress="onlyNumber"
+          placeholder="Ingrese Ruc"
           
           required
         ></b-form-input>

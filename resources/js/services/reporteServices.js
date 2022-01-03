@@ -30,6 +30,11 @@ export default {
         let url = server + resource + 'reporte-por-cliente';
         return Axios.get(url + "/" + cliId);
     },
+    reporteDeudasporCliente(cliId) {
+        //console.log(Axios.get(url));
+        let url = server + resource + 'reporte-deudas-cliente';
+        return Axios.get(url + "/" + cliId);
+    },
     downloadReporteVenta(fechadesde,fechahasta){
         let url = server + resource + 'download-reporte-venta';
         return Axios.get(url + "/" + fechadesde+ "/" + fechahasta);

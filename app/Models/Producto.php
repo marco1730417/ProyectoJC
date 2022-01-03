@@ -18,7 +18,7 @@ class Producto extends Model
        'descripcion', 'unidades',
         'iva', 'PrecioVenta1', 'PrecioVenta2',
         'PrecioVenta3', 'PrecioInventario', 'Utilidad',
-        'Margen'
+        'Margen','uniPrecioVenta1','uniPrecioVenta2','uniPrecioVenta3'
         
         
     ];

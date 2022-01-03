@@ -60,17 +60,7 @@
 
         <div class="card-body">
             <div class="row ">
-<!-- 
-                <div class="col-sm-12 ">
-
-                    <div class="d-inline p-2 "> Razon Social {{$info_venta[0]['nombre'] }} </div>
-                    <div class="d-inline p-2 " >  Ruc:{{$info_venta[0]['ruc'] }} </div> <br />
-                    <div class="d-inline p-2 "> Direccion:{{$info_venta[0]['direccion'] }}  </div>
-                    <div class="d-inline p-2 "> Fecha:{{$info_venta[0]['fecha'] }}  </div>
-                    <div class="d-inline p-2 "> Telf:{{$info_venta[0]['telefono'] }} </div>
-                </div>
-
- -->   <div class="column">
+  <div class="column">
 
     <p> <b> Nombre: </b> {{$info_venta[0]['nombre'] }} </p>
     <p> <b>Direccion: </b>  {{$info_venta[0]['direccion'] }} </p>
@@ -116,12 +106,14 @@
                         <td class="left">
 
                             @if ($item['opcion'] == 2)
-                            RL
-                            @else
-                            M
+                            {{$item['uniPrecioVenta2']}}
                             @endif
-
-
+                            @if ($item['opcion'] == 1)
+                            {{$item['uniPrecioVenta1']}}
+                            @endif
+                            @if ($item['opcion'] == 3)
+                            {{$item['uniPrecioVenta3']}}
+                            @endif
 
                         </td>
                         <td class="text-right "><!-- {{$item['precioUnitario']}} -->
