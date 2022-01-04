@@ -387,18 +387,18 @@ class VentaApiController extends ApiResponseController
             ->leftJoin('ventas', 'pagos.venId', '=', 'ventas.id')
             ->leftJoin('clientes', 'pagos.cliId', '=', 'clientes.id')
             ->where('venId', $venId)
-         //   ->where('pagos.tipo','=','Abono')
-            
             ->get();
-        $total_abonos = Pago::where('pagos.venId', $venId)->sum('pagos.abono');
-        $saldo = $detalle_venta[0]['total'] - $total_abonos;
+        //    return $detalle_venta;
+        $total_pagos = Pago::where('pagos.venId', $venId)->sum('pagos.pago');
+        $saldo = $detalle_venta[0]['total'] - $total_pagos;
+      
         $totalcobrar = $detalle_venta[0]['total'];
         $fechamaxima = $detalle_venta[0]['fechamaxima'];
 
 
         $info_pago_abono = [
             'detalle_venta' => $detalle_venta,
-            'total_abonos' =>     $total_abonos,
+            'total_abonos' =>     $total_pagos,
             'fechamaxima' => $fechamaxima,
             'saldo' => $saldo,
             'totalcobrar' => $totalcobrar,
@@ -876,7 +876,7 @@ se evite poner esta accion y unificar campos en una unica api */
         $new_pago->pago =  $format_pago;
         $new_pago->abono =  $format_pago;
         $new_pago->saldo =  $saldo_actual;
-        $new_pago->total =  $total;
+        //$new_pago->total =  $total;
         $new_pago->fechamaxima =  $fechamaxima;
         $new_pago->estado =  $estado;
         

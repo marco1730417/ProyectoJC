@@ -129,30 +129,15 @@
 
         <template #cell(descripcion)="data">
           {{ data.item.descripcion }}
+     <!--      {{data.item}} -->
          <!--  <small class="mb-0 mr-2">{{ data.item.descripcion }}</small> -->
         </template>
         <template #cell(unidades)="data">
-          {{ data.item.unidades }}
+          {{ data.item.unidades }} {{data.item.uniPrecioVenta1}}
         <!--   <small class="mb-0 mr-2">{{ data.item.unidades }}</small> -->
         </template>
 
-        <template #cell(PrecioVenta1)="data">
-    <!--       <b-badge variant="outline" class="p-1" size="sm">{{
-            data.item.PrecioVenta1
-          }}</b-badge>  -->
-          {{
-            data.item.PrecioVenta1
-          }}
-                  </template>
-
-        <template #cell(PrecioVenta2)="data">
-        <!--   <b-badge variant="outline" class="p-1" size="sm">{{
-            data.item.PrecioVenta2
-          }}</b-badge> -->
-          {{
-            data.item.PrecioVenta2
-          }}
-        </template>
+ 
 
          <template #cell(Utilidad)="data">
           <b-badge variant="outline" class="p-1" size="sm">{{
@@ -255,6 +240,13 @@ export default {
         {
           key: "PrecioVenta2",
           label: "PV2",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "list-item-enddate text-center",
+        },
+          {
+          key: "PrecioVenta3",
+          label: "PV3",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate text-center",

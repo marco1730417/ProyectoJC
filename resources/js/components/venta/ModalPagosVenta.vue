@@ -3,6 +3,9 @@
     <div class="card-body">
       <div class="container">
 <!-- {{infopagosventa.detalle_venta}} -->
+{{infopagosventa}}
+          <h5>Total de venta : ${{ parseFloat(infopagosventa.totalcobrar).toFixed(2) }}</h5>
+                
 <b-table      show-empty
           responsive="sm"
       striped hover :items="infopagosventa.detalle_venta" :fields="fields">
@@ -20,6 +23,14 @@
             <!--  {{ data.item.fecha }} -->
         <!--       {{ data.item.total}}  -->
                  $ {{ parseFloat(data.item.total).toFixed(2) }}
+           <!--    {{ moment(data.item.fecha).format("MMM DD YYYY, ddd") }} -->
+          
+          </template>
+           <template #cell(pago)="data">
+            <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
+            <!--  {{ data.item.fecha }} -->
+        <!--       {{ data.item.total}}  -->
+                 $ {{ parseFloat(data.item.pago).toFixed(2) }}
            <!--    {{ moment(data.item.fecha).format("MMM DD YYYY, ddd") }} -->
           
           </template>
@@ -75,6 +86,10 @@ export default {
         {
           key: "tipo",
           label: "Forma de Pago",
+        },
+           {
+          key: "pago",
+          label: "Pago",
         },
         {
           key: "total",

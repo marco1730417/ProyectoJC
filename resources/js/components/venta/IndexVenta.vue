@@ -75,7 +75,7 @@
                 </div>
               </div>
             </div>
-<!--             <div class="col-xl-3 col-lg-6">
+            <!--             <div class="col-xl-3 col-lg-6">
               <div class="card card-stats mb-4 mb-xl-0">
                 <div class="card-body">
                   <div class="row">
@@ -114,13 +114,7 @@
 {{venId}} -->
 
     <div class="container-fluid mt--7">
-
-
-
-
       <div class="row">
-   
-           
         <div class="col">
           <div class="card shadow">
             <div class="card-header border-0">
@@ -128,19 +122,21 @@
                 <div class="col-8">
                   <h3 class="mb-0">Venta</h3>
                 </div>
-                       <div class="col-8">
-                   <b-form-input
-                style="height: calc(1.3em + 0.5rem + 2px); font-size: 0.75rem"
-                class="float-right"
-                id="filter-input"
-                v-model="filter"
-                type="search"
-                size="sm"
-                placeholder="Buscar Venta"
-              ></b-form-input>
+                <div class="col-8">
+                  <b-form-input
+                    style="
+                      height: calc(1.3em + 0.5rem + 2px);
+                      font-size: 0.75rem;
+                    "
+                    class="float-right"
+                    id="filter-input"
+                    v-model="filter"
+                    type="search"
+                    size="sm"
+                    placeholder="Buscar Venta"
+                  ></b-form-input>
                 </div>
                 <div class="col-4">
-              
                   <a
                     href="#"
                     @click="gotoNuevaVenta()"
@@ -154,119 +150,118 @@
             <div class="col-12"></div>
 
             <div class="table-responsive">
-             <b-table
-          :items="detalleventa"
-          :fields="fields1"
-          :filter="filter"
-          show-empty
-          responsive="sm"
-          :per-page="perPage"
-          :current-page="currentPage"
-        >
-     <!--      <template #cell(index)="data">
+              <b-table
+                :items="detalleventa"
+                :fields="fields1"
+                :filter="filter"
+                show-empty
+                responsive="sm"
+                :per-page="perPage"
+                :current-page="currentPage"
+              >
+                <!--      <template #cell(index)="data">
             <small> {{ data.index + 1 }} </small>
           </template> -->
-          <template #cell(fecha)="data">
-            <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
-            <!--  {{ data.item.fecha }} -->
-              {{ moment(data.item.fecha ).format("MMM DD YYYY, ddd, h:mm:ss a")}} 
-           <!--    {{ moment(data.item.fecha).format("MMM DD YYYY, ddd") }} -->
-          
-          </template>
-              <template #cell(nombre)="data">
-            <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
-<!--             <small> </small> -->
-             <div class="left" id="center">
-            <small> {{ data.item.nombre }}<br/></small>
-            <small> {{data.item.ruc}}</small>
-              
-        </div>
-          </template>
-              <template #cell(observacion)="data">
-            <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
-            {{ data.item.observacion }}
-          </template>
-    
-    
-          <template #cell(actions)="data">
-               <b-button
-              variant="outline-success default actions"
-              @click="gotoEditVenta(data.item.id)"
-              size="sm"
-              title="venta"
-          
-            >
-              <i class="fas fa-arrow-circle-right"></i>
-            </b-button>
-            <b-button
-              variant="outline-info default actions"
-              data-toggle="modal"
-                        data-target="#ModalVentaObservaciones"
-              size="sm"
-              title="observaciones"
-              @click="captureitem(data.item)"
-          
-            >
-              <i class="fas fa-eye"></i>
-            </b-button>
-     <b-button
-              variant="outline-warning default actions"
-              size="sm"
-                      @click="downloadVenta(data.item.id)"
-              data-placement="top"
-              title="Descargar"
-            >
-              <i class="fas fa-print" title="Descargar"></i>
-            </b-button>
-              <b-button v-if="data.item.pagoabonos>0"
-              variant="outline-warning default actions"
-              size="sm"
-             data-toggle="modal"
-                        data-target="#ModalAbonos"
-                        @click="obtenerabonos(data.item.id)"
-              data-placement="top"
-              title="Abonos"
-            >
-              <i class="fas fa-balance-scale" title="Abonos"></i>
-            </b-button>
-                <b-button 
-              variant="outline-warning default actions"
-              size="sm"
-             data-toggle="modal"
-                        data-target="#ModalPagos"
-                        @click="captureventa(data.item.id)"
-              data-placement="top"
-              title="Pagos"
-            >
-              <i class="fas fa-dollar-sign" title="Pagos"></i>
-            </b-button>
-            
-            <b-button
-              variant="outline-danger default actions"
-              size="sm"
-              data-toggle="tooltip"
-              data-placement="top"
-              title="Anular"
-         @click="deleteVenta(data.item.id)"
-            >
-              <i class="fas fa-window-close"></i>
-            </b-button>
-       
-          </template>
-        </b-table>
-             <!-- PAGINACION -->
-        <div v-if="rows > 2">
-          <b-pagination
-            class="text-center"
-            v-model="currentPage"
-            :total-rows="rows"
-            :per-page="perPage"
-            aria-controls="my-table"
-            size="sm"
-            align="center"
-          ></b-pagination>
-        </div>
-        <!-- FIN PAGINACION -->
+                <template #cell(fecha)="data">
+                  <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
+                  <!--  {{ data.item.fecha }} -->
+                  {{
+                    moment(data.item.fecha).format(
+                      "MMM DD YYYY, ddd, h:mm:ss a"
+                    )
+                  }}
+                  <!--    {{ moment(data.item.fecha).format("MMM DD YYYY, ddd") }} -->
+                </template>
+                <template #cell(nombre)="data">
+                  <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
+                  <!--             <small> </small> -->
+                  <div class="left" id="center">
+                    <small> {{ data.item.nombre }}<br /></small>
+                    <small> {{ data.item.ruc }}</small>
+                  </div>
+                </template>
+                <template #cell(observacion)="data">
+                  <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
+                  {{ data.item.observacion }}
+                </template>
+
+                <template #cell(actions)="data">
+                  <b-button
+                    variant="outline-success default actions"
+                    @click="gotoEditVenta(data.item.id)"
+                    size="sm"
+                    title="venta"
+                  >
+                    <i class="fas fa-arrow-circle-right"></i>
+                  </b-button>
+                  <b-button
+                    variant="outline-info default actions"
+                    data-toggle="modal"
+                    data-target="#ModalVentaObservaciones"
+                    size="sm"
+                    title="observaciones"
+                    @click="captureitem(data.item)"
+                  >
+                    <i class="fas fa-eye"></i>
+                  </b-button>
+                  <b-button
+                    variant="outline-warning default actions"
+                    size="sm"
+                    @click="downloadVenta(data.item.id)"
+                    data-placement="top"
+                    title="Descargar"
+                  >
+                    <i class="fas fa-print" title="Descargar"></i>
+                  </b-button>
+                  <b-button
+                    v-if="data.item.pagoabonos > 0"
+                    variant="outline-info default actions"
+                    size="sm"
+                    data-toggle="modal"
+                    data-target="#ModalAbonos"
+                    @click="obtenerabonos(data.item.id)"
+                    data-placement="top"
+                    title="Abonos"
+                  >
+                    <i class="fas fa-balance-scale" title="Abonos"></i>
+                  </b-button>
+                  <b-button
+                    variant="outline-success default actions"
+                    size="sm"
+                    data-toggle="modal"
+                    data-target="#ModalPagos"
+                    @click="obtenerpagos(data.item.id)"
+                    data-placement="top"
+                    title="Pagos"
+                  >
+                    <i class="fas fa-dollar-sign" title="Pagos"></i>
+                  </b-button>
+
+                  <b-button
+                    variant="outline-danger default actions"
+                    size="sm"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Anular"
+                    @click="deleteVenta(data.item.id)"
+                  >
+                    <i class="fas fa-window-close"></i>
+                  </b-button>
+                </template>
+              </b-table>
+              <!-- PAGINACION -->
+              <div v-if="rows > 2">
+                <b-pagination
+                  class="text-center"
+                  v-model="currentPage"
+                  :total-rows="rows"
+                  :per-page="perPage"
+                  aria-controls="my-table"
+                  size="sm"
+                  align="center"
+                ></b-pagination>
+              </div>
+              <!-- FIN PAGINACION -->
               <!--          Modal agregar editar producto -->
               <div
                 class="modal fade"
@@ -298,7 +293,7 @@
                         max-rows="6"
                       ></b-form-textarea>
                       <br />
-<!-- {{infoventa}} -->
+                      <!-- {{infoventa}} -->
                       <b-button
                         @click="
                           updateObservacion(infoventa.id, infoventa.observacion)
@@ -338,9 +333,20 @@
                     <div class="modal-body">
                       <!--   {{infoabonos}} -->
                       <div>
-                      <!--   <h5>Total a cobrar : $ {{ infoabonos.totalcobrar }}</h5> -->
-                       <h5>Total a cobrar : ${{ parseFloat(infoabonos.totalcobrar).toFixed(2) }}</h5>
-                           <h5>Fecha maxima :  {{ moment(infoabonos.fechamaxima , "YYYY-MM-DD").format("MMM DD YYYY, ddd")}} </h5>
+                        <!--   <h5>Total a cobrar : $ {{ infoabonos.totalcobrar }}</h5> -->
+                        <h5>
+                          Total a cobrar : ${{
+                            parseFloat(infoabonos.totalcobrar).toFixed(2)
+                          }}
+                        </h5>
+                        <h5>
+                          Fecha maxima :
+                          {{
+                            moment(infoabonos.fechamaxima, "YYYY-MM-DD").format(
+                              "MMM DD YYYY, ddd"
+                            )
+                          }}
+                        </h5>
                         <b-progress
                           :value="infoabonos.total_abonos"
                           :max="infoabonos.totalcobrar"
@@ -353,14 +359,14 @@
                           :items="infoabonos.detalle_venta"
                           :fields="fields"
                         >
-                              <template #cell(fecha)="data">
-            <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
-            <!--  {{ data.item.fecha }} -->
-              {{ moment(data.item.fecha , "YYYY-MM-DD, h:mm:ss a").format("MMM DD YYYY, ddd, h:mm:ss a")}} 
-           <!--    {{ moment(data.item.fecha).format("MMM DD YYYY, ddd") }} -->
-          
-          </template>
-                        
+                          <template #cell(fecha)="data">
+                            {{
+                              moment(
+                                data.item.fecha,
+                                "YYYY-MM-DD, h:mm:ss a"
+                              ).format("MMM DD YYYY, ddd, h:mm:ss a")
+                            }}
+                          </template>
                         </b-table>
 
                         <form action="">
@@ -404,7 +410,7 @@
                                   <p>
                                     <span class="fas fa-dollar-sign"></span
                                     >{{ pagorecibido }}
-                                     <!--  {{
+                                    <!--  {{
                                       parseFloat(pagorecibido).toFixed(2)
                                     }} -->
                                   </p>
@@ -447,7 +453,7 @@
                   </div>
                 </div>
               </div>
-                    <!--          Modal agregar editar producto -->
+              <!--          Modal agregar editar producto -->
               <div
                 class="modal fade"
                 id="ModalPagos"
@@ -468,8 +474,52 @@
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
-                    <div class="modal-body">
-                 <modal-pagos-venta :venId="venta" ></modal-pagos-venta>
+           <!--          <div class="modal-body">
+                      <modal-pagos-venta :venId="venta"></modal-pagos-venta>
+                    </div> -->
+
+                             <div class="modal-body">
+                      <!--   {{infoabonos}} -->
+                      <div>
+                        <!--   <h5>Total a cobrar : $ {{ infoabonos.totalcobrar }}</h5> -->
+                        <h5>
+                          Total Venta : ${{
+                            parseFloat(infopagosventa.totalcobrar).toFixed(2)
+                          }}
+                        </h5>
+              
+                        <b-progress
+                          :value="infopagosventa.total_abonos"
+                          :max="infopagosventa.totalcobrar"
+                          show-progress
+                          animated
+                        ></b-progress>
+                        <b-table
+                          striped
+                          hover
+                          :items="infopagosventa.detalle_venta"
+                          :fields="fields2"
+                        >
+                      <template #cell(pago)="data">
+            <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
+            <!--  {{ data.item.fecha }} -->
+        <!--       {{ data.item.total}}  -->
+                 $ {{ parseFloat(data.item.pago).toFixed(2) }}
+           <!--    {{ moment(data.item.fecha).format("MMM DD YYYY, ddd") }} -->
+          
+          </template>
+                          <template #cell(fecha)="data">
+                            {{
+                              moment(
+                                data.item.fecha,
+                                "YYYY-MM-DD, h:mm:ss a"
+                              ).format("MMM DD YYYY, ddd, h:mm:ss a")
+                            }}
+                          </template>
+                        </b-table>
+
+                
+                      </div>
                     </div>
                     <div class="modal-footer"></div>
                   </div>
@@ -504,8 +554,8 @@ const server = Conf.server;
 
 import { BootstrapVue } from "bootstrap-vue";
 import vSelect from "vue-select";
-    import moment from "moment";
-    moment.locale('es');
+import moment from "moment";
+moment.locale("es");
 Vue.use(BootstrapVue);
 
 export default {
@@ -514,11 +564,30 @@ export default {
   },
   data() {
     return {
- perPage: 10,
+      perPage: 10,
       currentPage: 1,
       filter: null,
-    
-  fields1: [
+     fields2: [
+            {
+          key: "fecha",
+          label: "Fecha",
+        },
+        {
+          key: "tipo",
+          label: "Forma de Pago",
+        },
+           {
+          key: "pago",
+          label: "Pago",
+        },
+        {
+          key: "total",
+          label: "Total",
+        },
+        
+        { key: "actions", label: "Acciones",   tdClass: "list-item-enddate", },
+      ],
+      fields1: [
         {
           key: "id",
           label: "#",
@@ -526,7 +595,7 @@ export default {
           sortDirection: "desc",
           tdClass: "index",
         },
-      {
+        {
           key: "fecha",
           label: "Fecha",
           sortable: false,
@@ -540,18 +609,16 @@ export default {
           sortDirection: "desc",
           tdClass: "list-item-enddate",
         },
-           {
+        {
           key: "observacion",
-          label: "Nota",
+          label: "Observacion",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate",
         },
-   
- 
-        { key: "actions", label: "Acciones",   tdClass: "list-item-enddate", },
-      ],
 
+        { key: "actions", label: "Acciones", tdClass: "list-item-enddate" },
+      ],
 
       fields: [
         {
@@ -570,12 +637,13 @@ export default {
       detalleventa: [],
       totalventas: "",
       infoventa: [],
+        infopagosventa: [],
       text: "",
       formadepago: "",
       infoabonos: "",
       pagorecibido: "",
       saldo: "",
-       venta:"",
+      venta: "",
     };
   },
   computed: {
@@ -587,7 +655,7 @@ export default {
 
       return tt;
     },
-       rows() {
+    rows() {
       return this.detalleventa.length;
     },
   },
@@ -596,9 +664,7 @@ export default {
     this.totalDashboardVentas();
   },
   methods: {
-    	    captureventa(id){
-this.venta=id;
-    },
+   
     registrarabono(pago, info) {
       let data = {
         info: info,
@@ -608,15 +674,14 @@ this.venta=id;
       VentaServices.registrarabono(data)
         .then((response) => {
           let mensaje = response.data.data;
-      if (mensaje == 200) {
-                              this.$swal
-        .fire({
-  icon: 'success',
-  title: 'Abono registrado',
-  showConfirmButton: false,
-  timer: 1500
-});
-location.reload();
+          if (mensaje == 200) {
+            this.$swal.fire({
+              icon: "success",
+              title: "Abono registrado",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            location.reload();
           }
         })
         .catch((error) => {
@@ -647,6 +712,15 @@ location.reload();
       VentaServices.getInformacionPagosVentaAbonos(id)
         .then((response) => {
           this.infoabonos = response.data.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+     obtenerpagos(id) {
+    VentaServices.getInformacionPagosVenta(id)
+        .then((response) => {
+          this.infopagosventa = response.data.data;
         })
         .catch((error) => {
           console.log(error);
@@ -697,7 +771,7 @@ location.reload();
           console.log(error);
         });
     },
-    
+
     gotoEditVenta(id) {
       const userId = id;
       /* this.$router.push({ name: 'nuevaventa', params: { venId:userId }})
@@ -708,7 +782,6 @@ location.reload();
       });
       //window.open(routeData.href, "_blank");
       window.open(routeData.href, "_self");
-      
     },
     gotoNuevaVenta() {
       VentaServices.createNuevaVenta()
@@ -719,9 +792,8 @@ location.reload();
             name: "editventa",
             params: { id: mensaje },
           });
-        //  window.open(routeData.href, "_blank");
-         window.open(routeData.href, "_self");
-        
+          //  window.open(routeData.href, "_blank");
+          window.open(routeData.href, "_self");
         })
         .catch((error) => {
           console.log(error);

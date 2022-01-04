@@ -110,8 +110,11 @@ class CompraApiController extends ApiResponseController
 
 
         $data = request()->all();
+
+       // return $data;
+
         $tipo =  $data['tipo'];
-        if ($tipo === 'rollo') {
+        if ($tipo === 'rll' || $tipo==='cj') {
 
             $new_detalle_compras = new DetalleCompras;
             $new_detalle_compras->comId =  $data['comId'];
@@ -120,15 +123,17 @@ class CompraApiController extends ApiResponseController
             $new_detalle_compras->precio =  $data['precio'];
             $new_detalle_compras->tipo =  $data['tipo'];
             $new_detalle_compras->rollos =  $data['rollos'];
-
+        
             $new_detalle_compras->save();
 
             $update_stock =  Producto::findOrFail($data['proId']);
             $update_stock->unidades =  $new_detalle_compras->cantidad + $update_stock->unidades;
+            $update_stock->metrosrollo = $data['cantidad'];
+            
             $update_stock->update();
         }
 
-        if ($tipo === 'metro') {
+        if ($tipo === 'mt'|| $tipo==='u') {
 
             $new_detalle_compras = new DetalleCompras;
             $new_detalle_compras->comId =  $data['comId'];

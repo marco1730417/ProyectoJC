@@ -88,7 +88,7 @@
                               <b-form-input
                                 id="input-small"
                                 size="sm"
-                                 type="number"
+                                type="number"
                                 @keypress="onlyNumber"
                                 v-model="descuento"
                               ></b-form-input>
@@ -103,7 +103,7 @@
                               <b-form-input
                                 id="input-small"
                                 size="sm"
-                                 type="number"
+                                type="number"
                                 @keypress="onlyNumber"
                                 v-model="subtotalcero"
                               ></b-form-input>
@@ -117,8 +117,8 @@
                               <b-form-input
                                 id="input-small"
                                 size="sm"
-                                
-                                 type="number"                                @keypress="onlyNumber"
+                                type="number"
+                                @keypress="onlyNumber"
                                 v-model="subtotaldoce"
                               ></b-form-input>
                             </b-col>
@@ -133,7 +133,7 @@
                                 size="sm"
                                 @keypress="onlyNumber"
                                 v-model="valoriva"
-                                 type="number"
+                                type="number"
                               ></b-form-input>
                             </b-col>
                           </b-row>
@@ -147,7 +147,7 @@
                                 size="sm"
                                 @keypress="onlyNumber"
                                 v-model="totalcompra"
-                                 type="number"
+                                type="number"
                               ></b-form-input>
                             </b-col>
                           </b-row>
@@ -164,19 +164,15 @@
                             </b-col>
                           </b-row>
                         </b-container>
-
-             
-                      
                       </div>
                       <div class="col-md-6">
-             
-                <p>Productos adquiridos</p>
+                        <p>Productos adquiridos</p>
                         <b-container fluid>
                           <b-row class="my-1">
                             <b-col sm="4">
                               <label for="input-small">Producto:</label>
                             </b-col>
-                            <b-col sm="8">
+                            <b-col sm="12">
                               <v-select
                                 label="descripcion"
                                 v-model="producto"
@@ -190,33 +186,36 @@
                             <b-col sm="4">
                               <label for="input-small">Tipo de compra:</label>
                             </b-col>
-                            <b-col sm="8">
-                              <div>
-                                <b-form-group>
-                                  <b-form-radio
-                                    v-model="tipocompra"
-                                    value="rollo"
-                                    >Rollo
-                                  </b-form-radio>
-                                  <b-form-radio
-                                    v-model="tipocompra"
-                                    value="metro"
-                                    >Metros</b-form-radio
-                                  >
-                 <!--                </b-form-group>
-                                   <b-form-group  >
+             
+                     
+<b-col sm="12">
+   <div>
+ <b-form-group label="Escoja la unidad adquirida" >
   <b-form-radio-group  id="radio-group-1"  
     name="radio-sub-component1">
-    <b-form-radio v-for="item in options"  v-model="tipocompra" :value="item.value" >{{item.text}}</b-form-radio>
- {{selectedpv1}} 
-  </b-form-radio-group>-->
-</b-form-group> 
-                              </div>
+    <b-form-radio v-for="item in options"  v-model="tipocompra" :key="item.value" :value="item.value" >{{item.text}}</b-form-radio>
+<!-- {{selectedpv1}} -->
+  </b-form-radio-group>
+</b-form-group>
+         </div>
+                 <b-row v-if="tipocompra === 'mt' || tipocompra === 'u'   " class="my-1">
+                            <b-col sm="4">
+                              <label for="input-small">Cantidad total de {{tipocompra}} </label>
+                            </b-col>
+                            <b-col sm="8">
+                              <b-form-input
+                                id="input-small"
+                                @keypress="onlyNumber"
+                                size="sm"
+                                v-model="cantidad"
+                                type="number"
+                              ></b-form-input>
                             </b-col>
                           </b-row>
-                          <b-row v-if="tipocompra === 'rollo'" class="my-1">
+                       
+                                <b-row v-if="tipocompra === 'rll' " class="my-1">
                             <b-col sm="4">
-                              <label for="input-small">Numero de rollos:</label>
+                              <label for="input-small">Numero de {{tipocompra}} </label>
                             </b-col>
                             <b-col sm="8">
                               <b-form-input
@@ -227,26 +226,58 @@
                                 type="number"
                               ></b-form-input>
                             </b-col>
-                          </b-row>
-
-                          <b-row v-if="tipocompra" class="my-1">
-                            <b-col sm="4">
-                              <label for="input-small"
-                                >Cantidad de metros
-                              </label>
+                             <b-col sm="4">
+                              <label for="input-small">Cantidad total de mt </label>
                             </b-col>
                             <b-col sm="8">
                               <b-form-input
                                 id="input-small"
                                 @keypress="onlyNumber"
                                 size="sm"
-                                type="number"
                                 v-model="cantidad"
+                                type="number"
                               ></b-form-input>
-                              <small v-if="tipocompra === 'rollo'">Favor ingrese la cantidad de metros por rollo</small>
+                                <small 
+                                > <strong>Favor ingrese la cantidad de mt por
+                                {{tipocompra}} </strong> </small
+                              >
                             </b-col>
                           </b-row>
-                          <b-row v-if="tipocompra" class="my-1">
+
+
+
+                          
+                                <b-row v-if="tipocompra === 'cj' " class="my-1">
+                            <b-col sm="4">
+                              <label for="input-small">Numero de {{tipocompra}} </label>
+                            </b-col>
+                            <b-col sm="8">
+                              <b-form-input
+                                id="input-small"
+                                @keypress="onlyNumber"
+                                size="sm"
+                                v-model="rollos"
+                                type="number"
+                              ></b-form-input>
+                            </b-col>
+                             <b-col sm="4">
+                              <label for="input-small">Cantidad total de u </label>
+                            </b-col>
+                            <b-col sm="8">
+                              <b-form-input
+                                id="input-small"
+                                @keypress="onlyNumber"
+                                size="sm"
+                                v-model="cantidad"
+                                type="number"
+                              ></b-form-input>
+                               <small 
+                                > <strong>Favor ingrese la cantidad de u por
+                                {{tipocompra}} </strong> </small
+                              >
+                            </b-col>
+                          </b-row>
+                             <b-row v-if="tipocompra" class="my-1">
                             <b-col sm="4">
                               <label for="input-small">Precio:</label>
                             </b-col>
@@ -259,6 +290,13 @@
                               ></b-form-input>
                             </b-col>
                           </b-row>
+
+ </b-col>
+
+                          </b-row>
+
+
+
                           <b-row class="my-1">
                             <br />
                             <b-col class="text-center" sm="12">
@@ -277,106 +315,69 @@
                               >
                             </b-col>
                           </b-row>
-
-
-
-
-
-
-
-                          
                         </b-container>
                       </div>
                     </div>
 
-
-
-
-
-
-
-
-
-
-
-      <div class="row">
+                    <div class="row">
                       <div class="col-md-12">
                         <p>Detalle General de la compra</p>
                         <b-container fluid>
-                            <b-table
-                          striped
-                          hover
-                          :items="detallecompra"
-                          :fields="fields"
-                        >
-<template #cell(index)="data">
-              <small> {{ data.index + 1 }} </small>
-            </template>
-               <template #cell(proNombre)="data">
-              <small v-if="data.item.proDescripcion"
-                >
-               
-                {{ data.item.proNombre }}
-              </small>
-              <small v-else> No data </small>
-            </template>
-              <template #cell(rollos)="data">
-              <small v-if="data.item.rollos"
-                >
-               
-                {{ data.item.rollos }}
-              </small>
-              <small v-else>0 </small>
-            </template>
-              <template #cell(cantidad)="data">
-              <small v-if="data.item.cantidad"
-                >
-               
-                {{ data.item.cantidad }}
-              </small>
-              <small v-else> No data </small>
-            </template>
-                 <template #cell(unidades)="data">
-              <small v-if="data.item.unidades"
-                >
-               
-                {{ data.item.unidades }}
-              </small>
-              <small v-else> No data </small>
-            </template>
-                <template #cell(precio)="data">
-              <small v-if="data.item.precio"
-                >
-               
-               $ {{ data.item.precio }}
-              </small>
-              <small v-else> No data </small>
-            </template>
-                     <template #cell(actions)="data">
-      
-
-            <b-button
-              variant="outline-danger default actions"
-              size="sm"
-              data-toggle="tooltip"
-              data-placement="top"
-              title="save"
-              @click="deleteDetalleCompra(data.item.id)"
-            >
-              <i class="fas fa-trash"></i>
-            </b-button>
-          </template>
-                        </b-table>
+                          <b-table
+                            striped
+                            hover
+                            :items="detallecompra"
+                            :fields="fields"
+                          >
+                            <template #cell(index)="data">
+                              <small> {{ data.index + 1 }} </small>
+                            </template>
+                            <template #cell(proNombre)="data">
+                              <small v-if="data.item.proDescripcion">
+                                {{ data.item.proNombre }}
+                              </small>
+                              <small v-else> No data </small>
+                            </template>
+                            <template #cell(rollos)="data">
+                              <small v-if="data.item.rollos">
+                                {{ data.item.rollos }}
+                              </small>
+                              <small v-else>0 </small>
+                            </template>
+                            <template #cell(cantidad)="data">
+                              <small v-if="data.item.cantidad">
+                                {{ data.item.cantidad }}
+                              </small>
+                              <small v-else> No data </small>
+                            </template>
+                            <template #cell(unidades)="data">
+                              <small v-if="data.item.unidades">
+                                {{ data.item.unidades }}
+                              </small>
+                              <small v-else> No data </small>
+                            </template>
+                            <template #cell(precio)="data">
+                              <small v-if="data.item.precio">
+                                $ {{ data.item.precio }}
+                              </small>
+                              <small v-else> No data </small>
+                            </template>
+                            <template #cell(actions)="data">
+                              <b-button
+                                variant="outline-danger default actions"
+                                size="sm"
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title="save"
+                                @click="deleteDetalleCompra(data.item.id)"
+                              >
+                                <i class="fas fa-trash"></i>
+                              </b-button>
+                            </template>
+                          </b-table>
                         </b-container>
-
-             
-                      
                       </div>
-                 
                     </div>
-
-
-
                   </div>
                 </div>
               </div>
@@ -428,9 +429,8 @@
 
 
 <script>
-import VentaServices from "../../services/ventaServices";
+
 import CompraServices from "../../services/compraServices";
-import ClienteServices from "../../services/clienteServices";
 import ProveedorServices from "../../services/proveedorServices";
 import Conf from "../../services/conf.js";
 import ProductoServices from "../../services/productoServices";
@@ -448,15 +448,14 @@ export default {
   },
   data() {
     return {
-         options: [
-          { text: 'mt', value: 'mt' },
-          { text: 'rll', value: 'rll' },
-          { text: 'u', value: 'u' },
-          { text: 'cj', value: 'cj' },
-          
-        ],
+      options: [
+        { text: "mt", value: "mt" },
+        { text: "rll", value: "rll" },
+        { text: "u", value: "u" },
+        { text: "cj", value: "cj" },
+      ],
       fields: [
- {
+        {
           key: "index",
           label: "#",
           sortable: false,
@@ -470,7 +469,7 @@ export default {
           sortDirection: "desc",
           tdClass: "list-item-enddate",
         },
-            {
+        {
           key: "rollos",
           label: "Rollos",
           sortable: false,
@@ -484,26 +483,26 @@ export default {
           sortDirection: "desc",
           tdClass: "list-item-enddate",
         },
-     {
+        {
           key: "unidades",
           label: "Stock",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate",
-        }, 
-           {
+        },
+        {
           key: "precio",
           label: "Precio",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate",
         },
-         { key: "actions", label: "Accion", tdClass: "text-center" },
+        { key: "actions", label: "Accion", tdClass: "text-center" },
       ],
-         
+
       tipocompra: "",
       fecha: "",
-      rollos:0,
+      rollos: 0,
       cliente: "",
       totalcompra: 0,
       subtotalcero: 0,
@@ -521,7 +520,7 @@ export default {
       totalesventa: [],
       detallecompra: [],
       detallegeneralcompra: [],
-      cantidad: "",
+      cantidad: 0,
       precio: "",
       filter: null,
       comId: "",
@@ -576,8 +575,7 @@ export default {
       }
     },
     deleteDetalleCompra(id) {
- 
-    this.$swal
+      this.$swal
         .fire({
           title: "Estas seguro de eliminar esta compra?",
           showCancelButton: true,
@@ -590,16 +588,14 @@ export default {
               .then((response) => {
                 let mensaje = response.data.data;
                 if (mensaje == 200) {
-          
-             this.$swal.fire({
-              icon: "success",
-              title: "Compra eliminada y stock actualizado",
-              showConfirmButton: false,
-              timer: 1500,
-            });
+                  this.$swal.fire({
+                    icon: "success",
+                    title: "Compra eliminada y stock actualizado",
+                    showConfirmButton: false,
+                    timer: 1500,
+                  });
 
-  this.getInformacionCompra();
-
+                  this.getInformacionCompra();
                 }
               })
               .catch((error) => {
@@ -607,11 +603,6 @@ export default {
               });
           }
         });
-
-
-
-
-        
     },
     updateCompra() {
       let data = {
@@ -656,8 +647,8 @@ export default {
         proId: this.producto["id"],
         cantidad: this.cantidad,
         precio: this.precio,
-        tipo:this.tipocompra,
-        rollos:this.rollos,
+        tipo: this.tipocompra,
+        rollos: this.rollos,
       };
       CompraServices.addProductosCompra(data)
         .then((response) => {
@@ -669,7 +660,7 @@ export default {
           this.producto = "";
           this.rollos = "";
           this.tipo = "";
-          
+
           if (mensaje == 200) {
             this.$swal.fire({
               icon: "success",
@@ -692,7 +683,7 @@ export default {
           console.log(error);
         });
     },
-/* 
+    /* 
     INformacion de la parte superior */
     getInformacionHeaderCompras() {
       CompraServices.getInformacionHeaderCompras(this.comId)
