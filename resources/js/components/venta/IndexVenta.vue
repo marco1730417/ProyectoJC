@@ -516,6 +516,21 @@
                               ).format("MMM DD YYYY, ddd, h:mm:ss a")
                             }}
                           </template>
+                          <template #cell(actions)="data">
+      
+<!--  {{data.item}} -->
+            <b-button
+              variant="outline-danger default actions"
+              size="sm"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="Eliminar"
+         @click="deletePago(data.item.id)"
+            >
+              <i class="fas fa-trash"></i>
+            </b-button>
+       
+          </template>
                         </b-table>
 
                 
@@ -545,7 +560,7 @@
 <script>
 import VentaServices from "../../services/ventaServices";
 import ClienteServices from "../../services/clienteServices";
-
+import pagoServices from "../../services/pagoServices";
 import Venta from "./Venta.vue";
 import Conf from "../../services/conf.js";
 
@@ -664,7 +679,19 @@ export default {
     this.totalDashboardVentas();
   },
   methods: {
-   
+        deletePago(id) {
+      pagoServices.deletePago(id)
+        .then((response) => {
+          let mensaje = response.data.data;
+          if (mensaje == 200) {
+  location.reload();
+  
+      }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     registrarabono(pago, info) {
       let data = {
         info: info,
