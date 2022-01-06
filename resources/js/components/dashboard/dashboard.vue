@@ -49,9 +49,9 @@ $    {{ parseFloat(totalventas.subtotal ).toFixed(2) }}
                   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">
-                        Clientes activos
+                        Clientes 
                       </h5>
-                      <span class="h2 font-weight-bold mb-0"> {{totalventas.cliente}}</span>
+                      <span class="h2 font-weight-bold mb-0"> {{totalventas.numero_clientes}}</span>
                     </div>
                     <div class="col-auto">
                       <div

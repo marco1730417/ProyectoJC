@@ -11,6 +11,7 @@ use App\Models\Pago;
 use Illuminate\Support\Facades\DB;
 use App\Models\DetalleVenta;
 use App\Models\Producto;
+use App\Models\Proveedores;
 use App\Models\Retencion;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -825,6 +826,9 @@ se evite poner esta accion y unificar campos en una unica api */
         $maxima = $maxima_venta + $valor_iva;
 
         $numero_productos = Producto::count('id');
+        $numero_clientes = Cliente::count('id');
+        $numero_proveedores = Proveedores::count('id');
+        
 
         $productos_stock = Producto::where('unidades', '<', 10)->orderBy('unidades')->get();
 
@@ -905,6 +909,10 @@ $mejores_clientes = Venta::select(
             'cliente' =>     $numero_clientes,
             'max_venta' => $max_venta,
             'numero_productos' => $numero_productos,
+            'numero_clientes' => $numero_clientes,
+            'numero_proveedores' => $numero_proveedores,
+            
+            
             'productos_stock' => $productos_stock,
             'productos_mas_vendidos' => $productos_mas_vendidos,
             'mejores_clientes' => $mejores_clientes,
