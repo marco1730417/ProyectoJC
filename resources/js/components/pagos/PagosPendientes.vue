@@ -64,7 +64,7 @@
                   <!--   {{data.item}} -->
                   <b-button
                     variant="outline-success default actions"
-                    @click="changestatus(data.item.pagId)"
+                    @click="changestatus(data.item.id)"
                     size="sm"
                     title="venta"
                   >
@@ -159,6 +159,13 @@ export default {
           tdClass: "list-item-enddate",
         },
         {
+          key: "saldo",
+          label: "Saldo",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "list-item-enddate",
+        },
+              {
           key: "total",
           label: "Total",
           sortable: false,

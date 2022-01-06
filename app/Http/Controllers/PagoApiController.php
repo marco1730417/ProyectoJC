@@ -24,8 +24,47 @@ class PagoApiController extends ApiResponseController
      *
      * @return \Illuminate\Http\Response
      */
-
     public function PagosPendientes()
+
+    {
+        
+        //1 Sacar ventas con estado 0 asociadas a este cliente
+         $ventas_pendientes= Venta::select('id','estadopago','cliId','ventas.fecha as venfecha',
+         DB::raw("(SELECT (pagos.saldo) FROM pagos
+         WHERE ventas.id=pagos.venId
+         ORDER BY pagos.saldo
+         limit 1
+         ) AS saldos"),
+         DB::raw("(SELECT (pagos.fechamaxima) FROM pagos
+         WHERE ventas.id=pagos.venId
+         ORDER BY pagos.saldo
+         limit 1
+         ) AS fechamaxima"),
+         DB::raw('(SELECT clientes.nombre 
+         FROM clientes  
+         WHERE 
+              clientes.id=ventas.cliId)
+         AS nombre'),
+         DB::raw("(SELECT (pagos.saldo) FROM pagos
+         WHERE ventas.id=pagos.venId
+         ORDER BY pagos.saldo
+         limit 1
+         ) AS saldo"),
+         DB::raw("(SELECT (pagos.total) FROM pagos
+         WHERE ventas.id=pagos.venId
+         ORDER BY pagos.total
+         limit 1
+         ) AS total"),
+         )
+        ->where('estadopago',0)
+        ->get();
+       
+
+
+      
+        return $this->successResponse($ventas_pendientes);
+    }
+    public function PagosPendientesv1()
     {
         $pagos = Pago::select(
             'pagos.tipo',
@@ -59,10 +98,14 @@ class PagoApiController extends ApiResponseController
         return $this->successResponse(200);
     }
 
+// Api para registrar un pago como finalizado
     public function cambioestadoPago($id)
-    {        
-        $pago = Pago::findOrFail($id);
-        $pago->estado = 1;
+    {       
+        
+      //  return $id;
+        
+        $pago = Venta::findOrFail($id);
+        $pago->estadopago = 1;
         $pago->update();
 
         if (!$pago) return $this->errorResponse(500);
