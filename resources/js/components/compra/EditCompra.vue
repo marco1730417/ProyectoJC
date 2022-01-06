@@ -183,9 +183,7 @@
                           </b-row>
 
                           <b-row class="my-1">
-                            <b-col sm="4">
-                              <label for="input-small">Tipo de compra:</label>
-                            </b-col>
+                    
              
                      
 <b-col sm="12">

@@ -223,11 +223,11 @@
                             <tbody>
                                 <tr v-for="item in totalventas['productos_stock'] ">
                                     <th scope="row">
-                                       {{item.descripcion}}
+                                       {{item.descripcion}} 
                                     </th>
                                  
-                                    <td>
-                                       {{item.unidades}}
+                                    <td >
+                                       {{item.unidades}}{{item.uniPrecioVenta1}}
                                     </td>
                                         <td>
                                      

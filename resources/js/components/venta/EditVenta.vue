@@ -122,8 +122,12 @@
                     Este cliente adeuda valores por ventas con los siguientes detalles.    </span>  </br>
                     <b-list-group>
   <b-list-group-item v-for="item in infoventascliente" :key="item.id" class="d-flex justify-content-between align-items-center">
-  Venta: {{item.venId }} - Observaciones {{item.observaciones}}
-    <b-badge variant="primary" pill>{{item.fecha}}</b-badge>
+  V# {{item.venId }} - Fecha    {{
+                    moment(item.fecha).format(
+                      "MMM DD YYYY, ddd, h:mm:ss a"
+                    )
+                  }}  {{item.observaciones}} - Valor adeudado $ {{item.saldos}}
+ 
   </b-list-group-item>
 
 
@@ -251,6 +255,7 @@
                                 class="form-control"
                                 type="number"
                                 v-model="pagorecibido"
+                                @keypress="onlyNumber"
                               />
                             </div>
                             <div>
@@ -1473,7 +1478,13 @@ downloadVentaCheque(fecha,detalle,cliId){
         });
     },
 
-
+      onlyNumber ($event) {
+          //console.log($event.keyCode); //keyCodes value
+          let keyCode = ($event.keyCode ? $event.keyCode : $event.which);
+          if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) { // 46 is dot
+              $event.preventDefault();
+          }
+      },
     actualizarVenta(cliente) {
       let data = {
         cliId: cliente,

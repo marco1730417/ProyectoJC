@@ -208,20 +208,23 @@ $cheque_valor = collect($cheque_valor);
     public function reporteDeudasporCliente($cliId)
 
     {
-        $ventas_cliente= Pago :: select ('pagos.id','pagos.tipo','pagos.total','ventas.fecha','ventas.observacion','pagos.pago',
-        'clientes.nombre','clientes.ruc','ventas.id as venId'
-        )
-       ->leftJoin('clientes', 'pagos.cliId', '=', 'clientes.id')
-       ->leftJoin('ventas', 'pagos.venId', '=', 'ventas.id')
-       
-     ->where('clientes.id',$cliId)
-     ->where('pagos.estado',0)
-     
+        
+        //1 Sacar ventas con estado 0 asociadas a este cliente
+         $ventas_pendientes= Venta::select('id as venId','estadopago','cliId','ventas.fecha',
+         DB::raw("(SELECT (pagos.saldo) FROM pagos
+         WHERE ventas.id=pagos.venId
+         ORDER BY pagos.saldo
+         limit 1
+         ) AS saldos"),
+         )
+        ->where('cliId',$cliId)
+        ->where('estadopago',0)
         ->get();
+       
 
 
       
-        return $this->successResponse($ventas_cliente);
+        return $this->successResponse($ventas_pendientes);
     }
     public function downloadReporteCliente($cliId)
 

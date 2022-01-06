@@ -111,10 +111,16 @@ class VentaApiController extends ApiResponseController
         $format_pago = number_format($pago, 2);
         $estado=0;
 
-        if( $format_pago>=$format_total )
+        if( $format_pago>=$format_total ) { 
         $estado=1;  //1 el pago ha sido completo
-        if( $format_pago<$format_total )
+        $update_venta= Venta::findOrFail($data['venId']);
+        $update_venta->estadopago=1;
+        $update_venta->update();}
+        if( $format_pago<$format_total ) { 
         $estado=0;  // el pago esta incompleto
+        $update_venta= Venta::findOrFail($data['venId']);
+        $update_venta->estadopago=0;
+        $update_venta->update();}
 
         $new_pago = new Pago;
         $new_pago->venId = $data['venId'];
@@ -124,6 +130,8 @@ class VentaApiController extends ApiResponseController
         $new_pago->vuelto =  $format_vuelto;
         $new_pago->pago =  $format_pago;
         $new_pago->total =  $format_total;
+        $new_pago->saldo =  $format_total- $format_pago;
+        
         $new_pago->estado = $estado;
 
         $new_pago->save();
@@ -145,9 +153,19 @@ class VentaApiController extends ApiResponseController
         $estado=0;
 
         if( $format_pago>=$format_total )
-        $estado=1;
+
+        { 
+            $estado=1;  //1 el pago ha sido completo
+            $update_venta= Venta::findOrFail($data['venId']);
+            $update_venta->estadopago=1;
+            $update_venta->update();}
+
         if( $format_pago<$format_total )
-        $estado=0;
+        { 
+            $estado=0;  //1 el pago ha sido completo
+            $update_venta= Venta::findOrFail($data['venId']);
+            $update_venta->estadopago=0;
+            $update_venta->update();}
 
         $new_pago = new Pago;
         $new_pago->venId = $data['venId'];
@@ -158,6 +176,7 @@ class VentaApiController extends ApiResponseController
        
         $new_pago->pago =  $format_pago;
         $new_pago->total =  $format_total;
+        $new_pago->saldo =  $format_total- $format_pago;
         
         $new_pago->numtransf =  $data['numtransf'];
         $new_pago->estado = $estado;
@@ -184,11 +203,20 @@ class VentaApiController extends ApiResponseController
         $format_abono = number_format($abono, 2);
         $estado=0;
 
-        if( $format_abono>=$format_total )
-        $estado=1;
-        if( $format_abono<$format_total )
-        $estado=0;
 
+        if( $format_abono>=$format_total ) 
+        { 
+            $estado=1;  //1 el pago ha sido completo
+            $update_venta= Venta::findOrFail($data['venId']);
+            $update_venta->estadopago=1;
+            $update_venta->update();}
+
+        if( $format_abono<$format_total )
+        { 
+            $estado=0;  //1 el pago ha sido completo
+            $update_venta= Venta::findOrFail($data['venId']);
+            $update_venta->estadopago=0;
+            $update_venta->update();}
 
         $new_pago = new Pago;
         $new_pago->venId = $data['venId'];
@@ -202,6 +230,75 @@ class VentaApiController extends ApiResponseController
         $new_pago->total =  $format_total;
         $new_pago->fechamaxima =  $data['fechamaxima'];
         $new_pago->estado = $estado;
+        $new_pago->save();
+
+        if (!$new_pago) return $this->errorResponse(500);
+
+        return $this->successResponse(200);
+    }
+    public function registrarabono(Request $request)
+    {
+
+
+        $carbon = new \Carbon\Carbon();
+        $fecha = $carbon->now();
+
+
+        $data = request()->all();
+        ///primero sacamos la venta
+        $info = $data['info'];
+        $venId = $info[0]['venId'];
+        // obtenemos el ultimo saldo pendiente
+        $saldo_anterior= Pago::where('venId',$venId)->get()->last();
+        $saldo_anterior=$saldo_anterior->saldo;
+      //  return $saldo_anterior->saldo;
+
+        $total = $info[0]['total'];
+        $fechamaxima = $info[0]['fechamaxima'];
+       // $saldo_anterior = $info[0]['saldo'];
+      
+        $cliId = $info[0]['cliId'];
+        $pago = $data['pago'];
+        $saldo_actual = $data['saldo'];
+        $total=$info[0]['total'];
+        
+        $format_total = number_format($total, 2);
+        $format_pago = number_format($pago, 2);
+        $saldo_anterior = number_format($saldo_anterior, 2);
+        $saldo_actual = number_format($saldo_actual, 2);
+      
+        $estado=0;
+
+        if( $format_pago>=$saldo_anterior )
+        { 
+            $estado=1;  //1 el pago ha sido completo
+            $update_venta= Venta::findOrFail($venId);
+            $update_venta->estadopago=1;
+            $update_venta->update();}
+
+        if( $format_pago<$saldo_anterior )
+       { 
+            $estado=0;  //1 el pago ha sido completo
+            $update_venta= Venta::findOrFail($venId);
+            $update_venta->estadopago=0;
+            $update_venta->update();}
+
+
+
+        $new_pago = new Pago;
+        $new_pago->fecha = $fecha;
+        $new_pago->cliId =  $cliId;
+        $new_pago->tipo = "Abono";
+        $new_pago->venId =  $venId;
+
+        $new_pago->pago =  $format_pago;
+        $new_pago->abono =  $format_pago;
+        $new_pago->saldo =  $saldo_actual;
+        //$new_pago->total =  $total;
+        $new_pago->fechamaxima =  $fechamaxima;
+        $new_pago->estado =  $estado;
+        
+
         $new_pago->save();
 
         if (!$new_pago) return $this->errorResponse(500);
@@ -638,9 +735,12 @@ class VentaApiController extends ApiResponseController
             'clientes.direccion',
             'clientes.telefono',
 
-            DB::raw("(SELECT sum(detalle_ventas.cantidad*detalle_ventas.precioUnitario) FROM detalle_ventas
-        WHERE ventas.id=detalle_ventas.venId
-        ) AS total"),
+            DB::raw("(SELECT (pagos.total) FROM pagos
+            WHERE ventas.id=pagos.venId
+            limit 1
+            ) AS total"),
+
+
         DB::raw("(SELECT count(pagos.id) FROM pagos
         WHERE ventas.id=pagos.venId
         and pagos.tipo='Abono'
@@ -732,19 +832,31 @@ se evite poner esta accion y unificar campos en una unica api */
             'proId',
             'productos.nombre',
             DB::raw("(SELECT count(detalle_ventas.proId) FROM detalle_ventas
+            where detalle_ventas.proId = productos.id
         ) AS total"),
         )
             ->leftJoin('productos', 'productos.id', '=', 'detalle_ventas.proId')
-            ->groupBy('proId')->orderBy('total')->take(5)->get();
+            ->groupBy('proId')->orderBy('total','desc')->take(5)->get();
 
-        $mejores_clientes = Venta::select(
+        /* $mejores_clientes = Venta::select(
             'cliId',
             'clientes.nombre',
-            DB::raw("(SELECT count(ventas.cliId) FROM ventas
+            DB::raw("(SELECT count(ventas.cliId) FROM ventas where ventas.cliId= clientes.id
         ) AS total"),
-        )
+)
             ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
             ->groupBy('cliId')->orderBy('total')->take(1)->get();
+ */
+$mejores_clientes = Venta::select(
+    'cliId',
+    'clientes.nombre',
+    DB::raw("(SELECT count(ventas.cliId) FROM ventas
+    where ventas.cliId = clientes.id
+) AS total"),
+)
+    ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
+    ->groupBy('cliId')->orderBy('total','desc')->take(5)->get();
+
 
             $frutas= Pago::select(
                 DB::raw('sum(total) as sum'),
@@ -827,64 +939,5 @@ se evite poner esta accion y unificar campos en una unica api */
     }
 
 
-    public function registrarabono(Request $request)
-    {
-
-
-        $carbon = new \Carbon\Carbon();
-        $fecha = $carbon->now();
-
-
-        $data = request()->all();
-        ///primero sacamos la venta
-        $info = $data['info'];
-        $venId = $info[0]['venId'];
-        // obtenemos el ultimo saldo pendiente
-        $saldo_anterior= Pago::where('venId',$venId)->get()->last();
-        $saldo_anterior=$saldo_anterior->saldo;
-      //  return $saldo_anterior->saldo;
-
-        $total = $info[0]['total'];
-        $fechamaxima = $info[0]['fechamaxima'];
-       // $saldo_anterior = $info[0]['saldo'];
-      
-        $cliId = $info[0]['cliId'];
-        $pago = $data['pago'];
-        $saldo_actual = $data['saldo'];
-        $total=$info[0]['total'];
-        
-        $format_total = number_format($total, 2);
-        $format_pago = number_format($pago, 2);
-        $saldo_anterior = number_format($saldo_anterior, 2);
-        $saldo_actual = number_format($saldo_actual, 2);
-      
-        $estado=0;
-
-        if( $format_pago>=$saldo_anterior )
-        $estado=1;  //1 el pago ha sido completo
-        if( $format_pago<$saldo_anterior )
-        $estado=0;  // el pago esta incompleto
-
-
-
-        $new_pago = new Pago;
-        $new_pago->fecha = $fecha;
-        $new_pago->cliId =  $cliId;
-        $new_pago->tipo = "Abono";
-        $new_pago->venId =  $venId;
-
-        $new_pago->pago =  $format_pago;
-        $new_pago->abono =  $format_pago;
-        $new_pago->saldo =  $saldo_actual;
-        //$new_pago->total =  $total;
-        $new_pago->fechamaxima =  $fechamaxima;
-        $new_pago->estado =  $estado;
-        
-
-        $new_pago->save();
-
-        if (!$new_pago) return $this->errorResponse(500);
-
-        return $this->successResponse(200);
-    }
+   
 }

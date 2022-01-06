@@ -184,6 +184,10 @@
                   <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
                   {{ data.item.observacion }}
                 </template>
+                     <template #cell(total)="data">
+                  <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
+                  {{ data.item.total }}
+                </template>
 
                 <template #cell(actions)="data">
                   <b-button
@@ -627,6 +631,13 @@ export default {
         {
           key: "observacion",
           label: "Observacion",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "list-item-enddate",
+        },
+          {
+          key: "total",
+          label: "Total",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate",
