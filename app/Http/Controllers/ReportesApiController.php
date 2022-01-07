@@ -35,7 +35,33 @@ class ReportesApiController extends ApiResponseController
         ->toDateTimeString();
 
         $info_venta= Venta :: select ('ventas.id' ,'ventas.fecha','ventas.observacion',
-        'clientes.nombre','clientes.ruc','clientes.direccion','clientes.telefono'
+        'clientes.nombre','clientes.ruc','clientes.direccion','clientes.telefono',
+        DB::raw("(SELECT (pagos.saldo) FROM pagos
+        WHERE ventas.id=pagos.venId
+ORDER BY pagos.saldo
+limit 1
+) AS saldos"),
+DB::raw("(SELECT (pagos.abono) FROM pagos
+WHERE ventas.id=pagos.venId
+ORDER BY pagos.saldo
+limit 1
+) AS abono"),
+        DB::raw("(SELECT (pagos.tipo) FROM pagos
+WHERE ventas.id=pagos.venId
+
+ORDER BY pagos.saldo
+limit 1
+) AS tipo"),
+DB::raw("(SELECT (pagos.total) FROM pagos
+WHERE ventas.id=pagos.venId
+ORDER BY pagos.saldo
+limit 1
+) AS total"),
+DB::raw("(SELECT (pagos.fechamaxima) FROM pagos
+WHERE ventas.id=pagos.venId
+ORDER BY pagos.saldo
+limit 1
+) AS fechamaxima"),
         )
       ->whereBetween(DB::raw('DATE(ventas.fecha)'), [$start_date, $end_date])
        ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
@@ -52,6 +78,7 @@ class ReportesApiController extends ApiResponseController
       
 ->get();
 $contado_valor= $contado->sum('parcial');
+
 $transferencia= Pago::select(
                                   
     db::raw('(pagos.pago) as parcial')

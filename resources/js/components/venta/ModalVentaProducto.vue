@@ -1,6 +1,11 @@
 <template>
   <div class="container">
     <div class="row">
+      <div class="float-end">
+      <button title="Actualizar Productos" @click="getAllProductos" class="btn  btn-sm"><i  class="fas fa-sync"></i></button>
+
+<button  title="Limpiar" @click="clear" class="btn  btn-sm"><i  class="fas fa-broom"></i></button>
+</div>
       <label for="password2" class="col-sm-12 col-form-label text-center"
         >Producto</label
       >
@@ -12,8 +17,7 @@
 <a href="#" @click="clear" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Actualizar</a> -->
 <!-- <button class="btn"><i class="fa fa-home"></i></button> -->
 <!-- <i class="fa fa-home" style="font-size:24px"></i> -->
-<button @click="clear" class="btn"><i class="fas fa-sync"></i></button>
-<button @click="clear" class="btn"><i class="fas fa-sync"></i></button>
+
         <v-select
           label="descripcion"
           v-model="producto"
@@ -204,7 +208,7 @@
             </p>
             <div class="collapse show p-3 pt-0" id="collapseExample">
 
-              <div  class="col-sm-4">
+              <div  class="col-sm-6">
                     <label
                       for="lname"
                       class="col-sm-6 col-form-label text-center"
@@ -220,10 +224,10 @@
                   </div>
                   
               <div  class="col-sm-4">
-                    <label
+                    <label v-if="descuento"
                       for="lname"
-                      class="col-sm-6 col-form-label text-center"
-                      >El descuento total es {{descuento*cantidad}}  </label
+                      class="col-sm-12 col-form-label text-center"
+                      >Total descuento:$ {{descuento*cantidad}}  </label
                     >
                 
                   </div>
@@ -328,7 +332,10 @@ export default {
       this.metrosrollo = "";
       this.cantidad = "";
       this.precioUnitario = "";
-      this.getAllProductos();
+  
+    },
+    recargarproductos(){
+    this.getAllProductos();
     },
     onlyNumber($event) {
       //console.log($event.keyCode); //keyCodes value
