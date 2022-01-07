@@ -78,7 +78,7 @@
                   <!--  {{ data.item.fecha }} -->
                   {{
                     moment(data.item.fechamaxima).format(
-                      "MMM DD YYYY, ddd, h:mm:ss a"
+                      "MMM DD YYYY"
                     )
                   }}
                   <!--    {{ moment(data.item.fecha).format("MMM DD YYYY, ddd") }} -->
