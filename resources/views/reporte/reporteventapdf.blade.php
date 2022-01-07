@@ -60,14 +60,20 @@
 </style>
 @section('content')
 <div class="offset-xl-2 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 padding">
-    <div class="card">
+<div class="card">
+  <div class="card-body">
+  <h5 class="card-title">Reporte de Ventas</h5>
+    <small class="card-text">Fecha Inicio: @php echo($start_date);@endphp </small>
+    <small class="card-text">Fecha Final: @php echo($end_date);@endphp </small>
+
+  </div>
+</div>
+
+<div class="card">
 
         <div class="card-body">
             <div class="row ">
-
-            <h5>Reporte de ventas Fecha Inicio @php echo($start_date);@endphp - Fecha Final @php echo($end_date);@endphp </h5> </br>
-
-      
+   
          
             </div>
 
@@ -80,7 +86,11 @@
                      
                     <th>Cliente</th>
                         <th>Fecha</th>
-                    
+                        <th>Tipo</th>
+                        <th>Abono</th>
+                        <th>Saldo</th>
+                        <th>Fecha máxima</th>
+                        <th>Total</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -89,7 +99,23 @@
                     <td>{{$item['id']}}</td>
                     <td>{{$item['nombre']}}</td>
                         <td class="center">{{$item['fecha']}}</td>
-                    </tr>
+                        <td class="center">{{$item['tipo']}}</td>
+                  
+                        <td>
+                    $@php echo(number_format($item['abono'],2));@endphp
+                     </td>
+                     <td>
+                    $@php echo(number_format($item['saldos'],2));@endphp
+                     </td>
+
+                     <td class="center">{{$item['fechamaxima']}}</td>
+                     <td>
+                    $@php echo(number_format($item['total'],2));@endphp
+                     </td>
+                     </tr>
+               
+
+
                     @endforeach
                 </tbody>
             </table>
@@ -107,21 +133,32 @@
                                     <strong>TOTAL CONTADO</strong>
                                 </td>
                               
-                                <td class="right">$@php echo($contado_valor);@endphp</td>
+                                <td class="right">
+
+                                
+                                $@php echo(number_format($contado_valor,2));@endphp
+                                </td>
                             </tr>
                             <tr>
                                 <td class="left">
                                     <strong>TOTAL TRANSFERENCIAS</strong>
                                 </td>
                               
-                                <td class="right">$@php echo($transferencia_valor);@endphp</td>
+                                <td class="right">
+
+                                $@php echo(number_format($transferencia_valor,2));@endphp
+                            
+                                </td>
                             </tr>
                             <tr>
                                 <td class="left">
                                     <strong>TOTAL CHEQUES</strong>
                                 </td>
                               
-                                <td class="right">$@php echo($cheque_valor);@endphp</td>
+                                <td class="right">
+                                $@php echo(number_format($cheque_valor,2));@endphp
+
+                                </td>
                             </tr>
                     
                             <tr>
@@ -129,7 +166,11 @@
                                     <strong>TOTAL ABONOS</strong>
                                 </td>
                               
-                                <td class="right">$@php echo($abono_valor);@endphp</td>
+                                <td class="right">
+                                $@php echo(number_format($abono_valor,2));@endphp
+
+                             
+                                </td>
                             </tr>
                     
                         </tbody>

@@ -139,7 +139,34 @@ $totales_venta = [
       ->toDateTimeString();
 
       $info_venta= Venta :: select ('ventas.id' ,'ventas.fecha','ventas.observacion',
-      'clientes.nombre','clientes.ruc','clientes.direccion','clientes.telefono'
+      'clientes.nombre','clientes.ruc','clientes.direccion','clientes.telefono',
+      DB::raw("(SELECT (pagos.saldo) FROM pagos
+        WHERE ventas.id=pagos.venId
+ORDER BY pagos.saldo
+limit 1
+) AS saldos"),
+DB::raw("(SELECT (pagos.abono) FROM pagos
+WHERE ventas.id=pagos.venId
+ORDER BY pagos.saldo
+limit 1
+) AS abono"),
+        DB::raw("(SELECT (pagos.tipo) FROM pagos
+WHERE ventas.id=pagos.venId
+
+ORDER BY pagos.saldo
+limit 1
+) AS tipo"),
+DB::raw("(SELECT (pagos.total) FROM pagos
+WHERE ventas.id=pagos.venId
+ORDER BY pagos.saldo
+limit 1
+) AS total"),
+DB::raw("(SELECT (pagos.fechamaxima) FROM pagos
+WHERE ventas.id=pagos.venId
+ORDER BY pagos.saldo
+limit 1
+) AS fechamaxima"),
+       
       )
     ->whereBetween(DB::raw('DATE(ventas.fecha)'), [$start_date, $end_date])
      ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
@@ -156,6 +183,7 @@ $totales_venta = [
     
 ->get();
 $contado_valor= $contado->sum('parcial');
+
 $transferencia= Pago::select(
                                 
   db::raw('(pagos.pago) as parcial')
@@ -186,16 +214,12 @@ $cheque= Pago::select(
 ->get();
 
 
-
-
-
-
 $cheque_valor= $cheque->sum('parcial');
 $info_venta = collect($info_venta);
-$contado_valor = collect($contado_valor);
-$transferencia_valor = collect($transferencia_valor);
-$abono_valor = collect($abono_valor);
-$cheque_valor = collect($cheque_valor);
+$contado_valor = ($contado_valor);
+$transferencia_valor = ($transferencia_valor);
+$abono_valor = ($abono_valor);
+$cheque_valor = ($cheque_valor);
 
         //  $pdf = PDF::loadView('venta.ventapdf', $data);
         $pdf = PDF::loadView('reporte.reporteventapdf',  
