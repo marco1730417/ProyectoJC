@@ -590,7 +590,7 @@
               <div class="modal-dialog modal-md" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title">Terminar venta como cheque o credito</h5>
+                    <h5 class="modal-title">Terminar venta como cheque</h5>
                     <button
                       type="button"
                       class="close"
@@ -644,7 +644,7 @@
 
                               <!-- {{detallegeneralventa}} -->
                               <div
-                                v-if="fechamaximacheque && detallecheque"
+                                v-if="fechamaximacheque "
                                 @click="
                                   downloadVentaCheque(
                                     fechamaximacheque,
@@ -657,7 +657,7 @@
                                 <span class="fas fa-dollar-sign px-1"></span
                                 >Terminar Venta
                               </div>
-                              <div v-else class="btn btn-primary mt-2">
+                              <div v-else class="btn btn-secondary mt-2">
                                 <span class="fas fa-dollar-sign px-1"></span
                                 >Terminar Venta
                               </div>
@@ -671,6 +671,103 @@
                 </div>
               </div>
             </div>
+              <!-- fin venta como cheque -->
+<!-- modal venta al cheque -->
+            <div
+              class="modal fade"
+              id="ModalVentaCredito"
+              tabindex="-1"
+              role="dialog"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-md" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Terminar venta como credito</h5>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="container">
+                      <form action="">
+                        <div class="mb-3">
+                          <p class="dis fw-bold mb-2">Fecha maxima</p>
+                          <input
+                            class="form-control"
+                            type="date"
+                            v-model="fechamaximacredito"
+                          />
+                        </div>
+
+                        <div class="mb-3">
+                          <p class="dis fw-bold mb-2">Detalle adicional</p>
+                          <input
+                            class="form-control"
+                            type="text"
+                            v-model="detallecredito"
+                          />
+                        </div>
+                        <div class="mb-3"></div>
+                        <div>
+                          <div class="address">
+                            <div class="d-flex flex-column dis">
+                              <div
+                                class="
+                                  d-flex
+                                  align-items-center
+                                  justify-content-between
+                                  mb-2
+                                "
+                              >
+                                <p>Cantidad de pago</p>
+                                <p>
+                                  <span class="fas fa-dollar-sign"></span>
+                                  {{
+                                    parseFloat(totalesventa.total).toFixed(2)
+                                  }}
+                                </p>
+                              </div>
+                        
+
+                              <!-- {{detallegeneralventa}} -->
+                              <div
+                                v-if="fechamaximacredito "
+                                @click="
+                                  downloadVentaCredito(
+                                    fechamaximacredito,
+                                    detallecredito,
+                                    totaldetallegeneral.cliId
+                                  )
+                                "
+                                class="btn btn-primary mt-2"
+                              >
+                                <span class="fas fa-dollar-sign px-1"></span
+                                >Terminar Venta
+                              </div>
+                              <div v-else class="btn btn-secondary mt-2">
+                                <span class="fas fa-dollar-sign px-1"></span
+                                >Terminar Venta
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <div class="modal-footer"></div>
+                </div>
+              </div>
+            </div>
+              <!-- fin venta como cheque -->
+
+              
+
               <!-- modal retencion -->
             <div
               class="modal fade"
@@ -991,7 +1088,7 @@
                     >
                           <b-dropdown-item
                       data-toggle="modal"
-                      data-target="#ModalVentaCheque"
+                      data-target="#ModalVentaCredito"
                       ><i class="fas fa-bell"></i>Credito</b-dropdown-item
                     >
                     <b-dropdown-item
@@ -1145,6 +1242,8 @@ export default {
       fechamaxima: "",
       fechamaximacheque:"",
       detallecheque:"",
+           fechamaximacredito:"",
+      detallecredito:"",
       saldo: "",
       totaldetallegeneral:[],
       infoventascliente:[]
@@ -1344,6 +1443,50 @@ downloadVentaCheque(fecha,detalle,cliId){
         cliId: cliId,
       };
     VentaServices.registrarPagoCheque(data)
+        .then((response) => {
+          let mensaje = response.data.data;
+          if (mensaje == 200) {
+   this.$swal
+        .fire({
+          title: "Su venta ha sido guardada, Desea imprimir la factura?",
+          showCancelButton: true,
+          confirmButtonText: "Si",
+        })
+        .then((result) => {
+
+
+   if (result.isConfirmed) {
+
+           let routeData = server + resource + `download-venta/` + this.substr;
+      window.open(routeData);
+
+       
+    window.location.href='/venta/';
+          }
+          else
+          
+    window.location.href='/venta/';
+        });
+
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+
+},
+
+
+downloadVentaCredito(fecha,detalle,cliId){
+  let data = {
+        venId: this.substr,
+        total: this.totalesventa.total,
+        fechamaxima: fecha,
+        cheque: detalle,
+        cliId: cliId,
+      };
+    VentaServices.registrarPagoCredito(data)
         .then((response) => {
           let mensaje = response.data.data;
           if (mensaje == 200) {

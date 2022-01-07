@@ -2,32 +2,38 @@
   <div class="container">
     <div class="row">
       <div class="float-end">
-      <button title="Actualizar Productos" @click="getAllProductos" class="btn  btn-sm"><i  class="fas fa-sync"></i></button>
+        <button
+          title="Actualizar Productos"
+          @click="getAllProductos"
+          class="btn btn-sm"
+        >
+          <i class="fas fa-sync"></i>
+        </button>
 
-<button  title="Limpiar" @click="clear" class="btn  btn-sm"><i  class="fas fa-broom"></i></button>
-</div>
+        <button
+          v-if="producto"
+          title="Limpiar"
+          @click="clear"
+          class="btn btn-sm"
+        >
+          <i class="fas fa-broom"></i>
+        </button>
+      </div>
       <label for="password2" class="col-sm-12 col-form-label text-center"
         >Producto</label
       >
       <div class="col-sm-12">
-    <!--     <i @click="clear" class="fas fa-eraser"></i> -->
-<!-- <button type="button" @click="clear" class="btn btn-outline-primary">Limpiar</button> -->
-<!-- <button type="button" class="btn btn-primary btn-sm">Small button</button> </br> -->
-<!-- <a href="#" @click="clear" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Limpiar</a>
-<a href="#" @click="clear" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Actualizar</a> -->
-<!-- <button class="btn"><i class="fa fa-home"></i></button> -->
-<!-- <i class="fa fa-home" style="font-size:24px"></i> -->
-
         <v-select
           label="descripcion"
           v-model="producto"
           :options="infoproducto"
           required
         ></v-select>
-        <small v-if="producto"> 
-            <strong class="text-info"> Codigo:  </strong>  {{ producto.nombre }}
-        <strong class="text-info"> Stock:  </strong>  {{ producto.unidades }} mtrs
-<!--        {{producto}} -->
+        <small v-if="producto">
+          <strong class="text-warning"> Codigo: </strong> {{ producto.nombre }}
+          <strong class="text-warning"> Stock: </strong>
+          {{ producto.unidades }} {{ producto.uniPrecioVenta1 }}
+          <!--        {{producto}} -->
         </small>
       </div>
 
@@ -71,7 +77,7 @@
                       id="cantidad"
                     />
                   </div>
-              
+
                   <div v-if="status === 'accepted'" class="col-sm-8">
                     <label
                       for="lname"
@@ -102,7 +108,7 @@
                             <b-row v-if="producto.PrecioVenta1" class="my-1">
                               <b-col sm="9  ">
                                 <label for="input-none"
-                                  >Precio x {{producto.uniPrecioVenta1}} ( $
+                                  >Precio x {{ producto.uniPrecioVenta1 }} ( $
                                   {{ producto.PrecioVenta1 }})
                                 </label>
                               </b-col>
@@ -118,7 +124,7 @@
                             <b-row v-if="producto.PrecioVenta2" class="my-1">
                               <b-col sm="9">
                                 <label for="input-none"
-                                  >Precio x {{producto.uniPrecioVenta2}} ( $
+                                  >Precio x {{ producto.uniPrecioVenta2 }} ( $
                                   {{ producto.PrecioVenta2 }})
                                 </label>
                               </b-col>
@@ -129,14 +135,13 @@
                                   v-model="precioUnitario"
                                   :value="2"
                                 />
-                          
                               </b-col>
                             </b-row>
                             <b-row v-if="producto.PrecioVenta3" class="my-1">
                               <b-col sm="9">
                                 <label for="input-none"
-                                  >Precio esp x {{producto.uniPrecioVenta3}} ( $
-                                  {{ producto.PrecioVenta3 }})
+                                  >Precio esp x {{ producto.uniPrecioVenta3 }} (
+                                  $ {{ producto.PrecioVenta3 }})
                                 </label>
                               </b-col>
                               <b-col sm="3">
@@ -154,24 +159,25 @@
                             <label
                               v-if="total_metro_rollo == false"
                               for="lname"
-                              class="col-sm-12 col-form-label text-danger "
+                              class="col-sm-12 col-form-label text-danger"
                               >No existe suficiente stock (Existen maximo
                               {{ producto.unidades }} mtrs )</label
                             >
                             <label
                               v-if="validacion_metro == false"
                               for="lname"
-                              class="col-sm-12 col-form-label text-danger "
+                              class="col-sm-12 col-form-label text-danger"
                               >No existe suficiente stock (Existen maximo
                               {{ producto.unidades }} mtrs )</label
                             >
-                               <label
+                            <label
                               v-if="precioUnitario == 2"
                               for="lname"
-                              class="col-sm-12 col-form-label text-info "
-                              >Cantidad de {{producto.uniPrecioVenta1}}  por {{producto.uniPrecioVenta2}} es de {{producto.metrosrollo}}  
-                           </label
-                            >
+                              class="col-sm-12 col-form-label text-info"
+                              >Cantidad de {{ producto.uniPrecioVenta1 }} por
+                              {{ producto.uniPrecioVenta2 }} es de
+                              {{ producto.metrosrollo }}
+                            </label>
                           </div>
                         </div>
                       </div>
@@ -183,7 +189,7 @@
           </div>
         </div>
       </div>
-         <div v-if="producto" class="col-12">
+      <div v-if="producto" class="col-12">
         <div class="card p-3">
           <div class="card-body border p-0">
             <p>
@@ -203,50 +209,40 @@
                 aria-expanded="true"
                 aria-controls="collapseExample"
               >
-                <span class="fw-bold">Descuento Extra    </span>
+                <span class="fw-bold">Descuento Extra </span>
               </a>
             </p>
             <div class="collapse show p-3 pt-0" id="collapseExample">
+              <div class="col-sm-6">
+                <label for="lname" class="col-sm-6 col-form-label text-center"
+                  >Descuento</label
+                >
+                <input
+                  v-model="descuento"
+                  @keypress="onlyNumber"
+                  type="number"
+                  class="form-control"
+                  id="metrosrollo"
+                />
+              </div>
 
-              <div  class="col-sm-6">
-                    <label
-                      for="lname"
-                      class="col-sm-6 col-form-label text-center"
-                      >Descuento</label
-                    >
-                    <input
-                      v-model="descuento"
-                      @keypress="onlyNumber"
-                      type="number"
-                      class="form-control"
-                      id="metrosrollo"
-                    />
-                  </div>
-                  
-              <div  class="col-sm-4">
-                    <label v-if="descuento"
-                      for="lname"
-                      class="col-sm-12 col-form-label text-center"
-                      >Total descuento:$ {{descuento*cantidad}}  </label
-                    >
-                
-                  </div>
-
-
+              <div class="col-sm-4">
+                <label
+                  v-if="descuento"
+                  for="lname"
+                  class="col-sm-12 col-form-label text-center"
+                  >Total descuento:$ {{ descuento * cantidad }}
+                </label>
+              </div>
             </div>
           </div>
         </div>
-
- 
-
-
-
       </div>
 
-      <div v-if="precioUnitario == 1 || precioUnitario == 3 " class="col-12">
+      <div v-if="precioUnitario == 1 || precioUnitario == 3" class="col-12">
         <div
           v-if="
-            producto && cantidad && precioUnitario && validacion_metro === true  
+            producto && cantidad && precioUnitario && validacion_metro === true
           "
           @click="createDetalleVenta(producto.id)"
           class="btn btn-primary payment"
@@ -257,10 +253,7 @@
       <div v-if="precioUnitario == 2" class="col-12">
         <div
           v-if="
-            producto &&
-            cantidad &&
-            precioUnitario &&
-            total_metro_rollo === true
+            producto && cantidad && precioUnitario && total_metro_rollo === true
           "
           @click="createDetalleVenta(producto.id)"
           class="btn btn-primary payment"
@@ -268,7 +261,6 @@
           Agregar Producto
         </div>
       </div>
-
     </div>
   </div>
 </template>
@@ -308,7 +300,7 @@ export default {
   computed: {
     total_metro_rollo: function () {
       //console.log(this.productosSelected.tarVenta + "valor unitario");
-      if (this.cantidad > 0 && this.precioUnitario==2 ) {
+      if (this.cantidad > 0 && this.precioUnitario == 2) {
         let stock = this.producto.unidades;
         let totalxrollo =
           parseFloat(this.cantidad) * parseFloat(this.producto.metrosrollo);
@@ -332,10 +324,9 @@ export default {
       this.metrosrollo = "";
       this.cantidad = "";
       this.precioUnitario = "";
-  
     },
-    recargarproductos(){
-    this.getAllProductos();
+    recargarproductos() {
+      this.getAllProductos();
     },
     onlyNumber($event) {
       //console.log($event.keyCode); //keyCodes value
@@ -352,7 +343,6 @@ export default {
       this.metrosrollo = 0;
       this.precioEspecial = "";
       this.descuento = 0;
-      
     },
     getAllProductos() {
       ProductoServices.getAllProductos()
@@ -369,8 +359,7 @@ export default {
         precioUnitario: this.precioUnitario,
         proId: id,
         venId: this.venta,
-        descuento:this.descuento,
-
+        descuento: this.descuento,
       };
       VentaServices.createDetalleVenta(data)
         .then((response) => {
@@ -398,9 +387,7 @@ export default {
 };
 </script>
 <style scoped>
-import 'font-awesome/scss/font-awesome.scss'
-
-* {
+import "font-awesome/scss/font-awesome.scss" * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;

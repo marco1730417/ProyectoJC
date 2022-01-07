@@ -332,6 +332,32 @@ class VentaApiController extends ApiResponseController
 
         return $this->successResponse(200);
     }
+    public function registrarPagoCredito(Request $request)
+    {
+        $carbon = new \Carbon\Carbon();
+        $fecha = $carbon->now();
+
+        $data = request()->all();
+
+
+        $new_pago = new Pago;
+        $new_pago->venId = $data['venId'];
+        $new_pago->fecha = $fecha;
+        $new_pago->tipo = "Credito";
+        $new_pago->cliId =  $data['cliId'];
+        $new_pago->pago = 0;
+        $new_pago->total =  $data['total'];
+        $new_pago->saldo =  $data['total'];
+        $new_pago->fechamaxima =  $data['fechamaxima'];
+        $new_pago->cheque =  $data['cheque'];
+        $new_pago->estado = 0;
+
+        $new_pago->save();
+
+        if (!$new_pago) return $this->errorResponse(500);
+
+        return $this->successResponse(200);
+    }
 
     public function registrarRetencion(Request $request)
     {

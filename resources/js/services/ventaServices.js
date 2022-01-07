@@ -91,8 +91,14 @@ export default {
     registrarPagoAbono(data) {
         let url = server + resource + "registrar-pago-abono";
         return Axios.post(url, data);
-    },   registrarPagoCheque(data) {
+    }, 
+    
+    registrarPagoCheque(data) {
         let url = server + resource + "registrar-pago-cheque";
+        return Axios.post(url, data);
+    },
+    registrarPagoCredito(data) {
+        let url = server + resource + "registrar-pago-credito";
         return Axios.post(url, data);
     },
 

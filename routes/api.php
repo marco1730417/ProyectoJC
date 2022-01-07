@@ -119,6 +119,8 @@ Route::group(['prefix' => 'venta'], function () {
     Route::post('registrar-pago-transferencia', [VentaApiController::class, 'registrarPagoTransferencia']);
     Route::post('registrar-pago-abono', [VentaApiController::class, 'registrarPagoAbono']);
     Route::post('registrar-pago-cheque', [VentaApiController::class, 'registrarPagoCheque']);
+    Route::post('registrar-pago-credito', [VentaApiController::class, 'registrarPagoCredito']);
+    
    
     Route::post('registrar-retencion', [VentaApiController::class, 'registrarRetencion']);
     Route::get('retencion-venta/{venId}',  [VentaApiController::class, 'retencionporventa']);
