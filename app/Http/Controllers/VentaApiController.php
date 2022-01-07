@@ -685,6 +685,40 @@ class VentaApiController extends ApiResponseController
             ->leftJoin('productos', 'detalle_ventas.proId', '=', 'productos.id')
             ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
             ->where('venId', $venId)->get();
+// informacion de pago
+//1 Sacar ventas con estado 0 asociadas a este cliente
+$detallepago= Venta::select('id as venId',
+DB::raw("(SELECT (pagos.saldo) FROM pagos
+WHERE ventas.id=pagos.venId
+and ventas.id = $venId
+ORDER BY pagos.saldo
+limit 1
+) AS saldos"),
+DB::raw("(SELECT (pagos.tipo) FROM pagos
+WHERE ventas.id=pagos.venId
+and ventas.id = $venId
+ORDER BY pagos.saldo
+limit 1
+) AS tipo"),
+DB::raw("(SELECT (pagos.total) FROM pagos
+WHERE ventas.id=pagos.venId
+and ventas.id = $venId
+ORDER BY pagos.saldo
+limit 1
+) AS total"),
+DB::raw("(SELECT (pagos.fechamaxima) FROM pagos
+WHERE ventas.id=pagos.venId
+and ventas.id = $venId
+ORDER BY pagos.saldo
+limit 1
+) AS fechamaxima"),
+)
+->where('estadopago',0)
+->where('id',$venId)
+
+->get();
+
+
 
         $parciales = DetalleVenta::queryVentaParcial($venId)->get();
         $descuentos = DetalleVenta::queryDescuentos($venId)->get();
@@ -709,14 +743,11 @@ class VentaApiController extends ApiResponseController
         $total_venta = collect($totales_venta);
 
 
-        $info_venta = Venta::select('ventas.id', 'ventas.fecha', 'clientes.nombre', 'clientes.ruc', 'clientes.direccion', 'clientes.telefono', 'ventas.metodopago')
+        $info_venta = Venta::select('ventas.id', 'ventas.fecha', 'clientes.nombre','clientes.email', 'clientes.ruc', 'clientes.direccion', 'clientes.telefono', 'ventas.metodopago')
             ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
             ->where('ventas.id', $venId)->get();
-/* return $info_venta[0]['nombre'];
- */
 
-        //  $pdf = PDF::loadView('venta.ventapdf', $data);
-        $pdf = PDF::loadView('venta.ventapdf',  ["detalle_venta" => $detalle_venta, "total_venta" => $total_venta, "info_venta" => $info_venta], ['format' => 'A4']);
+        $pdf = PDF::loadView('venta.ventapdf',  ["detalle_venta" => $detalle_venta,"detallepago" => $detallepago, "total_venta" => $total_venta, "info_venta" => $info_venta], ['format' => 'A4']);
 
       //  return $pdf->download('venta.pdf');
         return $pdf->download($venId.$info_venta[0]['nombre'].'- venta.pdf');

@@ -5,8 +5,15 @@
         >Producto</label
       >
       <div class="col-sm-12">
-        <i @click="clear" class="fas fa-eraser"></i>
-
+    <!--     <i @click="clear" class="fas fa-eraser"></i> -->
+<!-- <button type="button" @click="clear" class="btn btn-outline-primary">Limpiar</button> -->
+<!-- <button type="button" class="btn btn-primary btn-sm">Small button</button> </br> -->
+<!-- <a href="#" @click="clear" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Limpiar</a>
+<a href="#" @click="clear" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Actualizar</a> -->
+<!-- <button class="btn"><i class="fa fa-home"></i></button> -->
+<!-- <i class="fa fa-home" style="font-size:24px"></i> -->
+<button @click="clear" class="btn"><i class="fas fa-sync"></i></button>
+<button @click="clear" class="btn"><i class="fas fa-sync"></i></button>
         <v-select
           label="descripcion"
           v-model="producto"
@@ -321,6 +328,7 @@ export default {
       this.metrosrollo = "";
       this.cantidad = "";
       this.precioUnitario = "";
+      this.getAllProductos();
     },
     onlyNumber($event) {
       //console.log($event.keyCode); //keyCodes value
@@ -383,6 +391,7 @@ export default {
 };
 </script>
 <style scoped>
+import 'font-awesome/scss/font-awesome.scss'
 
 * {
   margin: 0;

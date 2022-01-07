@@ -4,130 +4,37 @@
       <div class="container-fluid">
         <div class="header-body">
           <!-- Card stats -->
-          <div class="row">
-            <div class="col-xl-6 col-lg-6"></div>
-          </div>
+    <div class="card">
+  <div class="card-header">
+    REPORTE DE VENTAS
+  </div>
+  <div class="card-body">
+  <!--   <h4 class="card-title">Por favor eliga las fechas previo a su reporte</h4> -->
+<form >
+  <div class="form-group">
+     <label for="email">Fecha Inicial:</label>
+    <input type="date"     v-model="fechadesde"
+                             class="form-control" id="email">
+  </div>
+  <div class="form-group ">
+  <label for="email">Fecha Final:</label>
+    <input type="date"     v-model="fechahasta"
+                             class="form-control" id="email">
+ 
+  </div>
+  <button @click="reporteVentas" class="btn btn-primary mb-2"><i class="fas fa-search"></i>Buscar</button>
+</form>
+  
+  
+  </div>
+  
+</div>
+
         </div>
+        
       </div>
     </div>
 
-    <div class="container-fluid mt--7">
-      <div class="row">
-        <div class="col">
-          <div class="card shadow">
-            <div class="card-header border-0">
-              <div class="row align-items-center">
-                <div class="col-12 text-left">
-                  <div class="container">
-                    <h3 class="text-center">Reportes de ventas</h3>
-
-                    <div class="row">
-                      <div class="col-md-4">
-                        <p>Seleccione la fecha</p>
-                        <b-container fluid>
-                          <b-row class="my-1">
-                            <b-col sm="4">
-                              <label for="input-small">Desde:</label>
-                            </b-col>
-                            <b-col sm="8">
-                              <b-form-input
-                                id="input-small"
-                                size="sm"
-                                type="date"
-                                v-model="fechadesde"
-                              ></b-form-input>
-                            </b-col>
-                          </b-row>
-                          <b-row class="my-1">
-                            <b-col sm="4">
-                              <label for="input-small">Hasta:</label>
-                            </b-col>
-                            <b-col sm="8">
-                              <b-form-input
-                                id="input-small"
-                                size="sm"
-                                type="date"
-                                v-model="fechahasta"
-                              ></b-form-input>
-                            </b-col>
-                          </b-row>
-                          <b-row class="my-1">
-                            <br />
-                            <b-col class="text-center" sm="12">
-                              <b-button
-                                size="sm"
-                                @click="reporteVentas"
-                                variant="primary"
-                                >Generar</b-button
-                              >
-                            </b-col>
-                          </b-row>
-                        </b-container>
-                      </div>
-                      <div class="col-md-8">
-                        <!--     {{infoventa}}  -->
-                        <b-table
-                          v-if="infoventa"
-                          striped
-                          hover
-                          :items="infoventa.ventas_por_fecha"
-                          :fields="fields"
-                        ></b-table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <table v-if="infoventa" class="table">
-                <thead>
-                  <tr>
-                    <th>Total Contado</th>
-                    <th>Total Transferencia</th>
-                    <th>Total Abonos</th>
-                    <th>Total Cheque</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      {{ parseFloat(infoventa.ventas_contado).toFixed(2) }}
-                    </td>
-                    <td>
-                      {{
-                        parseFloat(infoventa.ventas_transferencia).toFixed(2)
-                      }}
-                    </td>
-                    <td>
-                      {{ parseFloat(infoventa.ventas_abono).toFixed(2) }}
-                    </td>
-                    <td>
-                      {{ parseFloat(infoventa.ventas_cheque).toFixed(2) }}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <!-- <button @click="downloadVenta">Descargar pdf</button> -->
-              <b-col class="text-center" sm="12">
-                <b-button
-                  v-if="fechadesde && fechahasta"
-                  size="sm"
-                  @click="downloadVenta"
-                  variant="warning"
-                  ><i class="fas fa-print" title="Reporte"></i> Descargar
-                  PDF</b-button
-                >
-              </b-col>
-            </div>
-          </div>
-
-          <!--  {{totalesventa}} -->
-
-          <div class="card-footer py-4">
-            <nav class="d-flex justify-content-end" aria-label="..."></nav>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 

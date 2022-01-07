@@ -84,6 +84,7 @@ $cheque= Pago::select(
 $cheque_valor= $cheque->sum('parcial');
 
 
+
 $totales_venta = [
     'ventas_por_fecha' => $info_venta,
     'ventas_contado' =>     ($contado_valor),
@@ -155,11 +156,14 @@ $cheque= Pago::select(
 ->leftJoin('ventas as ventas','pagos.venId','=','ventas.id')
 ->where('pagos.tipo','Cheque')
 ->whereBetween(DB::raw('DATE(ventas.fecha)'), [$start_date, $end_date])
-
 ->get();
+
+
+
+
+
+
 $cheque_valor= $cheque->sum('parcial');
-
-
 $info_venta = collect($info_venta);
 $contado_valor = collect($contado_valor);
 $transferencia_valor = collect($transferencia_valor);
