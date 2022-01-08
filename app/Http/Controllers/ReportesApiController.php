@@ -247,13 +247,51 @@ $cheque_valor = ($cheque_valor);
     public function reporteVentasporCLiente($cliId)
 
     {
-      $ventas_cliente= Venta :: select ('ventas.id','pagos.tipo','pagos.total','ventas.fecha','ventas.observacion',
+    /*   $ventas_cliente= Venta :: select ('ventas.id','pagos.tipo','pagos.total','ventas.fecha','ventas.observacion',
       'clientes.nombre','clientes.ruc','clientes.direccion','clientes.telefono'
       )
      ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
      ->leftJoin('pagos', 'ventas.id', '=', 'pagos.venId')
    ->where('clientes.id',$cliId)
-      ->get();
+      ->get(); */
+
+        //1 Sacar ventas con estado 0 asociadas a este cliente
+        $ventas_cliente= Venta::select('ventas.id as venId','estadopago','cliId','ventas.fecha','ventas.observacion',
+        'clientes.nombre','clientes.ruc',
+        DB::raw("(SELECT (pagos.saldo) FROM pagos
+        WHERE ventas.id=pagos.venId
+ORDER BY pagos.saldo
+limit 1
+) AS saldos"),
+DB::raw("(SELECT (pagos.abono) FROM pagos
+WHERE ventas.id=pagos.venId
+ORDER BY pagos.saldo
+limit 1
+) AS abono"),
+        DB::raw("(SELECT (pagos.tipo) FROM pagos
+WHERE ventas.id=pagos.venId
+
+ORDER BY pagos.saldo
+limit 1
+) AS tipo"),
+DB::raw("(SELECT (pagos.total) FROM pagos
+WHERE ventas.id=pagos.venId
+ORDER BY pagos.saldo
+limit 1
+) AS total"),
+DB::raw("(SELECT (pagos.fechamaxima) FROM pagos
+WHERE ventas.id=pagos.venId
+ORDER BY pagos.saldo
+limit 1
+) AS fechamaxima"),
+        )
+        
+        ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
+       ->where('cliId',$cliId)
+       ->where('estadopago',0)
+       ->get();
+      
+
 
 
       

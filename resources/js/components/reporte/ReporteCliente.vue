@@ -4,15 +4,37 @@
       <div class="container-fluid">
         <div class="header-body">
           <!-- Card stats -->
-     <div class="row">
-       
+   <div class="card">
+  <div class="card-header text-center">
+ <strong>REPORTE DE CLIENTES </strong>   
+  </div>
+  <div class="card-body">
+  <!--   <h4 class="card-title">Por favor eliga las fechas previo a su reporte</h4> -->
 
-            <div  class="col-xl-6 col-lg-6">
-       
-            </div>
+  <div class="form-group">
+     <label for="email">Escoja un Cliente:</label>
 
-       
-          </div>
+   <v-select
+                          label="nombre"
+                          v-model="cliente"
+                          :options="infocliente"
+                          @click="reporteVentas"
+                          required
+                        ></v-select>
+  </div>
+   <div class="float-right">
+ <!-- 
+ <button @click="downloadReporteCliente" class="btn btn-primary mb-2"><i class="fas fa-print"></i>EXPORTAR PDF</button>
+ -->
+  
+  </div>
+
+ 
+  </div>
+  
+</div>
+
+
         </div>
       </div>
     </div>
@@ -28,41 +50,44 @@
              
                 <div class="col-12 text-left">
              
-<div class="container">
-  <h3 class="text-center">Reportes de cliente</h3>
+<div v-if="infoventascliente.length>0" class="container">
+  <h3 class="text-center">Reportes de ventas de cliente</h3>
 
 
   <div class="row">
-    <div class="col-md-4">
-      
-      <p>Seleccione el cliente</p>
-   <b-container fluid>
- 
 
-      Cliente
-                        <v-select
-                          label="nombre"
-                          v-model="cliente"
-                          :options="infocliente"
-                          @click="reporteVentas"
-                          required
-                        ></v-select>
-     <b-row class="my-1">
- <br/>
- 
-  </b-row>
-  </b-container>
-
-    
-    </div>
-    <div class="col-md-8">
+    <div class="col-md-12">
  <!-- {{infoventa}} -->
     <b-table striped hover :items="infoventascliente" :fields="fields">
-
-      
+    <template #cell(fecha)="data">
+                  <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
+                  <!--  {{ data.item.fecha }} -->
+                  {{
+                    moment(data.item.fecha).format(
+                      "MMM DD YYYY, ddd, h:mm:ss a"
+                    )
+                  }}
+                  <!--    {{ moment(data.item.fecha).format("MMM DD YYYY, ddd") }} -->
+                </template>
+         <template #cell(saldos)="data">
+                  <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
+                  <!--  {{ data.item.fecha }} -->
+                  <span v-if="data.item.saldos>0">{{
+                  data.item.saldos
+                  }} </span>   <span v-else>0 </span> 
+                  <!--    {{ moment(data.item.fecha).format("MMM DD YYYY, ddd") }} -->
+                </template>
+                   <template #cell(total)="data">
+                  <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
+                  <!--  {{ data.item.fecha }} -->
+                  <span v-if="data.item.total">${{
+                  data.item.total
+                  }} </span>   <span v-else>0 </span> 
+                  <!--    {{ moment(data.item.fecha).format("MMM DD YYYY, ddd") }} -->
+                </template>
     </b-table>
   
-          <b-col class="text-center" sm="12">
+        <!--   <b-col class="text-center" sm="12">
                 <b-button
                   v-if="cliente "
                   size="sm"
@@ -71,7 +96,43 @@
                   ><i class="fas fa-print" title="Reporte"></i> Descargar
                   PDF</b-button
                 >
-              </b-col>
+              </b-col> -->
+      </div>
+
+
+    </div>
+  </div>
+  <div v-if="infodeudascliente.length>0" class="container">
+  <h3 class="text-center">Valores Adeudados</h3>
+
+
+  <div class="row">
+
+    <div class="col-md-12">
+ <!-- {{infoventa}} -->
+    <b-table striped hover :items="infodeudascliente" :fields="fields1">
+    <template #cell(fecha)="data">
+                  <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
+                  <!--  {{ data.item.fecha }} -->
+                  {{
+                    moment(data.item.fecha).format(
+                      "MMM DD YYYY, ddd, h:mm:ss a"
+                    )
+                  }}
+                  <!--    {{ moment(data.item.fecha).format("MMM DD YYYY, ddd") }} -->
+                </template>
+         <template #cell(saldos)="data">
+                  <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
+                  <!--  {{ data.item.fecha }} -->
+                  <span v-if="data.item.saldos>0">{{
+                  data.item.saldos
+                  }} </span>   <span v-else>0 </span> 
+                  <!--    {{ moment(data.item.fecha).format("MMM DD YYYY, ddd") }} -->
+                </template>
+                
+    </b-table>
+  
+
       </div>
 
 
@@ -124,6 +185,13 @@ export default {
     return {
 
       fields: [
+           {
+          key: "venId",
+          label: "#",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "list-item-enddate",
+        },
         {
           key: "nombre",
           label: "Cliente",
@@ -146,6 +214,30 @@ export default {
           tdClass: "list-item-enddate",
         },
       ],
+       fields1: [
+           {
+          key: "venId",
+          label: "#",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "list-item-enddate",
+        },
+     
+  {
+          key: "fecha",
+          label: "Fecha",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "list-item-enddate",
+        },
+        {
+          key: "saldos",
+          label: "Saldos",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "list-item-enddate",
+        },
+      ],
       fechadesde: "",
         fechahasta: "",
       cliente: "",
@@ -153,6 +245,7 @@ export default {
     infocliente:"",
       producto: "",
       clientecapturado:"",
+      infodeudascliente:[],
     };
   },
    watch: {
@@ -165,7 +258,15 @@ export default {
 this.getAllClientes();
   },
   methods: {
-   
+     reporteDeudasporCliente(id) {
+      ReporteServices.reporteDeudasporCliente(id)
+        .then((response) => {
+          this.infodeudascliente = response.data.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
         onlyNumber($event) {
       //console.log($event.keyCode); //keyCodes value
       let keyCode = $event.keyCode ? $event.keyCode : $event.which;
@@ -188,6 +289,8 @@ this.getAllClientes();
       ReporteServices.reporteVentasporCliente(id)
         .then((response) => {
           this.infoventascliente = response.data.data;
+             this.reporteDeudasporCliente(id);
+       
         })
         .catch((error) => {
           console.log(error);

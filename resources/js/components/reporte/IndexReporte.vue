@@ -24,7 +24,7 @@
   </div>
   <div class="text-center">
  
- <button @click="reporteVentas" class="btn btn-primary mb-2"><i class="fas fa-search"></i>Buscar</button>
+ <button @click="reporteVentas" class="btn btn-primary mb-2"><i class="fas fa-search"></i>GENERAR REPORTE</button>
 
   
   </div>
@@ -139,7 +139,7 @@
               </b-row>
             </b-container>
             <div class="float-right">
-  <button  @click="downloadVenta" type="button" class="btn btn-primary"><i class="fas fa-print"></i>Exportar PDF</button>
+  <button  @click="downloadVenta" type="button" class="btn btn-primary"><i class="fas fa-print"></i>EXPORTAR PDF</button>
      
             </div>
         
