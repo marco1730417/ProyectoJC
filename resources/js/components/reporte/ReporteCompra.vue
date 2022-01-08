@@ -4,113 +4,122 @@
       <div class="container-fluid">
         <div class="header-body">
           <!-- Card stats -->
-          <div class="row">
-            <div class="col-xl-6 col-lg-6"></div>
-          </div>
+    <div class="card">
+  <div class="card-header text-center">
+ <strong>REPORTE DE COMPRAS </strong>   
+  </div>
+  <div class="card-body">
+  <!--   <h4 class="card-title">Por favor eliga las fechas previo a su reporte</h4> -->
+
+  <div class="form-group">
+     <label for="email">Fecha Inicial:</label>
+    <input type="date"     v-model="fechadesde"
+                             class="form-control" id="email">
+  </div>
+  <div class="form-group ">
+  <label for="email">Fecha Final:</label>
+    <input type="date"     v-model="fechahasta"
+                             class="form-control" id="email">
+ 
+  </div>
+  <div class="text-center">
+ 
+ <button @click="reporteCompras" class="btn btn-primary mb-2"><i class="fas fa-search"></i>GENERAR REPORTE</button>
+
+  
+  </div>
+ 
+  </div>
+  
+</div>
+
         </div>
+        
       </div>
     </div>
 
-    <div class="container-fluid mt--7">
+        <div class="container-fluid mt--7">
       <div class="row">
         <div class="col">
           <div class="card shadow">
             <div class="card-header border-0">
               <div class="row align-items-center">
-                <div class="col-12 text-left">
-                  <div class="container">
-                    <h3 class="text-center">Reportes de compras</h3>
-
-                    <div class="row">
-                      <div class="col-md-4">
-                        <p>Seleccione la fecha</p>
-                        <b-container fluid>
-                          <b-row class="my-1">
-                            <b-col sm="4">
-                              <label for="input-small">Desde:</label>
-                            </b-col>
-                            <b-col sm="8">
-                              <b-form-input
-                                id="input-small"
-                                size="sm"
-                                type="date"
-                                v-model="fechadesde"
-                              ></b-form-input>
-                            </b-col>
-                          </b-row>
-                          <b-row class="my-1">
-                            <b-col sm="4">
-                              <label for="input-small">Hasta:</label>
-                            </b-col>
-                            <b-col sm="8">
-                              <b-form-input
-                                id="input-small"
-                                size="sm"
-                                type="date"
-                                v-model="fechahasta"
-                              ></b-form-input>
-                            </b-col>
-                          </b-row>
-                          <b-row class="my-1">
-                            <br />
-                            <b-col class="text-center" sm="12">
-                              <b-button
-                                size="sm"
-                                @click="reporteCompras"
-                                variant="primary"
-                                >Generar</b-button
-                              >
-                            </b-col>
-                          </b-row>
-                        </b-container>
-                      </div>
-                      <div class="col-md-8">
-                        <!--     {{infocompra}}  -->
-                        <!-- {{total_compras}} -->
-                        <b-table
-                          v-if="infocompra"
-                          striped
-                          hover
-                          :items="infocompra.compras_por_fecha"
-                          :fields="fields"
-                        ></b-table>
-
-                      </div>
-                    </div>
-                  </div>
+                <div class="col-8">
+                
+                </div>
+        
+                <div class="col-4">
+             
                 </div>
               </div>
-      <table v-if="infocompra" class="table">
-                <thead>
-                  <tr>
-                    <th>Total Compras</th>
-                   </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                     <!--  {{ parseFloat(infoventa.compras_por_fecha).toFixed(2) }} -->
-              $    {{   infocompra.total_compras}}
-                    </td>
-         
-                  </tr>
-                </tbody>
-              </table>
             </div>
-          </div>
 
-          <!--  {{totalesventa}} -->
+            <div class="col-12"></div>
 
-          <div class="card-footer py-4">
-            <nav class="d-flex justify-content-end" aria-label="..."></nav>
+            <div v-if="infocompra" class="table-responsive">
+              <b-table
+                :items="infocompra.compras_por_fecha"
+                :fields="fields"
+                show-empty
+                responsive="sm"
+              >
+                   <template #cell(fecha)="data">
+                  <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
+                  <!--  {{ data.item.fecha }} -->
+                  {{
+                    moment(data.item.fecha).format(
+                      "MMM DD YYYY, ddd"
+                    )
+                  }}
+                  <!--    {{ moment(data.item.fecha).format("MMM DD YYYY, ddd") }} -->
+                </template>
+                    <template #cell(fechamaxima)="data">
+                  <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
+                  <!--  {{ data.item.fecha }} -->
+                  {{
+                    moment(data.item.fechamaxima).format(
+                      "MMM DD YYYY"
+                    )
+                  }}
+                  <!--    {{ moment(data.item.fecha).format("MMM DD YYYY, ddd") }} -->
+                </template>
+                  <template #cell(tipo)="data">
+                  <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
+                  <!--  {{ data.item.fecha }} -->
+                  <span v-if="data.item.tipo">{{
+                  data.item.tipo
+                  }} </span>   <span v-else> Pago no registrado </span> 
+                  <!--    {{ moment(data.item.fecha).format("MMM DD YYYY, ddd") }} -->
+                </template>
+                             <template #cell(saldos)="data">
+                  <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
+                  <!--  {{ data.item.fecha }} -->
+                  <span v-if="data.item.saldos>0">{{
+                  data.item.saldos
+                  }} </span>   <span v-else>0 </span> 
+                  <!--    {{ moment(data.item.fecha).format("MMM DD YYYY, ddd") }} -->
+                </template>
+              </b-table>
+           
+            <div class="float-right">
+  <button  @click="downloadVenta" type="button" class="btn btn-primary"><i class="fas fa-print"></i>EXPORTAR PDF</button>
+     
+            </div>
+        
+              <!--          Modal agregar editar producto -->
+            </div>
+
+
+            <div class="card-footer py-4">
+              <nav class="d-flex justify-content-end" aria-label="..."></nav>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
   </div>
 </template>
-
-
 <script>
 import VentaServices from "../../services/ventaServices";
 import CompraServices from "../../services/compraServices";
