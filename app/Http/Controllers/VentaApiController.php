@@ -313,7 +313,11 @@ class VentaApiController extends ApiResponseController
 
         $data = request()->all();
 
-
+    
+            $estado=0;  //1 el pago ha sido completo
+            $update_venta= Venta::findOrFail($data['venId']);
+            $update_venta->estadopago=0;
+            $update_venta->update();
         $new_pago = new Pago;
         $new_pago->venId = $data['venId'];
         $new_pago->fecha = $fecha;
@@ -324,7 +328,7 @@ class VentaApiController extends ApiResponseController
         $new_pago->saldo =  $data['total'];
         $new_pago->fechamaxima =  $data['fechamaxima'];
         $new_pago->cheque =  $data['cheque'];
-        $new_pago->estado = 0;
+        $new_pago->estado = $estado;
 
         $new_pago->save();
 
@@ -338,7 +342,10 @@ class VentaApiController extends ApiResponseController
         $fecha = $carbon->now();
 
         $data = request()->all();
-
+        $estado=0;  //1 el pago ha sido completo
+        $update_venta= Venta::findOrFail($data['venId']);
+        $update_venta->estadopago=0;
+        $update_venta->update();
 
         $new_pago = new Pago;
         $new_pago->venId = $data['venId'];

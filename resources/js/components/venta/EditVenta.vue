@@ -1132,7 +1132,6 @@ import ClienteServices from "../../services/clienteServices";
 import Conf from "../../services/conf.js";
 import ReporteServices from "../../services/reporteServices";
 
-
 const resource = "api/venta/";
 const server = Conf.server;
 import moment from "moment";
@@ -1146,26 +1145,26 @@ export default {
   },
   data() {
     return {
-       perPage: 10,
+      perPage: 10,
       currentPage: 1,
       filter: null,
-    
-       fields: [
-     /*    {
+
+      fields: [
+        /*    {
           key: "index",
           label: "#",
           sortable: false,
           sortDirection: "desc",
           tdClass: "index",
         }, */
-      {
+        {
           key: "nombre",
           label: "Producto",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate",
         },
-            {
+        {
           key: "cantidad",
           label: "Cantidad",
           sortable: false,
@@ -1180,35 +1179,35 @@ export default {
           sortDirection: "desc",
           tdClass: "list-item-enddate",
         },
-   /*         {
+        /*         {
           key: "opcion",
           label: "Unidad",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate",
         }, */
-           {
+        {
           key: "precioUnitario",
           label: "Precio",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate",
         },
-                {
+        {
           key: "descuento",
           label: "Descuento",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate",
         },
-          {
+        {
           key: "subTotal",
           label: "Precio Total",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate",
         },
-       /*   {
+        /*   {
           key: "Desc",
           label: "Desc",
           sortable: false,
@@ -1217,9 +1216,7 @@ export default {
         },
        
          */
-       
-    
- 
+
         { key: "actions", label: "Acciones", tdClass: "text-center" },
       ],
       fecha: moment().format("MMMM Do YYYY"),
@@ -1240,24 +1237,23 @@ export default {
       formadepago: "",
       substr: "",
       fechamaxima: "",
-      fechamaximacheque:"",
-      detallecheque:"",
-           fechamaximacredito:"",
-      detallecredito:"",
+      fechamaximacheque: "",
+      detallecheque: "",
+      fechamaximacredito: "",
+      detallecredito: "",
       saldo: "",
-      totaldetallegeneral:[],
-      infoventascliente:[]
+      totaldetallegeneral: [],
+      infoventascliente: [],
     };
   },
   watch: {
     clienteupdate: function (newClient, oldClient) {
       this.actualizarVenta(newClient.id);
-           
     },
- /*     clienteupdate: function (newValue, oldValue) {
+    /*     clienteupdate: function (newValue, oldValue) {
       this.reporteVentasCliente(newValue.id);
     }, */
-   },
+  },
   computed: {
     total_cambio: function () {
       //console.log(this.productosSelected.tarVenta + "valor unitario");
@@ -1287,7 +1283,7 @@ export default {
     this.detalleGeneralVenta();
   },
   methods: {
-        reporteVentasCliente(id) {
+    reporteVentasCliente(id) {
       ReporteServices.reporteDeudasporCliente(id)
         .then((response) => {
           this.infoventascliente = response.data.data;
@@ -1329,8 +1325,6 @@ export default {
           confirmButtonText: "Si",
         })
         .then((result) => {
-
-
           /* Read more about isConfirmed, isDenied below */
           if (result.isConfirmed) {
             VentaServices.deleteVenta(this.substr)
@@ -1343,9 +1337,6 @@ export default {
               .catch((error) => {
                 console.log(error);
               });
-
-
-
           }
         });
     },
@@ -1375,10 +1366,10 @@ export default {
           this.detallegeneralventa = response.data.data;
           //   en caso que exista informacion de venta asignamos el cliente
           this.clienteupdate = this.detallegeneralventa["cliente"];
-          this.totaldetallegeneral= this.detallegeneralventa.total;
-          this.totaldetallegeneral= this.totaldetallegeneral[0];
-           this.reporteVentasCliente(this.clienteupdate[0].id);
-       //   console.log(JSON.stringify(this.clienteupdate[0].id));
+          this.totaldetallegeneral = this.detallegeneralventa.total;
+          this.totaldetallegeneral = this.totaldetallegeneral[0];
+          this.reporteVentasCliente(this.clienteupdate[0].id);
+          //   console.log(JSON.stringify(this.clienteupdate[0].id));
         })
         .catch((error) => {
           console.log(error);
@@ -1396,130 +1387,95 @@ export default {
         .then((response) => {
           let mensaje = response.data.data;
           if (mensaje == 200) {
+            this.$swal
+              .fire({
+                title: "Su venta ha sido guardada, Desea imprimir la factura?",
+                showCancelButton: true,
+                confirmButtonText: "Si",
+              })
+              .then((result) => {
+                if (result.isConfirmed) {
+                  let routeData =
+                    server + resource + `download-venta/` + this.substr;
+                  window.open(routeData);
 
-
-   this.$swal
-        .fire({
-          title: "Su venta ha sido guardada, Desea imprimir la factura?",
-          showCancelButton: true,
-          confirmButtonText: "Si",
-        })
-        .then((result) => {
-
-
-   if (result.isConfirmed) {
-
-           let routeData = server + resource + `download-venta/` + this.substr;
-      window.open(routeData);
-
-
-    window.location.href='/venta/';
-          }
-          else
-          
-    window.location.href='/venta/';
-    
-        });
-
-
-
-
-            
+                  window.location.href = "/venta/";
+                } else window.location.href = "/venta/";
+              });
           }
         })
         .catch((error) => {
           console.log(error);
         });
-
-  
     },
 
-downloadVentaCheque(fecha,detalle,cliId){
-  let data = {
+    downloadVentaCheque(fecha, detalle, cliId) {
+      let data = {
         venId: this.substr,
         total: this.totalesventa.total,
         fechamaxima: fecha,
         cheque: detalle,
         cliId: cliId,
       };
-    VentaServices.registrarPagoCheque(data)
+      VentaServices.registrarPagoCheque(data)
         .then((response) => {
           let mensaje = response.data.data;
           if (mensaje == 200) {
-   this.$swal
-        .fire({
-          title: "Su venta ha sido guardada, Desea imprimir la factura?",
-          showCancelButton: true,
-          confirmButtonText: "Si",
-        })
-        .then((result) => {
+            this.$swal
+              .fire({
+                title: "Su venta ha sido guardada, Desea imprimir la factura?",
+                showCancelButton: true,
+                confirmButtonText: "Si",
+              })
+              .then((result) => {
+                if (result.isConfirmed) {
+                  let routeData =
+                    server + resource + `download-venta/` + this.substr;
+                  window.open(routeData);
 
-
-   if (result.isConfirmed) {
-
-           let routeData = server + resource + `download-venta/` + this.substr;
-      window.open(routeData);
-
-       
-    window.location.href='/venta/';
-          }
-          else
-          
-    window.location.href='/venta/';
-        });
-
+                  window.location.href = "/venta/";
+                } else window.location.href = "/venta/";
+              });
           }
         })
         .catch((error) => {
           console.log(error);
         });
+    },
 
-
-},
-
-
-downloadVentaCredito(fecha,detalle,cliId){
-  let data = {
+    downloadVentaCredito(fecha, detalle, cliId) {
+      let data = {
         venId: this.substr,
         total: this.totalesventa.total,
         fechamaxima: fecha,
         cheque: detalle,
         cliId: cliId,
       };
-    VentaServices.registrarPagoCredito(data)
+      VentaServices.registrarPagoCredito(data)
         .then((response) => {
           let mensaje = response.data.data;
           if (mensaje == 200) {
-   this.$swal
-        .fire({
-          title: "Su venta ha sido guardada, Desea imprimir la factura?",
-          showCancelButton: true,
-          confirmButtonText: "Si",
-        })
-        .then((result) => {
+            this.$swal
+              .fire({
+                title: "Su venta ha sido guardada, Desea imprimir la factura?",
+                showCancelButton: true,
+                confirmButtonText: "Si",
+              })
+              .then((result) => {
+                if (result.isConfirmed) {
+                  let routeData =
+                    server + resource + `download-venta/` + this.substr;
+                  window.open(routeData);
 
-
-   if (result.isConfirmed) {
-
-           let routeData = server + resource + `download-venta/` + this.substr;
-      window.open(routeData);
-
-       
-    window.location.href='/venta/';
-          }
-          else
-          
-    window.location.href='/venta/';
-        });
-
+                  window.location.href = "/venta/";
+                } else window.location.href = "/venta/";
+              });
           }
         })
         .catch((error) => {
           console.log(error);
         });
-
-
-},
+    },
 
     downloadVentaTransferencia(pago, detalle, cliId) {
       let data = {
@@ -1533,36 +1489,26 @@ downloadVentaCredito(fecha,detalle,cliId){
         .then((response) => {
           let mensaje = response.data.data;
           if (mensaje == 200) {
-            
-               this.$swal
-        .fire({
-          title: "Su venta ha sido guardada, Desea imprimir la factura?",
-          showCancelButton: true,
-          confirmButtonText: "Si",
-        })
-        .then((result) => {
+            this.$swal
+              .fire({
+                title: "Su venta ha sido guardada, Desea imprimir la factura?",
+                showCancelButton: true,
+                confirmButtonText: "Si",
+              })
+              .then((result) => {
+                if (result.isConfirmed) {
+                  let routeData =
+                    server + resource + `download-venta/` + this.substr;
+                  window.open(routeData);
 
-
-   if (result.isConfirmed) {
-
-           let routeData = server + resource + `download-venta/` + this.substr;
-      window.open(routeData);
-
-
-    window.location.href='/venta/';
-          }
-          else
-          
-    window.location.href='/venta/';
-        });
-
+                  window.location.href = "/venta/";
+                } else window.location.href = "/venta/";
+              });
           }
         })
         .catch((error) => {
           console.log(error);
         });
-
-
     },
 
     downloadVentaAbono(pago, fechamaxima, cliId) {
@@ -1579,36 +1525,26 @@ downloadVentaCredito(fecha,detalle,cliId){
         .then((response) => {
           let mensaje = response.data.data;
           if (mensaje == 200) {
+            this.$swal
+              .fire({
+                title: "Su venta ha sido guardada, Desea imprimir la factura?",
+                showCancelButton: true,
+                confirmButtonText: "Si",
+              })
+              .then((result) => {
+                if (result.isConfirmed) {
+                  let routeData =
+                    server + resource + `download-venta/` + this.substr;
+                  window.open(routeData);
 
-   this.$swal
-        .fire({
-          title: "Su venta ha sido guardada, Desea imprimir la factura?",
-          showCancelButton: true,
-          confirmButtonText: "Si",
-        })
-        .then((result) => {
-
-
-   if (result.isConfirmed) {
- let routeData = server + resource + `download-venta/` + this.substr;
-      window.open(routeData);
-
-
-    window.location.href='/venta/';
-          }
-          else
-          
-    window.location.href='/venta/';
-        });
-
-
+                  window.location.href = "/venta/";
+                } else window.location.href = "/venta/";
+              });
           }
         })
         .catch((error) => {
           console.log(error);
         });
-
- 
     },
 
     totalesVenta() {
@@ -1621,13 +1557,14 @@ downloadVentaCredito(fecha,detalle,cliId){
         });
     },
 
-      onlyNumber ($event) {
-          //console.log($event.keyCode); //keyCodes value
-          let keyCode = ($event.keyCode ? $event.keyCode : $event.which);
-          if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) { // 46 is dot
-              $event.preventDefault();
-          }
-      },
+    onlyNumber($event) {
+      //console.log($event.keyCode); //keyCodes value
+      let keyCode = $event.keyCode ? $event.keyCode : $event.which;
+      if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) {
+        // 46 is dot
+        $event.preventDefault();
+      }
+    },
     actualizarVenta(cliente) {
       let data = {
         cliId: cliente,
@@ -1638,7 +1575,7 @@ downloadVentaCredito(fecha,detalle,cliId){
         .then((response) => {
           let mensaje = response.data.data;
           this.detalleGeneralVenta();
-           this.reporteVentasCliente(cliente);
+          this.reporteVentasCliente(cliente);
         })
         .catch((error) => {
           console.log(error);
