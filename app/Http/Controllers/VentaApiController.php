@@ -932,7 +932,11 @@ $mejores_clientes = Venta::select(
             )
                 ->groupBy('months')
                 ->get();
+
+             //   return $frutas;
+
                 $collection = collect($frutas);
+           //     return $collection;
             /*     $squares = array_map(function($mes) {
                     return $mes['sum']*1;
                 }, $frutas);
@@ -975,8 +979,6 @@ $mejores_clientes = Venta::select(
             'numero_productos' => $numero_productos,
             'numero_clientes' => $numero_clientes,
             'numero_proveedores' => $numero_proveedores,
-            
-            
             'productos_stock' => $productos_stock,
             'productos_mas_vendidos' => $productos_mas_vendidos,
             'mejores_clientes' => $mejores_clientes,
