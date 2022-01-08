@@ -55,7 +55,7 @@
                      <template #cell(fechamaxima)="data">
                   {{
                     moment(data.item.fechamaxima).format(
-                      "MMM DD YYYY, ddd, h:mm:ss a"
+                      "MMM DD YYYY"
                     )
                   }}
                 </template>
