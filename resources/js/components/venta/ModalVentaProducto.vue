@@ -24,7 +24,7 @@
       >
       <div class="col-sm-12">
         <v-select
-          label="descripcion"
+          label="nombre"
           v-model="producto"
           :options="infoproducto"
           required
