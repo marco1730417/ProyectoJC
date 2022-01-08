@@ -188,7 +188,7 @@
                     <div class="card-body">
                         <!-- Chart -->
                   <!-- {{series[0].data[0]}} -->
-                  <small>{{options}} </small> 
+                  <small>{{options}} {{series}} </small> 
   <apexchart width="700" type="bar" :options="options" :series="series"></apexchart>
 </div>
                  

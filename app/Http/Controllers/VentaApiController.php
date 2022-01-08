@@ -927,7 +927,7 @@ $mejores_clientes = Venta::select(
 
 
             $frutas= Pago::select(
-                DB::raw('sum(total) as sum'),
+                DB::raw('round(sum(total),2) as sum '),
                 DB::raw("DATE_FORMAT(fecha,'%M %Y') as months")
             )
                 ->groupBy('months')
