@@ -59,6 +59,12 @@
                     )
                   }}
                 </template>
+                 <template #cell(saldo)="data">
+                     $ {{ parseFloat(data.item.saldo).toFixed(2) }}
+                  </template>
+                        <template #cell(total)="data">
+                     $ {{ parseFloat(data.item.total).toFixed(2) }}
+                  </template>
 
                 <template #cell(actions)="data">
                   <!--   {{data.item}} -->

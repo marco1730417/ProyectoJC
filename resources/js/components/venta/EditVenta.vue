@@ -121,7 +121,8 @@
                     moment(item.fecha).format(
                       "MMM DD YYYY, ddd, h:mm:ss a"
                     )
-                  }}  {{item.observaciones}} => Valor adeudado $ {{item.saldos}}
+                  }}  {{item.observaciones}} => Valor adeudado 
+                    $ {{ parseFloat(item.saldos).toFixed(2) }}
  
   </b-list-group-item>
 
