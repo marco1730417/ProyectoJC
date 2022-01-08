@@ -70,7 +70,7 @@ limit 1
  
         $contado= Pago::select(
                                   
-            db::raw('(pagos.pago) as parcial')
+          db::raw('round((pagos.total),2) as parcial')
           )
   ->leftJoin('ventas as ventas','pagos.venId','=','ventas.id')
   ->where('pagos.tipo','Contado')
@@ -81,7 +81,7 @@ $contado_valor= $contado->sum('parcial');
 
 $transferencia= Pago::select(
                                   
-    db::raw('(pagos.pago) as parcial')
+  db::raw('round((pagos.total),2) as parcial')
   )
 ->leftJoin('ventas as ventas','pagos.venId','=','ventas.id')
 ->where('pagos.tipo','Transferencia')
@@ -91,7 +91,7 @@ $transferencia= Pago::select(
 $transferencia_valor= $transferencia->sum('parcial');
 $abono= Pago::select(
                                   
-    db::raw('(pagos.pago) as parcial')
+    db::raw('round((pagos.pago),2) as parcial')
   )
 ->leftJoin('ventas as ventas','pagos.venId','=','ventas.id')
 ->where('pagos.tipo','Abono')
@@ -101,7 +101,7 @@ $abono= Pago::select(
 $abono_valor= $abono->sum('parcial');
 $cheque= Pago::select(
                                   
-    db::raw('(pagos.pago) as parcial')
+    db::raw('round((pagos.total),2) as parcial')
   )
 ->leftJoin('ventas as ventas','pagos.venId','=','ventas.id')
 ->where('pagos.tipo','Cheque')
@@ -110,7 +110,16 @@ $cheque= Pago::select(
 ->get();
 $cheque_valor= $cheque->sum('parcial');
 
+$credito= Pago::select(
+                                  
+  db::raw('round((pagos.total),2) as parcial')
+)
+->leftJoin('ventas as ventas','pagos.venId','=','ventas.id')
+->where('pagos.tipo','Credito')
+->whereBetween(DB::raw('DATE(ventas.fecha)'), [$start_date, $end_date])
 
+->get();
+$credito_valor= $credito->sum('parcial');
 
 $totales_venta = [
     'ventas_por_fecha' => $info_venta,
@@ -118,6 +127,7 @@ $totales_venta = [
     'ventas_transferencia' =>     ($transferencia_valor),
     'ventas_abono' =>     ($abono_valor),
     'ventas_cheque' =>     ($cheque_valor),
+    'ventas_credito' =>     ($credito_valor),
     
     
     
@@ -175,7 +185,7 @@ limit 1
 
       $contado= Pago::select(
                                 
-          db::raw('(pagos.pago) as parcial')
+        db::raw('round((pagos.total),2) as parcial')
         )
 ->leftJoin('ventas as ventas','pagos.venId','=','ventas.id')
 ->where('pagos.tipo','Contado')
@@ -186,7 +196,7 @@ $contado_valor= $contado->sum('parcial');
 
 $transferencia= Pago::select(
                                 
-  db::raw('(pagos.pago) as parcial')
+  db::raw('round((pagos.total),2) as parcial')
 )
 ->leftJoin('ventas as ventas','pagos.venId','=','ventas.id')
 ->where('pagos.tipo','Transferencia')
@@ -206,13 +216,22 @@ $abono= Pago::select(
 $abono_valor= $abono->sum('parcial');
 $cheque= Pago::select(
                                 
-  db::raw('(pagos.pago) as parcial')
+  db::raw('round((pagos.total),2) as parcial')
 )
 ->leftJoin('ventas as ventas','pagos.venId','=','ventas.id')
 ->where('pagos.tipo','Cheque')
 ->whereBetween(DB::raw('DATE(ventas.fecha)'), [$start_date, $end_date])
 ->get();
+$credito= Pago::select(
+                                  
+  db::raw('round((pagos.total),2) as parcial')
+)
+->leftJoin('ventas as ventas','pagos.venId','=','ventas.id')
+->where('pagos.tipo','Credito')
+->whereBetween(DB::raw('DATE(ventas.fecha)'), [$start_date, $end_date])
 
+->get();
+$credito_valor= $credito->sum('parcial');
 
 $cheque_valor= $cheque->sum('parcial');
 $info_venta = collect($info_venta);
@@ -220,6 +239,7 @@ $contado_valor = ($contado_valor);
 $transferencia_valor = ($transferencia_valor);
 $abono_valor = ($abono_valor);
 $cheque_valor = ($cheque_valor);
+$credito_valor = ($credito_valor);
 
         //  $pdf = PDF::loadView('venta.ventapdf', $data);
         $pdf = PDF::loadView('reporte.reporteventapdf',  
@@ -233,6 +253,7 @@ $cheque_valor = ($cheque_valor);
         "transferencia_valor" => $transferencia_valor,
         "abono_valor" => $abono_valor,
         "cheque_valor" => $cheque_valor,
+        "credito_valor" => $credito_valor,
 
       
       ], ['format' => 'A4']);

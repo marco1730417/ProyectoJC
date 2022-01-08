@@ -129,6 +129,21 @@
                             <td>
                             {{ parseFloat(infoventa.ventas_abono).toFixed(2) }}
                             </td>
+                      
+                          </tr>
+                              <tr>
+                            <td>CHEQUE</td>
+                            <td>
+                            {{ parseFloat(infoventa.ventas_cheque).toFixed(2) }}
+                            </td>
+                      
+                          </tr>
+                            <tr>
+                            <td>CREDITO</td>
+                            <td>
+                            {{ parseFloat(infoventa.ventas_credito).toFixed(2) }}
+                            </td>
+                      
                           </tr>
                              
                         </tbody>

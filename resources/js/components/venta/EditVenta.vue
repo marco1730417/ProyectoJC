@@ -63,10 +63,10 @@
                   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">
-                        Total Venta   <span class="text-nowrap text-primary"><i class="fas fa-calendar"></i> {{ fecha }}</span>
+                          <span class="text-nowrap text-primary"><i class="fas fa-calendar"></i> {{ fecha }}</span>
                       </h5>
-                      <span class="h2 font-weight-bold mb-0">
-                        {{ parseFloat(totalesventa.total).toFixed(2) }}
+                      <span class="h1 font-weight-bold mb-0 text-success float-center">
+                       $ {{ parseFloat(totalesventa.total).toFixed(2) }}
                       </span>
                     </div>
                     <div class="col-auto">
@@ -87,15 +87,10 @@
                     <span class="text-warning mr-2"
                       ><i class="fas fa-user"></i>
                     
-                   {{    totaldetallegeneral.nombre}}
+                   {{    totaldetallegeneral.nombre}}      {{    totaldetallegeneral.ruc}}
                       
-                    </span>   <span class="text-warning mr-2"
-                      >
-                          {{    totaldetallegeneral.ruc}}
-                      
-                    </span>
-               
-                         <span class="text-nowrap text-primary"><i class="fas fa-home"></i>{{ totaldetallegeneral.direccion }}</span> 
+                    </span>  
+                         <span class="text-nowrap text-primary"><i class="fas fa-home"></i> {{ totaldetallegeneral.direccion }}</span> 
              
                   </p>
                 </div>
@@ -922,37 +917,37 @@
                           <tr>
                             <td>SUBTOTAL PRECIO</td>
                             <td>
-                              {{ parseFloat(totalesventa.subtotalprecio).toFixed(2) }}
+                           $   {{ parseFloat(totalesventa.subtotalprecio).toFixed(2) }}
                             </td>
                           </tr>
                             <tr>
                             <td>DESCUENTO</td>
                             <td>
-                              {{ parseFloat(totalesventa.descuentos).toFixed(2) }}
+                            $  {{ parseFloat(totalesventa.descuentos).toFixed(2) }}
                             </td>
                           </tr>
                              <tr>
                             <td>SUBTOTAL SIN IMPUESTOS</td>
                             <td>
-                              {{ parseFloat(totalesventa.subtotal_sin_impuestos).toFixed(2) }}
+                           $   {{ parseFloat(totalesventa.subtotal_sin_impuestos).toFixed(2) }}
                             </td>
                           </tr>
                                 <tr>
                             <td>SUBTOTAL 12%</td>
                             <td>
-                              {{ parseFloat(totalesventa.subtotal_sin_impuestos).toFixed(2) }}
+                            $  {{ parseFloat(totalesventa.subtotal_sin_impuestos).toFixed(2) }}
                             </td>
                           </tr>
                           <tr>
                             <td>VALOR IVA 12%</td>
                             <td>
-                              {{ parseFloat(totalesventa.valorIva).toFixed(2) }}
+                           $   {{ parseFloat(totalesventa.valorIva).toFixed(2) }}
                             </td>
                           </tr>
                           <tr>
                             <td>VALOR TOTAL</td>
                             <td>
-                              {{ parseFloat(totalesventa.total).toFixed(2) }}
+                            $  {{ parseFloat(totalesventa.total).toFixed(2) }}
                             </td>
                           </tr>
                         </tbody>

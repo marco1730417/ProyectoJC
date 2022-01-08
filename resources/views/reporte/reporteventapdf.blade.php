@@ -150,16 +150,7 @@
                             
                                 </td>
                             </tr>
-                            <tr>
-                                <td class="left">
-                                    <strong>TOTAL CHEQUES</strong>
-                                </td>
-                              
-                                <td class="right">
-                                $@php echo(number_format($cheque_valor,2));@endphp
-
-                                </td>
-                            </tr>
+                     
                     
                             <tr>
                                 <td class="left">
@@ -170,6 +161,26 @@
                                 $@php echo(number_format($abono_valor,2));@endphp
 
                              
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="left">
+                                    <strong>TOTAL CHEQUES</strong>
+                                </td>
+                              
+                                <td class="right">
+                                $@php echo(number_format($cheque_valor,2));@endphp
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="left">
+                                    <strong>TOTAL CREDITOS</strong>
+                                </td>
+                              
+                                <td class="right">
+                                $@php echo(number_format($credito_valor,2));@endphp
+
                                 </td>
                             </tr>
                     
