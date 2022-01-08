@@ -63,7 +63,7 @@
                   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">
-                        Total Venta
+                        Total Venta   <span class="text-nowrap text-primary"><i class="fas fa-calendar"></i> {{ fecha }}</span>
                       </h5>
                       <span class="h2 font-weight-bold mb-0">
                         {{ parseFloat(totalesventa.total).toFixed(2) }}
@@ -89,13 +89,13 @@
                     
                    {{    totaldetallegeneral.nombre}}
                       
-                    </span>   <span class="text-info mr-2"
-                      ><i class="fas fa-user"></i>
+                    </span>   <span class="text-warning mr-2"
+                      >
                           {{    totaldetallegeneral.ruc}}
                       
                     </span>
-                    <span class="text-nowrap"><i class="fas fa-calendar"></i>{{ fecha }}</span> </br>
-                         <span class="text-nowrap"><i class="fas fa-home"></i>{{ totaldetallegeneral.direccion }}</span> 
+               
+                         <span class="text-nowrap text-primary"><i class="fas fa-home"></i>{{ totaldetallegeneral.direccion }}</span> 
              
                   </p>
                 </div>
@@ -117,16 +117,16 @@
                   <p class="mt-3 mb-0 text-muted text-sm">
              
                   </p>
-                         <span class="text-warning mr-2"
-                      ><i class="fas fa-user"></i>
+                         <span class="text-primary mr-2"
+                      >
                     Este cliente adeuda valores por ventas con los siguientes detalles.    </span>  </br>
                     <b-list-group>
   <b-list-group-item v-for="item in infoventascliente" :key="item.id" class="d-flex justify-content-between align-items-center">
-  V# {{item.venId }} - Fecha    {{
+  Venta Nro. {{item.venId }} - realizada el    {{
                     moment(item.fecha).format(
                       "MMM DD YYYY, ddd, h:mm:ss a"
                     )
-                  }}  {{item.observaciones}} - Valor adeudado $ {{item.saldos}}
+                  }}  {{item.observaciones}} => Valor adeudado $ {{item.saldos}}
  
   </b-list-group-item>
 
@@ -322,7 +322,7 @@
                                     <span class="fas fa-dollar-sign px-1"></span
                                     >Terminar Venta
                                   </div>
-                                  <div v-else class="btn btn-primary mt-2">
+                                  <div v-else class="btn btn-secondary mt-2">
                                     <span class="fas fa-dollar-sign px-1"></span
                                     >Terminar Venta
                                   </div>
@@ -371,11 +371,13 @@
                         <div class="box-inner-2">
                           <form action="">
                             <div class="mb-3">
-                              <p class="dis fw-bold mb-2">Cantidad recibida</p>
+                              <p class="dis fw-bold mb-2">Cantidad transferida</p>
                               <input
                                 class="form-control"
                                 type="number"
                                 v-model="pagorecibidotransferencia"
+                                     @keypress="onlyNumber"
+                           
                               />
                             </div>
                             <div class="mb-3">
@@ -438,7 +440,7 @@
                                     <span class="fas fa-dollar-sign px-1"></span
                                     >Terminar Venta
                                   </div>
-                                  <div v-else class="btn btn-primary mt-2">
+                                  <div v-else class="btn btn-secondary mt-2">
                                     <span class="fas fa-dollar-sign px-1"></span
                                     >Terminar Venta
                                   </div>
@@ -497,6 +499,8 @@
                             class="form-control"
                             type="number"
                             v-model="pagorecibido"
+                                 @keypress="onlyNumber"
+                           
                           />
                         </div>
                         <div class="mb-3"></div>
@@ -563,7 +567,7 @@
                                 <span class="fas fa-dollar-sign px-1"></span
                                 >Terminar Venta
                               </div>
-                              <div v-else class="btn btn-primary mt-2">
+                              <div v-else class="btn btn-secondary mt-2">
                                 <span class="fas fa-dollar-sign px-1"></span
                                 >Terminar Venta
                               </div>
@@ -797,98 +801,6 @@
               </div>
             </div>
 
-  <!-- modal venta al credito -->
-            <div
-              class="modal fade"
-              id="ModalVentaCheque"
-              tabindex="-1"
-              role="dialog"
-              aria-hidden="true"
-            >
-              <div class="modal-dialog modal-md" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title">Terminar venta como cheque</h5>
-                    <button
-                      type="button"
-                      class="close"
-                      data-dismiss="modal"
-                      aria-label="Close"
-                    >
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <div class="container">
-                      <form action="">
-                        <div class="mb-3">
-                          <p class="dis fw-bold mb-2">Fecha maxima</p>
-                          <input
-                            class="form-control"
-                            type="date"
-                            v-model="fechamaximacheque"
-                          />
-                        </div>
-
-                        <div class="mb-3">
-                          <p class="dis fw-bold mb-2">Detalle cheque</p>
-                          <input
-                            class="form-control"
-                            type="text"
-                            v-model="detallecheque"
-                          />
-                        </div>
-                        <div class="mb-3"></div>
-                        <div>
-                          <div class="address">
-                            <div class="d-flex flex-column dis">
-                              <div
-                                class="
-                                  d-flex
-                                  align-items-center
-                                  justify-content-between
-                                  mb-2
-                                "
-                              >
-                                <p>Cantidad de pago</p>
-                                <p>
-                                  <span class="fas fa-dollar-sign"></span>
-                                  {{
-                                    parseFloat(totalesventa.total).toFixed(2)
-                                  }}
-                                </p>
-                              </div>
-                        
-
-                              <!-- {{detallegeneralventa}} -->
-                              <div
-                                v-if="fechamaximacheque && detallecheque"
-                                @click="
-                                  downloadVentaCheque(
-                                    fechamaximacheque,
-                                    detallecheque,
-                                    totaldetallegeneral.cliId
-                                  )
-                                "
-                                class="btn btn-primary mt-2"
-                              >
-                                <span class="fas fa-dollar-sign px-1"></span
-                                >Terminar Venta
-                              </div>
-                              <div v-else class="btn btn-primary mt-2">
-                                <span class="fas fa-dollar-sign px-1"></span
-                                >Terminar Venta
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                  <div class="modal-footer"></div>
-                </div>
-              </div>
-            </div>
 
 
 

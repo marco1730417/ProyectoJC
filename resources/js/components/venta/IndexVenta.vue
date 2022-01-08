@@ -31,7 +31,6 @@
                       </div>
                     </div>
                   </div>
-           
                 </div>
               </div>
             </div>
@@ -61,11 +60,9 @@
                       </div>
                     </div>
                   </div>
-         
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>
@@ -117,34 +114,26 @@
                 :per-page="perPage"
                 :current-page="currentPage"
               >
-                <!--      <template #cell(index)="data">
-            <small> {{ data.index + 1 }} </small>
-          </template> -->
-                <template #cell(fecha)="data">
-                  <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
-                  <!--  {{ data.item.fecha }} -->
+               <template #cell(fecha)="data">
                   {{
                     moment(data.item.fecha).format(
                       "MMM DD YYYY, ddd, h:mm:ss a"
                     )
                   }}
-                  <!--    {{ moment(data.item.fecha).format("MMM DD YYYY, ddd") }} -->
                 </template>
                 <template #cell(nombre)="data">
-                  <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
-                  <!--             <small> </small> -->
                   <div class="left" id="center">
                     <small> {{ data.item.nombre }}<br /></small>
                     <small> {{ data.item.ruc }}</small>
                   </div>
                 </template>
                 <template #cell(observacion)="data">
-                  <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
-                  {{ data.item.observacion }}
+                <span v-if="data.item.observacion"> {{ data.item.observacion }}</span> 
+                 <span v-else> N/A</span> 
                 </template>
-                     <template #cell(total)="data">
-                  <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
-                  {{ data.item.total }}
+                <template #cell(total)="data">
+             <span v-if="data.item.total"> {{ data.item.total }}</span> 
+                 <span v-else> Pago no registrado</span> 
                 </template>
 
                 <template #cell(actions)="data">
@@ -436,20 +425,18 @@
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
-           <!--          <div class="modal-body">
-                      <modal-pagos-venta :venId="venta"></modal-pagos-venta>
-                    </div> -->
-
-                             <div class="modal-body">
+                
+                    <div class="modal-body">
                       <!--   {{infoabonos}} -->
                       <div>
-                        <!--   <h5>Total a cobrar : $ {{ infoabonos.totalcobrar }}</h5> -->
                         <h5>
-                          Total Venta : ${{
+                          Total Venta : <span v-if="infopagosventa.totalcobrar">
+                         ${{
                             parseFloat(infopagosventa.totalcobrar).toFixed(2)
                           }}
+                            </span> <span v-else>0</span>
                         </h5>
-              
+
                         <b-progress
                           :value="infopagosventa.total_abonos"
                           :max="infopagosventa.totalcobrar"
@@ -462,40 +449,35 @@
                           :items="infopagosventa.detalle_venta"
                           :fields="fields2"
                         >
-                      <template #cell(pago)="data">
-            <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
-            <!--  {{ data.item.fecha }} -->
-        <!--       {{ data.item.total}}  -->
-                 $ {{ parseFloat(data.item.pago).toFixed(2) }}
-           <!--    {{ moment(data.item.fecha).format("MMM DD YYYY, ddd") }} -->
-          
-          </template>
+                          <template #cell(pago)="data">
+                            $ {{ parseFloat(data.item.pago).toFixed(2) }}
+                          </template>
+                          <template #cell(total)="data">
+                            $ {{ parseFloat(data.item.total).toFixed(2) }}
+                          </template>
+
                           <template #cell(fecha)="data">
                             {{
                               moment(
                                 data.item.fecha,
                                 "YYYY-MM-DD, h:mm:ss a"
-                              ).format("MMM DD YYYY, ddd, h:mm:ss a")
+                              ).format("MMM DD YYYY, ddd")
                             }}
                           </template>
                           <template #cell(actions)="data">
-      
-<!--  {{data.item}} -->
-            <b-button
-              variant="outline-danger default actions"
-              size="sm"
-              data-toggle="tooltip"
-              data-placement="top"
-              title="Eliminar"
-         @click="deletePago(data.item.id)"
-            >
-              <i class="fas fa-trash"></i>
-            </b-button>
-       
-          </template>
+                            <!--  {{data.item}} -->
+                            <b-button
+                              variant="outline-danger default actions"
+                              size="sm"
+                              data-toggle="tooltip"
+                              data-placement="top"
+                              title="Eliminar"
+                              @click="deletePago(data.item.id)"
+                            >
+                              <i class="fas fa-trash"></i>
+                            </b-button>
+                          </template>
                         </b-table>
-
-                
                       </div>
                     </div>
                     <div class="modal-footer"></div>
@@ -505,7 +487,6 @@
 
               <!--          Modal agregar editar producto -->
             </div>
-
 
             <div class="card-footer py-4">
               <nav class="d-flex justify-content-end" aria-label="..."></nav>
@@ -543,8 +524,8 @@ export default {
       perPage: 10,
       currentPage: 1,
       filter: null,
-     fields2: [
-            {
+      fields2: [
+        {
           key: "fecha",
           label: "Fecha",
         },
@@ -552,16 +533,16 @@ export default {
           key: "tipo",
           label: "Forma de Pago",
         },
-           {
+        {
           key: "pago",
           label: "Pago",
         },
-        {
+        /*   {
           key: "total",
           label: "Total",
-        },
-        
-        { key: "actions", label: "Acciones",   tdClass: "list-item-enddate", },
+        }, */
+
+        { key: "actions", label: "Acciones", tdClass: "list-item-enddate" },
       ],
       fields1: [
         {
@@ -592,7 +573,7 @@ export default {
           sortDirection: "desc",
           tdClass: "list-item-enddate",
         },
-          {
+        {
           key: "total",
           label: "Total",
           sortable: false,
@@ -620,7 +601,7 @@ export default {
       detalleventa: [],
       totalventas: "",
       infoventa: [],
-        infopagosventa: [],
+      infopagosventa: [],
       text: "",
       formadepago: "",
       infoabonos: "",
@@ -647,14 +628,14 @@ export default {
     this.totalDashboardVentas();
   },
   methods: {
-        deletePago(id) {
-      pagoServices.deletePago(id)
+    deletePago(id) {
+      pagoServices
+        .deletePago(id)
         .then((response) => {
           let mensaje = response.data.data;
           if (mensaje == 200) {
-  location.reload();
-  
-      }
+            location.reload();
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -712,8 +693,8 @@ export default {
           console.log(error);
         });
     },
-     obtenerpagos(id) {
-    VentaServices.getInformacionPagosVenta(id)
+    obtenerpagos(id) {
+      VentaServices.getInformacionPagosVenta(id)
         .then((response) => {
           this.infopagosventa = response.data.data;
         })
