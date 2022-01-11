@@ -255,6 +255,19 @@ class CompraApiController extends ApiResponseController
         return $this->successResponse($info_dashboard);
     }
 
+    public function updateDetalleCompra(Request $request)
+    {
+
+        $data = request()->all();
+      //  return $data['infoproducto']['id'];
+
+         $update_detalle_compra = DetalleCompras::findOrFail($data['infoproducto']['id']);
+        $update_detalle_compra->precio = $data['infoproducto']['precio'];
+        $update_detalle_compra->update();
+        if (!$update_detalle_compra) return $this->errorResponse(500);
+        return $this->successResponse(200);
+    }
+
 
 
 

@@ -50,4 +50,8 @@ export default {
         let url = server + resource + 'totales-dashboard-compras';
         return Axios.get(url);
     },
+    updateDetalleCompra(data) {
+        let url = server + resource + "update-detalle_compra";
+        return Axios.post(url, data);
+    },
 }

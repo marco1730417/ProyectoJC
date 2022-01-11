@@ -174,126 +174,146 @@
                             </b-col>
                             <b-col sm="12">
                               <v-select
-                                label="descripcion"
+                                label="nombre"
                                 v-model="producto"
                                 :options="infoproducto"
                                 required
                               ></v-select>
+                              <small class="text-primary text-center">
+                                {{ producto.descripcion }}
+                              </small>
                             </b-col>
                           </b-row>
 
                           <b-row class="my-1">
-                    
-             
-                     
-<b-col sm="12">
-   <div>
- <b-form-group label="Escoja la unidad adquirida" >
-  <b-form-radio-group  id="radio-group-1"  
-    name="radio-sub-component1">
-    <b-form-radio v-for="item in options"  v-model="tipocompra" :key="item.value" :value="item.value" >{{item.text}}</b-form-radio>
-<!-- {{selectedpv1}} -->
-  </b-form-radio-group>
-</b-form-group>
-         </div>
-                 <b-row v-if="tipocompra === 'mt' || tipocompra === 'u'   " class="my-1">
-                            <b-col sm="4">
-                              <label for="input-small">Cantidad total de {{tipocompra}} </label>
-                            </b-col>
-                            <b-col sm="8">
-                              <b-form-input
-                                id="input-small"
-                                @keypress="onlyNumber"
-                                size="sm"
-                                v-model="cantidad"
-                                type="number"
-                              ></b-form-input>
-                            </b-col>
-                          </b-row>
-                       
-                                <b-row v-if="tipocompra === 'rll' " class="my-1">
-                            <b-col sm="4">
-                              <label for="input-small">Numero de {{tipocompra}} </label>
-                            </b-col>
-                            <b-col sm="8">
-                              <b-form-input
-                                id="input-small"
-                                @keypress="onlyNumber"
-                                size="sm"
-                                v-model="rollos"
-                                type="number"
-                              ></b-form-input>
-                            </b-col>
-                             <b-col sm="4">
-                              <label for="input-small">Cantidad total de mt </label>
-                            </b-col>
-                            <b-col sm="8">
-                              <b-form-input
-                                id="input-small"
-                                @keypress="onlyNumber"
-                                size="sm"
-                                v-model="cantidad"
-                                type="number"
-                              ></b-form-input>
-                                <small 
-                                > <strong>Favor ingrese la cantidad de mt por
-                                {{tipocompra}} </strong> </small
+                            <b-col sm="12">
+                              <div>
+                                <b-form-group
+                                  label="Escoja la unidad adquirida"
+                                >
+                                  <b-form-radio-group
+                                    id="radio-group-1"
+                                    name="radio-sub-component1"
+                                  >
+                                    <b-form-radio
+                                      v-for="item in options"
+                                      v-model="tipocompra"
+                                      :key="item.value"
+                                      :value="item.value"
+                                      >{{ item.text }}</b-form-radio
+                                    >
+                                    <!-- {{selectedpv1}} -->
+                                  </b-form-radio-group>
+                                </b-form-group>
+                              </div>
+                              <b-row
+                                v-if="tipocompra === 'mt' || tipocompra === 'u'"
+                                class="my-1"
                               >
+                                <b-col sm="4">
+                                  <label for="input-small"
+                                    >Cantidad total de {{ tipocompra }}
+                                  </label>
+                                </b-col>
+                                <b-col sm="8">
+                                  <b-form-input
+                                    id="input-small"
+                                    @keypress="onlyNumber"
+                                    size="sm"
+                                    v-model="cantidad"
+                                    type="number"
+                                  ></b-form-input>
+                                </b-col>
+                              </b-row>
+
+                              <b-row v-if="tipocompra === 'rll'" class="my-1">
+                                <b-col sm="4">
+                                  <label for="input-small"
+                                    >Numero de {{ tipocompra }}
+                                  </label>
+                                </b-col>
+                                <b-col sm="8">
+                                  <b-form-input
+                                    id="input-small"
+                                    @keypress="onlyNumber"
+                                    size="sm"
+                                    v-model="rollos"
+                                    type="number"
+                                  ></b-form-input>
+                                </b-col>
+                                <b-col sm="4">
+                                  <label for="input-small"
+                                    >Cantidad total de mt
+                                  </label>
+                                </b-col>
+                                <b-col sm="8">
+                                  <b-form-input
+                                    id="input-small"
+                                    @keypress="onlyNumber"
+                                    size="sm"
+                                    v-model="cantidad"
+                                    type="number"
+                                  ></b-form-input>
+                                  <small>
+                                    <strong
+                                      >Favor ingrese la cantidad de mt por
+                                      {{ tipocompra }}
+                                    </strong>
+                                  </small>
+                                </b-col>
+                              </b-row>
+
+                              <b-row v-if="tipocompra === 'cj'" class="my-1">
+                                <b-col sm="4">
+                                  <label for="input-small"
+                                    >Numero de {{ tipocompra }}
+                                  </label>
+                                </b-col>
+                                <b-col sm="8">
+                                  <b-form-input
+                                    id="input-small"
+                                    @keypress="onlyNumber"
+                                    size="sm"
+                                    v-model="rollos"
+                                    type="number"
+                                  ></b-form-input>
+                                </b-col>
+                                <b-col sm="4">
+                                  <label for="input-small"
+                                    >Cantidad total de u
+                                  </label>
+                                </b-col>
+                                <b-col sm="8">
+                                  <b-form-input
+                                    id="input-small"
+                                    @keypress="onlyNumber"
+                                    size="sm"
+                                    v-model="cantidad"
+                                    type="number"
+                                  ></b-form-input>
+                                  <small>
+                                    <strong
+                                      >Favor ingrese la cantidad de u por
+                                      {{ tipocompra }}
+                                    </strong>
+                                  </small>
+                                </b-col>
+                              </b-row>
+                              <b-row v-if="tipocompra" class="my-1">
+                                <b-col sm="4">
+                                  <label for="input-small">Precio:</label>
+                                </b-col>
+                                <b-col sm="8">
+                                  <b-form-input
+                                    id="input-small"
+                                    size="sm"
+                                    @keypress="onlyNumber"
+                                    v-model="precio"
+                                  ></b-form-input>
+                                </b-col>
+                              </b-row>
                             </b-col>
                           </b-row>
-
-
-
-                          
-                                <b-row v-if="tipocompra === 'cj' " class="my-1">
-                            <b-col sm="4">
-                              <label for="input-small">Numero de {{tipocompra}} </label>
-                            </b-col>
-                            <b-col sm="8">
-                              <b-form-input
-                                id="input-small"
-                                @keypress="onlyNumber"
-                                size="sm"
-                                v-model="rollos"
-                                type="number"
-                              ></b-form-input>
-                            </b-col>
-                             <b-col sm="4">
-                              <label for="input-small">Cantidad total de u </label>
-                            </b-col>
-                            <b-col sm="8">
-                              <b-form-input
-                                id="input-small"
-                                @keypress="onlyNumber"
-                                size="sm"
-                                v-model="cantidad"
-                                type="number"
-                              ></b-form-input>
-                               <small 
-                                > <strong>Favor ingrese la cantidad de u por
-                                {{tipocompra}} </strong> </small
-                              >
-                            </b-col>
-                          </b-row>
-                             <b-row v-if="tipocompra" class="my-1">
-                            <b-col sm="4">
-                              <label for="input-small">Precio:</label>
-                            </b-col>
-                            <b-col sm="8">
-                              <b-form-input
-                                id="input-small"
-                                size="sm"
-                                @keypress="onlyNumber"
-                                v-model="precio"
-                              ></b-form-input>
-                            </b-col>
-                          </b-row>
-
- </b-col>
-
-                          </b-row>
-
-
 
                           <b-row class="my-1">
                             <br />
@@ -366,10 +386,21 @@
                                 size="sm"
                                 data-toggle="tooltip"
                                 data-placement="top"
-                                title="save"
+                                title="eliminar producto"
                                 @click="deleteDetalleCompra(data.item.id)"
                               >
                                 <i class="fas fa-trash"></i>
+                              </b-button>
+                              <b-button
+                                variant="outline-success default actions"
+                                size="sm"
+                                data-toggle="modal"
+                                data-target="#ModalEditarProducto"
+                                @click="obtenerdatosproducto(data.item)"
+                                data-placement="top"
+                                title="editar compra"
+                              >
+                                <i class="fas fa-edit" title="Pagos"></i>
                               </b-button>
                             </template>
                           </b-table>
@@ -382,6 +413,64 @@
             </div>
           </div>
 
+          <div
+            class="modal fade"
+            id="ModalEditarProducto"
+            tabindex="-1"
+            role="dialog"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Edicion de producto</h5>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+
+                <div class="modal-body">
+                 <!--  {{ productoinfo }} -->
+                  <form>
+                    <div class="form-group">
+                      <label for="exampleFormControlInput1">Producto</label>
+                      <input
+                        type="email"
+                        class="form-control"
+                        disabled
+                        id="exampleFormControlInput1"
+                        v-model="productoinfo.proDescripcion"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleFormControlSelect1">Precio</label>
+                      <input
+                        type="email"
+                        class="form-control"
+                        id="exampleFormControlInput1"
+                        v-model="productoinfo.precio"
+                      />
+                    </div>
+                    <div class="col-12 text-center">
+                      <div
+                        v-if="productoinfo.precio"
+                        @click="updateDetalleCompra(productoinfo)"
+                        class="btn btn-primary payment"
+                      >
+                        Editar
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer"></div>
+              </div>
+            </div>
+          </div>
           <!--          Modal agregar nuevo producto -->
 
           <div
@@ -427,7 +516,6 @@
 
 
 <script>
-
 import CompraServices from "../../services/compraServices";
 import ProveedorServices from "../../services/proveedorServices";
 import Conf from "../../services/conf.js";
@@ -469,14 +557,14 @@ export default {
         },
         {
           key: "rollos",
-          label: "Rollos",
+          label: "RLL / CJ",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate",
         },
         {
           key: "cantidad",
-          label: "Metros",
+          label: "MT / U",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate",
@@ -525,6 +613,7 @@ export default {
       comprobante: "",
       infoproducto: "",
       producto: "",
+      productoinfo: [],
     };
   },
   created() {
@@ -538,6 +627,30 @@ export default {
     this.getInformacionHeaderCompras();
   },
   methods: {
+    updateDetalleCompra(datosproducto) {
+      let data = {
+        infoproducto: datosproducto,
+      };
+      CompraServices.updateDetalleCompra(data)
+        .then((response) => {
+          let mensaje = response.data.data;
+          if (mensaje == 200) {
+            this.$swal.fire({
+              icon: "success",
+              title: "Valores actualizados",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+
+            this.getInformacionCompra();
+          
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
     onOver() {
       this.$refs.dropdown.visible = true;
     },
@@ -601,6 +714,9 @@ export default {
               });
           }
         });
+    },
+    obtenerdatosproducto(item) {
+      this.productoinfo = item;
     },
     updateCompra() {
       let data = {
