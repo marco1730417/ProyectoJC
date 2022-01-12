@@ -1127,7 +1127,7 @@ export default {
 
         { key: "actions", label: "Acciones", tdClass: "text-center" },
       ],
-      fecha: moment().format("MMMM Do YYYY"),
+      fecha: moment().format("MMM DD YYYY, ddd, h:mm:ss a"),
       cliente: "",
       clienteupdate: "",
       formadepagoupdate: "",
