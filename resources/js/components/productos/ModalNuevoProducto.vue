@@ -245,7 +245,7 @@
   </b-row>
 
      <b-row class="my-1">
-    <b-col sm="5">
+    <b-col sm="5" >
       <label for="input-small">Cantidad de {{selectedpv1}} por cada {{selectedpv2}}   :</label>
     </b-col>
     <b-col sm="7">
@@ -273,7 +273,7 @@
       <div  class="col-12 text-center">
         <div
         
-          v-if="nombre && unidades && PrecioVenta1"
+          v-if="nombre "
            @click="createNewProducto()"
           class="btn btn-primary payment"
         >
@@ -296,7 +296,7 @@ export default {
         selectedpv1: "",
         selectedpv2:"",
         selectedpv3: "",
-        metrosrollo:"",
+        metrosrollo:0,
           uniPrecioVenta1:"",
       uniPrecioVenta2:"",
       uniPrecioVenta3:"",
@@ -314,11 +314,11 @@ export default {
       nombre: "",
       codigo: "",
       descripcion: "",
-      unidades: "",
+      unidades: 0,
       iva: 12,
-      PrecioVenta1: "",
-      PrecioVenta2: "",
-      PrecioVenta3:"",
+      PrecioVenta1: 0,
+      PrecioVenta2: 0,
+      PrecioVenta3:0,
 
       
       Utilidad:"",
