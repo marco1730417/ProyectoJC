@@ -13,7 +13,7 @@
                       <!--      <b-col>Informacion de la Compra
  -->
                       <div>
-                        <h2>Informacion General</h2>
+                        <h2>Información General</h2>
                         <b-form>
                           <div class="row">
                             <div class="col">
@@ -163,7 +163,7 @@
                           </div>
                         </b-form>
                       </div>
-                             <h2>Informacion de productos adquiridos</h2>
+                             <h2>Productos adquiridos</h2>
                     </div>
                     <!--  </b-col> -->
                     <b-col>
