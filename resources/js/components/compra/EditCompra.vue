@@ -156,10 +156,26 @@
                             </div>
 
                             <div class="col">
+                           <!--    <b-button @click="updateCompra" variant="primary"
+                                >Guardar Información</b-button
+                              > -->
+                                     <b-form-group
+                                id="input-group-1"
+                                label="Total"
+                                label-for="input-1"
+                              >
+                                <b-form-input
+                                  @keypress="onlyNumber"
+                                  type="number"
+                                  v-model="totalcompra"
+                                  required
+                                ></b-form-input>
+                              </b-form-group>
                               <b-button @click="updateCompra" variant="primary"
                                 >Guardar Información</b-button
                               >
                             </div>
+                            
                           </div>
                         </b-form>
                       </div>
@@ -212,7 +228,7 @@
                               >
                                 <b-col sm="4">
                                   <label for="input-small"
-                                    >Cantidad total de {{ tipocompra }}
+                                    >Cantidad de {{ tipocompra }}
                                   </label>
                                 </b-col>
                                 <b-col sm="8">
@@ -243,7 +259,7 @@
                                 </b-col>
                                 <b-col sm="4">
                                   <label for="input-small"
-                                    >Cantidad total de mt
+                                    >Cantidad de mt por cada {{tipocompra}}
                                   </label>
                                 </b-col>
                                 <b-col sm="8">
@@ -254,12 +270,12 @@
                                     v-model="cantidad"
                                     type="number"
                                   ></b-form-input>
-                                  <small>
+                            <!--       <small>
                                     <strong
                                       >Favor ingrese la cantidad de mt por
                                       {{ tipocompra }}
                                     </strong>
-                                  </small>
+                                  </small> -->
                                 </b-col>
                               </b-row>
 
@@ -280,7 +296,7 @@
                                 </b-col>
                                 <b-col sm="4">
                                   <label for="input-small"
-                                    >Cantidad total de u
+                                    >Cantidad  de u por cada {{tipocompra}}
                                   </label>
                                 </b-col>
                                 <b-col sm="8">
@@ -291,12 +307,12 @@
                                     v-model="cantidad"
                                     type="number"
                                   ></b-form-input>
-                                  <small>
+                           <!--        <small>
                                     <strong
                                       >Favor ingrese la cantidad de u por
                                       {{ tipocompra }}
                                     </strong>
-                                  </small>
+                                  </small> -->
                                 </b-col>
                               </b-row>
                               <b-row v-if="tipocompra" class="my-1">
@@ -307,6 +323,7 @@
                                   <b-form-input
                                     id="input-small"
                                     size="sm"
+                                    type="number"
                                     @keypress="onlyNumber"
                                     v-model="precio"
                                   ></b-form-input>
