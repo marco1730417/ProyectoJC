@@ -5,185 +5,185 @@
         <div class="header-body">
           <!-- Card stats -->
           <div class="row">
-            <div class="col-xl-6 col-lg-6"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="container-fluid mt--7">
-      <div class="row">
-        <div class="col">
-          <div class="card shadow">
-            <div class="card-header border-0">
-              <div class="row align-items-center">
-                <div class="col-12 text-left">
-                  <div class="container">
-                    <h3 class="text-center">Informacion de compra</h3>
-
-                    <div class="row">
-                      <div class="col-md-6">
-                        <p>Informacion de la compra</p>
-                        <b-container fluid>
-                          <b-row class="my-1">
-                            <b-col sm="4">
-                              <label for="input-small">Proveedor:</label>
-                            </b-col>
-                            <b-col sm="8">
-                              <v-select
-                                label="nombre"
-                                v-model="proveedor"
-                                :options="infoproveedor"
-                                required
-                              ></v-select>
-                            </b-col>
-                          </b-row>
-                          <b-row class="my-1">
-                            <b-col sm="4">
-                              <label for="input-small">Fecha:</label>
-                            </b-col>
-                            <b-col sm="8">
-                              <b-form-input
-                                id="input-small"
-                                size="sm"
-                                type="date"
-                                v-model="fecha"
-                              ></b-form-input>
-                              <small v-if="detallegeneralcompra.length > 0">
-                                {{ detallegeneralcompra.detalle_compra.fecha }}
-                              </small>
-                            </b-col>
-                          </b-row>
-                          <b-row class="my-1">
-                            <b-col sm="4">
-                              <label for="input-small">Comprobante:</label>
-                            </b-col>
-                            <b-col sm="8">
-                              <b-form-input
-                                id="input-small"
-                                size="sm"
-                                v-model="comprobante"
-                              ></b-form-input>
-                            </b-col>
-                          </b-row>
-                          <b-row class="my-1">
-                            <b-col sm="4">
-                              <label for="input-small">SubTotal:</label>
-                            </b-col>
-                            <b-col sm="8">
-                              <b-form-input
-                                id="input-small"
-                                size="sm"
-                                @keypress="onlyNumber"
-                                type="number"
-                                v-model="subtotal"
-                              ></b-form-input>
-                            </b-col>
-                          </b-row>
-                          <b-row class="my-1">
-                            <b-col sm="4">
-                              <label for="input-small">Descuentos:</label>
-                            </b-col>
-                            <b-col sm="8">
-                              <b-form-input
-                                id="input-small"
-                                size="sm"
-                                type="number"
-                                @keypress="onlyNumber"
-                                v-model="descuento"
-                              ></b-form-input>
-                            </b-col>
-                          </b-row>
-
-                          <b-row class="my-1">
-                            <b-col sm="4">
-                              <label for="input-small">SubTotal 0:</label>
-                            </b-col>
-                            <b-col sm="8">
-                              <b-form-input
-                                id="input-small"
-                                size="sm"
-                                type="number"
-                                @keypress="onlyNumber"
-                                v-model="subtotalcero"
-                              ></b-form-input>
-                            </b-col>
-                          </b-row>
-                          <b-row class="my-1">
-                            <b-col sm="4">
-                              <label for="input-small">SubTotal 12:</label>
-                            </b-col>
-                            <b-col sm="8">
-                              <b-form-input
-                                id="input-small"
-                                size="sm"
-                                type="number"
-                                @keypress="onlyNumber"
-                                v-model="subtotaldoce"
-                              ></b-form-input>
-                            </b-col>
-                          </b-row>
-                          <b-row class="my-1">
-                            <b-col sm="4">
-                              <label for="input-small">Valor iva:</label>
-                            </b-col>
-                            <b-col sm="8">
-                              <b-form-input
-                                id="input-small"
-                                size="sm"
-                                @keypress="onlyNumber"
-                                v-model="valoriva"
-                                type="number"
-                              ></b-form-input>
-                            </b-col>
-                          </b-row>
-                          <b-row class="my-1">
-                            <b-col sm="4">
-                              <label for="input-small">Total:</label>
-                            </b-col>
-                            <b-col sm="8">
-                              <b-form-input
-                                id="input-small"
-                                size="sm"
-                                @keypress="onlyNumber"
-                                v-model="totalcompra"
-                                type="number"
-                              ></b-form-input>
-                            </b-col>
-                          </b-row>
-
-                          <b-row class="my-1">
-                            <br />
-                            <b-col class="text-center" sm="12">
-                              <b-button
-                                size="sm"
-                                @click="updateCompra"
-                                variant="primary"
-                                >Guardar Informacion</b-button
+            <div class="col-xl-12 col-lg-12">
+              <div class="card card-stats mb-4 mb-xl-0">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <!--      <b-col>Informacion de la Compra
+ -->
+                      <div>
+                        <h2>Informacion General</h2>
+                        <b-form>
+                          <div class="row">
+                            <div class="col">
+                              <b-form-group
+                                id="input-group-3"
+                                label="Proveedor"
+                                label-for="input-3"
                               >
-                            </b-col>
-                          </b-row>
-                        </b-container>
+                                <v-select
+                                  label="nombre"
+                                  v-model="proveedor"
+                                  :options="infoproveedor"
+                                  required
+                                ></v-select>
+                              </b-form-group>
+                            </div>
+                            <div class="col">
+                              <b-form-group
+                                id="input-group-1"
+                                label="Comprobante"
+                                label-for="input-1"
+                              >
+                                <b-form-input
+                                  v-model="comprobante"
+                                  type="email"
+                                  placeholder="Ingrese el numero de comprobante"
+                                  required
+                                ></b-form-input>
+                              </b-form-group>
+                            </div>
+
+                            <div class="col">
+                              <div>
+                                <label
+                                  class="mr-sm-2"
+                                  for="inline-form-custom-select-pref"
+                                  >Fecha</label
+                                >
+                                <b-form inline>
+                                  <b-form-input
+                                    id="inline-form-input-name"
+                                    class="mb-2 mr-sm-2 mb-sm-0"
+                                    type="date"
+                                    v-model="fecha"
+                                  ></b-form-input>
+
+                                  <label
+                                    class="sr-only"
+                                    for="inline-form-input-username"
+                                    >Actual Date</label
+                                  >
+
+                                  <b-input-group class="mb-2 mr-sm-2 mb-sm-0">
+                                    <b-form-input
+                                      type="text"
+                                      id="inline-form-input-username"
+                                      disabled
+                                      :placeholder="fecha"
+                                    ></b-form-input>
+                                  </b-input-group>
+                                </b-form>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col">
+                              <b-form-group
+                                id="input-group-1"
+                                label="SubTotal"
+                                label-for="input-1"
+                              >
+                                <b-form-input
+                                  @keypress="onlyNumber"
+                                  type="number"
+                                  v-model="subtotal"
+                                  required
+                                ></b-form-input>
+                              </b-form-group>
+                            </div>
+                            <div class="col">
+                              <b-form-group
+                                id="input-group-1"
+                                label="Descuentos"
+                                label-for="input-1"
+                              >
+                                <b-form-input
+                                  @keypress="onlyNumber"
+                                  type="number"
+                                  v-model="descuento"
+                                  required
+                                ></b-form-input>
+                              </b-form-group>
+                            </div>
+
+                            <div class="col">
+                              <b-form-group
+                                id="input-group-1"
+                                label="SubTotal 0"
+                                label-for="input-1"
+                              >
+                                <b-form-input
+                                  @keypress="onlyNumber"
+                                  type="number"
+                                  v-model="subtotalcero"
+                                  required
+                                ></b-form-input>
+                              </b-form-group>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col">
+                              <b-form-group
+                                id="input-group-1"
+                                label="SubTotal 12"
+                                label-for="input-1"
+                              >
+                                <b-form-input
+                                  @keypress="onlyNumber"
+                                  type="number"
+                                  v-model="subtotaldoce"
+                                  required
+                                ></b-form-input>
+                              </b-form-group>
+                            </div>
+                            <div class="col">
+                              <b-form-group
+                                id="input-group-1"
+                                label="Valor Iva"
+                                label-for="input-1"
+                              >
+                                <b-form-input
+                                  @keypress="onlyNumber"
+                                  type="number"
+                                  v-model="valoriva"
+                                  required
+                                ></b-form-input>
+                              </b-form-group>
+                            </div>
+
+                            <div class="col">
+                              <b-button @click="updateCompra" variant="primary"
+                                >Guardar Información</b-button
+                              >
+                            </div>
+                          </div>
+                        </b-form>
                       </div>
-                      <div class="col-md-6">
-                        <p>Productos adquiridos</p>
-                        <b-container fluid>
-                          <b-row class="my-1">
-                            <b-col sm="4">
-                              <label for="input-small">Producto:</label>
-                            </b-col>
-                            <b-col sm="12">
-                              <v-select
-                                label="nombre"
-                                v-model="producto"
-                                :options="infoproducto"
-                                required
-                              ></v-select>
-                              <small class="text-primary text-center">
-                                {{ producto.descripcion }}
-                              </small>
-                            </b-col>
-                          </b-row>
+                             <h2>Informacion de productos adquiridos</h2>
+                    </div>
+                    <!--  </b-col> -->
+                    <b-col>
+                      <div>
+                        <b-form>
+                          <b-form-group
+                            id="input-group-3"
+                            label="Producto"
+                            label-for="input-3"
+                          >
+                            <v-select
+                              label="nombre"
+                              v-model="producto"
+                              :options="infoproducto"
+                              required
+                            ></v-select>
+                            <small class="text-primary text-center">
+                              {{ producto.descripcion }}
+                            </small>
+                          </b-form-group>
 
                           <b-row class="my-1">
                             <b-col sm="12">
@@ -314,18 +314,21 @@
                               </b-row>
                             </b-col>
                           </b-row>
-
                           <b-row class="my-1">
                             <br />
                             <b-col class="text-center" sm="12">
                               <b-button
-                                size="sm"
+                                v-if="producto"
                                 @click="addProductosCompra"
                                 variant="primary"
-                                >Guardar Producto</b-button
+                                >Agregar Producto</b-button
+                              > <b-button
+                                v-if="!producto"
+                              disabled
+                                variant="primary"
+                                >Agregar Producto</b-button
                               >
                               <b-button
-                                size="sm"
                                 data-toggle="modal"
                                 data-target="#ModalNuevoProducto"
                                 variant="secondary"
@@ -333,180 +336,179 @@
                               >
                             </b-col>
                           </b-row>
-                        </b-container>
-                      </div>
-                    </div>
+                          <!--          Modal agregar editar producto -->
 
-                    <div class="row">
-                      <div class="col-md-12">
-                        <p>Detalle General de la compra</p>
-                        <b-container fluid>
-                          <b-table
-                            striped
-                            hover
-                            :items="detallecompra"
-                            :fields="fields"
-                          >
-                            <template #cell(index)="data">
-                              <small> {{ data.index + 1 }} </small>
-                            </template>
-                            <template #cell(proNombre)="data">
-                              <small v-if="data.item.proDescripcion">
-                                {{ data.item.proNombre }}
-                              </small>
-                              <small v-else> No data </small>
-                            </template>
-                            <template #cell(rollos)="data">
-                              <small v-if="data.item.rollos">
-                                {{ data.item.rollos }}
-                              </small>
-                              <small v-else>0 </small>
-                            </template>
-                            <template #cell(cantidad)="data">
-                              <small v-if="data.item.cantidad">
-                                {{ data.item.cantidad }}
-                              </small>
-                              <small v-else> No data </small>
-                            </template>
-                            <template #cell(unidades)="data">
-                              <small v-if="data.item.unidades">
-                                {{ data.item.unidades }}
-                              </small>
-                              <small v-else> No data </small>
-                            </template>
-                            <template #cell(precio)="data">
-                              <small v-if="data.item.precio">
-                                $ {{ data.item.precio }}
-                              </small>
-                              <small v-else> No data </small>
-                            </template>
-                            <template #cell(actions)="data">
-                              <b-button
-                                variant="outline-danger default actions"
-                                size="sm"
-                                data-toggle="tooltip"
-                                data-placement="top"
-                                title="eliminar producto"
-                                @click="deleteDetalleCompra(data.item.id)"
+                          <div class="row">
+                            <b-container fluid>
+                              <p>Productos de compra {{ comprobante }}</p>
+
+                              <b-table
+                                striped
+                                :items="detallecompra"
+                                :fields="fields"
                               >
-                                <i class="fas fa-trash"></i>
-                              </b-button>
-                              <b-button
-                                variant="outline-success default actions"
-                                size="sm"
-                                data-toggle="modal"
-                                data-target="#ModalEditarProducto"
-                                @click="obtenerdatosproducto(data.item)"
-                                data-placement="top"
-                                title="editar compra"
-                              >
-                                <i class="fas fa-edit" title="Pagos"></i>
-                              </b-button>
-                            </template>
-                          </b-table>
-                        </b-container>
+                                <template #cell(index)="data">
+                                  <small>
+                                    {{ data.index + 1 }}
+                                    <!-- {{data.item}}  --></small
+                                  >
+                                </template>
+                                <template #cell(proNombre)="data">
+                                  <small v-if="data.item.proNombre">
+                                    {{ data.item.proNombre }}
+                                  </small>
+                                  <small v-else> No data </small>
+                                </template>
+                                <template #cell(rollos)="data">
+                                  <small v-if="data.item.rollos">
+                                    {{ data.item.rollos }}
+                                  </small>
+                                  <small v-else>0 </small>
+                                </template>
+                                <template #cell(cantidad)="data">
+                                  <small v-if="data.item.cantidad">
+                                    {{ data.item.cantidad }}
+                                  </small>
+                                  <small v-else> No data </small>
+                                </template>
+                                <template #cell(unidades)="data">
+                                  <small v-if="data.item.unidades">
+                                    {{ data.item.unidades }}
+                                  </small>
+                                  <small v-else> No data </small>
+                                </template>
+                                <template #cell(precio)="data">
+                                  <small v-if="data.item.precio">
+                                    $ {{ data.item.precio }}
+                                  </small>
+                                  <small v-else> No data </small>
+                                </template>
+                                <template #cell(actions)="data">
+                                          <b-button
+                                    variant="outline-success default actions"
+                                    size="sm"
+                                    data-toggle="modal"
+                                    data-target="#ModalEditarProducto"
+                                    @click="obtenerdatosproducto(data.item)"
+                                    data-placement="top"
+                                    title="editar compra"
+                                  >
+                                    <i class="fas fa-edit" title="Editar precio"></i>
+                                  </b-button>
+                                  <b-button
+                                    variant="outline-danger default actions"
+                                    size="sm"
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    title="eliminar producto"
+                                    @click="deleteDetalleCompra(data.item.id)"
+                                  >
+                                    <i class="fas fa-trash"></i>
+                                  </b-button>
+                          
+                                </template>
+                              </b-table>
+                              <br /><br /><br />
+            
+                            </b-container>
+                          </div>
+                        </b-form>
                       </div>
-                    </div>
+                    </b-col>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div
-            class="modal fade"
-            id="ModalEditarProducto"
-            tabindex="-1"
-            role="dialog"
-            aria-hidden="true"
-          >
-            <div class="modal-dialog modal-lg" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">Edicion de producto</h5>
-                  <button
-                    type="button"
-                    class="close"
-                    data-dismiss="modal"
-                    aria-label="Close"
-                  >
-                    <span aria-hidden="true">&times;</span>
-                  </button>
+            <div
+              class="modal fade"
+              id="ModalNuevoProducto"
+              tabindex="-1"
+              role="dialog"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Registrar nuevo producto</h5>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                      <b-alert show> <strong>IMPORTANTE </strong>  <br/> Si se va a agregar un producto nuevo , se recomienda ingresar las cantidades con valor 0 para evitar
+                        un doble ingreso de stock al momento de registrar la compra
+                      </b-alert>
+                    <modal-nuevo-producto @updateProducto="updateProducto" />
+                  </div>
+                  <div class="modal-footer"></div>
                 </div>
+              </div>
+            </div>
 
-                <div class="modal-body">
-                 <!--  {{ productoinfo }} -->
-                  <form>
-                    <div class="form-group">
-                      <label for="exampleFormControlInput1">Producto</label>
-                      <input
-                        type="email"
-                        class="form-control"
-                        disabled
-                        id="exampleFormControlInput1"
-                        v-model="productoinfo.proDescripcion"
-                      />
-                    </div>
-                    <div class="form-group">
-                      <label for="exampleFormControlSelect1">Precio</label>
-                      <input
-                        type="email"
-                        class="form-control"
-                        id="exampleFormControlInput1"
-                        v-model="productoinfo.precio"
-                      />
-                    </div>
-                    <div class="col-12 text-center">
-                      <div
-                        v-if="productoinfo.precio"
-                        @click="updateDetalleCompra(productoinfo)"
-                        class="btn btn-primary payment"
-                      >
-                        Editar
+            <div
+              class="modal fade"
+              id="ModalEditarProducto"
+              tabindex="-1"
+              role="dialog"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Edicion de producto</h5>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+
+                  <div class="modal-body">
+                    <!--       {{ productoinfo }} -->
+                    <form>
+                      <div class="form-group">
+                        <label for="exampleFormControlInput1">Producto</label>
+                        <input
+                          type="email"
+                          class="form-control"
+                          disabled
+                          id="exampleFormControlInput1"
+                          v-model="productoinfo.proDescripcion"
+                        />
                       </div>
-                    </div>
-                  </form>
+                      <div class="form-group">
+                        <label for="exampleFormControlSelect1">Precio</label>
+                        <input
+                          type="email"
+                          class="form-control"
+                          id="exampleFormControlInput1"
+                          v-model="productoinfo.precio"
+                        />
+                      </div>
+                      <div class="col-12 text-center">
+                        <div
+                          v-if="productoinfo.precio"
+                          @click="updateDetalleCompra(productoinfo)"
+                          class="btn btn-primary payment"
+                        >
+                          Editar
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer"></div>
                 </div>
-                <div class="modal-footer"></div>
               </div>
             </div>
-          </div>
-          <!--          Modal agregar nuevo producto -->
-
-          <div
-            class="modal fade"
-            id="ModalNuevoProducto"
-            tabindex="-1"
-            role="dialog"
-            aria-hidden="true"
-          >
-            <div class="modal-dialog modal-lg" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">Registrar nuevo producto</h5>
-                  <button
-                    type="button"
-                    class="close"
-                    data-dismiss="modal"
-                    aria-label="Close"
-                  >
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <modal-nuevo-producto @updateProducto="getAllProductos" />
-                </div>
-                <div class="modal-footer"></div>
-              </div>
-            </div>
-          </div>
-
-          <!--          Modal agregar editar producto -->
-
-          <!--  {{totalesventa}} -->
-
-          <div class="card-footer py-4">
-            <nav class="d-flex justify-content-end" aria-label="..."></nav>
           </div>
         </div>
       </div>
@@ -549,7 +551,7 @@ export default {
           tdClass: "index",
         },
         {
-          key: "proDescripcion",
+          key: "proNombre",
           label: "Producto",
           sortable: false,
           sortDirection: "desc",
@@ -583,7 +585,7 @@ export default {
           sortDirection: "desc",
           tdClass: "list-item-enddate",
         },
-        { key: "actions", label: "Accion", tdClass: "text-center" },
+        { key: "actions", label: "Accion" },
       ],
 
       tipocompra: "",
@@ -607,7 +609,7 @@ export default {
       detallecompra: [],
       detallegeneralcompra: [],
       cantidad: 0,
-      precio: "",
+      precio: 0,
       filter: null,
       comId: "",
       comprobante: "",
@@ -627,6 +629,12 @@ export default {
     this.getInformacionHeaderCompras();
   },
   methods: {
+    updateProducto() {
+      /*    $("#ModalNuevoProducto").modal("hide");
+      this.getAllProductos(); */
+      location.reload();
+    },
+
     updateDetalleCompra(datosproducto) {
       let data = {
         infoproducto: datosproducto,
@@ -643,7 +651,6 @@ export default {
             });
 
             this.getInformacionCompra();
-          
           }
         })
         .catch((error) => {
@@ -701,7 +708,7 @@ export default {
                 if (mensaje == 200) {
                   this.$swal.fire({
                     icon: "success",
-                    title: "Compra eliminada y stock actualizado",
+                    title: "Detalle de compra eliminado y stock actualizado",
                     showConfirmButton: false,
                     timer: 1500,
                   });
