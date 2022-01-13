@@ -9,7 +9,7 @@
               <div class="card card-stats mb-4 mb-xl-0">
                 <div class="card-body">
                   <div class="row">
-                    <div class="col-xs-12">
+                    <div class="col-sm-12">
                       <!--      <b-col>Informacion de la Compra
  -->
                       <div>
