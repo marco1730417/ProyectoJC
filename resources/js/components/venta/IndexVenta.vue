@@ -132,7 +132,10 @@
                  <span v-else> N/A</span> 
                 </template>
                 <template #cell(total)="data">
-             <span v-if="data.item.total"> {{ data.item.total }}</span> 
+             <span v-if="data.item.total"> 
+                  $ {{ parseFloat(data.item.total).toFixed(2) }}
+           
+               </span> 
                  <span v-else> Pago no registrado</span> 
                 </template>
 
