@@ -171,12 +171,26 @@
                                   required
                                 ></b-form-input>
                               </b-form-group>
-                              <b-button @click="updateCompra" variant="primary"
+                           <!--    <b-button @click="updateCompra" variant="primary"
                                 >Guardar Información</b-button
-                              >
+                              > -->
+
+
+
+
                             </div>
                             
+      
                           </div>
+
+<div class="row">  <b-col class="text-center float-center" >
+                              <b-button
+                             @click="updateCompra" 
+                                variant="primary"
+                                >Guardar Información</b-button
+                              >
+                            </b-col> </div>
+
                         </b-form>
                       </div>
                              <h2>Productos adquiridos</h2>
