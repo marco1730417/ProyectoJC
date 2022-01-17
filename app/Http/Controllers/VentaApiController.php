@@ -677,8 +677,8 @@ class VentaApiController extends ApiResponseController
         $subtotal_sin_impuestos = $subtotal - $descuentos_total;
 
         $iva = 12;
-        $valor_iva = $subtotal * $iva / 100;
-        $total = $subtotal + $valor_iva;
+        $valor_iva = $subtotal_sin_impuestos * $iva / 100;
+        $total = $subtotal_sin_impuestos + $valor_iva;
 
         $totales_venta = [
             'subtotalprecio' => $subtotal,
@@ -759,8 +759,8 @@ limit 1
         $subtotal = $parciales->sum('parcial');
         $subtotal_sin_impuestos = $subtotal - $descuentos_total;
         $iva = 12;
-        $valor_iva = $subtotal * $iva / 100;
-        $total = $subtotal + $valor_iva;
+        $valor_iva = $subtotal_sin_impuestos * $iva / 100;
+        $total = $subtotal_sin_impuestos + $valor_iva;
 
         $totales_venta = [
             'subtotalprecio' => $subtotal,
