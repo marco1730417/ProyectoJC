@@ -21,7 +21,7 @@
         padding-top: 110px;
         font-family: Arial, sans-serif !important;
         margin: 5px;
-        font-size: 1.2rem !important;
+        font-size: 1.4rem !important;
         border: 2px solid rgb(241, 240, 240);
     }
 

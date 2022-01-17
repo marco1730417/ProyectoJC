@@ -30,9 +30,9 @@
           required
         ></v-select>
         <small v-if="producto">
-          <strong class="text-warning"> Codigo: </strong> {{ producto.nombre }}
+          <strong class="text-warning"> Descripción: </strong> {{ producto.descripcion }}
           <strong class="text-warning"> Stock: </strong>
-          {{ producto.unidades }} {{ producto.uniPrecioVenta1 }}
+       <span v-if="producto.unidades >0">  {{ producto.unidades }} {{ producto.uniPrecioVenta1 }} </span>  <span v-else>0 </span>
           <!--        {{producto}} -->
         </small>
       </div>
