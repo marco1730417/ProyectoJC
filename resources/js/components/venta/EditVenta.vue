@@ -896,7 +896,7 @@
               size="sm"
               data-toggle="tooltip"
               data-placement="top"
-              title="save"
+              title="Borrar producto"
          @click="deleteDetalleVenta(data.item.id)"
             >
               <i class="fas fa-trash"></i>
