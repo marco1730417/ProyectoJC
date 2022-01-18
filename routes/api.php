@@ -116,6 +116,8 @@ Route::group(['prefix' => 'venta'], function () {
     Route::post('delete-venta/{id}', [VentaApiController::class, 'deleteVenta']);
    
     Route::post('update-observacion', [VentaApiController::class, 'UpdateObservacion']);
+    Route::post('update-descuento', [VentaApiController::class, 'UpdateDescuento']);
+    
     Route::post('registrar-pago-contado', [VentaApiController::class, 'registrarPagoContado']);
     Route::post('registrar-pago-transferencia', [VentaApiController::class, 'registrarPagoTransferencia']);
     Route::post('registrar-pago-abono', [VentaApiController::class, 'registrarPagoAbono']);

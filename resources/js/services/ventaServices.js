@@ -62,6 +62,10 @@ export default {
         let url = server + resource + "update-observacion";
         return Axios.post(url, data);
     },
+    UpdateDescuento(data) {
+        let url = server + resource + "update-descuento";
+        return Axios.post(url, data);
+    },
     
     registrarabono(data) {
         let url = server + resource + "registrar-abono";
