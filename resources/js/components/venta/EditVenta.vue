@@ -832,8 +832,7 @@
 
             <!-- modal venta observaciones -->
 
-            <div class="col-12"></div>
-
+            
             <b-table
           :items="detalleventa"
           :fields="fields"
@@ -1077,7 +1076,7 @@ export default {
         }, */
         {
           key: "nombre",
-          label: "Producto",
+          label: "Código",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate",
@@ -1092,7 +1091,7 @@ export default {
 
         {
           key: "descripcion",
-          label: "Descripcion",
+          label: "Descripción",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate",
@@ -1120,7 +1119,7 @@ export default {
         }, */
         {
           key: "subTotal",
-          label: "Precio Total",
+          label: "Total",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate",
@@ -1135,7 +1134,7 @@ export default {
        
          */
 
-        { key: "actions", label: "Acciones", tdClass: "text-center" },
+        { key: "actions", label: "Accion", tdClass: "text-center" },
       ],
       fecha: moment().format("MMM DD YYYY, ddd, h:mm:ss a"),
       cliente: "",
