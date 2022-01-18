@@ -92,7 +92,10 @@
                     data-toggle="modal"
                     data-target="#ModalNuevoProveedor"
                     >Nuevo Proveedor</a
-                  >  </div>
+                  >  
+                  <button class="btn btn-success btn-sm" title="Recargar" @click="getAllProveedores" ><i class="fas fa-sync"></i></button>
+   
+                  </div>
 
 
         </div>

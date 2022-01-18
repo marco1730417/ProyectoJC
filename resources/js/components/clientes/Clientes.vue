@@ -90,7 +90,8 @@
               data-toggle="modal"
               data-target="#ModalNuevoCliente"
               >Nuevo Cliente</a
-            >
+            ><button class="btn btn-success btn-sm" title="Recargar" @click="getAllClientes" ><i class="fas fa-sync"></i></button>
+   
           </div>
         </div>
       </div>

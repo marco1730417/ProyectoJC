@@ -97,7 +97,8 @@
                     @click="gotoNuevaVenta()"
                     class="badge badge-primary"
                     >Nueva Venta</a
-                  >
+                  >    <button class="btn btn-success btn-sm" title="Recargar" @click="detalleVenta" ><i class="fas fa-sync"></i></button>
+   
                 </div>
               </div>
             </div>
