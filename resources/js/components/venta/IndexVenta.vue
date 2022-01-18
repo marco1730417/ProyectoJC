@@ -570,13 +570,13 @@ export default {
           sortDirection: "desc",
           tdClass: "list-item-enddate",
         },
-        {
+      /*   {
           key: "observacion",
           label: "Observacion",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate",
-        },
+        }, */
         {
           key: "total",
           label: "Total",

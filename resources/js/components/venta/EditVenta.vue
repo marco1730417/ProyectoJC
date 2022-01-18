@@ -88,7 +88,7 @@
                       ><i class="fas fa-user"></i>
                     
                    {{    totaldetallegeneral.nombre}}      {{    totaldetallegeneral.ruc}}
-                      
+                   <!--    {{totaldetallegeneral.descuento}} -->
                     </span>  
                          <span class="text-nowrap text-primary"><i class="fas fa-home"></i> {{ totaldetallegeneral.direccion }}</span> 
              
@@ -876,13 +876,12 @@
              {{ parseFloat( data.item.precioUnitario).toFixed(2) }}
 
           </template>
-          <template #cell(descuento)="data">
-            <!--  <small class="mb-0 mr-2">{{ data.item.ruc }}</small> -->
-        
+         <!--  <template #cell(descuento)="data">
+         
              $ 
              {{ parseFloat( data.item.descuento).toFixed(2) }}
           </template>
-
+ -->
           
 
 
@@ -924,7 +923,18 @@
                             <tr>
                             <td>DESCUENTO</td>
                             <td>
-                            $  {{ parseFloat(totalesventa.descuentos).toFixed(2) }}
+                            <!-- $  {{ parseFloat(totalesventa.descuentos).toFixed(2) }}
+                             -->
+                             <div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text">$</span>
+  </div>
+  <input type="text" v-model="descuento" class="form-control" aria-label="Amount (to the nearest dollar)">
+  <div class="input-group-append">
+  </div>
+ <!--  <button @click="UpdateDescuento()"></button> -->
+  <button class="btn btn-success" @click="UpdateDescuento()" title="Aplicar descuento"><i class="fa fa-check"></i></button>
+</div>
                             </td>
                           </tr>
                              <tr>
@@ -1056,7 +1066,7 @@ export default {
       perPage: 10,
       currentPage: 1,
       filter: null,
-
+      descuento: 0,
       fields: [
         /*    {
           key: "index",
@@ -1101,13 +1111,13 @@ export default {
           sortDirection: "desc",
           tdClass: "list-item-enddate",
         },
-        {
+        /*   {
           key: "descuento",
           label: "Descuento",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate",
-        },
+        }, */
         {
           key: "subTotal",
           label: "Precio Total",
@@ -1191,6 +1201,22 @@ export default {
     this.detalleGeneralVenta();
   },
   methods: {
+    UpdateDescuento() {
+      let data = {
+        id: this.substr,
+        descuento: this.descuento,
+      };
+      VentaServices.UpdateDescuento(data)
+        .then((response) => {
+          let mensaje = response.data.data;
+          if (mensaje == 200) {
+            this.totalesVenta();
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     reporteVentasCliente(id) {
       ReporteServices.reporteDeudasporCliente(id)
         .then((response) => {
@@ -1276,6 +1302,12 @@ export default {
           this.clienteupdate = this.detallegeneralventa["cliente"];
           this.totaldetallegeneral = this.detallegeneralventa.total;
           this.totaldetallegeneral = this.totaldetallegeneral[0];
+          //console.log(this.totaldetallegeneral.descuento+'descuentos');
+
+          if (this.totaldetallegeneral.descuento != null)
+            this.descuento = this.totaldetallegeneral.descuento;
+          else this.descuento = 0;
+
           this.reporteVentasCliente(this.clienteupdate[0].id);
           //   console.log(JSON.stringify(this.clienteupdate[0].id));
         })

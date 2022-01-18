@@ -116,10 +116,13 @@ class VentaApiController extends ApiResponseController
         $estado=1;  //1 el pago ha sido completo
         $update_venta= Venta::findOrFail($data['venId']);
         $update_venta->estadopago=1;
+        $update_venta->total=$format_total;
+        
         $update_venta->update();}
         if( $format_pago<$format_total ) { 
         $estado=0;  // el pago esta incompleto
         $update_venta= Venta::findOrFail($data['venId']);
+        $update_venta->total=$format_total;
         $update_venta->estadopago=0;
         $update_venta->update();}
 
@@ -159,6 +162,7 @@ class VentaApiController extends ApiResponseController
             $estado=1;  //1 el pago ha sido completo
             $update_venta= Venta::findOrFail($data['venId']);
             $update_venta->estadopago=1;
+            $update_venta->total=$format_total;
             $update_venta->update();}
 
         if( $format_pago<$format_total )
@@ -166,6 +170,7 @@ class VentaApiController extends ApiResponseController
             $estado=0;  //1 el pago ha sido completo
             $update_venta= Venta::findOrFail($data['venId']);
             $update_venta->estadopago=0;
+            $update_venta->total=$format_total;
             $update_venta->update();}
 
         $new_pago = new Pago;
@@ -210,6 +215,7 @@ class VentaApiController extends ApiResponseController
             $estado=1;  //1 el pago ha sido completo
             $update_venta= Venta::findOrFail($data['venId']);
             $update_venta->estadopago=1;
+            $update_venta->total=$format_total;
             $update_venta->update();}
 
         if( $format_abono<$format_total )
@@ -217,6 +223,7 @@ class VentaApiController extends ApiResponseController
             $estado=0;  //1 el pago ha sido completo
             $update_venta= Venta::findOrFail($data['venId']);
             $update_venta->estadopago=0;
+            $update_venta->total=$format_total;
             $update_venta->update();}
 
         $new_pago = new Pago;
@@ -275,6 +282,7 @@ class VentaApiController extends ApiResponseController
             $estado=1;  //1 el pago ha sido completo
             $update_venta= Venta::findOrFail($venId);
             $update_venta->estadopago=1;
+            $update_venta->total=$format_total;
             $update_venta->update();}
 
         if( $format_pago<$saldo_anterior )
@@ -282,6 +290,7 @@ class VentaApiController extends ApiResponseController
             $estado=0;  //1 el pago ha sido completo
             $update_venta= Venta::findOrFail($venId);
             $update_venta->estadopago=0;
+            $update_venta->total=$format_total;
             $update_venta->update();}
 
 
@@ -312,11 +321,13 @@ class VentaApiController extends ApiResponseController
         $fecha = $carbon->now();
 
         $data = request()->all();
-
+        $total=$data['total'];
+        $format_total = number_format($total, 2);
     
             $estado=0;  //1 el pago ha sido completo
             $update_venta= Venta::findOrFail($data['venId']);
             $update_venta->estadopago=0;
+            $update_venta->total=$format_total;
             $update_venta->update();
         $new_pago = new Pago;
         $new_pago->venId = $data['venId'];
@@ -342,9 +353,11 @@ class VentaApiController extends ApiResponseController
         $fecha = $carbon->now();
 
         $data = request()->all();
-        $estado=0;  //1 el pago ha sido completo
+        $total=$data['total'];
+        $format_total = number_format($total, 2);
         $update_venta= Venta::findOrFail($data['venId']);
         $update_venta->estadopago=0;
+        $update_venta->total=$format_total;
         $update_venta->update();
 
         $new_pago = new Pago;
@@ -632,6 +645,7 @@ class VentaApiController extends ApiResponseController
         $info_venta = Venta::select(
             'ventas.id',
             'ventas.fecha',
+            'ventas.descuento',
             'clientes.nombre',
             'clientes.ruc',
             'clientes.id as cliId',
@@ -671,11 +685,14 @@ class VentaApiController extends ApiResponseController
 
 
         $parciales = DetalleVenta::queryVentaParcial($venId)->get();
-        $descuentos = DetalleVenta::queryDescuentos($venId)->get();
-        $descuentos_total = $descuentos->sum('descuentos');
+        //$descuentos = DetalleVenta::queryDescuentos($venId)->get();
+        //$descuentos_total = $descuentos->sum('descuentos'); V1 DESCUENTOS POR PRODUCTO
+        $descuentos_total= Venta::findOrFail($venId);
+        $descuentos_total=$descuentos_total->descuento;
+        
         $subtotal = $parciales->sum('parcial');
+        
         $subtotal_sin_impuestos = $subtotal - $descuentos_total;
-
         $iva = 12;
         $valor_iva = $subtotal_sin_impuestos * $iva / 100;
         $total = $subtotal_sin_impuestos + $valor_iva;
@@ -754,8 +771,10 @@ limit 1
 
 
         $parciales = DetalleVenta::queryVentaParcial($venId)->get();
-        $descuentos = DetalleVenta::queryDescuentos($venId)->get();
-        $descuentos_total = $descuentos->sum('descuentos');
+       /*  $descuentos = DetalleVenta::queryDescuentos($venId)->get();
+        $descuentos_total = $descuentos->sum('descuentos'); */
+        $descuentos_total= Venta::findOrFail($venId);
+        $descuentos_total=$descuentos_total->descuento;
         $subtotal = $parciales->sum('parcial');
         $subtotal_sin_impuestos = $subtotal - $descuentos_total;
         $iva = 12;
@@ -794,16 +813,16 @@ limit 1
             'ventas.id',
             'ventas.fecha',
             'ventas.observacion',
-
+'ventas.total as total',
             'clientes.nombre',
             'clientes.ruc',
             'clientes.direccion',
             'clientes.telefono',
 
-            DB::raw("(SELECT (pagos.total) FROM pagos
+          /*   DB::raw("(SELECT (pagos.total) FROM pagos
             WHERE ventas.id=pagos.venId
             limit 1
-            ) AS total"),
+            ) AS total"), */
 
 
         DB::raw("(SELECT count(pagos.id) FROM pagos
@@ -1006,6 +1025,45 @@ $mejores_clientes = Venta::select(
         $venta_update = Venta::findOrFail($id);
         $venta_update->observacion = $observacion;
         $venta_update->update();
+
+
+        if (!$venta_update) return $this->errorResponse(500);
+        return $this->successResponse(200);
+    }
+
+
+    
+    public function UpdateDescuento(Request $request)
+    {
+
+        $data = request()->all();
+
+        $venId = $data['id'];
+        $descuento = $data['descuento'];
+
+
+
+        $venta_update = Venta::findOrFail($venId);
+        $venta_update->descuento = $descuento ?: 0;;
+        $venta_update->update();
+
+// actualizamos total
+
+if($venta_update){ 
+$parciales = DetalleVenta::queryVentaParcial($venId)->get();
+ $descuentos_total= $descuento;
+ $subtotal = $parciales->sum('parcial');
+ $subtotal_sin_impuestos = $subtotal - $descuentos_total;
+ $iva = 12;
+ $valor_iva = $subtotal_sin_impuestos * $iva / 100;
+ $total = $subtotal_sin_impuestos + $valor_iva;
+ $update_total = Venta::findOrFail($venId);
+ $update_total->total = $total;
+ $update_total->update();
+ 
+}
+
+
 
 
         if (!$venta_update) return $this->errorResponse(500);

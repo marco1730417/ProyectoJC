@@ -93,7 +93,7 @@
                         <th>Descripcion</th>
                         <th>Unidad</th>
                         <th  class="text-right ">Precio</th>
-                        <th  class="text-right ">Desc</th>
+                     <!--    <th  class="text-right ">Desc</th> -->
                         <th  class="text-right ">Precio Total</th>
                     </tr>
                 </thead>
@@ -119,9 +119,9 @@
                         <td class="text-right "><!-- {{$item['precioUnitario']}} -->
                         $@php echo(number_format($item['precioUnitario'],2));@endphp
                         </td>
-                        <td class="text-right"><!-- {{$item['descuento']}} -->
+                      <!--   <td class="text-right">
                         $@php echo(number_format($item['descuento'],2));@endphp
-                        </td>
+                        </td> -->
                         <td class="text-right"><!-- {{$item['subTotal']}} -->
                         $@php echo(number_format($item['subTotal'],2));@endphp
                       
