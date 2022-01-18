@@ -1241,8 +1241,9 @@ export default {
         .then((response) => {
           let mensaje = response.data.data;
           if (mensaje == 200) {
-            this.getInformacionVenta();
-            this.totalesVenta();
+          //  this.getInformacionVenta();
+            //this.totalesVenta();
+            location.reload();
           }
         })
         .catch((error) => {
