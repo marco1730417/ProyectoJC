@@ -937,7 +937,7 @@
                             </td>
                           </tr>
                              <tr>
-                            <td>SUBTOTAL SIN IMPUESTOS</td>
+                            <td>SUBTOTAL SIN IMP</td>
                             <td>
                            $   {{ parseFloat(totalesventa.subtotal_sin_impuestos).toFixed(2) }}
                             </td>
