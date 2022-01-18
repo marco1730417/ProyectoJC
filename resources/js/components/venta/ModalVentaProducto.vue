@@ -189,7 +189,7 @@
           </div>
         </div>
       </div>
-      <div v-if="producto" class="col-12">
+<!--       <div v-if="producto" class="col-12">
         <div class="card p-3">
           <div class="card-body border p-0">
             <p>
@@ -237,7 +237,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <div v-if="precioUnitario == 1 || precioUnitario == 3" class="col-12">
         <div
