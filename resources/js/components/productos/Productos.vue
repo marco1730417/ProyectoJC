@@ -14,6 +14,7 @@
                 size="sm"
                 placeholder="Buscar Producto"
               ></b-form-input>
+        
             </b-form-group>
 
             <!--          Modal agregar nuevo producto -->
@@ -47,8 +48,7 @@
               </div>
             </div>
           </div>
-
-          <!--          Modal agregar editar producto -->
+<!--          Modal agregar editar producto -->
 
           <div
             class="modal fade"
@@ -98,7 +98,10 @@
               data-toggle="modal"
               data-target="#ModalNuevoProducto"
               >Nuevo Producto</a
-            >
+            > 
+            
+<button class="btn btn-success btn-sm" title="Recargar" @click="getAllProductos" ><i class="fas fa-sync"></i></button>
+          
           </div>
         </div>
       </div>
