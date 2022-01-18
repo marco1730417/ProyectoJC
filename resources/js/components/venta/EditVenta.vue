@@ -1083,7 +1083,7 @@ export default {
         },
         {
           key: "cantidad",
-          label: "Cantidad",
+          label: "Cant",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate",
