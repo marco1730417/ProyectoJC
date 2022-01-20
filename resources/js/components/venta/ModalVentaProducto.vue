@@ -9,6 +9,7 @@
         >
           <i class="fas fa-sync"></i>
         </button>
+     
 
         <button
           v-if="producto"
@@ -18,13 +19,26 @@
         >
           <i class="fas fa-broom"></i>
         </button>
-      </div>
+
+        
+      </div> 
+      
+      <div class="b">
+        <div class="form-check form-check-inline">
+  <input class="form-check-input" v-model="busqueda" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="nombre">
+  <label class="form-check-label" for="inlineRadio1">Código</label>
+</div>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" v-model="busqueda" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="descripcion">
+  <label class="form-check-label" for="inlineRadio2">Descripción</label>
+</div></div>
       <label for="password2" class="col-sm-12 col-form-label text-center"
         >Producto</label
       >
+      
       <div class="col-sm-12">
         <v-select
-          label="nombre"
+          :label="busqueda"
           v-model="producto"
           :options="infoproducto"
           required
@@ -280,6 +294,7 @@ export default {
   data() {
     return {
       status: "not_accepted",
+      busqueda:"nombre",
       producto: "",
       infoproducto: [],
       cantidad: 0,
@@ -510,6 +525,10 @@ body {
   transition: 0.3s;
   text-transform: uppercase;
 }
+div.b {
+  position: absolute;
+  right: 0;
+}   
 
 .form-control:focus + .form__label {
   top: -8px;
