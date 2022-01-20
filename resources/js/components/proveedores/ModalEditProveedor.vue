@@ -2,7 +2,7 @@
 <div class="card">
   <div class="card-body">
     <b-form v-if="show">
-      <b-form-group id="input-group-2" label="Nombre del Cliente" label-for="input-2">
+      <b-form-group id="input-group-2" label="Nombre del Proveedor" label-for="input-2">
         <b-form-input
           id="input-2"
           v-model="infoeditproveedor.nombre"
@@ -12,7 +12,7 @@
         ></b-form-input>
     <!--     {{ nombre }} -->
       </b-form-group>
-           <b-form-group id="input-group-3"   label="Ruc:" label-for="input-3"  >
+           <b-form-group id="input-group-3"   label="Ruc" label-for="input-3"  >
         <b-form-input
           id="input-2"
           v-model="infoeditproveedor.ruc"
@@ -25,7 +25,7 @@
       </b-form-group>
       <b-form-group
         id="input-group-2"
-        label="Telefono"
+        label="Teléfono"
         label-for="input-2"
       >
         <b-form-input
@@ -51,7 +51,7 @@
           required
         ></b-form-input>
       </b-form-group>
-      <b-form-group id="input-group-1" label="Direccion" label-for="input-3">
+      <b-form-group id="input-group-1" label="Dirección" label-for="input-3">
         <b-form-textarea
           id="textarea"
           v-model="infoeditproveedor.direccion"

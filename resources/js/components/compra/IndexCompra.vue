@@ -14,7 +14,8 @@
                         Compras Totales
                       </h5>
                       <span class="h2 font-weight-bold mb-0">
-                        $ {{ totalcompras.total_compras }}
+                     
+                               $ {{ parseFloat(totalcompras.total_compras).toFixed(2) }}
                       </span>
                     </div>
                     <div class="col-auto">
@@ -170,9 +171,9 @@
               :per-page="perPage"
               :current-page="currentPage"
             >
-              <template #cell(index)="data">
+      <!--         <template #cell(index)="data">
                 <small> {{ data.index + 1 }} </small>
-              </template>
+              </template> -->
               <template #cell(fecha)="data">
                 <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
                 <!--    {{ data.item.fecha }} -->
@@ -286,8 +287,8 @@ export default {
 
       fields: [
         {
-          key: "index",
-          label: "Item",
+          key: "id",
+          label: "#",
           sortable: false,
           sortDirection: "desc",
           tdClass: "index",
