@@ -40,6 +40,7 @@
 
     }
 
+
     .column {
   float: left;
   width: 40%;
@@ -63,13 +64,13 @@
   <div class="column">
 
     <p> <b> Nombre: </b> {{$info_venta[0]['nombre'] }} </p>
-    <p> <b>Direccion: </b>  {{$info_venta[0]['direccion'] }} </p>
+    <p> <b>Dirección: </b>  {{$info_venta[0]['direccion'] }} </p>
  
   </div>
   <div class="column"  >
 
   <p> <b>Ruc: </b>  {{$info_venta[0]['ruc'] }} </p>
-   <p> <b>Telefono: </b>  {{$info_venta[0]['telefono'] }} </p>
+   <p> <b>Teléfono: </b>  {{$info_venta[0]['telefono'] }} </p>
     
   </div>
   <div class="column"  >
@@ -90,7 +91,7 @@
                     <tr>
                         <th>Cod</th>
                         <th>Cant</th>
-                        <th>Descripcion</th>
+                        <th>Descripción</th>
                         <th>Unidad</th>
                         <th  class="text-right ">Precio</th>
                      <!--    <th  class="text-right ">Desc</th> -->
@@ -133,26 +134,40 @@
 
 
             <div class="row">
-       <!--      <div class="col-xs-6">
-            <TABLE border="1"
->
-Informacion Adicional
-<tr>
-    <th>Abono</th>
-    <td>0</td>
-  </tr>
+         
+            <div class="col-xs-6 col-md-4">
+           
+<div class="card  border-primary" >
+<p class="card-header" >  <b> Información Adicional</b></p>
+</div> 
+@if ($detallepago[0]['tipo'] )  
+<table class="table table-striped">
+  <tbody>
   <tr>
-    <th>Saldo</th>
-    <td>0</td>
-  </tr>
-
-</TABLE>
-            
-</div> -->
+      <th>Forma de pago</th>
+      <td>{{$detallepago[0]['tipo']}}</td>
+    </tr>
+    @if ($detallepago[0]['tipo'] == 'Abono' ||$detallepago[0]['tipo'] == 'Credito' )
+    <tr>
+      <th>Fecha de vencimiento</th>
+      <td>{{$detallepago[0]['fechamaxima']}}</td>
+    </tr>
+    @endif
+    @if ($info_venta[0]['email']  )  
+    <tr>
+      <th>Email</th>
+      <td>{{$info_venta[0]['email'] }} </td>
+    </tr>
+@endif
+  </tbody>
+</table>
+@endif
+</div>
+     
             <div class="col-xs-6">
 
-                <div class="col-lg-4 col-sm-5 ml-auto">
-                    <table class="table table-clear">
+                <div class="col-lg-6 col-sm-3 ml-auto">
+                    <table  class="table table-clear">
                         <tbody>
                             <tr>
                                 <td class="left">

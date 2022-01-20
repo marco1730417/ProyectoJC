@@ -756,17 +756,16 @@ and ventas.id = $venId
 ORDER BY pagos.saldo
 limit 1
 ) AS total"),
-DB::raw("(SELECT (pagos.fechamaxima) FROM pagos
+DB::raw("(SELECT date_format(pagos.fechamaxima, '%d-%m-%Y') FROM pagos
 WHERE ventas.id=pagos.venId
 and ventas.id = $venId
 ORDER BY pagos.saldo
 limit 1
 ) AS fechamaxima"),
 )
-->where('estadopago',0)
 ->where('id',$venId)
-
 ->get();
+
 
 
 
@@ -790,11 +789,7 @@ limit 1
             'total' => $total
         ];
 
-        //return $this->successResponse($totales_cotizacion);
-
         $total_venta = collect($totales_venta);
-
-
         $info_venta = Venta::select('ventas.id', 'ventas.fecha', 'clientes.nombre','clientes.email', 'clientes.ruc', 'clientes.direccion', 'clientes.telefono', 'ventas.metodopago')
             ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
             ->where('ventas.id', $venId)->get();
@@ -802,7 +797,7 @@ limit 1
         $pdf = PDF::loadView('venta.ventapdf',  ["detalle_venta" => $detalle_venta,"detallepago" => $detallepago, "total_venta" => $total_venta, "info_venta" => $info_venta], ['format' => 'A4']);
 
       //  return $pdf->download('venta.pdf');
-        return $pdf->download($venId.$info_venta[0]['nombre'].'- venta.pdf');
+        return $pdf->download($venId.$info_venta[0]['nombre'].'- JCFactura.pdf');
     }
 
     public function detalleVenta()
