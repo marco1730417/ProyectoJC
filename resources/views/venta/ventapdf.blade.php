@@ -136,10 +136,10 @@
             <div class="row">
          
             <div class="col-xs-6 col-md-4">
-           
+            @if ($detallepago[0]['tipo'] )  
 <div class="card  border-primary" >
 <p class="card-header" >  <b> Información Adicional</b></p>
-</div> 
+</div> @endif
 @if ($detallepago[0]['tipo'] )  
 <table class="table table-striped">
   <tbody>

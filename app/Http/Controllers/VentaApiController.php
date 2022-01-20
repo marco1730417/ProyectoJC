@@ -794,6 +794,8 @@ limit 1
             ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
             ->where('ventas.id', $venId)->get();
 
+           // return $detallepago;
+
         $pdf = PDF::loadView('venta.ventapdf',  ["detalle_venta" => $detalle_venta,"detallepago" => $detallepago, "total_venta" => $total_venta, "info_venta" => $info_venta], ['format' => 'A4']);
 
       //  return $pdf->download('venta.pdf');
