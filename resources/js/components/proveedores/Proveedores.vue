@@ -223,7 +223,7 @@ export default {
       fields: [
             {
             key: "id",
-            label: "Item",
+            label: "#",
             sortable: false,
             sortDirection: "desc",
             tdClass: "index",
