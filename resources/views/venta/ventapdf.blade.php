@@ -158,7 +158,25 @@
       <th>Email</th>
       <td>{{$info_venta[0]['email'] }} </td>
     </tr>
+
 @endif
+@if ($detallepago[0]['tipo'] == 'Abono' )
+    <tr>
+      <th>Abono</th>
+      <td>
+      $@php echo(number_format($detallepago[0]['abono'],2));@endphp
+          
+    </td>
+    </tr>
+    <tr>
+      <th>Saldo</th>
+      <td>
+          
+      $@php echo(number_format($detallepago[0]['saldos'],2));@endphp
+    
+    </td>
+    </tr>
+    @endif
   </tbody>
 </table>
 @endif
