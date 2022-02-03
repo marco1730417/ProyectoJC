@@ -199,13 +199,24 @@
                     <b-col>
                       <div>
                         <b-form>
+                                             <div class="b" style="float:right">
+        <div class="form-check form-check-inline">
+  <input class="form-check-input" v-model="busqueda" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="nombre">
+  <label class="form-check-label" for="inlineRadio1">Código</label>
+</div>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" v-model="busqueda" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="descripcion">
+  <label class="form-check-label" for="inlineRadio2">Descripción</label>
+</div></div>
                           <b-form-group
                             id="input-group-3"
                             label="Producto"
                             label-for="input-3"
                           >
+          
                             <v-select
-                              label="nombre"
+                              :label="busqueda"
+         
                               v-model="producto"
                               :options="infoproducto"
                               required
@@ -567,6 +578,8 @@ export default {
   },
   data() {
     return {
+       busqueda:"nombre",
+
       options: [
         { text: "mt", value: "mt" },
         { text: "rll", value: "rll" },
