@@ -241,7 +241,7 @@ export default {
       fechadesde: "",
         fechahasta: "",
       cliente: "",
-      infoventascliente:"",
+      infoventascliente:[],
     infocliente:"",
       producto: "",
       clientecapturado:"",
