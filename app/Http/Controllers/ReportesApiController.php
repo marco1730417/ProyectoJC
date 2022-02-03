@@ -309,7 +309,7 @@ limit 1
         
         ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
        ->where('cliId',$cliId)
-       ->where('estadopago',0)
+       ->where('ventas.estadopago',1)
        ->get();
       
 
