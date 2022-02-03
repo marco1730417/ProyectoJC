@@ -744,6 +744,12 @@ and ventas.id = $venId
 ORDER BY pagos.saldo
 limit 1
 ) AS saldos"),
+DB::raw("(SELECT (pagos.abono) FROM pagos
+WHERE ventas.id=pagos.venId
+and ventas.id = $venId
+ORDER BY pagos.saldo
+limit 1
+) AS abono"),
 DB::raw("(SELECT (pagos.tipo) FROM pagos
 WHERE ventas.id=pagos.venId
 and ventas.id = $venId
