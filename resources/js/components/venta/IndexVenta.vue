@@ -679,10 +679,24 @@ export default {
           if (mensaje == 200) {
             this.detalleVenta();
             this.totalDashboardVentas();
+                   this.$swal
+        .fire({
+  icon: 'success',
+  title: 'Observacion guardada',
+  showConfirmButton: false,
+  timer: 1500
+})
+
           }
         })
-        .catch((error) => {
-          console.log(error);
+          .catch((error) => {
+              this.$swal
+        .fire({
+  icon: 'error',
+  title: 'Observacion no agregado',
+  showConfirmButton: false,
+  timer: 1500
+})
         });
     },
     captureitem(item) {

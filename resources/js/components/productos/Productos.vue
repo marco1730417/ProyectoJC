@@ -139,6 +139,21 @@
           {{ data.item.unidades }} {{data.item.uniPrecioVenta1}}
         <!--   <small class="mb-0 mr-2">{{ data.item.unidades }}</small> -->
         </template>
+                <template #cell(PrecioVenta1)="data">
+       
+ $ {{ parseFloat(data.item.PrecioVenta1).toFixed(2) }}
+        </template>
+
+             <template #cell(PrecioVenta2)="data">
+       
+ $ {{ parseFloat(data.item.PrecioVenta2).toFixed(2) }}
+        </template>
+
+
+             <template #cell(PrecioVenta3)="data">
+       
+ $ {{ parseFloat(data.item.PrecioVenta3).toFixed(2) }}
+        </template>
 
  
 

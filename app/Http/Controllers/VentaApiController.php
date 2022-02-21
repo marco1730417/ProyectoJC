@@ -614,7 +614,7 @@ class VentaApiController extends ApiResponseController
         $collection = collect($infodetalle);
         $collection->each(function ($item, $key) {
             $update_producto = Producto::findOrFail($item->proId);
-            $update_producto->unidades = $update_producto->unidades + $item->cantidad;
+            $update_producto->unidades = $update_producto->unidades + $item->metrostotales;
             $update_producto->update();
             DetalleVenta::where('venId', $item->venId)->delete();
         });
@@ -628,7 +628,7 @@ class VentaApiController extends ApiResponseController
     {
         $infodetalle = DetalleVenta::findOrFail($id);
         $update_producto = Producto::findOrFail($infodetalle->proId);
-        $update_producto->unidades = $update_producto->unidades + $infodetalle->cantidad;
+        $update_producto->unidades = $update_producto->unidades + $infodetalle->metrostotales;
         $update_producto->update();
 
         $detalle_delete = DetalleVenta::findOrFail($id);
