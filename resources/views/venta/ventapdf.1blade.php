@@ -5,8 +5,7 @@
 @endsection
 <style>
        @page {
-        size: A5 landscape;
-        width: 15cm;
+        size: A5 ;
         margin: 0.1%;
         font-size: 5pt;
         font-family: Arial, sans-serif !important;
@@ -25,6 +24,7 @@
         font-size: 1.4rem !important;
         border: 2px solid rgb(241, 240, 240);
     }
+
     td {
         padding-left: 1px;
         padding-bottom: 3px;
@@ -40,75 +40,26 @@
 
     }
 
-    .content_f{
-        width: 100%;
-    }
+
     .column {
   float: left;
   width: 40%;
-  margin-left: 15px;
 }
-.column1 {
-    float: left;
-    width: 40%;
-    margin-right: 15px;
-    }
 
 .row:after {
   content: "";
   display: table;
   clear: both;
 }
-@media print {
-    .content_f{
-        width: 100%;
-    }
-    .column {
-    float: left;
-    width: 40%;
-    margin-left: 15px;
-    }
-    .column1 {
-    float: left;
-    width: 40%;
-    margin-right: 15px;
-    }
 
-    .row:after {
-    content: "";
-    display: table;
-    clear: both;
-    }
-    body {
-        padding-top: 75px;
-        font-family: Arial, sans-serif !important;
-        margin: 5px;
-        font-size: 1.4rem !important;
-        border: 2px solid rgb(241, 240, 240);
-    }
-    td {
-        padding-left: 1px;
-        padding-bottom: 3px;
-
-
-    }
-
-    th {
-        font-weight: bold;
-
-        padding-left: 4px;
-        padding-bottom: 15px;
-
-    }
-}
 
 </style>
 @section('content')
 
-<div class="content_f">
+<div class="offset-xl-2 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 padding">
     <div class="card">
 
-        <div class="card-body">
+        <div class="card-body A5">
             <div class="row ">
   <div class="column">
 
@@ -122,7 +73,7 @@
    <p> <b>Teléfono: </b>  {{$info_venta[0]['telefono'] }} </p>
     
   </div>
-  <div class="column1"  >
+  <div class="column"  >
 
   <p> <b>Fecha </b>  {{$info_venta[0]['fecha'] }} </p> 
   
