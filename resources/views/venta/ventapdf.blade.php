@@ -7,6 +7,7 @@
        @page {
         size: A5 landscape;
         width: 15cm;
+        
         margin: 0.1%;
         font-size: 5pt;
         font-family: Arial, sans-serif !important;
@@ -19,7 +20,6 @@
         margin: 1mm;
     }
     body {
-        padding-top: 1px;
         font-family: Arial, sans-serif !important;
         margin: 5px;
         font-size: 1.5rem !important;
@@ -58,7 +58,13 @@
   content: "";
   display: table;
   clear: both;
+
 }
+
+.producto{
+        break-inside: avoid;
+    }
+    
 @media print {
     .content_f{
         width: 100%;
@@ -72,6 +78,10 @@
     float: left;
     width: 40%;
     margin-right: 15px;
+    }
+
+    .producto{
+        break-inside: avoid;
     }
 
     .row:after {
@@ -149,7 +159,8 @@
                 </thead>
                 <tbody>
                     @foreach ($detalle_venta as $item)
-                    <tr>
+
+                    <tr class="producto">
                         <td>{{$item['nombre']}}</td>
                         <td class="center">{{$item['cantidad']}}</td>
                         <td class="left">{{$item['descripcion']}}</td>
