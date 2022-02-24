@@ -7,7 +7,7 @@
        @page {
         size: A5 landscape;
         width: 15cm;
-        
+        height: 21cm;
         margin: 0.1%;
         font-size: 5pt;
         font-family: Arial, sans-serif !important;
@@ -64,10 +64,11 @@
 .producto{
         break-inside: avoid;
     }
-    
+
 @media print {
     .content_f{
         width: 100%;
+        height: 210mm;
     }
     .column {
     float: left;
