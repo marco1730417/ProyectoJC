@@ -19,10 +19,10 @@
         margin: 1mm;
     }
     body {
-        padding-top: 110px;
+        padding-top: 45px;
         font-family: Arial, sans-serif !important;
         margin: 5px;
-        font-size: 1.4rem !important;
+        font-size: 1.5rem !important;
         border: 2px solid rgb(241, 240, 240);
     }
     td {
