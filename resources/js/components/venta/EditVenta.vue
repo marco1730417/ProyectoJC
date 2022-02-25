@@ -185,6 +185,8 @@
                     ><i class="fas fa-search"></i>Buscar Productos</a
                   >
 
+                    <b-badge pill variant="primary"> {{detalleventa.length}} </b-badge>
+
          <!--     <div
               id="ModalVentaProducto"
               class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
