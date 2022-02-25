@@ -42,7 +42,7 @@
 
     .content_f{
         width: 100%;
-        height:100%;
+      
     }
     .column {
   float: left;
