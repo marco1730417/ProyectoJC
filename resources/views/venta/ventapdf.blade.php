@@ -18,7 +18,7 @@
         margin: 1mm;
     }
     body {
-        padding-top:70px;
+        padding-top:35px;
       
         font-family: Arial, sans-serif !important;
         margin: 5px;
