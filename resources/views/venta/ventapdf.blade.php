@@ -5,9 +5,7 @@
 @endsection
 <style>
        @page {
-        size: A5 landscape;
-        width: 15cm;
-        height: 21cm;
+        size: 210mm 150 landscape ;
         margin: 0.1%;
         font-size: 5pt;
         font-family: Arial, sans-serif !important;
@@ -42,6 +40,7 @@
 
     .content_f{
         width: 100%;
+        height:100%;
     }
     .column {
   float: left;
@@ -61,14 +60,12 @@
 
 }
 
-.producto{
-        break-inside: avoid;
-    }
+
 
 @media print {
     .content_f{
         width: 100%;
-        height: 210mm;
+        height:100%;
     }
     .column {
     float: left;
@@ -81,9 +78,6 @@
     margin-right: 15px;
     }
 
-    .producto{
-        break-inside: avoid;
-    }
 
     .row:after {
     content: "";
@@ -161,7 +155,7 @@
                 <tbody>
                     @foreach ($detalle_venta as $item)
 
-                    <tr class="producto">
+                    <tr>
                         <td>{{$item['nombre']}}</td>
                         <td class="center">{{$item['cantidad']}}</td>
                         <td class="left">{{$item['descripcion']}}</td>
