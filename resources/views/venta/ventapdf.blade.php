@@ -18,6 +18,8 @@
         margin: 1mm;
     }
     body {
+        padding-top:70px;
+      
         font-family: Arial, sans-serif !important;
         margin: 5px;
         font-size: 1.5rem !important;
