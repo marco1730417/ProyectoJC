@@ -903,6 +903,23 @@
             </b-button>
           </template>
         </b-table>
+ <!-- PAGINACION -->
+        <div v-if="rows > 2">
+          <b-pagination
+            class="text-center"
+            v-model="currentPage"
+            :total-rows="rows"
+            :per-page="perPage"
+            aria-controls="my-table"
+            size="sm"
+            align="center"
+          ></b-pagination>
+        </div>
+        <!-- FIN PAGINACION -->
+
+
+
+
             <b-container class="bv-example-row">
               <b-row>
                 <b-col></b-col>
@@ -1172,6 +1189,9 @@ export default {
     }, */
   },
   computed: {
+        rows() {
+      return this.detalleventa.length;
+    },
     total_cambio: function () {
       //console.log(this.productosSelected.tarVenta + "valor unitario");
       let total = this.totalesventa.total;
