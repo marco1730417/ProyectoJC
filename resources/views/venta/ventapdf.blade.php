@@ -5,7 +5,7 @@
 @endsection
 <style>
        @page {
-        size: 210mm 150 landscape ;
+        size: 240mm 150 landscape ;
         margin: 0.1%;
         font-size: 5pt;
         font-family: Arial, sans-serif !important;
@@ -22,7 +22,7 @@
       
         font-family: Arial, sans-serif !important;
         margin: 5px;
-        font-size: 1.5rem !important;
+        font-size: 1.8rem !important;
         border: 2px solid rgb(241, 240, 240);
     }
     td {
