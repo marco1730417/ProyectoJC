@@ -22,6 +22,16 @@
                     <h3 class="text-center">Pagos Pendientes- {{ fecha }}</h3>
                   </div>
                 </div>
+                       <b-form-group >
+              <b-form-input
+                class="float-right"
+                id="filter-input"
+                v-model="filter"
+                type="search"
+                size="sm"
+                placeholder="Buscar Cliente"
+              ></b-form-input>
+            </b-form-group>
               </div>
               <!--  {{pagospendientes}} -->
               <b-table
@@ -39,8 +49,12 @@
                 :current-page="currentPage"
                 responsive="sm"
               >
-                <template #cell(index)="data">
-                  <small> {{ data.index + 1 }} </small>
+                <template #cell(id)="data">
+               
+   <b-badge href=""   @click="gotoEditVenta(data.item.id)"
+                   variant="primary">{{ data.item.id }}</b-badge> 
+<!--  <b-badge href="#" variant="primary">Primary</b-badge> -->
+
                 </template>
                 <template #cell(nombre)="data">
                   <small class="mb-0 mr-2">{{ data.item.nombre }}</small>
@@ -199,6 +213,17 @@ export default {
     this.PagosPendientes();
   },
   methods: {
+        gotoEditVenta(id) {
+      const userId = id;
+      /* this.$router.push({ name: 'nuevaventa', params: { venId:userId }})
+       */
+      let routeData = this.$router.resolve({
+        name: "editventa",
+        params: { id: userId },
+      });
+      //window.open(routeData.href, "_blank");
+      window.open(routeData.href, "_self");
+    },
     /*         changestatus(id) {
       pagoServices.updatePago(id)
         .then((response) => {

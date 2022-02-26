@@ -186,35 +186,6 @@
                   >
 
                     <b-badge pill variant="primary"> {{detalleventa.length}} </b-badge>
-
-         <!--     <div
-              id="ModalVentaProducto"
-              class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-xl">
-    <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title">Nuevo Item</h5>
-                          <button
-                            type="button"
-                            class="close"
-                            data-dismiss="modal"
-                            aria-label="Close"
-                          >
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-                          <modal-venta-producto
-                            @updateVenta="updateDatos"
-                            :venta="substr"
-                          />
-                        </div>
-                        <div class="modal-footer"></div>
-                      </div>
-                    </div>
-                  </div>
- -->
-
                   
                 </div>
               </div>
@@ -1034,6 +1005,12 @@
                       >Observaciones</b-dropdown-item
                     >
                         <b-dropdown-item
+                       @click="downloadVenta()"
+                
+                      ><i class="fas fa-print"></i
+                      >Imprimir</b-dropdown-item
+                    >
+                        <b-dropdown-item
                       data-toggle="modal"
                       data-target="#ModalRetencion"
                       ><i class="fas fa-cube"></i
@@ -1222,6 +1199,10 @@ export default {
     this.detalleGeneralVenta();
   },
   methods: {
+      downloadVenta() {
+      let routeData = server + resource + `download-venta/` + this.substr;
+      window.open(routeData);
+    },
     UpdateDescuento() {
       let data = {
         id: this.substr,
@@ -1435,7 +1416,11 @@ export default {
           }
         })
         .catch((error) => {
-          console.log(error);
+               this.$swal
+              .error({
+                title: "Existio un problema ",
+              })
+     
         });
     },
 
