@@ -38,8 +38,22 @@
                         </v-select>
                       </h5>
                     </div>
+
+<!--  <a
+              href=""
+              class="btn btn-sm btn-primary"
+              data-toggle="modal"
+              data-target="#ModalNuevoCliente"
+              >Nuevo Cliente</a
+            > -->
+ <!-- <b-button size="sm" data-toggle="modal"
+              data-target="#ModalNuevoCliente"
+             variant="info"><i class="fas fa-plus-circle"></i> </b-button> -->
+
+
                     <div class="col-auto">
-                      <div
+                      <div data-toggle="modal"
+              data-target="#ModalNuevoCliente"
                         class="
                           icon icon-shape
                           bg-danger
@@ -48,7 +62,7 @@
                           shadow
                         "
                       >
-                        <i class="fas fa-user"></i>
+                        <i title="Nuevo cliente" class="fas fa-plus"></i>
                       </div>
                     </div>
                   </div>
@@ -99,10 +113,12 @@
  
   <div v-if="infoventascliente.length>0" class="card card-stats mb-4 mb-xl-0">
                 <div class="card-body">
-                  <div class="row">
+                <!--   {{clienteupdate[0].id}} -->
+               <!--    <button class="btn btn-success btn-sm" title="Recargar" @click="reporteVentasCliente(clienteupdate[0].id)" ><i class="fas fa-sync"></i></button>
+                -->   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">
-                        Observaciones
+                          Este cliente adeuda valores con los siguientes detalles.  
                       </h5>
                       <span class="h2 font-weight-bold mb-0">
                       </span>
@@ -112,17 +128,15 @@
                   <p class="mt-3 mb-0 text-muted text-sm">
              
                   </p>
-                         <span class="text-primary mr-2"
-                      >
-                    Este cliente adeuda valores por ventas con los siguientes detalles.    </span>  </br>
+                  
                     <b-list-group>
   <b-list-group-item v-for="item in infoventascliente" :key="item.id" class="d-flex justify-content-between align-items-center">
-  Venta Nro. {{item.venId }} - realizada el    {{
+   <small>  Venta Nro. {{item.venId }} realizada el    {{
                     moment(item.fecha).format(
                       "MMM DD YYYY, ddd, h:mm:ss a"
                     )
-                  }}  {{item.observaciones}} => Valor adeudado 
-                    $ {{ parseFloat(item.saldos).toFixed(2) }}
+                  }}  {{item.observaciones}}  Valor adeudado 
+                    $ {{ parseFloat(item.saldos).toFixed(2) }}</small>
  
   </b-list-group-item>
 
@@ -670,7 +684,7 @@
                     <div class="container">
                       <form action="">
                         <div class="mb-3">
-                          <p class="dis fw-bold mb-2">Fecha maxima</p>
+                          <p class="dis fw-bold mb-2">Fecha máxima</p>
                           <input
                             class="form-control"
                             type="date"
@@ -804,7 +818,36 @@
             </div>
 
             <!-- modal venta observaciones -->
+    <!--          Modal agregar nuevo cliente -->
 
+            <div
+              class="modal fade"
+              id="ModalNuevoCliente"
+              tabindex="-1"
+              role="dialog"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Nuevo Cliente</h5>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <modal-nuevo-cliente @updateClientes="updateClientes" />
+                  </div>
+                  <div class="modal-footer"></div>
+                </div>
+              </div>
+            </div>
+               <!--          Modal agregar nuevo cliente -->
             
             <b-table
           :items="detalleventa"
@@ -1199,6 +1242,10 @@ export default {
     this.detalleGeneralVenta();
   },
   methods: {
+    updateClientes(){
+   this.getAllClientes();
+  location.reload();
+    },
       downloadVenta() {
       let routeData = server + resource + `download-venta/` + this.substr;
       window.open(routeData);
