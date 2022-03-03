@@ -14,7 +14,42 @@
                 size="sm"
                 placeholder="Buscar Producto"
               ></b-form-input>
-        
+            </b-form-group>
+
+            <!--          Modal agregar nuevo producto -->
+          </div>
+          <div class="w-50">
+            <b-form-group
+              label="Ordenar"
+              label-for="sort-by-select"
+              label-cols-sm="3"
+              label-align-sm="right"
+              label-size="sm"
+              class="mb-0"
+            >
+              <b-input-group size="sm">
+                <b-form-select
+                  id="sort-by-select"
+                  v-model="sortBy"
+                  :options="sortOptions"
+                  size="sm"
+                  class="w-25"
+                >
+                  <template #first>
+                    <option value="">-- none --</option>
+                  </template>
+                </b-form-select>
+
+                <b-form-select
+                  v-model="sortDesc"
+                  :disabled="!sortBy"
+                  size="sm"
+                  class="w-25"
+                >
+                  <option :value="false">Asc</option>
+                  <option :value="true">Desc</option>
+                </b-form-select>
+              </b-input-group>
             </b-form-group>
 
             <!--          Modal agregar nuevo producto -->
@@ -48,7 +83,7 @@
               </div>
             </div>
           </div>
-<!--          Modal agregar editar producto -->
+          <!--          Modal agregar editar producto -->
 
           <div
             class="modal fade"
@@ -98,10 +133,15 @@
               data-toggle="modal"
               data-target="#ModalNuevoProducto"
               >Nuevo Producto</a
-            > 
-            
-<button class="btn btn-success btn-sm" title="Recargar" @click="getAllProductos" ><i class="fas fa-sync"></i></button>
-          
+            >
+
+            <button
+              class="btn btn-success btn-sm"
+              title="Recargar"
+              @click="getAllProductos"
+            >
+              <i class="fas fa-sync"></i>
+            </button>
           </div>
         </div>
       </div>
@@ -113,14 +153,15 @@
         striped
         show-empty
         small
-          :filter="filter"
-        
-        fixed
+        :filter="filter"
         hover
         :items="infoproducto"
         :fields="fields"
         :per-page="perPage"
         :current-page="currentPage"
+        :sort-by.sync="sortBy"
+        :sort-desc.sync="sortDesc"
+        sort-icon-left
         responsive="sm"
       >
         <template #cell(index)="data">
@@ -132,36 +173,30 @@
 
         <template #cell(descripcion)="data">
           {{ data.item.descripcion }}
-     <!--      {{data.item}} -->
-         <!--  <small class="mb-0 mr-2">{{ data.item.descripcion }}</small> -->
+          <!--      {{data.item}} -->
+          <!--  <small class="mb-0 mr-2">{{ data.item.descripcion }}</small> -->
         </template>
         <template #cell(unidades)="data">
-          {{ data.item.unidades }} {{data.item.uniPrecioVenta1}}
-        <!--   <small class="mb-0 mr-2">{{ data.item.unidades }}</small> -->
+          {{ data.item.unidades }} {{ data.item.uniPrecioVenta1 }}
+          <!--   <small class="mb-0 mr-2">{{ data.item.unidades }}</small> -->
         </template>
-                <template #cell(PrecioVenta1)="data">
-       
- $ {{ parseFloat(data.item.PrecioVenta1).toFixed(2) }}
-        </template>
-
-             <template #cell(PrecioVenta2)="data">
-       
- $ {{ parseFloat(data.item.PrecioVenta2).toFixed(2) }}
+        <template #cell(PrecioVenta1)="data">
+          $ {{ parseFloat(data.item.PrecioVenta1).toFixed(2) }}
         </template>
 
-
-             <template #cell(PrecioVenta3)="data">
-       
- $ {{ parseFloat(data.item.PrecioVenta3).toFixed(2) }}
+        <template #cell(PrecioVenta2)="data">
+          $ {{ parseFloat(data.item.PrecioVenta2).toFixed(2) }}
         </template>
 
- 
+        <template #cell(PrecioVenta3)="data">
+          $ {{ parseFloat(data.item.PrecioVenta3).toFixed(2) }}
+        </template>
 
-         <template #cell(Utilidad)="data">
+        <template #cell(Utilidad)="data">
           <b-badge variant="outline" class="p-1" size="sm">{{
             data.item.Utilidad
           }}</b-badge>
-        </template> 
+        </template>
 
         <template #cell(actions)="data">
           <b-button
@@ -222,6 +257,26 @@ export default {
       filter: null,
       perPage: 10,
       currentPage: 1,
+
+      sortBy: "",
+      sortDesc: false,
+      sortDirection: "asc",
+      fields1: [
+        {
+          key: "nombre",
+          label: "Codigo",
+          sortable: true,
+          sortDirection: "desc",
+        },
+        {
+          key: "descripcion",
+          label: "Descripcion",
+          sortable: true,
+          class: "text-center",
+        },
+        { key: "actions", label: "Actions" },
+      ],
+
       fields: [
         {
           key: "id",
@@ -230,8 +285,13 @@ export default {
           sortDirection: "desc",
           tdClass: "index",
         },
-
-     
+              {
+          key: "nombre",
+          label: "Codigo",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "list-item-enddate",
+        },
         {
           key: "descripcion",
           label: "Descripcion",
@@ -262,14 +322,14 @@ export default {
           sortDirection: "desc",
           tdClass: "list-item-enddate text-center",
         },
-          {
+      /*   {
           key: "PrecioVenta3",
           label: "PV3",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate text-center",
-        },
-     /*    {
+        }, */
+        /*    {
           key: "Utilidad",
           label: "Utilidad",
           sortable: false,
@@ -289,19 +349,27 @@ export default {
     rows() {
       return this.infoproducto.length;
     },
+    sortOptions() {
+      // Create an options list from our fields
+      return this.fields1
+        .filter((f) => f.sortable)
+        .map((f) => {
+          return { text: f.label, value: f.key };
+        });
+    },
   },
   methods: {
     updateProducto() {
-   /*    $("#ModalNuevoProducto").modal("hide");
+      /*    $("#ModalNuevoProducto").modal("hide");
       this.getAllProductos(); */
       location.reload();
     },
 
     updateProductosUpdate() {
-    /*   this.getAllProductos();
+      /*   this.getAllProductos();
 
       $("#ModalEditProducto").modal("hide"); */
-         location.reload();
+      location.reload();
     },
     openModalEditProducto(infoproducto) {
       this.infoeditproducto = infoproducto;
@@ -332,27 +400,24 @@ export default {
               .then((response) => {
                 let mensaje = response.data.data;
                 if (mensaje == 200) {
-
-
-
-       this.$swal.fire({
-              icon: "success",
-              title: "Producto eliminado",
-              showConfirmButton: false,
-              timer: 1500,
-            });
+                  this.$swal.fire({
+                    icon: "success",
+                    title: "Producto eliminado",
+                    showConfirmButton: false,
+                    timer: 1500,
+                  });
 
                   this.getAllProductos();
                 }
               })
               .catch((error) => {
-                             this.$swal
-        .fire({
-  icon: 'error',
-  title: 'Este producto forma parte de una venta o compra asociada',
-  showConfirmButton: false,
-  timer: 1500
-})
+                this.$swal.fire({
+                  icon: "error",
+                  title:
+                    "Este producto forma parte de una venta o compra asociada",
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
               });
           }
         });

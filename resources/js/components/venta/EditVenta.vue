@@ -1,6 +1,5 @@
 <template>
   <div class="main-content">
-    
     <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
       <div class="container-fluid">
         <div class="header-body">
@@ -21,11 +20,10 @@
                           :options="infocliente"
                           required
                         >
-                 
                         </v-select>
                       </h5>
                     </div>
-                           <div class="col">
+                    <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">
                         Cliente - Ruc
                         <v-select
@@ -34,26 +32,25 @@
                           :options="infocliente"
                           required
                         >
-                 
                         </v-select>
                       </h5>
                     </div>
 
-<!--  <a
+                    <!--  <a
               href=""
               class="btn btn-sm btn-primary"
               data-toggle="modal"
               data-target="#ModalNuevoCliente"
               >Nuevo Cliente</a
             > -->
- <!-- <b-button size="sm" data-toggle="modal"
+                    <!-- <b-button size="sm" data-toggle="modal"
               data-target="#ModalNuevoCliente"
              variant="info"><i class="fas fa-plus-circle"></i> </b-button> -->
 
-
                     <div class="col-auto">
-                      <div data-toggle="modal"
-              data-target="#ModalNuevoCliente"
+                      <div
+                        data-toggle="modal"
+                        data-target="#ModalNuevoCliente"
                         class="
                           icon icon-shape
                           bg-danger
@@ -77,10 +74,20 @@
                   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">
-                          <span class="text-nowrap text-primary"><i class="fas fa-calendar"></i> {{ fecha }}</span>
+                        <span class="text-nowrap text-primary"
+                          ><i class="fas fa-calendar"></i> {{ fecha }}</span
+                        >
                       </h5>
-                      <span class="h1 font-weight-bold mb-0 text-success float-center">
-                       $ {{ parseFloat(totalesventa.total).toFixed(2) }}
+                      <span
+                        class="
+                          h1
+                          font-weight-bold
+                          mb-0
+                          text-success
+                          float-center
+                        "
+                      >
+                        $ {{ parseFloat(totalesventa.total).toFixed(2) }}
                       </span>
                     </div>
                     <div class="col-auto">
@@ -100,86 +107,94 @@
                   <p class="mt-3 mb-0 text-muted text-sm">
                     <span class="text-warning mr-2"
                       ><i class="fas fa-user"></i>
-                    
-                   {{    totaldetallegeneral.nombre}}      {{    totaldetallegeneral.ruc}}
-                   <!--    {{totaldetallegeneral.descuento}} -->
-                    </span>  
-                         <span class="text-nowrap text-primary"><i class="fas fa-home"></i> {{ totaldetallegeneral.direccion }}</span> 
-             
+
+                      {{ totaldetallegeneral.nombre }}
+                      {{ totaldetallegeneral.ruc }}
+                      <!--    {{totaldetallegeneral.descuento}} -->
+                    </span>
+                    <span class="text-nowrap text-primary"
+                      ><i class="fas fa-home"></i>
+                      {{ totaldetallegeneral.direccion }}</span
+                    >
                   </p>
                 </div>
               </div>
- 
- 
-  <div v-if="infoventascliente.length>0" class="card card-stats mb-4 mb-xl-0">
+
+              <div
+                v-if="infoventascliente.length > 0"
+                class="card card-stats mb-4 mb-xl-0"
+              >
                 <div class="card-body">
-                <!--   {{clienteupdate[0].id}} -->
-               <!--    <button class="btn btn-success btn-sm" title="Recargar" @click="reporteVentasCliente(clienteupdate[0].id)" ><i class="fas fa-sync"></i></button>
-                -->   <div class="row">
+                  <!--   {{clienteupdate[0].id}} -->
+                  <!--    <button class="btn btn-success btn-sm" title="Recargar" @click="reporteVentasCliente(clienteupdate[0].id)" ><i class="fas fa-sync"></i></button>
+                -->
+                  <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">
-                          Este cliente adeuda valores con los siguientes detalles.  
+                        Este cliente adeuda valores con los siguientes detalles.
                       </h5>
-                      <span class="h2 font-weight-bold mb-0">
-                      </span>
+                      <span class="h2 font-weight-bold mb-0"> </span>
                     </div>
-              
                   </div>
-                  <p class="mt-3 mb-0 text-muted text-sm">
-             
-                  </p>
-                  
-                    <b-list-group>
-  <b-list-group-item v-for="item in infoventascliente" :key="item.id" class="d-flex justify-content-between align-items-center">
-   <small>  Venta Nro. {{item.venId }} realizada el    {{
-                    moment(item.fecha).format(
-                      "MMM DD YYYY, ddd, h:mm:ss a"
-                    )
-                  }}  {{item.observaciones}}  Valor adeudado 
-                    $ {{ parseFloat(item.saldos).toFixed(2) }}</small>
- 
-  </b-list-group-item>
+                  <p class="mt-3 mb-0 text-muted text-sm"></p>
 
-
-</b-list-group>
-                   <!--     {{infoventascliente}} -->
-                
-             
+                  <b-list-group>
+                    <b-list-group-item
+                      v-for="item in infoventascliente"
+                      :key="item.id"
+                      class="d-flex justify-content-between align-items-center"
+                    >
+                      <small>
+                        Venta Nro. {{ item.venId }} realizada el
+                        {{
+                          moment(item.fecha).format(
+                            "MMM DD YYYY, ddd, h:mm:ss a"
+                          )
+                        }}
+                        {{ item.observaciones }} Valor adeudado $
+                        {{ parseFloat(item.saldos).toFixed(2) }}</small
+                      >
+                    </b-list-group-item>
+                  </b-list-group>
+                  <!--     {{infoventascliente}} -->
                 </div>
               </div>
 
               <br />
             </div>
-
-
-
-
-
           </div>
         </div>
       </div>
     </div>
-<div id="ModalVentaProducto" class="modal" tabindex="-1">
-  <div   class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Nuevo Producto</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <modal-venta-producto
-                            @updateVenta="updateDatos"
-                            :venta="substr"
-                          />
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    <div id="ModalVentaProducto" class="modal" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Nuevo Producto</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <modal-venta-producto @updateVenta="updateDatos" :venta="substr" />
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
 
     <div v-if="substr > 0" class="container-fluid mt--7">
       <div class="row">
@@ -199,8 +214,9 @@
                     ><i class="fas fa-search"></i>Buscar Productos</a
                   >
 
-                    <b-badge pill variant="primary"> {{detalleventa.length}} </b-badge>
-                  
+                  <b-badge pill variant="primary">
+                    {{ detalleventa.length }}
+                  </b-badge>
                 </div>
               </div>
             </div>
@@ -299,7 +315,6 @@
                                         totaldetallegeneral.cliId
                                       )
                                     "
-                                    
                                     class="btn btn-primary mt-2"
                                   >
                                     <span class="fas fa-dollar-sign px-1"></span
@@ -354,13 +369,14 @@
                         <div class="box-inner-2">
                           <form action="">
                             <div class="mb-3">
-                              <p class="dis fw-bold mb-2">Cantidad transferida</p>
+                              <p class="dis fw-bold mb-2">
+                                Cantidad transferida
+                              </p>
                               <input
                                 class="form-control"
                                 type="number"
                                 v-model="pagorecibidotransferencia"
-                                     @keypress="onlyNumber"
-                           
+                                @keypress="onlyNumber"
                               />
                             </div>
                             <div class="mb-3">
@@ -482,8 +498,7 @@
                             class="form-control"
                             type="number"
                             v-model="pagorecibido"
-                                 @keypress="onlyNumber"
-                           
+                            @keypress="onlyNumber"
                           />
                         </div>
                         <div class="mb-3"></div>
@@ -535,7 +550,7 @@
                                 </p>
                               </div>
 
-                             <!--   {{totaldetallegeneral.cliId}}  -->
+                              <!--   {{totaldetallegeneral.cliId}}  -->
                               <div
                                 v-if="fechamaxima && pagorecibido"
                                 @click="
@@ -566,7 +581,7 @@
             </div>
 
             <!-- modal venta al abonos -->
-  <!-- modal venta al cheque -->
+            <!-- modal venta al cheque -->
             <div
               class="modal fade"
               id="ModalVentaCheque"
@@ -627,11 +642,10 @@
                                   }}
                                 </p>
                               </div>
-                        
 
                               <!-- {{detallegeneralventa}} -->
                               <div
-                                v-if="fechamaximacheque "
+                                v-if="fechamaximacheque"
                                 @click="
                                   downloadVentaCheque(
                                     fechamaximacheque,
@@ -658,8 +672,8 @@
                 </div>
               </div>
             </div>
-              <!-- fin venta como cheque -->
-<!-- modal venta al cheque -->
+            <!-- fin venta como cheque -->
+            <!-- modal venta al cheque -->
             <div
               class="modal fade"
               id="ModalVentaCredito"
@@ -720,11 +734,10 @@
                                   }}
                                 </p>
                               </div>
-                        
 
                               <!-- {{detallegeneralventa}} -->
                               <div
-                                v-if="fechamaximacredito "
+                                v-if="fechamaximacredito"
                                 @click="
                                   downloadVentaCredito(
                                     fechamaximacredito,
@@ -751,11 +764,9 @@
                 </div>
               </div>
             </div>
-              <!-- fin venta como cheque -->
+            <!-- fin venta como cheque -->
 
-              
-
-              <!-- modal retencion -->
+            <!-- modal retencion -->
             <div
               class="modal fade"
               id="ModalRetencion"
@@ -777,15 +788,12 @@
                     </button>
                   </div>
                   <div class="modal-body">
-              <retencion-venta :venId="substr" ></retencion-venta>
+                    <retencion-venta :venId="substr"></retencion-venta>
                   </div>
                   <div class="modal-footer"></div>
                 </div>
               </div>
             </div>
-
-
-
 
             <!-- modal observaciones generales  -->
 
@@ -810,7 +818,7 @@
                     </button>
                   </div>
                   <div class="modal-body">
-                 <observacion-venta :venId="substr" ></observacion-venta>
+                    <observacion-venta :venId="substr"></observacion-venta>
                   </div>
                   <div class="modal-footer"></div>
                 </div>
@@ -818,7 +826,7 @@
             </div>
 
             <!-- modal venta observaciones -->
-    <!--          Modal agregar nuevo cliente -->
+            <!--          Modal agregar nuevo cliente -->
 
             <div
               class="modal fade"
@@ -847,94 +855,84 @@
                 </div>
               </div>
             </div>
-               <!--          Modal agregar nuevo cliente -->
-            
+            <!--          Modal agregar nuevo cliente -->
+
             <b-table
-          :items="detalleventa"
-          :fields="fields"
-          :filter="filter"
-          show-empty
-          responsive="sm"
-          :per-page="perPage"
-          :current-page="currentPage"
-        >
-          <template #cell(index)="data">
-            <small> {{ data.index + 1 }} </small>
-          </template>
-      
+              :items="detalleventa"
+              :fields="fields"
+              :filter="filter"
+              show-empty
+              responsive="sm"
+              :per-page="perPage"
+              :current-page="currentPage"
+            >
+              <template #cell(index)="data">
+                <small> {{ data.index + 1 }} </small>
+              </template>
+
               <template #cell(nombre)="data">
-            <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
-            {{ data.item.nombre }}
-          </template>
+                <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
+                {{ data.item.nombre }}
+              </template>
               <template #cell(cantidad)="data">
-            <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
-            <div v-if="data.item.opcion===1" >
-         {{ data.item.cantidad }}     {{ data.item.uniPrecioVenta1 }}  
-</div>
-   
-            <div v-if="data.item.opcion===2" >
-         {{ data.item.cantidad }}     {{ data.item.uniPrecioVenta2 }}  
-</div>
-  <div v-if="data.item.opcion===3" >
-         {{ data.item.cantidad }}     {{ data.item.uniPrecioVenta3 }}  
-</div>
+                <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
+                <div v-if="data.item.opcion === 1">
+                  {{ data.item.cantidad }} {{ data.item.uniPrecioVenta1 }}
+                </div>
 
-          </template>
-          <template #cell(descripcion)="data">
-            <!--  <small class="mb-0 mr-2">{{ data.item.ruc }}</small> -->
-            {{ data.item.descripcion }}
-          </template>
-         
-          <template #cell(precioUnitario)="data">
-          
-                  $ 
-             {{ parseFloat( data.item.precioUnitario).toFixed(2) }}
+                <div v-if="data.item.opcion === 2">
+                  {{ data.item.cantidad }} {{ data.item.uniPrecioVenta2 }}
+                </div>
+                <div v-if="data.item.opcion === 3">
+                  {{ data.item.cantidad }} {{ data.item.uniPrecioVenta3 }}
+                </div>
+              </template>
+              <template #cell(descripcion)="data">
+                <!--  <small class="mb-0 mr-2">{{ data.item.ruc }}</small> -->
+                {{ data.item.descripcion }}
+              </template>
 
-          </template>
-         <!--  <template #cell(descuento)="data">
+              <template #cell(precioUnitario)="data">
+                $
+                {{ parseFloat(data.item.precioUnitario).toFixed(2) }}
+              </template>
+              <!--  <template #cell(descuento)="data">
          
              $ 
              {{ parseFloat( data.item.descuento).toFixed(2) }}
           </template>
  -->
-          
 
-
-          <template #cell(subTotal)="data">
-         
-           $ 
-             {{ parseFloat( data.item.subTotal).toFixed(2) }}
-          </template>
-          <template #cell(actions)="data">
-     
-            <b-button
-              variant="outline-danger default actions"
-              size="sm"
-              data-toggle="tooltip"
-              data-placement="top"
-              title="Borrar producto"
-         @click="deleteDetalleVenta(data.item.id)"
-            >
-              <i class="fas fa-trash"></i>
-            </b-button>
-          </template>
-        </b-table>
- <!-- PAGINACION -->
-        <div v-if="rows > 2">
-          <b-pagination
-            class="text-center"
-            v-model="currentPage"
-            :total-rows="rows"
-            :per-page="perPage"
-            aria-controls="my-table"
-            size="sm"
-            align="center"
-          ></b-pagination>
-        </div>
-        <!-- FIN PAGINACION -->
-
-
-
+              <template #cell(subTotal)="data">
+                $
+                {{ parseFloat(data.item.subTotal).toFixed(2) }}
+              </template>
+              <template #cell(actions)="data">
+                <b-button
+                  variant="outline-danger default actions"
+                  size="sm"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title="Borrar producto"
+                  @click="deleteDetalleVenta(data.item.id)"
+                >
+                  <i class="fas fa-trash"></i>
+                </b-button>
+              </template>
+            </b-table>
+            <!-- PAGINACION -->
+            <div v-if="rows > 2">
+              <b-pagination
+                class="text-center"
+                v-model="currentPage"
+                :total-rows="rows"
+                :per-page="perPage"
+                aria-controls="my-table"
+                size="sm"
+                align="center"
+              ></b-pagination>
+            </div>
+            <!-- FIN PAGINACION -->
 
             <b-container class="bv-example-row">
               <b-row>
@@ -949,48 +947,74 @@
                           <tr>
                             <td>SUBTOTAL PRECIO</td>
                             <td>
-                           $   {{ parseFloat(totalesventa.subtotalprecio).toFixed(2) }}
+                              $
+                              {{
+                                parseFloat(totalesventa.subtotalprecio).toFixed(
+                                  2
+                                )
+                              }}
                             </td>
                           </tr>
-                            <tr>
+                          <tr>
                             <td>DESCUENTO</td>
                             <td>
-                            <!-- $  {{ parseFloat(totalesventa.descuentos).toFixed(2) }}
+                              <!-- $  {{ parseFloat(totalesventa.descuentos).toFixed(2) }}
                              -->
-                             <div class="input-group mb-3">
-  <div class="input-group-prepend">
-    <span class="input-group-text">$</span>
-  </div>
-  <input type="text" v-model="descuento" class="form-control" aria-label="Amount (to the nearest dollar)">
-  <div class="input-group-append">
-  </div>
- <!--  <button @click="UpdateDescuento()"></button> -->
-  <button class="btn btn-success" @click="UpdateDescuento()" title="Aplicar descuento"><i class="fa fa-check"></i></button>
-</div>
+                              <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text">$</span>
+                                </div>
+                                <input
+                                  type="text"
+                                  v-model="descuento"
+                                  class="form-control"
+                                  aria-label="Amount (to the nearest dollar)"
+                                />
+                                <div class="input-group-append"></div>
+                                <!--  <button @click="UpdateDescuento()"></button> -->
+                                <button
+                                  class="btn btn-success"
+                                  @click="UpdateDescuento()"
+                                  title="Aplicar descuento"
+                                >
+                                  <i class="fa fa-check"></i>
+                                </button>
+                              </div>
                             </td>
                           </tr>
-                             <tr>
+                          <tr>
                             <td>SUBTOTAL SIN IMP</td>
                             <td>
-                           $   {{ parseFloat(totalesventa.subtotal_sin_impuestos).toFixed(2) }}
+                              $
+                              {{
+                                parseFloat(
+                                  totalesventa.subtotal_sin_impuestos
+                                ).toFixed(2)
+                              }}
                             </td>
                           </tr>
-                                <tr>
+                          <tr>
                             <td>SUBTOTAL 12%</td>
                             <td>
-                            $  {{ parseFloat(totalesventa.subtotal_sin_impuestos).toFixed(2) }}
+                              $
+                              {{
+                                parseFloat(
+                                  totalesventa.subtotal_sin_impuestos
+                                ).toFixed(2)
+                              }}
                             </td>
                           </tr>
                           <tr>
                             <td>VALOR IVA 12%</td>
                             <td>
-                           $   {{ parseFloat(totalesventa.valorIva).toFixed(2) }}
+                              $
+                              {{ parseFloat(totalesventa.valorIva).toFixed(2) }}
                             </td>
                           </tr>
                           <tr>
                             <td>VALOR TOTAL</td>
                             <td>
-                            $  {{ parseFloat(totalesventa.total).toFixed(2) }}
+                              $ {{ parseFloat(totalesventa.total).toFixed(2) }}
                             </td>
                           </tr>
                         </tbody>
@@ -1015,7 +1039,7 @@
                     <b-dropdown-item
                       data-toggle="modal"
                       data-target="#ModalVentaContado"
-                      ><i class="fas fa-dollar-sign"></i> 
+                      ><i class="fas fa-dollar-sign"></i>
                       Contado</b-dropdown-item
                     >
                     <b-dropdown-item
@@ -1030,13 +1054,12 @@
                       ><i class="fas fa-comments-dollar"></i
                       >Abono</b-dropdown-item
                     >
-                       <b-dropdown-item
+                    <b-dropdown-item
                       data-toggle="modal"
                       data-target="#ModalVentaCheque"
-                      ><i class="fas fa-money-check"></i
-                      >Cheque</b-dropdown-item
+                      ><i class="fas fa-money-check"></i>Cheque</b-dropdown-item
                     >
-                          <b-dropdown-item
+                    <b-dropdown-item
                       data-toggle="modal"
                       data-target="#ModalVentaCredito"
                       ><i class="fas fa-bell"></i>Credito</b-dropdown-item
@@ -1047,24 +1070,19 @@
                       ><i class="fas fa-paper-plane"></i
                       >Observaciones</b-dropdown-item
                     >
-                        <b-dropdown-item
-                       @click="downloadVenta()"
-                
-                      ><i class="fas fa-print"></i
-                      >Imprimir</b-dropdown-item
+                    <b-dropdown-item @click="downloadVenta()"
+                      ><i class="fas fa-print"></i>Imprimir</b-dropdown-item
                     >
-                        <b-dropdown-item
+                    <b-dropdown-item
                       data-toggle="modal"
                       data-target="#ModalRetencion"
-                      ><i class="fas fa-cube"></i
-                      >Retencion</b-dropdown-item
+                      ><i class="fas fa-cube"></i>Retencion</b-dropdown-item
                     >
-<!-- 
+                    <!-- 
                     <b-dropdown-item @click="deleteVenta"
                       ><i class="fas fa-ban"></i>Eliminar Venta</b-dropdown-item
                     > -->
                   </b-dropdown>
-                  
                 </div>
               </div>
             </div>
@@ -1211,7 +1229,7 @@ export default {
     }, */
   },
   computed: {
-        rows() {
+    rows() {
       return this.detalleventa.length;
     },
     total_cambio: function () {
@@ -1242,11 +1260,11 @@ export default {
     this.detalleGeneralVenta();
   },
   methods: {
-    updateClientes(){
-   this.getAllClientes();
-  location.reload();
+    updateClientes() {
+      this.getAllClientes();
+      location.reload();
     },
-      downloadVenta() {
+    downloadVenta() {
       let routeData = server + resource + `download-venta/` + this.substr;
       window.open(routeData);
     },
@@ -1291,7 +1309,7 @@ export default {
         .then((response) => {
           let mensaje = response.data.data;
           if (mensaje == 200) {
-          //  this.getInformacionVenta();
+            //  this.getInformacionVenta();
             //this.totalesVenta();
             location.reload();
           }
@@ -1463,11 +1481,9 @@ export default {
           }
         })
         .catch((error) => {
-               this.$swal
-              .error({
-                title: "Existio un problema ",
-              })
-     
+          this.$swal.error({
+            title: "Existio un problema ",
+          });
         });
     },
 
