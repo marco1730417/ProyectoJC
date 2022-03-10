@@ -82,8 +82,8 @@
               <small class="fw-bold">
 
 
-                  La sección de precios mantiene una relación con las unidades mínimas y grupales de cada producto. Siendo por convencion
-                  el PV1 el precio de la unidad minima Ej. (m , u) y el PV2 el precio la unidad grupal Ej. (rll , cj). El PV3 esta reservado a ser un precio especial en base a las reglas de negocio
+                  La sección de precios mantiene una relación con las unidades mínimas y grupales de cada producto. Se recomienda que 
+                  el PV1 sea el precio de la unidad minima Ej. (m , u) y el PV2 el precio la unidad grupal Ej. (rll , cj). El PV3 esta reservado a ser un precio especial en base a las reglas de negocio
 
                 </small>
             </p>
@@ -148,8 +148,8 @@
                       <div  class="col-8">
                         <!--left side -->
                         <div class="form-group row">
-
-
+<!-- 
+{{validatestatus}} -->
     <div class="col-lg-12 mb-lg-0 mb-3">
   
     <b-form-group label="Escoja la unidad para el PV1" >
@@ -291,7 +291,7 @@ export default {
         selectedpv2:"",
         selectedpv3: "",
         metrosrollo:"",
-          uniPrecioVenta1:0,
+          uniPrecioVenta1:"",
       uniPrecioVenta2:"",
       uniPrecioVenta3:"",
     
@@ -314,6 +314,16 @@ export default {
       iva: "",
     };
   },
+
+ /*  computed: {
+    validatestatus: function () {
+      if(this.infoeditproducto.PrecioVenta1 == 0){
+this.infoeditproducto.uniPrecioVenta1 == "";
+return true;
+      }else false;
+    }
+  }, */
+
   mounted() {},
   methods: {
     clearfields() {
