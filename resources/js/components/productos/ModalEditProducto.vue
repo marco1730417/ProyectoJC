@@ -77,8 +77,15 @@
                 aria-expanded="true"
                 aria-controls="collapseExample"
               >
-                <span class="fw-bold">Precios</span>
+                <span class="fw-bold">Precios</span> 
               </a>
+              <small class="fw-bold">
+
+
+                  La sección de precios mantiene una relación con las unidades mínimas y grupales de cada producto. Siendo por convencion
+                  el PV1 el precio de la unidad minima Ej. (m , u) y el PV2 el precio la unidad grupal Ej. (rll , cj). El PV3 esta reservado a ser un precio especial en base a las reglas de negocio
+
+                </small>
             </p>
             <div class="collapse show p-3 pt-0" id="collapseExample">
               <div  class="row">
@@ -258,7 +265,7 @@
       
       <div  class="col-12 text-center ">
         <div
-        v-if="infoeditproducto.unidades && infoeditproducto.PrecioVenta1 && infoeditproducto.nombre"
+        v-if="infoeditproducto.unidades && infoeditproducto.nombre"
         
           @click="UpdateProducto(infoeditproducto)"
           class="btn btn-primary payment"
@@ -284,7 +291,7 @@ export default {
         selectedpv2:"",
         selectedpv3: "",
         metrosrollo:"",
-          uniPrecioVenta1:"",
+          uniPrecioVenta1:0,
       uniPrecioVenta2:"",
       uniPrecioVenta3:"",
     
@@ -302,7 +309,7 @@ export default {
       nombre: "",
       codigo: "",
       descripcion: "",
-      unidades: "",
+      unidades: 0,
       PrecioVenta1: "",
       iva: "",
     };

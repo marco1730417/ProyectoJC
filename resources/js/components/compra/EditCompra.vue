@@ -739,7 +739,7 @@ export default {
     deleteDetalleCompra(id) {
       this.$swal
         .fire({
-          title: "Estas seguro de eliminar esta compra?",
+          title: "Estas seguro de eliminar este producto de su compra?",
           showCancelButton: true,
           confirmButtonText: "SI",
         })

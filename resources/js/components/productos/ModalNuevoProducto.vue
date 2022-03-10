@@ -94,6 +94,14 @@
               >
                 <span class="fw-bold">Precios</span>
               </a>
+                 <small class="fw-bold">
+
+                  La sección de precios mantiene una relación con las unidades mínimas y grupales de cada producto. Siendo por convencion
+                  el PV1 el precio de la unidad minima Ej. (m , u) y el PV2 el precio la unidad grupal Ej. (rll , cj). El PV3 esta reservado a ser un precio especial en base a las reglas de negocio
+                  
+
+
+                </small>
             </p>
             <div class="collapse show p-3 pt-0" id="collapseExample">
               <div  class="row">
