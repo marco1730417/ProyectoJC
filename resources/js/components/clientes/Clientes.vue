@@ -256,13 +256,13 @@ export default {
           tdClass: "list-item-enddate",
         },
 
-        {
+    /*     {
           key: "email",
           label: "Email",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate text-center",
-        },
+        }, */
         { key: "actions", label: "Acciones", tdClass: "text-center" },
       ],
     };
