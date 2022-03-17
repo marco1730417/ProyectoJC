@@ -17,7 +17,7 @@ class ClienteApiController extends ApiResponseController
      */
     public function getAllClientes() 
     {
-        $cliente_info = Cliente::all();
+        $cliente_info = Cliente::orderBy('nombre', 'asc')->get();
         return $this->successResponse($cliente_info);
     }
     public function createNewClient(Request $request){
