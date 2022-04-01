@@ -1,42 +1,15 @@
 <template>
-  <div class="container">
-    <form action="">
-      <!--   {{retencion}} {{ivaretencion}} -->
-      <div class="mb-3">
-         <b-form-textarea
-      id="textarea"
-      v-model="observacion"
-      placeholder="Enter something..."
-      rows="3"
-      max-rows="6"
-    ></b-form-textarea>
-      </div>
+<main class="container">
+<!--   <p>Observaciones</p> -->
 
-      <div class="mb-3"></div>
-      <div>
-        <div class="address">
-          <div class="d-flex flex-column dis">
-            <!--  {{retencion}} -->
-            <div
-              class="d-flex align-items-center justify-content-between mb-2"
-            >
-              <!--   {{totaldetallegeneral.cliId}}  -->
-              <div
-                v-if="observacion"
-                @click="updateObservacion()"
-                class="btn btn-primary mt-2"
-              >
-                <span class="fas fa-dollar-sign px-1"></span>Guardar Observacion
-              </div>
-              <div v-else class="btn btn-primary mt-2">
-                <span class="fas fa-dollar-sign px-1"></span>Guardar Observacion
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </form>
+  <div class="input-group">
+      <textarea    v-model="observacion" class="form-control custom-control" rows="2" style="resize:none"></textarea>     
+      <span    v-if="observacion"
+                @click="updateObservacion()" class="input-group-addon btn btn-primary">Send</span>
+                 <span   v-else class="input-group-addon btn btn-primary">Send</span>
+
   </div>
+</main>
 </template>
 
 

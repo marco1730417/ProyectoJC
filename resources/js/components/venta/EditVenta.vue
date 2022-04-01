@@ -36,6 +36,10 @@
                       </h5>
                     </div>
 
+    
+
+                   <!--  {{detalleventa}}
+ -->
                     <!--  <a
               href=""
               class="btn btn-sm btn-primary"
@@ -66,7 +70,19 @@
                   <br /><br />
                 </div>
               </div>
+
+    <div
+                class="card card-stats mb-4 mb-xl-0"
+              >
+                <div class="card-body">
+              <observacion-venta :venId="substr"></observacion-venta>
+                </div>
+              </div>
+
             </div>
+
+
+
 
             <div v-if="substr > 0" class="col-xl-6 col-lg-6">
               <div class="card card-stats mb-4 mb-xl-0">
@@ -112,6 +128,7 @@
                       {{ totaldetallegeneral.ruc }}
                       <!--    {{totaldetallegeneral.descuento}} -->
                     </span>
+                    
                     <span class="text-nowrap text-primary"
                       ><i class="fas fa-home"></i>
                       {{ totaldetallegeneral.direccion }}</span
@@ -1064,12 +1081,12 @@
                       data-target="#ModalVentaCredito"
                       ><i class="fas fa-bell"></i>Credito</b-dropdown-item
                     >
-                    <b-dropdown-item
+               <!--      <b-dropdown-item
                       data-toggle="modal"
                       data-target="#ModalObservacionesGenerales"
                       ><i class="fas fa-paper-plane"></i
                       >Observaciones</b-dropdown-item
-                    >
+                    > -->
                     <b-dropdown-item @click="downloadVenta()"
                       ><i class="fas fa-print"></i>Imprimir</b-dropdown-item
                     >
@@ -1260,6 +1277,7 @@ export default {
     this.detalleGeneralVenta();
   },
   methods: {
+
     updateClientes() {
       this.getAllClientes();
       location.reload();

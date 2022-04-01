@@ -107,9 +107,9 @@ class VentaApiController extends ApiResponseController
         $pago=$data['pago'];
         $vuelto=$data['vuelto'];
         
-        $format_vuelto = number_format($vuelto, 2);
-        $format_total = number_format($total, 2);
-        $format_pago = number_format($pago, 2);
+        $format_vuelto = number_format($vuelto, 2,'.','');
+        $format_total = number_format($total, 2,'.','');
+        $format_pago = number_format($pago, 2,'.','');
         $estado=0;
 
         if( $format_pago>=$format_total ) { 
@@ -152,8 +152,8 @@ class VentaApiController extends ApiResponseController
         $data = request()->all();
         $total=$data['total'];
         $pago=$data['pago'];
-        $format_total = number_format($total, 2);
-        $format_pago = number_format($pago, 2);
+        $format_total = number_format($total, 2,'.','');
+        $format_pago = number_format($pago, 2,'.','');
         $estado=0;
 
         if( $format_pago>=$format_total )
@@ -203,10 +203,12 @@ class VentaApiController extends ApiResponseController
         $abono=$data['abono'];
         $saldo=$data['saldo'];
 
-        $format_saldo = number_format($saldo, 2);
+        $format_saldo = number_format($saldo, 2,'.','');
       
-        $format_total = number_format($total, 2);
-        $format_abono = number_format($abono, 2);
+        $format_total = number_format($total, 2,'.','');
+
+
+        $format_abono = number_format($abono, 2,'.','');
         $estado=0;
 
 
@@ -270,10 +272,10 @@ class VentaApiController extends ApiResponseController
         $saldo_actual = $data['saldo'];
         $total=$info[0]['total'];
         
-        $format_total = number_format($total, 2);
-        $format_pago = number_format($pago, 2);
-        $saldo_anterior = number_format($saldo_anterior, 2);
-        $saldo_actual = number_format($saldo_actual, 2);
+        $format_total = number_format($total, 2,'.','');
+        $format_pago = number_format($pago, 2,'.','');
+        $saldo_anterior = number_format($saldo_anterior, 2,'.','');
+        $saldo_actual = number_format($saldo_actual, 2,'.','');
       
         $estado=0;
 
@@ -322,7 +324,7 @@ class VentaApiController extends ApiResponseController
 
         $data = request()->all();
         $total=$data['total'];
-        $format_total = number_format($total, 2);
+        $format_total = number_format($total, 2,'.','');
     
             $estado=0;  //1 el pago ha sido completo
             $update_venta= Venta::findOrFail($data['venId']);
@@ -354,7 +356,7 @@ class VentaApiController extends ApiResponseController
 
         $data = request()->all();
         $total=$data['total'];
-        $format_total = number_format($total, 2);
+        $format_total = number_format($total, 2,'.','');
         $update_venta= Venta::findOrFail($data['venId']);
         $update_venta->estadopago=0;
         $update_venta->total=$format_total;
