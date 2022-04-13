@@ -5,8 +5,8 @@
   <div class="input-group">
       <textarea    v-model="observacion" class="form-control custom-control" rows="2" style="resize:none"></textarea>     
       <span    v-if="observacion"
-                @click="updateObservacion()" class="input-group-addon btn btn-primary">Send</span>
-                 <span   v-else class="input-group-addon btn btn-primary">Send</span>
+                @click="updateObservacion()" class="input-group-addon btn btn-primary">Guardar</span>
+                 <span   v-else class="input-group-addon btn btn-primary">Guardar</span>
 
   </div>
 </main>

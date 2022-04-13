@@ -204,7 +204,7 @@
       <th>Forma de pago</th>
       <td>{{$detallepago[0]['tipo']}}</td>
     </tr>
-    @if ($detallepago[0]['tipo'] == 'Abono' ||$detallepago[0]['tipo'] == 'Credito' )
+    @if ($detallepago[0]['tipo'] == 'Abono' ||$detallepago[0]['tipo'] == 'Credito' ||$detallepago[0]['tipo'] == 'Cheque' )
     <tr>
       <th>Fecha de vencimiento</th>
       <td>{{$detallepago[0]['fechamaxima']}}</td>
