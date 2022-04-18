@@ -71,13 +71,13 @@
                 </div>
               </div>
 
-    <div
+<!--     <div
                 class="card card-stats mb-4 mb-xl-0"
               >
                 <div class="card-body">
               <observacion-venta :venId="substr"></observacion-venta>
                 </div>
-              </div>
+              </div> -->
 
             </div>
 

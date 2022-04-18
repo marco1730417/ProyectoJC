@@ -53,6 +53,10 @@
                
    <b-badge href=""   @click="gotoEditVenta(data.item.id)"
                    variant="primary">{{ data.item.id }}</b-badge> 
+                     <span v-if="data.item.cheque || data.item.numtransf ">      {{
+                          data.item.cheque
+                            }}  {{data.item.numtransf}}  </span>     <span v-else>  N/A</span> 
+
 <!--  <b-badge href="#" variant="primary">Primary</b-badge> -->
 
                 </template>

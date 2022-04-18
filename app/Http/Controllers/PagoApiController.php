@@ -55,6 +55,16 @@ class PagoApiController extends ApiResponseController
          ORDER BY pagos.total
          limit 1
          ) AS total"),
+         DB::raw("(SELECT (pagos.numtransf) FROM pagos
+         WHERE ventas.id=pagos.venId
+         ORDER BY pagos.total
+         limit 1
+         ) AS numtransf"),
+         DB::raw("(SELECT (pagos.cheque) FROM pagos
+         WHERE ventas.id=pagos.venId
+         ORDER BY pagos.total
+         limit 1
+         ) AS cheque"),
          )
         ->where('estadopago',0)
         ->get();

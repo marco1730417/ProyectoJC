@@ -528,7 +528,10 @@ class VentaApiController extends ApiResponseController
             'pagos.saldo',
             'pagos.fecha',
             'pagos.venId',
-            'pagos.cliId'
+            'pagos.cliId',
+            'pagos.cheque',
+            'pagos.numtransf'
+            
         )
             ->leftJoin('ventas', 'pagos.venId', '=', 'ventas.id')
             ->leftJoin('clientes', 'pagos.cliId', '=', 'clientes.id')
@@ -565,7 +568,8 @@ class VentaApiController extends ApiResponseController
             'pagos.saldo',
             'pagos.fecha',
             'pagos.venId',
-            'pagos.cliId'
+            'pagos.cliId',
+            'pagos.cheque'
         )
             ->leftJoin('ventas', 'pagos.venId', '=', 'ventas.id')
             ->leftJoin('clientes', 'pagos.cliId', '=', 'clientes.id')

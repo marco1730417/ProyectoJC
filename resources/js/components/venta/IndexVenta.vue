@@ -150,7 +150,7 @@
                   >
                     <i class="fas fa-arrow-circle-right"></i>
                   </b-button>
-                  <b-button
+              <!--     <b-button
                     variant="outline-info default actions"
                     data-toggle="modal"
                     data-target="#ModalVentaObservaciones"
@@ -159,7 +159,7 @@
                     @click="captureitem(data.item)"
                   >
                     <i class="fas fa-eye"></i>
-                  </b-button>
+                  </b-button> -->
                   <b-button
                     variant="outline-warning default actions"
                     size="sm"
@@ -469,6 +469,12 @@
                               ).format("MMM DD YYYY, ddd")
                             }}
                           </template>
+                                  <template #cell(cheque)="data">
+                      <span v-if="data.item.cheque || data.item.numtransf ">      {{
+                          data.item.cheque
+                            }}  {{data.item.numtransf}}  </span>     <span v-else>  N/A</span> 
+
+                          </template>
                           <template #cell(actions)="data">
                             <!--  {{data.item}} -->
                             <b-button
@@ -538,6 +544,11 @@ export default {
           key: "tipo",
           label: "Forma de Pago",
         },
+               {
+          key: "cheque",
+          label: "Detalle",
+        },
+        
         {
           key: "pago",
           label: "Pago",
