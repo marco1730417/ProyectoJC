@@ -112,12 +112,17 @@ class PagoApiController extends ApiResponseController
     public function cambioestadoPago($id)
     {       
         
-      //  return $id;
-        
         $pago = Venta::findOrFail($id);
         $pago->estadopago = 1;
         $pago->update();
 
+        $update_pago= Pago:: where ('venId',$id)->pluck('total');
+        $update_pago_realizado= Pago :: where ('venId',$id)->get();
+        $update_pago_realizado= $update_pago_realizado[0];
+        $update_pago_realizado->pago= $update_pago[0];
+        $update_pago_realizado->update();
+
+        
         if (!$pago) return $this->errorResponse(500);
         return $this->successResponse(200);
     }
