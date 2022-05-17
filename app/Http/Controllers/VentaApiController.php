@@ -321,29 +321,64 @@ class VentaApiController extends ApiResponseController
     {
         $carbon = new \Carbon\Carbon();
         $fecha = $carbon->now();
-
         $data = request()->all();
-        $total=$data['total'];
-        $format_total = number_format($total, 2,'.','');
-    
-            $estado=0;  //1 el pago ha sido completo
-            $update_venta= Venta::findOrFail($data['venId']);
-            $update_venta->estadopago=0;
-            $update_venta->total=$format_total;
-            $update_venta->update();
-        $new_pago = new Pago;
-        $new_pago->venId = $data['venId'];
-        $new_pago->fecha = $fecha;
-        $new_pago->tipo = "Cheque";
-        $new_pago->cliId =  $data['cliId'];
-        $new_pago->pago = 0;
-        $new_pago->total =  $data['total'];
-        $new_pago->saldo =  $data['total'];
-        $new_pago->fechamaxima =  $data['fechamaxima'];
-        $new_pago->cheque =  $data['cheque'];
-        $new_pago->estado = $estado;
+      
 
-        $new_pago->save();
+  
+$fecha_actual = strtotime(date("d-m-Y H:i:00",time()));
+$fechamaxima = strtotime($data['fechamaxima']);
+
+
+if($fecha_actual > $fechamaxima){
+    $total=$data['total'];
+    $format_total = number_format($total, 2,'.','');
+    $estado=1;  //1 el pago ha sido completo
+    $update_venta= Venta::findOrFail($data['venId']);
+    $update_venta->estadopago=1;
+    $update_venta->total=$format_total;
+    $update_venta->update();
+    $new_pago = new Pago;
+    $new_pago->venId = $data['venId'];
+    $new_pago->fecha = $fecha;
+    $new_pago->tipo = "Cheque";
+    $new_pago->cliId =  $data['cliId'];
+    $new_pago->pago = $data['total'];
+    $new_pago->total =  $data['total'];
+    $new_pago->saldo = 0;
+    $new_pago->fechamaxima =  $data['fechamaxima'];
+    $new_pago->cheque =  $data['cheque'];
+    $new_pago->estado = $estado;
+    $new_pago->save();
+
+
+
+}else{
+    $total=$data['total'];
+    $format_total = number_format($total, 2,'.','');
+    $estado=0;  //1 el pago ha sido completo
+    $update_venta= Venta::findOrFail($data['venId']);
+    $update_venta->estadopago=0;
+    $update_venta->total=$format_total;
+    $update_venta->update();
+    $new_pago = new Pago;
+    $new_pago->venId = $data['venId'];
+    $new_pago->fecha = $fecha;
+    $new_pago->tipo = "Cheque";
+    $new_pago->cliId =  $data['cliId'];
+    $new_pago->pago = 0;
+    $new_pago->total =  $data['total'];
+    $new_pago->saldo =  $data['total'];
+    $new_pago->fechamaxima =  $data['fechamaxima'];
+    $new_pago->cheque =  $data['cheque'];
+    $new_pago->estado = $estado;
+    $new_pago->save();
+
+
+}
+
+
+
+       
 
         if (!$new_pago) return $this->errorResponse(500);
 

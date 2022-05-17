@@ -472,7 +472,16 @@
                                   <template #cell(cheque)="data">
                       <span v-if="data.item.cheque || data.item.numtransf ">      {{
                           data.item.cheque
-                            }}  {{data.item.numtransf}}  </span>     <span v-else>  N/A</span> 
+                            }}  {{data.item.numtransf}} - 
+                            
+                          <strong>Fecha máxima </strong>      {{
+                    moment(data.item.fechamaxima).format(
+                      "MMM DD YYYY"
+                    )
+                  }}
+                            
+                            
+                             </span>     <span v-else>  N/A</span> 
 
                           </template>
                           <template #cell(actions)="data">
