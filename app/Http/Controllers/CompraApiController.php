@@ -208,10 +208,16 @@ class CompraApiController extends ApiResponseController
     {
         $infodetalle = DetalleCompras::findOrFail($id);
         $update_producto = Producto::findOrFail($infodetalle->proId);
+        $validacion_stock=$update_producto->unidades - $infodetalle->cantidad;
+        if($validacion_stock>0)
         $update_producto->unidades = $update_producto->unidades - $infodetalle->cantidad;
+        else 
+        $update_producto->unidades = 0;
+
         $update_producto->update();
  
-         $detalle_delete = DetalleCompras::findOrFail($id);
+
+        $detalle_delete = DetalleCompras::findOrFail($id);
         $detalle_delete->delete();
         if (!$detalle_delete) return $this->errorResponse(500); 
         return $this->successResponse(200);

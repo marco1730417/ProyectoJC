@@ -174,14 +174,14 @@
                               v-if="total_metro_rollo == false"
                               for="lname"
                               class="col-sm-12 col-form-label text-danger"
-                              >No existe suficiente stock (Existen maximo
+                              >No existe suficiente stock (Stock actual
                               {{ producto.unidades }} mtrs )</label
                             >
                             <label
                               v-if="validacion_metro == false"
                               for="lname"
                               class="col-sm-12 col-form-label text-danger"
-                              >No existe suficiente stock (Existen maximo
+                              >No existe suficiente stock (Stock actual
                               {{ producto.unidades }} mtrs )</label
                             >
                             <label

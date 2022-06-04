@@ -221,9 +221,36 @@
                               :options="infoproducto"
                               required
                             ></v-select>
-                            <small class="text-primary text-center">
+                    <!--         <small class="text-primary text-center">
                               {{ producto.descripcion }}
-                            </small>
+
+                            Stock Actual=>  {{producto.unidades}}
+                            </small> -->
+
+                            <div v-if="producto">
+  <b-card  class="text-center">
+    <table class="table">
+       <caption>Información actual del producto </caption>
+ <thead class="thead-light">
+    <tr>
+      <th scope="col">Descripción</th>
+      <th scope="col">Stock Actual</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">{{producto.descripcion}} </th>
+      <td>{{producto.unidades}}</td>
+      
+    </tr>
+  </tbody>
+</table>
+
+  </b-card>
+</div>
+
+
+
                           </b-form-group>
 
                           <b-row class="my-1">
@@ -758,7 +785,10 @@ export default {
                   });
 
                   this.getInformacionCompra();
-                }
+                  this.getAllProductos();
+            
+            this.producto="";
+            }
               })
               .catch((error) => {
                 console.log(error);
@@ -833,6 +863,10 @@ export default {
               showConfirmButton: false,
               timer: 1500,
             });
+
+this.getAllProductos();
+this.producto="";
+
           }
         })
         .catch((error) => {
