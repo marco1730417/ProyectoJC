@@ -126,6 +126,11 @@ class VentaApiController extends ApiResponseController
         $update_venta->estadopago=1;
         $update_venta->update();}
 
+        $saldo_pendiente=0;
+        $saldo_pendiente= $format_total- $format_pago;
+        if($saldo_pendiente>0) $saldo_pendiente= $saldo_pendiente;
+        else $saldo_pendiente=0;
+
         $new_pago = new Pago;
         $new_pago->venId = $data['venId'];
         $new_pago->fecha = $fecha;
@@ -134,7 +139,7 @@ class VentaApiController extends ApiResponseController
         $new_pago->vuelto =  $format_vuelto;
         $new_pago->pago =  $format_pago;
         $new_pago->total =  $format_total;
-        $new_pago->saldo =  $format_total- $format_pago;
+        $new_pago->saldo =  $saldo_pendiente;
         
         $new_pago->estado = $estado;
 
