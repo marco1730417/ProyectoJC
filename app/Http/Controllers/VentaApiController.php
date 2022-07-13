@@ -517,6 +517,8 @@ if($fecha_actual > $fechamaxima){
         $new_pago->saldo =  $saldo_pendiente;
         $new_pago->fechamaxima =  $data['fechamaxima'];
         $new_pago->cheque =  $data['cheque'];
+        $new_pago->detalleabono =  $data['cheque'];
+        
         $new_pago->estado = 0;
 
         $new_pago->save();

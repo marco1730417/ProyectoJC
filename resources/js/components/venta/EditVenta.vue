@@ -752,7 +752,7 @@
                             v-model="detallecredito"
                           />
                         </div>
-                               <div class="mb-3">
+                        <!--        <div class="mb-3">
                           <p class="dis fw-bold mb-2">Tipo Abono</p>
                           <b-form-group>
       <b-form-radio-group
@@ -769,7 +769,7 @@
                             type="text"
                             v-model="abonocredito"
                           />
-                        </div>
+                        </div> -->
                         <div class="mb-3"></div>
                         <div>
                           <div class="address">
