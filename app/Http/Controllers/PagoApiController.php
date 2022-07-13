@@ -127,7 +127,9 @@ class PagoApiController extends ApiResponseController
 // Api para registrar un pago como finalizado
     public function cambioestadoPago($id)
     {       
-        
+        $carbon = new \Carbon\Carbon();
+        $fecha = $carbon->now();
+
         $pago = Venta::findOrFail($id);
         $pago->estadopago = 1;
         $pago->update();
@@ -136,6 +138,7 @@ class PagoApiController extends ApiResponseController
         $update_pago_realizado= Pago :: where ('venId',$id)->get();
         $update_pago_realizado= $update_pago_realizado[0];
         $update_pago_realizado->pago= $update_pago[0];
+        $update_pago_realizado->cambioestado= $fecha;
         $update_pago_realizado->update();
 
         

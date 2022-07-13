@@ -18,7 +18,7 @@ class Pago extends Model
        'tipo', 'total',
         'pago', 'abono', 'numtransf',
         'fecha', 'cliId', 'saldo'
-,'vuelto'        ,'tipoabono' ,'detalleabono'
+,'vuelto'        ,'tipoabono' ,'detalleabono','cambioestado'
     ];
 
 }
