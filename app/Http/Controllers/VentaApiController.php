@@ -113,17 +113,17 @@ class VentaApiController extends ApiResponseController
         $estado=0;
 
         if( $format_pago>=$format_total ) { 
-        $estado=1;  //1 el pago ha sido completo
+       // $estado=1;  //1 el pago ha sido completo
         $update_venta= Venta::findOrFail($data['venId']);
         $update_venta->estadopago=1;
         $update_venta->total=$format_total;
         
         $update_venta->update();}
         if( $format_pago<$format_total ) { 
-        $estado=0;  // el pago esta incompleto
+        //$estado=0;  // el pago esta incompleto
         $update_venta= Venta::findOrFail($data['venId']);
         $update_venta->total=$format_total;
-        $update_venta->estadopago=0;
+        $update_venta->estadopago=1;
         $update_venta->update();}
 
         $new_pago = new Pago;
@@ -202,12 +202,11 @@ class VentaApiController extends ApiResponseController
         $total=$data['total'];
         $abono=$data['abono'];
         $saldo=$data['saldo'];
-
+        $tipoabono=$data['tipoabono'];
+        $detalleabono=$data['detalleabono'];
+        
         $format_saldo = number_format($saldo, 2,'.','');
-      
         $format_total = number_format($total, 2,'.','');
-
-
         $format_abono = number_format($abono, 2,'.','');
         $estado=0;
 
@@ -240,12 +239,20 @@ class VentaApiController extends ApiResponseController
         $new_pago->total =  $format_total;
         $new_pago->fechamaxima =  $data['fechamaxima'];
         $new_pago->estado = $estado;
+        $new_pago->tipoabono =  $tipoabono;
+        $new_pago->detalleabono = $detalleabono;
+        
         $new_pago->save();
 
         if (!$new_pago) return $this->errorResponse(500);
 
         return $this->successResponse(200);
     }
+
+
+
+    
+
     public function registrarabono(Request $request)
     {
 
@@ -255,9 +262,13 @@ class VentaApiController extends ApiResponseController
 
 
         $data = request()->all();
+
         ///primero sacamos la venta
         $info = $data['info'];
         $venId = $info[0]['venId'];
+        $tipoabono = $data['tipoabono'];
+        $detalleabono = $data['detalleabono'];
+        
         // obtenemos el ultimo saldo pendiente
         $saldo_anterior= Pago::where('venId',$venId)->get()->last();
         $saldo_anterior=$saldo_anterior->saldo;
@@ -309,6 +320,84 @@ class VentaApiController extends ApiResponseController
         //$new_pago->total =  $total;
         $new_pago->fechamaxima =  $fechamaxima;
         $new_pago->estado =  $estado;
+        $new_pago->tipoabono =  $tipoabono;
+        $new_pago->detalleabono =  $detalleabono;
+        
+        
+
+        $new_pago->save();
+
+        if (!$new_pago) return $this->errorResponse(500);
+
+        return $this->successResponse(200);
+    }
+    public function registrarcredito(Request $request)
+    {
+
+
+        $carbon = new \Carbon\Carbon();
+        $fecha = $carbon->now();
+
+        $data = request()->all();
+        $info = $data['info'];
+        $venId = $info[0]['venId'];
+        $tipoabono = $data['tipoabono'];
+        $detalleabono = $data['detalleabono'];
+        
+        // obtenemos el ultimo saldo pendiente
+        $saldo_anterior= Pago::where('venId',$venId)->get()->last();
+        $saldo_anterior=$saldo_anterior->saldo;
+      //  return $saldo_anterior->saldo;
+
+        $total = $info[0]['total'];
+        $fechamaxima = $info[0]['fechamaxima'];
+       // $saldo_anterior = $info[0]['saldo'];
+      
+        $cliId = $info[0]['cliId'];
+        $pago = $data['pago'];
+        $saldo_actual = $data['saldo'];
+        $total=$info[0]['total'];
+        
+        $format_total = number_format($total, 2,'.','');
+        $format_pago = number_format($pago, 2,'.','');
+        $saldo_anterior = number_format($saldo_anterior, 2,'.','');
+        $saldo_actual = number_format($saldo_actual, 2,'.','');
+      
+        $estado=0;
+
+        if( $format_pago>=$saldo_anterior )
+        { 
+            $estado=1;  //1 el pago ha sido completo
+            $update_venta= Venta::findOrFail($venId);
+            $update_venta->estadopago=1;
+            $update_venta->total=$format_total;
+            $update_venta->update();}
+
+        if( $format_pago<$saldo_anterior )
+       { 
+            $estado=0;  //1 el pago ha sido completo
+            $update_venta= Venta::findOrFail($venId);
+            $update_venta->estadopago=0;
+            $update_venta->total=$format_total;
+            $update_venta->update();}
+
+
+
+        $new_pago = new Pago;
+        $new_pago->fecha = $fecha;
+        $new_pago->cliId =  $cliId;
+        $new_pago->tipo = "Credito";
+        $new_pago->venId =  $venId;
+
+        $new_pago->pago =  $format_pago;
+        $new_pago->abono =  $format_pago;
+        $new_pago->saldo =  $saldo_actual;
+        //$new_pago->total =  $total;
+        $new_pago->fechamaxima =  $fechamaxima;
+        $new_pago->estado =  $estado;
+        $new_pago->tipoabono =  $tipoabono;
+        $new_pago->detalleabono =  $detalleabono;
+        
         
 
         $new_pago->save();
@@ -342,7 +431,7 @@ if($fecha_actual > $fechamaxima){
     $new_pago->fecha = $fecha;
     $new_pago->tipo = "Cheque";
     $new_pago->cliId =  $data['cliId'];
-    $new_pago->pago = $data['total'];
+    $new_pago->pago = $format_total ;
     $new_pago->total =  $data['total'];
     $new_pago->saldo = 0;
     $new_pago->fechamaxima =  $data['fechamaxima'];
@@ -366,7 +455,7 @@ if($fecha_actual > $fechamaxima){
     $new_pago->tipo = "Cheque";
     $new_pago->cliId =  $data['cliId'];
     $new_pago->pago = 0;
-    $new_pago->total =  $data['total'];
+    $new_pago->total =  $format_total ;
     $new_pago->saldo =  $data['total'];
     $new_pago->fechamaxima =  $data['fechamaxima'];
     $new_pago->cheque =  $data['cheque'];
@@ -389,9 +478,28 @@ if($fecha_actual > $fechamaxima){
         $carbon = new \Carbon\Carbon();
         $fecha = $carbon->now();
 
+
         $data = request()->all();
+
+      //  return $data;
+        $tipoabono=$data['tipoabono'];
         $total=$data['total'];
         $format_total = number_format($total, 2,'.','');
+        $abonocredito=$data['abonocredito'];
+
+
+        if($abonocredito >=0) { 
+        $saldo_pendiente=$total-$abonocredito;
+        $saldo_pendiente = number_format($saldo_pendiente, 2,'.','');
+        $abonocredito = number_format($abonocredito, 2,'.','');
+        $pago_realizado= $abonocredito;
+    }
+        
+        else {
+            $saldo_pendiente=$format_total;
+            $pago_realizado = 0;
+        } 
+
         $update_venta= Venta::findOrFail($data['venId']);
         $update_venta->estadopago=0;
         $update_venta->total=$format_total;
@@ -402,9 +510,11 @@ if($fecha_actual > $fechamaxima){
         $new_pago->fecha = $fecha;
         $new_pago->tipo = "Credito";
         $new_pago->cliId =  $data['cliId'];
-        $new_pago->pago = 0;
-        $new_pago->total =  $data['total'];
-        $new_pago->saldo =  $data['total'];
+        $new_pago->pago = $pago_realizado;
+        $new_pago->abono =  $pago_realizado;
+        $new_pago->tipoabono = $tipoabono;       
+        $new_pago->total =  $format_total ;
+        $new_pago->saldo =  $saldo_pendiente;
         $new_pago->fechamaxima =  $data['fechamaxima'];
         $new_pago->cheque =  $data['cheque'];
         $new_pago->estado = 0;
@@ -604,7 +714,9 @@ if($fecha_actual > $fechamaxima){
             'pagos.fecha',
             'pagos.venId',
             'pagos.cliId',
-            'pagos.cheque'
+            'pagos.cheque',
+            'pagos.tipoabono',
+            'pagos.detalleabono'
         )
             ->leftJoin('ventas', 'pagos.venId', '=', 'ventas.id')
             ->leftJoin('clientes', 'pagos.cliId', '=', 'clientes.id')
@@ -629,7 +741,46 @@ if($fecha_actual > $fechamaxima){
 
         return $this->successResponse($info_pago_abono);
     }
+    public function getInformacionPagosVentaCreditos($venId)
+    {
+        $detalle_venta = Pago::select(
+            'pagos.id',
+            'pagos.tipo',
+            'pagos.total',
+            'pagos.pago',
+            'pagos.abono',
+            'pagos.fechamaxima',
+            'pagos.saldo',
+            'pagos.fecha',
+            'pagos.venId',
+            'pagos.cliId',
+            'pagos.cheque',
+            'pagos.tipoabono',
+            'pagos.detalleabono'
+        )
+            ->leftJoin('ventas', 'pagos.venId', '=', 'ventas.id')
+            ->leftJoin('clientes', 'pagos.cliId', '=', 'clientes.id')
+            ->where('venId', $venId)
+            ->where('pagos.tipo','=','Credito')
+            
+            ->get();
+        $total_abonos = Pago::where('pagos.venId', $venId)->sum('pagos.abono');
+        $saldo = $detalle_venta[0]['total'] - $total_abonos;
+        $totalcobrar = $detalle_venta[0]['total'];
+        $fechamaxima = $detalle_venta[0]['fechamaxima'];
 
+
+        $info_pago_abono = [
+            'detalle_venta' => $detalle_venta,
+            'total_abonos' =>     $total_abonos,
+            'fechamaxima' => $fechamaxima,
+            'saldo' => $saldo,
+            'totalcobrar' => $totalcobrar,
+
+        ];
+
+        return $this->successResponse($info_pago_abono);
+    }
     
 
 
@@ -873,7 +1024,13 @@ limit 1
         WHERE ventas.id=pagos.venId
         and pagos.tipo='Abono'
         ) AS pagoabonos"),
+        DB::raw("(SELECT count(pagos.id) FROM pagos
+        WHERE ventas.id=pagos.venId
+        and pagos.tipo='Credito'
+        ) AS pagoabonoscreditos"),
+        
         )
+        
         
 
 

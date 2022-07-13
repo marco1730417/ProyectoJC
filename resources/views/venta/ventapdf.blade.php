@@ -209,6 +209,13 @@
       <th>Fecha de vencimiento</th>
       <td>{{$detallepago[0]['fechamaxima']}}</td>
     </tr>
+    @if ($detallepago[0]['saldos']> 0)
+    <tr>
+      <th>Saldo</th>
+      <td>{{$detallepago[0]['saldos']}}</td>
+    </tr>
+    
+    @endif
     @endif
     @if ($info_venta[0]['email']  )  
     <tr>

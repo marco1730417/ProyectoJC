@@ -97,6 +97,8 @@ Route::group(['prefix' => 'venta'], function () {
     Route::post('create-nueva-venta', [VentaApiController::class, 'createNuevaVenta']);
     Route::post('update-venta', [VentaApiController::class, 'updateVenta']);
     Route::post('registrar-abono', [VentaApiController::class, 'registrarabono']);
+    Route::post('registrar-credito', [VentaApiController::class, 'registrarcredito']);
+    
   
     Route::post('delete-retencion/{id}', [VentaApiController::class, 'deleteRetencion']);
  
@@ -108,6 +110,7 @@ Route::group(['prefix' => 'venta'], function () {
     Route::get('download-venta/{venId}',  [VentaApiController::class, 'downloadVenta']);
     Route::get('get-informacion-pagos-venta/{venId}',  [VentaApiController::class, 'getInformacionPagosVenta']);
     Route::get('get-informacion-pagos-venta-abonos/{venId}',  [VentaApiController::class, 'getInformacionPagosVentaAbonos']);
+    Route::get('get-informacion-pagos-venta-creditos/{venId}',  [VentaApiController::class, 'getInformacionPagosVentaCreditos']);
     
     
 

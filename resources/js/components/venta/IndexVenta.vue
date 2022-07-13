@@ -97,8 +97,14 @@
                     @click="gotoNuevaVenta()"
                     class="badge badge-primary"
                     >Nueva Venta</a
-                  >    <button class="btn btn-success btn-sm" title="Recargar" @click="detalleVenta" ><i class="fas fa-sync"></i></button>
-   
+                  >
+                  <button
+                    class="btn btn-success btn-sm"
+                    title="Recargar"
+                    @click="detalleVenta"
+                  >
+                    <i class="fas fa-sync"></i>
+                  </button>
                 </div>
               </div>
             </div>
@@ -115,7 +121,7 @@
                 :per-page="perPage"
                 :current-page="currentPage"
               >
-               <template #cell(fecha)="data">
+                <template #cell(fecha)="data">
                   {{
                     moment(data.item.fecha).format(
                       "MMM DD YYYY, ddd, h:mm:ss a"
@@ -129,16 +135,16 @@
                   </div>
                 </template>
                 <template #cell(observacion)="data">
-                <span v-if="data.item.observacion"> {{ data.item.observacion }}</span> 
-                 <span v-else> N/A</span> 
+                  <span v-if="data.item.observacion">
+                    {{ data.item.observacion }}</span
+                  >
+                  <span v-else> N/A</span>
                 </template>
                 <template #cell(total)="data">
-
-             <span v-if="data.item.total"> 
-                  $ {{ parseFloat(data.item.total).toFixed(2) }}
-           
-               </span> 
-                 <span v-else> Pago no registrado</span> 
+                  <span v-if="data.item.total">
+                    $ {{ parseFloat(data.item.total).toFixed(2) }}
+                  </span>
+                  <span v-else> Pago no registrado</span>
                 </template>
 
                 <template #cell(actions)="data">
@@ -150,7 +156,7 @@
                   >
                     <i class="fas fa-arrow-circle-right"></i>
                   </b-button>
-              <!--     <b-button
+                  <!--     <b-button
                     variant="outline-info default actions"
                     data-toggle="modal"
                     data-target="#ModalVentaObservaciones"
@@ -169,6 +175,7 @@
                   >
                     <i class="fas fa-print" title="Descargar"></i>
                   </b-button>
+                 
                   <b-button
                     v-if="data.item.pagoabonos > 0"
                     variant="outline-info default actions"
@@ -180,6 +187,19 @@
                     title="Abonos"
                   >
                     <i class="fas fa-balance-scale" title="Abonos"></i>
+                  </b-button>
+                 <!--  {{data.item.pagoabonoscreditos}} -->
+                      <b-button
+                    v-if="data.item.pagoabonoscreditos > 0"
+                    variant="outline-light default actions"
+                    size="sm"
+                    data-toggle="modal"
+                    data-target="#ModalCreditos"
+                    @click="obtenerabonoscreditos(data.item.id)"
+                    data-placement="top"
+                    title="Creditos"
+                  >
+                    <i class="fas fa-wallet" title="Creditos"></i>
                   </b-button>
                   <b-button
                     variant="outline-success default actions"
@@ -265,7 +285,7 @@
               </div>
 
               <!--          Modal agregar editar producto -->
-              <!--          Modal agregar editar producto -->
+              <!--          Modal agregar un abono a venta abono -->
               <div
                 class="modal fade"
                 id="ModalAbonos"
@@ -323,9 +343,17 @@
                               ).format("MMM DD YYYY, ddd, h:mm:ss a")
                             }}
                           </template>
+                               <template #cell(tipoabono)="data">
+                          <span v-if="data.item.tipoabono==1">
+                          Efectivo
+                          </span>
+                          <span v-else>
+                          Transferencia
+                          </span>
+                          
+                          </template>
                         </b-table>
 
-                        <form action="">
                           <div class="mb-3">
                             <p class="dis fw-bold mb-2">Cantidad recibida</p>
                             <input
@@ -334,6 +362,27 @@
                               v-model="pagorecibido"
                             />
                           </div>
+
+             <div class="mb-3"> 
+                          <b-form-group>
+      <b-form-radio-group
+        v-model="tipoabono"
+        :options="options"
+        name="radio-inline"
+      ></b-form-radio-group>
+    </b-form-group>
+                      </div>
+                      
+                        <div class="mb-3">
+                          <p class="dis fw-bold mb-2">Detalle Abono</p>
+                          <input
+                            class="form-control"
+                            type="text"
+                            v-model="detalleabono"
+                            
+                          />
+                        </div>
+
                           <div class="mb-3"></div>
                           <div>
                             <div class="address">
@@ -354,6 +403,8 @@
                                     }}
                                   </p>
                                 </div>
+                      
+
                                 <div
                                   class="
                                     d-flex
@@ -402,13 +453,189 @@
                               </div>
                             </div>
                           </div>
-                        </form>
                       </div>
                     </div>
                     <div class="modal-footer"></div>
                   </div>
                 </div>
               </div>
+
+   <!--          Modal agregar un abono a venta credito -->
+              <div
+                class="modal fade"
+                id="ModalCreditos"
+                tabindex="-1"
+                role="dialog"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog modal-lg" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Credito</h5>
+                      <button
+                        type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <!--   {{infoabonos}} -->
+                      <div>
+                        <!--   <h5>Total a cobrar : $ {{ infoabonos.totalcobrar }}</h5> -->
+                        <h5>
+                          Total a cobrar : ${{
+                            parseFloat(infoabonoscreditos.totalcobrar).toFixed(2)
+                          }}
+                        </h5>
+                        <h5>
+                          Fecha maxima :
+                          {{
+                            moment(infoabonoscreditos.fechamaxima, "YYYY-MM-DD").format(
+                              "MMM DD YYYY, ddd"
+                            )
+                          }}
+                        </h5>
+                        <b-progress
+                          :value="infoabonoscreditos.total_abonos"
+                          :max="infoabonoscreditos.totalcobrar"
+                          show-progress
+                          animated
+                        ></b-progress>
+                        <b-table
+                          striped
+                          hover
+                          :items="infoabonoscreditos.detalle_venta"
+                          :fields="fields"
+                        >
+                          <template #cell(fecha)="data">
+                            {{
+                              moment(
+                                data.item.fecha,
+                                "YYYY-MM-DD, h:mm:ss a"
+                              ).format("MMM DD YYYY, ddd, h:mm:ss a")
+                            }}
+                          </template>
+                               <template #cell(tipoabono)="data">
+                          <span v-if="data.item.tipoabono==1">
+                          Efectivo
+                          </span>
+                          <span v-else>
+                          Transferencia
+                          </span>
+                          
+                          </template>
+                        </b-table>
+
+                          <div class="mb-3">
+                            <p class="dis fw-bold mb-2">Cantidad recibida</p>
+                            <input
+                              class="form-control"
+                              type="number"
+                              v-model="pagorecibido"
+                            />
+                          </div>
+
+             <div class="mb-3"> 
+                          <b-form-group>
+      <b-form-radio-group
+        v-model="tipoabonocredito"
+        :options="optionscredito"
+        name="radio-inline"
+      ></b-form-radio-group>
+    </b-form-group>
+                      </div>
+                      
+                        <div class="mb-3">
+                          <p class="dis fw-bold mb-2">Detalle Abono</p>
+                          <input
+                            class="form-control"
+                            type="text"
+                            v-model="detalleabonocredito"
+                            
+                          />
+                        </div>
+
+                          <div class="mb-3"></div>
+                          <div>
+                            <div class="address">
+                              <div class="d-flex flex-column dis">
+                                <div
+                                  class="
+                                    d-flex
+                                    align-items-center
+                                    justify-content-between
+                                    mb-2
+                                  "
+                                >
+                                  <p>Total</p>
+                                  <p>
+                                    <span class="fas fa-dollar-sign"></span>
+                                    {{
+                                      parseFloat(infoabonoscreditos.saldo).toFixed(2)
+                                    }}
+                                  </p>
+                                </div>
+                      
+
+                                <div
+                                  class="
+                                    d-flex
+                                    align-items-center
+                                    justify-content-between
+                                    mb-2
+                                  "
+                                >
+                                  <p>Abono</p>
+                                  <p>
+                                    <span class="fas fa-dollar-sign"></span
+                                    >{{ pagorecibido }}
+                                    <!--  {{
+                                      parseFloat(pagorecibido).toFixed(2)
+                                    }} -->
+                                  </p>
+                                </div>
+                                <div
+                                  class="
+                                    d-flex
+                                    align-items-center
+                                    justify-content-between
+                                    mb-2
+                                  "
+                                >
+                                  <p>Saldo</p>
+                                  <p>
+                                    <span class="fas fa-dollar-sign"></span>
+                                    {{ parseFloat(total_saldo_credito).toFixed(2) }}
+                                  </p>
+                                </div>
+
+                                <div
+                                  v-if="pagorecibido"
+                                  @click="
+                                    registrarcredito(
+                                      pagorecibido,
+                                      infoabonoscreditos.detalle_venta
+                                    )
+                                  "
+                                  class="btn btn-primary mt-2"
+                                >
+                                  <span class="fas fa-dollar-sign px-1"></span
+                                  >Guardar Abono Credito
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer"></div>
+                  </div>
+                </div>
+              </div>
+
+
               <!--          Modal agregar editar producto -->
               <div
                 class="modal fade"
@@ -430,16 +657,18 @@
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
-                
+
                     <div class="modal-body">
                       <!--   {{infoabonos}} -->
                       <div>
                         <h5>
-                          Total Venta : <span v-if="infopagosventa.totalcobrar">
-                         ${{
-                            parseFloat(infopagosventa.totalcobrar).toFixed(2)
-                          }}
-                            </span> <span v-else>0</span>
+                          Total Venta :
+                          <span v-if="infopagosventa.totalcobrar">
+                            ${{
+                              parseFloat(infopagosventa.totalcobrar).toFixed(2)
+                            }}
+                          </span>
+                          <span v-else>0</span>
                         </h5>
 
                         <b-progress
@@ -454,9 +683,9 @@
                           :items="infopagosventa.detalle_venta"
                           :fields="fields2"
                         >
-                          <template #cell(pago)="data">
+                          <template  #cell(pago)="data">
                             $ {{ parseFloat(data.item.pago).toFixed(2) }}
-                          </template>
+                             </template>
                           <template #cell(total)="data">
                             $ {{ parseFloat(data.item.total).toFixed(2) }}
                           </template>
@@ -469,24 +698,29 @@
                               ).format("MMM DD YYYY, ddd")
                             }}
                           </template>
-                                  <template #cell(cheque)="data">
-                      <span v-if="data.item.cheque || data.item.numtransf ">      {{
-                          data.item.cheque
-                            }}  {{data.item.numtransf}} 
-                            
-                            
-                          <strong v-if="data.item.fechamaxima">- Fecha máxima </strong> <span  v-if="data.item.fechamaxima">
- {{
-                moment(data.item.fechamaxima).format(
-                      "MMM DD YYYY"
-                    )
-                  }}
-                          </span>    
-                            
-                            
-                             </span>     <span v-else>  N/A</span> 
+                          <template #cell(cheque)="data">
+                            <span
+                              v-if="data.item.cheque || data.item.numtransf"
+                            >
+                              {{ data.item.cheque }} {{ data.item.numtransf }}
 
+                              <strong v-if="data.item.fechamaxima"
+                                >- Fecha máxima
+                              </strong>
+                              <span v-if="data.item.fechamaxima">
+                                {{
+                                  moment(data.item.fechamaxima).format(
+                                    "MMM DD YYYY"
+                                  )
+                                }}
+                              </span>
+                            </span>
+
+                            
+                            
+                            <span v-else> N/A</span>
                           </template>
+                        
                           <template #cell(actions)="data">
                             <!--  {{data.item}} -->
                             <b-button
@@ -524,9 +758,7 @@
 
 <script>
 import VentaServices from "../../services/ventaServices";
-import ClienteServices from "../../services/clienteServices";
 import pagoServices from "../../services/pagoServices";
-import Venta from "./Venta.vue";
 import Conf from "../../services/conf.js";
 
 const resource = "api/venta/";
@@ -544,6 +776,22 @@ export default {
   },
   data() {
     return {
+        tipoabono: '1',
+        tipoabonocredito: '1',
+        
+  detalleabono:"",
+  detalleabonocredito:"",
+  
+        options: [
+          { text: 'Efectivo', value: '1' },
+          { text: 'Transferencia', value: '2' },
+        
+        ],
+              optionscredito: [
+          { text: 'Efectivo', value: '1' },
+          { text: 'Transferencia', value: '2' },
+        
+        ],
       perPage: 10,
       currentPage: 1,
       filter: null,
@@ -556,11 +804,11 @@ export default {
           key: "tipo",
           label: "Forma de Pago",
         },
-               {
+        {
           key: "cheque",
           label: "Detalle",
         },
-        
+
         {
           key: "pago",
           label: "Pago",
@@ -594,7 +842,7 @@ export default {
           sortDirection: "desc",
           tdClass: "list-item-enddate",
         },
-      /*   {
+        /*   {
           key: "observacion",
           label: "Observacion",
           sortable: false,
@@ -621,6 +869,14 @@ export default {
           key: "fecha",
           label: "Fecha",
         },
+          {
+          key: "tipoabono",
+          label: "Tipo",
+        },
+         {
+          key: "detalleabono",
+          label: "Detalle",
+        },
       ],
       fecha: moment().format("MMMM Do YYYY"),
       cliente: "",
@@ -633,6 +889,8 @@ export default {
       text: "",
       formadepago: "",
       infoabonos: "",
+      infoabonoscreditos: "",
+      
       pagorecibido: "",
       saldo: "",
       venta: "",
@@ -647,10 +905,19 @@ export default {
 
       return tt;
     },
+      total_saldo_credito: function () {
+      let total = this.infoabonoscreditos.saldo;
+      let pagorecibido = this.pagorecibido;
+      let tt = total - pagorecibido;
+      this.saldo = tt;
+
+      return tt;
+    },
     rows() {
       return this.detalleventa.length;
     },
   },
+  
   mounted() {
     this.detalleVenta();
     this.totalDashboardVentas();
@@ -674,8 +941,35 @@ export default {
         info: info,
         pago: pago,
         saldo: this.saldo,
+        tipoabono:this.tipoabono,
+        detalleabono:this.detalleabono
       };
       VentaServices.registrarabono(data)
+        .then((response) => {
+          let mensaje = response.data.data;
+          if (mensaje == 200) {
+            this.$swal.fire({
+              icon: "success",
+              title: "Abono registrado",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            location.reload();
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+      registrarcredito(pago, info) {
+      let data = {
+        info: info,
+        pago: pago,
+        saldo: this.saldo,
+        tipoabono:this.tipoabonocredito,
+        detalleabono:this.detalleabonocredito
+      };
+      VentaServices.registrarcredito(data)
         .then((response) => {
           let mensaje = response.data.data;
           if (mensaje == 200) {
@@ -703,24 +997,21 @@ export default {
           if (mensaje == 200) {
             this.detalleVenta();
             this.totalDashboardVentas();
-                   this.$swal
-        .fire({
-  icon: 'success',
-  title: 'Observacion guardada',
-  showConfirmButton: false,
-  timer: 1500
-})
-
+            this.$swal.fire({
+              icon: "success",
+              title: "Observacion guardada",
+              showConfirmButton: false,
+              timer: 1500,
+            });
           }
         })
-          .catch((error) => {
-              this.$swal
-        .fire({
-  icon: 'error',
-  title: 'Observacion no agregado',
-  showConfirmButton: false,
-  timer: 1500
-})
+        .catch((error) => {
+          this.$swal.fire({
+            icon: "error",
+            title: "Observacion no agregado",
+            showConfirmButton: false,
+            timer: 1500,
+          });
         });
     },
     captureitem(item) {
@@ -730,6 +1021,15 @@ export default {
       VentaServices.getInformacionPagosVentaAbonos(id)
         .then((response) => {
           this.infoabonos = response.data.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+       obtenerabonoscreditos(id) {
+      VentaServices.getInformacionPagosVentaCreditos(id)
+        .then((response) => {
+          this.infoabonoscreditos = response.data.data;
         })
         .catch((error) => {
           console.log(error);

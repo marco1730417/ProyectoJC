@@ -53,6 +53,10 @@ export default {
         let url = server + resource + 'get-informacion-pagos-venta-abonos';
         return Axios.get(url + "/" + venId);
     },
+    getInformacionPagosVentaCreditos(venId) {
+        let url = server + resource + 'get-informacion-pagos-venta-creditos';
+        return Axios.get(url + "/" + venId);
+    },
     downloadVenta(venId) {
         let url = server + resource + 'download-venta';
         return Axios.get(url + "/" + venId);
@@ -69,6 +73,10 @@ export default {
     
     registrarabono(data) {
         let url = server + resource + "registrar-abono";
+        return Axios.post(url, data);
+    },
+    registrarcredito(data) {
+        let url = server + resource + "registrar-credito";
         return Axios.post(url, data);
     },
 

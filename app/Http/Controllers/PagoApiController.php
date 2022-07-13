@@ -102,8 +102,24 @@ class PagoApiController extends ApiResponseController
 
     public function deletePago($id)
     {        
+        $venta_asociada= Venta ::leftJoin('pagos', 'ventas.id', '=', 'pagos.venId')
+        ->where('pagos.id',$id)
+        ->first();
+
+        $numero_pago = Pago::where('venId',$venta_asociada->venId)->count();
+        /*  Validacion para que solo cuando exista un pago y se borre dicho pago se quite de la lista de pagos pendientes */
+        if($numero_pago==1){
+        $venta_asociada= Venta::findOrFail($venta_asociada->venId);
+        $venta_asociada->estadopago = 1;
+        $venta_asociada->update();
+    }
+     
+
         $pago = Pago::findOrFail($id);
         $pago->delete();
+
+      
+
         if (!$pago) return $this->errorResponse(500);
         return $this->successResponse(200);
     }
