@@ -175,7 +175,7 @@
                   >
                     <i class="fas fa-print" title="Descargar"></i>
                   </b-button>
-                 
+
                   <b-button
                     v-if="data.item.pagoabonos > 0"
                     variant="outline-info default actions"
@@ -188,8 +188,8 @@
                   >
                     <i class="fas fa-balance-scale" title="Abonos"></i>
                   </b-button>
-                 <!--  {{data.item.pagoabonoscreditos}} -->
-                      <b-button
+                  <!--  {{data.item.pagoabonoscreditos}} -->
+                  <b-button
                     v-if="data.item.pagoabonoscreditos > 0"
                     variant="outline-light default actions"
                     size="sm"
@@ -311,12 +311,12 @@
                       <div>
                         <!--   <h5>Total a cobrar : $ {{ infoabonos.totalcobrar }}</h5> -->
                         <h5>
-                          Total a cobrar : ${{
+                          TOTAL A COBRAR : ${{
                             parseFloat(infoabonos.totalcobrar).toFixed(2)
                           }}
                         </h5>
                         <h5>
-                          Fecha maxima :
+                          FECHA MÁXIMA :
                           {{
                             moment(infoabonos.fechamaxima, "YYYY-MM-DD").format(
                               "MMM DD YYYY, ddd"
@@ -343,116 +343,114 @@
                               ).format("MMM DD YYYY, ddd, h:mm:ss a")
                             }}
                           </template>
-                               <template #cell(tipoabono)="data">
-                          <span v-if="data.item.tipoabono==1">
-                          Efectivo
-                          </span>
-                          <span v-else>
-                          Transferencia
-                          </span>
-                          
+                          <template #cell(tipoabono)="data">
+                            <span v-if="data.item.tipoabono == 1">
+                              Efectivo
+                            </span>
+                            <span v-if="data.item.tipoabono == 2">
+                              Transferencia
+                            </span>
+                            <span v-if="data.item.tipoabono == 3">
+                              Cheque
+                            </span>
                           </template>
                         </b-table>
 
-                          <div class="mb-3">
-                            <p class="dis fw-bold mb-2">Cantidad recibida</p>
-                            <input
-                              class="form-control"
-                              type="number"
-                              v-model="pagorecibido"
-                            />
-                          </div>
+                        <div class="mb-3">
+                          <p class="dis fw-bold mb-2">Cantidad recibida</p>
+                          <input
+                            class="form-control"
+                            type="number"
+                            v-model="pagorecibido"
+                          />
+                        </div>
 
-             <div class="mb-3"> 
+                        <div class="mb-3">
                           <b-form-group>
-      <b-form-radio-group
-        v-model="tipoabono"
-        :options="options"
-        name="radio-inline"
-      ></b-form-radio-group>
-    </b-form-group>
-                      </div>
-                      
+                            <b-form-radio-group
+                              v-model="tipoabono"
+                              :options="options"
+                              name="radio-inline"
+                            ></b-form-radio-group>
+                          </b-form-group>
+                        </div>
+
                         <div class="mb-3">
                           <p class="dis fw-bold mb-2">Detalle Abono</p>
                           <input
                             class="form-control"
                             type="text"
                             v-model="detalleabono"
-                            
                           />
                         </div>
 
-                          <div class="mb-3"></div>
-                          <div>
-                            <div class="address">
-                              <div class="d-flex flex-column dis">
-                                <div
-                                  class="
-                                    d-flex
-                                    align-items-center
-                                    justify-content-between
-                                    mb-2
-                                  "
-                                >
-                                  <p>Total</p>
-                                  <p>
-                                    <span class="fas fa-dollar-sign"></span>
-                                    {{
-                                      parseFloat(infoabonos.saldo).toFixed(2)
-                                    }}
-                                  </p>
-                                </div>
-                      
+                        <div class="mb-3"></div>
+                        <div>
+                          <div class="address">
+                            <div class="d-flex flex-column dis">
+                              <div
+                                class="
+                                  d-flex
+                                  align-items-center
+                                  justify-content-between
+                                  mb-2
+                                "
+                              >
+                                <p>Pendiente</p>
+                                <p>
+                                  <span class="fas fa-dollar-sign"></span>
+                                  {{ parseFloat(infoabonos.saldo).toFixed(2) }}
+                                </p>
+                              </div>
 
-                                <div
-                                  class="
-                                    d-flex
-                                    align-items-center
-                                    justify-content-between
-                                    mb-2
-                                  "
-                                >
-                                  <p>Abono</p>
-                                  <p>
-                                    <span class="fas fa-dollar-sign"></span
-                                    >{{ pagorecibido }}
-                                    <!--  {{
+                              <div
+                                class="
+                                  d-flex
+                                  align-items-center
+                                  justify-content-between
+                                  mb-2
+                                "
+                              >
+                                <p>Abono</p>
+                                <p>
+                                  <span class="fas fa-dollar-sign"></span
+                                  >{{ pagorecibido }}
+                                  <!--  {{
                                       parseFloat(pagorecibido).toFixed(2)
                                     }} -->
-                                  </p>
-                                </div>
-                                <div
-                                  class="
-                                    d-flex
-                                    align-items-center
-                                    justify-content-between
-                                    mb-2
-                                  "
-                                >
-                                  <p>Saldo</p>
-                                  <p>
-                                    <span class="fas fa-dollar-sign"></span>
-                                    {{ parseFloat(total_saldo).toFixed(2) }}
-                                  </p>
-                                </div>
+                                </p>
+                              </div>
+                              <div
+                                class="
+                                  d-flex
+                                  align-items-center
+                                  justify-content-between
+                                  mb-2
+                                "
+                              >
+                                <p>Saldo</p>
+                                <p>
+                                  <span class="fas fa-dollar-sign"></span>
+                                  {{ parseFloat(total_saldo).toFixed(2) }}
+                                </p>
+                              </div>
 
-                                <div
-                                  v-if="pagorecibido"
-                                  @click="
-                                    registrarabono(
-                                      pagorecibido,
-                                      infoabonos.detalle_venta
-                                    )
-                                  "
-                                  class="btn btn-primary mt-2"
-                                >
-                                  <span class="fas fa-dollar-sign px-1"></span
-                                  >Guardar Abono
-                                </div>
+                              <div
+                                v-if="pagorecibido"
+                                @click="
+                                  registrarabono(
+                                    pagorecibido,
+                                    infoabonos.detalle_venta
+                                  )
+                                "
+                                class="btn btn-primary mt-2"
+                              >
+                                <span class="fas fa-dollar-sign px-1"></span
+                                >Guardar Abono
                               </div>
                             </div>
                           </div>
+                        </div>
                       </div>
                     </div>
                     <div class="modal-footer"></div>
@@ -460,7 +458,7 @@
                 </div>
               </div>
 
-   <!--          Modal agregar un abono a venta credito -->
+              <!--          Modal agregar un abono a venta credito -->
               <div
                 class="modal fade"
                 id="ModalCreditos"
@@ -487,15 +485,18 @@
                         <!--   <h5>Total a cobrar : $ {{ infoabonos.totalcobrar }}</h5> -->
                         <h5>
                           Total a cobrar : ${{
-                            parseFloat(infoabonoscreditos.totalcobrar).toFixed(2)
+                            parseFloat(infoabonoscreditos.totalcobrar).toFixed(
+                              2
+                            )
                           }}
                         </h5>
                         <h5>
                           Fecha maxima :
                           {{
-                            moment(infoabonoscreditos.fechamaxima, "YYYY-MM-DD").format(
-                              "MMM DD YYYY, ddd"
-                            )
+                            moment(
+                              infoabonoscreditos.fechamaxima,
+                              "YYYY-MM-DD"
+                            ).format("MMM DD YYYY, ddd")
                           }}
                         </h5>
                         <b-progress
@@ -510,6 +511,13 @@
                           :items="infoabonoscreditos.detalle_venta"
                           :fields="fields"
                         >
+                          <template #cell(abono)="data">
+                            <span v-if="data.item.abono > 0">
+                              {{ parseFloat(data.item.abono).toFixed(2) }}
+                            </span>
+
+                            <span v-else>0</span>
+                          </template>
                           <template #cell(fecha)="data">
                             {{
                               moment(
@@ -518,123 +526,133 @@
                               ).format("MMM DD YYYY, ddd, h:mm:ss a")
                             }}
                           </template>
-                               <template #cell(tipoabono)="data">
-                          <span v-if="data.item.tipoabono==1">
-                          Efectivo
-                          </span>
-                          <span v-else>
-                          Transferencia
-                          </span>
-                          
+                          <template #cell(tipoabono)="data">
+                            <span v-if="data.item.tipoabono == 1">
+                              Efectivo
+                            </span>
+                            <span v-if="data.item.tipoabono == 2">
+                              Transferencia
+                            </span>
+                            <span v-if="data.item.tipoabono == null">
+                              N/A
+                            </span>
+                          </template>
+
+                          <template #cell(detalleabono)="data">
+                            <span v-if="data.item.detalleabono">
+                              {{ data.item.detalleabono }}
+                            </span>
+                            <span v-else> N/A </span>
                           </template>
                         </b-table>
 
-                          <div class="mb-3">
-                            <p class="dis fw-bold mb-2">Cantidad recibida</p>
-                            <input
-                              class="form-control"
-                              type="number"
-                              v-model="pagorecibido"
-                            />
-                          </div>
+                        <div class="mb-3">
+                          <p class="dis fw-bold mb-2">Cantidad recibida</p>
+                          <input
+                            class="form-control"
+                            type="number"
+                            v-model="pagorecibido"
+                          />
+                        </div>
 
-             <div class="mb-3"> 
+                        <div class="mb-3">
                           <b-form-group>
-      <b-form-radio-group
-        v-model="tipoabonocredito"
-        :options="optionscredito"
-        name="radio-inline"
-      ></b-form-radio-group>
-    </b-form-group>
-                      </div>
-                      
+                            <b-form-radio-group
+                              v-model="tipoabonocredito"
+                              :options="optionscredito"
+                              name="radio-inline"
+                            ></b-form-radio-group>
+                          </b-form-group>
+                        </div>
+
                         <div class="mb-3">
                           <p class="dis fw-bold mb-2">Detalle Abono</p>
                           <input
                             class="form-control"
                             type="text"
                             v-model="detalleabonocredito"
-                            
                           />
                         </div>
 
-                          <div class="mb-3"></div>
-                          <div>
-                            <div class="address">
-                              <div class="d-flex flex-column dis">
-                                <div
-                                  class="
-                                    d-flex
-                                    align-items-center
-                                    justify-content-between
-                                    mb-2
-                                  "
-                                >
-                                  <p>Total</p>
-                                  <p>
-                                    <span class="fas fa-dollar-sign"></span>
-                                    {{
-                                      parseFloat(infoabonoscreditos.saldo).toFixed(2)
-                                    }}
-                                  </p>
-                                </div>
-                      
+                        <div class="mb-3"></div>
+                        <div>
+                          <div class="address">
+                            <div class="d-flex flex-column dis">
+                              <div
+                                class="
+                                  d-flex
+                                  align-items-center
+                                  justify-content-between
+                                  mb-2
+                                "
+                              >
+                                <p>Pendiente</p>
+                                <p>
+                                  <span class="fas fa-dollar-sign"></span>
+                                  {{
+                                    parseFloat(
+                                      infoabonoscreditos.saldo
+                                    ).toFixed(2)
+                                  }}
+                                </p>
+                              </div>
 
-                                <div
-                                  class="
-                                    d-flex
-                                    align-items-center
-                                    justify-content-between
-                                    mb-2
-                                  "
-                                >
-                                  <p>Abono</p>
-                                  <p>
-                                    <span class="fas fa-dollar-sign"></span
-                                    >{{ pagorecibido }}
-                                    <!--  {{
+                              <div
+                                class="
+                                  d-flex
+                                  align-items-center
+                                  justify-content-between
+                                  mb-2
+                                "
+                              >
+                                <p>Abono</p>
+                                <p>
+                                  <span class="fas fa-dollar-sign"></span
+                                  >{{ pagorecibido }}
+                                  <!--  {{
                                       parseFloat(pagorecibido).toFixed(2)
                                     }} -->
-                                  </p>
-                                </div>
-                                <div
-                                  class="
-                                    d-flex
-                                    align-items-center
-                                    justify-content-between
-                                    mb-2
-                                  "
-                                >
-                                  <p>Saldo</p>
-                                  <p>
-                                    <span class="fas fa-dollar-sign"></span>
-                                    {{ parseFloat(total_saldo_credito).toFixed(2) }}
-                                  </p>
-                                </div>
+                                </p>
+                              </div>
+                              <div
+                                class="
+                                  d-flex
+                                  align-items-center
+                                  justify-content-between
+                                  mb-2
+                                "
+                              >
+                                <p>Saldo</p>
+                                <p>
+                                  <span class="fas fa-dollar-sign"></span>
+                                  {{
+                                    parseFloat(total_saldo_credito).toFixed(2)
+                                  }}
+                                </p>
+                              </div>
 
-                                <div
-                                  v-if="pagorecibido"
-                                  @click="
-                                    registrarcredito(
-                                      pagorecibido,
-                                      infoabonoscreditos.detalle_venta
-                                    )
-                                  "
-                                  class="btn btn-primary mt-2"
-                                >
-                                  <span class="fas fa-dollar-sign px-1"></span
-                                  >Guardar Abono Credito
-                                </div>
+                              <div
+                                v-if="pagorecibido"
+                                @click="
+                                  registrarcredito(
+                                    pagorecibido,
+                                    infoabonoscreditos.detalle_venta
+                                  )
+                                "
+                                class="btn btn-primary mt-2"
+                              >
+                                <span class="fas fa-dollar-sign px-1"></span
+                                >Guardar Abono Credito
                               </div>
                             </div>
                           </div>
+                        </div>
                       </div>
                     </div>
                     <div class="modal-footer"></div>
                   </div>
                 </div>
               </div>
-
 
               <!--          Modal agregar editar producto -->
               <div
@@ -683,9 +701,13 @@
                           :items="infopagosventa.detalle_venta"
                           :fields="fields2"
                         >
-                          <template  #cell(pago)="data">
-                            $ {{ parseFloat(data.item.pago).toFixed(2) }}
-                             </template>
+                          <template #cell(pago)="data">
+                            <span v-if="data.item.pago > 0"
+                              >$ {{ parseFloat(data.item.pago).toFixed(2) }}
+                            </span>
+                            <span v-else>0</span>
+                          </template>
+
                           <template #cell(total)="data">
                             $ {{ parseFloat(data.item.total).toFixed(2) }}
                           </template>
@@ -716,11 +738,9 @@
                               </span>
                             </span>
 
-                            
-                            
                             <span v-else> N/A</span>
                           </template>
-                        
+
                           <template #cell(actions)="data">
                             <!--  {{data.item}} -->
                             <b-button
@@ -776,22 +796,22 @@ export default {
   },
   data() {
     return {
-        tipoabono: '1',
-        tipoabonocredito: '1',
-        
-  detalleabono:"",
-  detalleabonocredito:"",
-  
-        options: [
-          { text: 'Efectivo', value: '1' },
-          { text: 'Transferencia', value: '2' },
-        
-        ],
-              optionscredito: [
-          { text: 'Efectivo', value: '1' },
-          { text: 'Transferencia', value: '2' },
-        
-        ],
+      tipoabono: "1",
+      tipoabonocredito: "1",
+
+      detalleabono: "",
+      detalleabonocredito: "",
+
+      options: [
+        { text: "Efectivo", value: "1" },
+        { text: "Transferencia", value: "2" },
+        { text: "Cheque", value: "3" },
+      ],
+      optionscredito: [
+        { text: "Efectivo", value: "1" },
+        { text: "Transferencia", value: "2" },
+        { text: "Cheque", value: "3" },
+      ],
       perPage: 10,
       currentPage: 1,
       filter: null,
@@ -869,11 +889,11 @@ export default {
           key: "fecha",
           label: "Fecha",
         },
-          {
+        {
           key: "tipoabono",
           label: "Tipo",
         },
-         {
+        {
           key: "detalleabono",
           label: "Detalle",
         },
@@ -890,7 +910,7 @@ export default {
       formadepago: "",
       infoabonos: "",
       infoabonoscreditos: "",
-      
+
       pagorecibido: "",
       saldo: "",
       venta: "",
@@ -905,7 +925,7 @@ export default {
 
       return tt;
     },
-      total_saldo_credito: function () {
+    total_saldo_credito: function () {
       let total = this.infoabonoscreditos.saldo;
       let pagorecibido = this.pagorecibido;
       let tt = total - pagorecibido;
@@ -917,7 +937,7 @@ export default {
       return this.detalleventa.length;
     },
   },
-  
+
   mounted() {
     this.detalleVenta();
     this.totalDashboardVentas();
@@ -941,8 +961,8 @@ export default {
         info: info,
         pago: pago,
         saldo: this.saldo,
-        tipoabono:this.tipoabono,
-        detalleabono:this.detalleabono
+        tipoabono: this.tipoabono,
+        detalleabono: this.detalleabono,
       };
       VentaServices.registrarabono(data)
         .then((response) => {
@@ -961,13 +981,13 @@ export default {
           console.log(error);
         });
     },
-      registrarcredito(pago, info) {
+    registrarcredito(pago, info) {
       let data = {
         info: info,
         pago: pago,
         saldo: this.saldo,
-        tipoabono:this.tipoabonocredito,
-        detalleabono:this.detalleabonocredito
+        tipoabono: this.tipoabonocredito,
+        detalleabono: this.detalleabonocredito,
       };
       VentaServices.registrarcredito(data)
         .then((response) => {
@@ -1026,7 +1046,7 @@ export default {
           console.log(error);
         });
     },
-       obtenerabonoscreditos(id) {
+    obtenerabonoscreditos(id) {
       VentaServices.getInformacionPagosVentaCreditos(id)
         .then((response) => {
           this.infoabonoscreditos = response.data.data;

@@ -224,7 +224,7 @@
     </tr>
 
 @endif
-@if ($detallepago[0]['tipo'] == 'Abono' )
+@if ($detallepago[0]['tipo'] == 'Abono' || $detallepago[0]['tipo'] == 'Credito' )
     <tr>
       <th>Abono</th>
       <td>
@@ -232,14 +232,7 @@
           
     </td>
     </tr>
-    <tr>
-      <th>Saldo</th>
-      <td>
-          
-      $@php echo(number_format($detallepago[0]['saldos'],2));@endphp
-    
-    </td>
-    </tr>
+   
     @endif
   </tbody>
 </table>

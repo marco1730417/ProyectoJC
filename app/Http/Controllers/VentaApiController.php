@@ -42,17 +42,41 @@ class VentaApiController extends ApiResponseController
         $infoproducto = Producto::findOrFail($proId);
         if ($precioUnitarioOpcion == 1) {
             $valorPrecio = $infoproducto->PrecioVenta1;
+            $unidad_correspondiente=$infoproducto->uniPrecioVenta1;
+
+            if($unidad_correspondiente){ 
+            if($unidad_correspondiente=='mt' || $unidad_correspondiente=='u' )
             $metrostotales = $data['cantidad'];
+            if($unidad_correspondiente=='rll' || $unidad_correspondiente=='cj' )
+            $metrostotales = $infoproducto->metrosrollo * $data['cantidad'];
+
+        } else   $metrostotales = $data['cantidad'];
         }
 
         if ($precioUnitarioOpcion == 2) {
             $valorPrecio = $infoproducto->PrecioVenta2;
-            $metrostotales = $infoproducto->metrosrollo * $data['cantidad'];
+            $unidad_correspondiente=$infoproducto->uniPrecioVenta2;
+          
+            if($unidad_correspondiente){ 
+                if($unidad_correspondiente=='mt' || $unidad_correspondiente=='u' )
+                $metrostotales = $data['cantidad'];
+                if($unidad_correspondiente=='rll' || $unidad_correspondiente=='cj' )
+                $metrostotales = $infoproducto->metrosrollo * $data['cantidad'];
+    
+            } else $metrostotales = $infoproducto->metrosrollo * $data['cantidad'];
         }
 
         if ($precioUnitarioOpcion == 3) {
             $valorPrecio = $infoproducto->PrecioVenta3;
-            $metrostotales = $data['cantidad'];
+            $unidad_correspondiente=$infoproducto->uniPrecioVenta3;
+            
+            if($unidad_correspondiente){ 
+                if($unidad_correspondiente=='mt' || $unidad_correspondiente=='u' )
+                $metrostotales = $data['cantidad'];
+                if($unidad_correspondiente=='rll' || $unidad_correspondiente=='cj' )
+                $metrostotales = $infoproducto->metrosrollo * $data['cantidad'];
+    
+            }   $metrostotales = $data['cantidad'];
         }
       
 
@@ -270,6 +294,8 @@ class VentaApiController extends ApiResponseController
 
         ///primero sacamos la venta
         $info = $data['info'];
+
+        
         $venId = $info[0]['venId'];
         $tipoabono = $data['tipoabono'];
         $detalleabono = $data['detalleabono'];
@@ -285,7 +311,8 @@ class VentaApiController extends ApiResponseController
       
         $cliId = $info[0]['cliId'];
         $pago = $data['pago'];
-        $saldo_actual = $data['saldo'];
+        $saldo_actual = $info[0]['saldo'];
+    
         $total=$info[0]['total'];
         
         $format_total = number_format($total, 2,'.','');

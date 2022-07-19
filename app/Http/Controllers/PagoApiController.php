@@ -52,6 +52,7 @@ class PagoApiController extends ApiResponseController
          ) AS saldo"),
          DB::raw("(SELECT (pagos.total) FROM pagos
          WHERE ventas.id=pagos.venId
+         and pagos.total is not null
          ORDER BY pagos.total
          limit 1
          ) AS total"),
@@ -62,9 +63,21 @@ class PagoApiController extends ApiResponseController
          ) AS numtransf"),
          DB::raw("(SELECT (pagos.cheque) FROM pagos
          WHERE ventas.id=pagos.venId
+         and pagos.cheque is not null
          ORDER BY pagos.total
          limit 1
          ) AS cheque"),
+         DB::raw("(SELECT (pagos.tipo) FROM pagos
+         WHERE ventas.id=pagos.venId
+         ORDER BY pagos.total
+         limit 1
+         ) AS tipo"),
+         DB::raw("(SELECT (pagos.detalleabono) FROM pagos
+         WHERE ventas.id=pagos.venId
+         and pagos.total is not null
+         ORDER BY pagos.total
+         limit 1
+         ) AS detalleabono"),
          )
         ->where('estadopago',0)
         ->get();

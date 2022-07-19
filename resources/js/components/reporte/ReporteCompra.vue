@@ -24,7 +24,7 @@
   </div>
   <div class="text-center">
  
- <button @click="reporteCompras" class="btn btn-primary mb-2"><i class="fas fa-search"></i>GENERAR REPORTE</button>
+ <button @click="reporteCompras" class="btn btn-primary mb-2">GENERAR REPORTE</button>
 
   
   </div>
