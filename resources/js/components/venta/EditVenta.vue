@@ -241,7 +241,7 @@
               role="dialog"
               aria-hidden="true"
             >
-              <div class="modal-dialog modal-sm" role="document">
+              <div class="modal-dialog modal-md" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
                     <h5 class="modal-title">Terminar venta al contado</h5>
@@ -255,9 +255,7 @@
                     </button>
                   </div>
                   <div class="modal-body">
-                    <div class="container d-lg-flex">
-                      <div class="box-2">
-                        <div class="box-inner-2">
+                    <div class="container">
                           <form action="">
                             <div class="mb-3">
                               <p class="dis fw-bold mb-2">Cantidad recibida</p>
@@ -313,8 +311,9 @@
                                   >
                                     <p class="fw-bold">Cambio</p>
                                     <p class="fw-bold">
-                                      <span class="fas fa-dollar-sign"></span
-                                      >{{ parseFloat(total_cambio).toFixed(2) }}
+                                      <span v-if="total_cambio>0" class="fas fa-dollar-sign">{{ parseFloat(total_cambio).toFixed(2) }}</span>
+                                      <span v-else class="fas fa-dollar-sign">0</span>
+                                      
                                     </p>
                                   </div>
                                   <div
@@ -339,8 +338,7 @@
                               </div>
                             </div>
                           </form>
-                        </div>
-                      </div>
+                        
                     </div>
                   </div>
                   <div class="modal-footer"></div>
@@ -359,7 +357,7 @@
               role="dialog"
               aria-hidden="true"
             >
-              <div class="modal-dialog modal-sm" role="document">
+              <div class="modal-dialog modal-md" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
                     <h5 class="modal-title">
@@ -375,9 +373,7 @@
                     </button>
                   </div>
                   <div class="modal-body">
-                    <div class="container d-lg-flex">
-                      <div class="box-2">
-                        <div class="box-inner-2">
+                    <div>
                           <form action="">
                             <div class="mb-3">
                               <p class="dis fw-bold mb-2">
@@ -458,8 +454,7 @@
                               </div>
                             </div>
                           </form>
-                        </div>
-                      </div>
+                      
                     </div>
                   </div>
                   <div class="modal-footer"></div>
