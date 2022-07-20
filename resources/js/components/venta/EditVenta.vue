@@ -36,9 +36,7 @@
                       </h5>
                     </div>
 
-    
-
-                   <!--  {{detalleventa}}
+                    <!--  {{detalleventa}}
  -->
                     <!--  <a
               href=""
@@ -71,18 +69,14 @@
                 </div>
               </div>
 
-<!--     <div
+              <!--     <div
                 class="card card-stats mb-4 mb-xl-0"
               >
                 <div class="card-body">
               <observacion-venta :venId="substr"></observacion-venta>
                 </div>
               </div> -->
-
             </div>
-
-
-
 
             <div v-if="substr > 0" class="col-xl-6 col-lg-6">
               <div class="card card-stats mb-4 mb-xl-0">
@@ -128,7 +122,7 @@
                       {{ totaldetallegeneral.ruc }}
                       <!--    {{totaldetallegeneral.descuento}} -->
                     </span>
-                    
+
                     <span class="text-nowrap text-primary"
                       ><i class="fas fa-home"></i>
                       {{ totaldetallegeneral.direccion }}</span
@@ -518,24 +512,23 @@
                             @keypress="onlyNumber"
                           />
                         </div>
-                               <div class="mb-3">
+                        <div class="mb-3">
                           <p class="dis fw-bold mb-2">Tipo Abono</p>
                           <b-form-group>
-      <b-form-radio-group
-        v-model="tipoabono"
-        :options="options"
-        name="radio-inline"
-      ></b-form-radio-group>
-    </b-form-group>
-                      </div>
-                      
+                            <b-form-radio-group
+                              v-model="tipoabono"
+                              :options="options"
+                              name="radio-inline"
+                            ></b-form-radio-group>
+                          </b-form-group>
+                        </div>
+
                         <div class="mb-3">
                           <p class="dis fw-bold mb-2">Detalle Abono</p>
                           <input
                             class="form-control"
                             type="text"
                             v-model="detalleabono"
-                            
                           />
                         </div>
 
@@ -752,83 +745,108 @@
                             v-model="detallecredito"
                           />
                         </div>
-                               <div class="mb-3">
-                          <p class="dis fw-bold mb-2">Tipo Abono</p>
-                          <b-form-group>
-      <b-form-radio-group
-        v-model="tipoabonocredito"
-        :options="options"
-        name="radio-inline"
-      ></b-form-radio-group>
-    </b-form-group>
-                      </div>
-                        <div class="mb-3">
-                          <p class="dis fw-bold mb-2">Abono</p>
-                          <input
-                            class="form-control"
-                            type="text"
-                            v-model="abonocredito"
-                          />
-                        </div>
-                        <div class="mb-3"></div>
-                        <div>
-                          <div class="address">
-                            <div class="d-flex flex-column dis">
-                              <div
-                                class="
-                                  d-flex
-                                  align-items-center
-                                  justify-content-between
-                                  mb-2
-                                "
-                              >
-                                <p>Cantidad de pago</p>
-                                <p>
-                                  <span class="fas fa-dollar-sign"></span>
-                                  {{
-                                    parseFloat(totalesventa.total).toFixed(2)
-                                  }}
-                                </p>
-                              </div>
-                                  <div
-                                class="
-                                  d-flex
-                                  align-items-center
-                                  justify-content-between
-                                  mb-2
-                                "
-                              >
-                                <p>Saldo </p>
-                                <p>
-                                  <span class="fas fa-dollar-sign"></span>
-                                  {{
-                                    parseFloat((totalesventa.total)-abonocredito).toFixed(2)
-                                  }}
-                                </p>
+
+                        <!-- <b-form-checkbox v-model="banderaabonocredito" name="check-button" switch>
+      Deseo realizar un abono 
+    </b-form-checkbox> -->
+
+                        <b-form-checkbox
+                          id="checkbox-1"
+                          v-model="banderaabonocredito"
+                          name="checkbox-1"
+                          :value="true"
+                          :unchecked-value="false"
+                        >
+                          Deseo registrar un abono
+                        </b-form-checkbox>
+                        <br />
+
+                        <div v-if="banderaabonocredito">
+                          <div class="mb-3">
+                            <p class="dis fw-bold mb-2">Tipo Abono</p>
+                            <b-form-group>
+                              <b-form-radio-group
+                                v-model="tipoabonocredito"
+                                :options="options"
+                                name="radio-inline"
+                              ></b-form-radio-group>
+                              <!-- {{tipoabonocredito}} -->
+                            </b-form-group>
+                          </div>
+                          <div class="mb-3">
+                            <p class="dis fw-bold mb-2">Abono</p>
+                            <input
+                              class="form-control"
+                              type="text"
+                              v-model="abonocredito"
+                            />
+                          </div>
+                          <div class="mb-3"></div>
+                          <div>
+                            <div class="address">
+                              <div class="d-flex flex-column dis">
+                                <div
+                                  class="
+                                    d-flex
+                                    align-items-center
+                                    justify-content-between
+                                    mb-2
+                                  "
+                                >
+                                  <p>Cantidad de pago</p>
+                                  <p>
+                                    <span class="fas fa-dollar-sign"></span>
+                                    {{
+                                      parseFloat(totalesventa.total).toFixed(2)
+                                    }}
+                                  </p>
+                                </div>
+                                <div
+                                  class="
+                                    d-flex
+                                    align-items-center
+                                    justify-content-between
+                                    mb-2
+                                  "
+                                >
+                                  <p>Saldo</p>
+                                  <p>
+                                    <span class="fas fa-dollar-sign"></span>
+                                    {{
+                                      parseFloat(
+                                        totalesventa.total - abonocredito
+                                      ).toFixed(2)
+                                    }}
+                                  </p>
+                                </div>
                               </div>
 
                               <!-- {{detallegeneralventa}} -->
-                              <div
-                                v-if="fechamaximacredito && abonocredito<totalesventa.total"
-                                @click="
-                                  downloadVentaCredito(
-                                    fechamaximacredito,
-                                    detallecredito,
-                                    totaldetallegeneral.cliId,
-                                    abonocredito
-                                  )
-                                "
-                                class="btn btn-primary mt-2"
-                              >
-                                <span class="fas fa-dollar-sign px-1"></span
-                                >Terminar Venta
-                              </div>
-                              <div v-else class="btn btn-secondary mt-2">
-                                <span class="fas fa-dollar-sign px-1"></span
-                                >Terminar Venta
-                              </div>
                             </div>
                           </div>
+                        </div>
+
+                        <div
+                          v-if="
+                            fechamaximacredito &&
+                            abonocredito < totalesventa.total
+                          "
+                          @click="
+                            downloadVentaCredito(
+                              fechamaximacredito,
+                              detallecredito,
+                              totaldetallegeneral.cliId,
+                              abonocredito
+                            )
+                          "
+                          class="btn btn-primary mt-2"
+                        >
+                          <span class="fas fa-dollar-sign px-1"></span>Terminar
+                          Venta
+                        </div>
+                        <div v-else class="btn btn-secondary mt-2">
+                          <span class="fas fa-dollar-sign px-1"></span>Terminar
+                          Venta
                         </div>
                       </form>
                     </div>
@@ -1137,7 +1155,7 @@
                       data-target="#ModalVentaCredito"
                       ><i class="fas fa-bell"></i>Credito</b-dropdown-item
                     >
-               <!--      <b-dropdown-item
+                    <!--      <b-dropdown-item
                       data-toggle="modal"
                       data-target="#ModalObservacionesGenerales"
                       ><i class="fas fa-paper-plane"></i
@@ -1192,18 +1210,16 @@ export default {
   },
   data() {
     return {
-  tipoabono: '1',
-  tipoabonocredito: '1',
-  
-  detalleabono:"",
-        options: [
-          { text: 'Efectivo', value: '1' },
-          { text: 'Transferencia', value: '2' },
-          { text: 'Cheque', value: '3' }
-          
-        
-        ],
-perPage: 10,
+      tipoabono: "1",
+      tipoabonocredito: null,
+      banderaabonocredito: false, // sirve para elegir entre poner o no un abono de credito
+      detalleabono: "",
+      options: [
+        { text: "Efectivo", value: "1" },
+        { text: "Transferencia", value: "2" },
+        { text: "Cheque", value: "3" },
+      ],
+      perPage: 10,
       currentPage: 1,
       filter: null,
       descuento: 0,
@@ -1299,7 +1315,7 @@ perPage: 10,
       detallecheque: "",
       fechamaximacredito: "",
       detallecredito: "",
-      abonocredito:0,
+      abonocredito: 0,
       saldo: "",
       totaldetallegeneral: [],
       infoventascliente: [],
@@ -1345,7 +1361,6 @@ perPage: 10,
     this.detalleGeneralVenta();
   },
   methods: {
-
     updateClientes() {
       this.getAllClientes();
       location.reload();
@@ -1537,16 +1552,16 @@ perPage: 10,
         });
     },
 
-    downloadVentaCredito(fecha, detalle, cliId,abono) {
+    downloadVentaCredito(fecha, detalle, cliId, abono) {
       let data = {
         venId: this.substr,
         total: this.totalesventa.total,
         fechamaxima: fecha,
         cheque: detalle,
         cliId: cliId,
-         tipoabono:this.tipoabonocredito,
-    
-        abonocredito:abono
+        tipoabono: this.tipoabonocredito,
+
+        abonocredito: abono,
       };
       VentaServices.registrarPagoCredito(data)
         .then((response) => {
@@ -1619,8 +1634,8 @@ perPage: 10,
         abono: pago,
         cliId: cliId,
         saldo: this.saldo,
-        tipoabono:this.tipoabono,
-        detalleabono:this.detalleabono
+        tipoabono: this.tipoabono,
+        detalleabono: this.detalleabono,
       };
       VentaServices.registrarPagoAbono(data)
         .then((response) => {

@@ -92,14 +92,21 @@
                   ></b-form-input>
                 </div>
                 <div class="col-4">
-                  <a
+                 <!--  <a
                     href="#"
                     @click="gotoNuevaVenta()"
                     class="badge badge-primary"
                     >Nueva Venta</a
+                  > -->
+                     <button
+                    class="btn btn-primary btn-md"
+                  @click="gotoNuevaVenta()"
                   >
+                  <i class="fas fa-shopping-cart"></i>  NUEVA VENTA
+                  </button>
                   <button
-                    class="btn btn-success btn-sm"
+                  style="float:right"
+                    class="btn btn-info btn-sm"
                     title="Recargar"
                     @click="detalleVenta"
                   >
@@ -129,10 +136,14 @@
                   }}
                 </template>
                 <template #cell(nombre)="data">
-                  <div class="left" id="center">
+                  <div v-if="data.item.nombre" class="left" id="center">
                     <small> {{ data.item.nombre }}<br /></small>
                     <small> {{ data.item.ruc }}</small>
                   </div>
+                  <div v-else class="left" id="center">
+                    <small> N/A </small><br />
+                  </div>
+                  
                 </template>
                 <template #cell(observacion)="data">
                   <span v-if="data.item.observacion">
@@ -148,7 +159,9 @@
                 </template>
 
                 <template #cell(actions)="data">
-                  <b-button
+                  <!-- 
+
+ <b-button
                     variant="outline-success default actions"
                     @click="gotoEditVenta(data.item.id)"
                     size="sm"
@@ -156,16 +169,7 @@
                   >
                     <i class="fas fa-arrow-circle-right"></i>
                   </b-button>
-                  <!--     <b-button
-                    variant="outline-info default actions"
-                    data-toggle="modal"
-                    data-target="#ModalVentaObservaciones"
-                    size="sm"
-                    title="observaciones"
-                    @click="captureitem(data.item)"
-                  >
-                    <i class="fas fa-eye"></i>
-                  </b-button> -->
+        
                   <b-button
                     variant="outline-warning default actions"
                     size="sm"
@@ -188,7 +192,6 @@
                   >
                     <i class="fas fa-balance-scale" title="Abonos"></i>
                   </b-button>
-                  <!--  {{data.item.pagoabonoscreditos}} -->
                   <b-button
                     v-if="data.item.pagoabonoscreditos > 0"
                     variant="outline-light default actions"
@@ -223,6 +226,58 @@
                   >
                     <i class="fas fa-window-close"></i>
                   </b-button>
+ -->
+
+                  <div>
+                    <b-dropdown size="sm" text="Acciones" class="m-2">
+                      <b-dropdown-item-button
+                        variant="success"
+                        @click="gotoEditVenta(data.item.id)"
+                      >
+                        <i class="fas fa-arrow-circle-right"></i>
+                        Venta</b-dropdown-item-button
+                      >
+                      <b-dropdown-item-button
+                        @click="downloadVenta(data.item.id)"
+                      >
+                        <i class="fas fa-print" title="Descargar"></i>
+                        Descargar</b-dropdown-item-button
+                      >
+                      <b-dropdown-item-button
+                        variant="info"
+                        v-if="data.item.pagoabonos > 0"
+                        data-toggle="modal"
+                        data-target="#ModalAbonos"
+                        @click="obtenerabonos(data.item.id)"
+                      >
+                        <i class="fas fa-balance-scale" title="Abonos"></i>
+                        Registrar Abono</b-dropdown-item-button
+                      >
+                      <b-dropdown-item-button
+                        variant="warning"
+                        v-if="data.item.pagoabonoscreditos > 0"
+                        data-toggle="modal"
+                        data-target="#ModalCreditos"
+                        @click="obtenerabonoscreditos(data.item.id)"
+                        ><i class="fas fa-wallet" title="Creditos"></i>Registrar
+                        Crédito</b-dropdown-item-button
+                      >
+                      <b-dropdown-item-button
+                        variant="primary"
+                        data-toggle="modal"
+                        data-target="#ModalPagos"
+                        @click="obtenerpagos(data.item.id)"
+                        ><i class="fas fa-dollar-sign" title="Pagos"></i
+                        >Historial Pagos</b-dropdown-item-button
+                      >
+                      <b-dropdown-item-button
+                        variant="danger"
+                        @click="deleteVenta(data.item.id)"
+                        ><i class="fas fa-window-close"></i
+                        >Anular</b-dropdown-item-button
+                      >
+                    </b-dropdown>
+                  </div>
                 </template>
               </b-table>
               <!-- PAGINACION -->

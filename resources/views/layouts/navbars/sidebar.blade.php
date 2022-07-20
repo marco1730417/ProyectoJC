@@ -120,7 +120,7 @@
                         <i class="ni ni-cart text-blue"></i> {{ __('Ventas') }}
                     </a>
                 </li>
-                <li class="nav-item">
+                <li  class="nav-item">
                     <a class="nav-link" href="{{ route('pago.index') }}">
                         <i class="ni ni-calendar-grid-58 text-blue"></i> {{ __('Pagos Pendientes') }}
                     </a>
@@ -146,7 +146,7 @@
                 <li class="nav-item">
                     <a href="{{ route('logout') }}" onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();" class="nav-link">
-                        Salir
+                     <i class="ni ni-button-power text-blue"></i>    Salir   
                     </a>
 
                 </li>
