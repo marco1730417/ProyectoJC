@@ -230,7 +230,7 @@
                               </td>
                             </tr>
                                  <tr>
-                              <td>ABONOS VENTA CREDITOS</td>
+                              <td>ABONOS A VENTAS TIPO CREDITO</td>
                               <td>
                                 {{
                                   parseFloat(
@@ -240,7 +240,7 @@
                               </td>
                             </tr>
                             <tr>
-                              <td>ABONOS VENTAS ABONOS</td>
+                              <td>ABONOS A VENTAS TIPO  ABONO</td>
                               <td>
                                 {{
                                   parseFloat(

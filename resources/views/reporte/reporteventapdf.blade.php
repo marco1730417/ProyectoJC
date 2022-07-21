@@ -244,7 +244,7 @@
                                 </tr>
                                 <tr>
                                     <td class="left">
-                                        <strong>ABONOS VENTA CREDITOS</strong>
+                                        <strong>ABONOS A VENTAS TIPO CREDITO</strong>
                                     </td>
 
                                     <td class="right">
@@ -256,7 +256,7 @@
 
                                 <tr>
                                     <td class="left">
-                                        <strong>ABONOS VENTAS ABONOS</strong>
+                                        <strong>ABONOS A VENTAS TIPO ABONO</strong>
                                     </td>
 
                                     <td class="right">

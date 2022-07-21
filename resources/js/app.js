@@ -90,6 +90,10 @@ Vue.component('modal-pagos-venta', require('./components/venta/ModalPagosVenta.v
 Vue.component('pagos-pendientes', require('./components/pagos/PagosPendientes.vue').default);
 Vue.component('retencion-venta', require('./components/venta/ModalRetencion.vue').default);
 Vue.component('observacion-venta', require('./components/venta/ModalObservaciones.vue').default);
+Vue.component('abonos-credito', require('./components/venta/ModalAbonosCredito.vue').default);
+Vue.component('abonos-abono', require('./components/venta/ModalAbonosAbono.vue').default);
+Vue.component('historial-pagos', require('./components/venta/ModalHistorialPagos.vue').default);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

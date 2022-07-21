@@ -288,39 +288,25 @@ class VentaApiController extends ApiResponseController
 
         $carbon = new \Carbon\Carbon();
         $fecha = $carbon->now();
-
-
         $data = request()->all();
-
-        ///primero sacamos la venta
         $info = $data['info'];
-
-        
         $venId = $info[0]['venId'];
         $tipoabono = $data['tipoabono'];
         $detalleabono = $data['detalleabono'];
-        
-        // obtenemos el ultimo saldo pendiente
         $saldo_anterior= Pago::where('venId',$venId)->get()->last();
         $saldo_anterior=$saldo_anterior->saldo;
-      //  return $saldo_anterior->saldo;
-
         $total = $info[0]['total'];
         $fechamaxima = $info[0]['fechamaxima'];
-       // $saldo_anterior = $info[0]['saldo'];
-      
         $cliId = $info[0]['cliId'];
         $pago = $data['pago'];
-        $saldo_actual = $info[0]['saldo'];
-    
+        $saldo_actual = $data['saldo'];
         $total=$info[0]['total'];
-        
         $format_total = number_format($total, 2,'.','');
         $format_pago = number_format($pago, 2,'.','');
         $saldo_anterior = number_format($saldo_anterior, 2,'.','');
         $saldo_actual = number_format($saldo_actual, 2,'.','');
-      
         $estado=0;
+        $cambioestado=null;
 
         if( $format_pago>=$saldo_anterior )
         { 
@@ -328,6 +314,7 @@ class VentaApiController extends ApiResponseController
             $update_venta= Venta::findOrFail($venId);
             $update_venta->estadopago=1;
             $update_venta->total=$format_total;
+            $cambioestado= $fecha;
             $update_venta->update();}
 
         if( $format_pago<$saldo_anterior )
@@ -335,26 +322,24 @@ class VentaApiController extends ApiResponseController
             $estado=0;  //1 el pago ha sido completo
             $update_venta= Venta::findOrFail($venId);
             $update_venta->estadopago=0;
+            $cambioestado= null;
             $update_venta->total=$format_total;
             $update_venta->update();}
 
-
-
-        $new_pago = new Pago;
-        $new_pago->fecha = $fecha;
-        $new_pago->cliId =  $cliId;
-        $new_pago->tipo = "Abono";
-        $new_pago->venId =  $venId;
-
-        $new_pago->pago =  $format_pago;
-        $new_pago->abono =  $format_pago;
-        $new_pago->saldo =  $saldo_actual;
-        //$new_pago->total =  $total;
-        $new_pago->fechamaxima =  $fechamaxima;
-        $new_pago->estado =  $estado;
-        $new_pago->tipoabono =  $tipoabono;
-        $new_pago->detalleabono =  $detalleabono;
-        
+                $new_pago = new Pago;
+                $new_pago->fecha = $fecha;
+                $new_pago->cliId =  $cliId;
+                $new_pago->tipo = "Abono";
+                $new_pago->venId =  $venId;
+                $new_pago->pago =  $format_pago;
+                $new_pago->abono =  $format_pago;
+                $new_pago->saldo =  $saldo_actual;
+                $new_pago->cambioestado= $cambioestado;
+                $new_pago->fechamaxima =  $fechamaxima;
+                $new_pago->estado =  $estado;
+                $new_pago->tipoabono =  $tipoabono;
+                $new_pago->detalleabono =  $detalleabono;
+                
         
 
         $new_pago->save();
@@ -396,22 +381,28 @@ class VentaApiController extends ApiResponseController
         $saldo_actual = number_format($saldo_actual, 2,'.','');
       
         $estado=0;
+        $cambioestado=null;
+
 
         if( $format_pago>=$saldo_anterior )
         { 
             $estado=1;  //1 el pago ha sido completo
             $update_venta= Venta::findOrFail($venId);
             $update_venta->estadopago=1;
+            $cambioestado= $fecha;
             $update_venta->total=$format_total;
             $update_venta->update();}
 
         if( $format_pago<$saldo_anterior )
        { 
-            $estado=0;  //1 el pago ha sido completo
+            $estado=0;  //0 el pago aun no ha sido completo
             $update_venta= Venta::findOrFail($venId);
             $update_venta->estadopago=0;
             $update_venta->total=$format_total;
-            $update_venta->update();}
+            $update_venta->update();
+            $cambioestado= null;
+          
+        }
 
 
 
@@ -424,6 +415,8 @@ class VentaApiController extends ApiResponseController
         $new_pago->pago =  $format_pago;
         $new_pago->abono =  $format_pago;
         $new_pago->saldo =  $saldo_actual;
+        $new_pago->cambioestado= $cambioestado;
+ 
         //$new_pago->total =  $total;
         $new_pago->fechamaxima =  $fechamaxima;
         $new_pago->estado =  $estado;
