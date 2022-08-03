@@ -980,6 +980,7 @@
               </template>
               <template #cell(actions)="data">
                 <b-button
+                 v-if="!infopagosventa"
                   variant="outline-danger default actions"
                   size="sm"
                   data-toggle="tooltip"
@@ -987,6 +988,17 @@
                   title="Borrar producto"
                   @click="deleteDetalleVenta(data.item.id)"
                 >
+                  <i class="fas fa-trash"></i>
+                </b-button>
+                          <b-button
+              v-else
+                  variant="outline-danger default actions"
+                  size="sm"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title="Borrar producto"
+             disabled
+             >
                   <i class="fas fa-trash"></i>
                 </b-button>
               </template>
