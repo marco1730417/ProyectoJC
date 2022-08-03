@@ -19,11 +19,12 @@
               <div class="row align-items-center">
                 <div class="col-12 text-left">
                   <div class="container">
-                    <h3 class="text-center">Pagos Pendientes- {{ fecha }}</h3>
+                    <h3 class="text-center">PAGOS PENDIENTES</h3>
                   </div>
                 </div>
                 <b-form-group>
                   <b-form-input
+                   style="float:center"
                     class="float-right"
                     id="filter-input"
                     v-model="filter"
@@ -55,13 +56,15 @@
                     @click="gotoEditVenta(data.item.id)"
                     variant="primary"
                     >{{ data.item.id }}</b-badge
-                  >
-                  <span v-if="data.item.cheque || data.item.numtransf">
+                  >  <br>
+              
+                  <small v-if="data.item.cheque || data.item.numtransf">
                     {{ data.item.cheque }} {{ data.item.numtransf }}
-                  </span>
+                  </small>
 
-                  <span v-else> {{ data.item.detalleabono }} </span>
-
+                  <small v-else> {{ data.item.detalleabono }} </small>
+<!-- <br>
+                  <small class="text-warning"> {{data.item.tipo}} </small> -->
                   <!--  <b-badge href="#" variant="primary">Primary</b-badge> -->
                 </template>
                 <template #cell(nombre)="data">
@@ -75,7 +78,7 @@
                   }}
                 </template>
                 <template #cell(fechamaxima)="data">
-                  {{ moment(data.item.fechamaxima).format("MMM DD YYYY") }}
+                  {{ moment(data.item.fechamaxima).format("MMM DD YYYY") }} 
                 </template>
                 <template #cell(saldo)="data">
                   $ {{ parseFloat(data.item.saldo).toFixed(2) }}
@@ -86,7 +89,39 @@
 
                 <template #cell(actions)="data">
                   <!--   {{data.item}} -->
-                  <b-button
+
+
+   <b-dropdown size="sm" text="Acciones" class="m-2">
+                  <b-dropdown-item-button
+                        variant="success"
+                       @click="changestatus(data.item.id)"
+                      >
+                        <i class="fas fa-balance-scale" title="Abonos"></i>
+                        Pago Total</b-dropdown-item-button
+                      >
+                      <b-dropdown-item-button
+                        variant="info"
+                          v-if="data.item.tipo == 'Abono'"
+                        data-toggle="modal"
+                        data-target="#ModalAbonos"
+                        @click="obtenerabonos(data.item.id)"
+                      >
+                        <i class="fas fa-balance-scale" title="Abonos"></i>
+                        Registrar Abono</b-dropdown-item-button
+                      >
+                      <b-dropdown-item-button
+                        variant="warning"
+                         v-if="data.item.tipo == 'Credito'"
+                        data-toggle="modal"
+                        data-target="#ModalCreditos"
+                        @click="obtenerabonoscreditos(data.item.id)"
+                        ><i class="fas fa-wallet" title="Creditos"></i>Registrar
+                        Crédito</b-dropdown-item-button
+                      >
+        
+                    </b-dropdown>
+
+               <!--    <b-button
                     variant="outline-success default actions"
                     @click="changestatus(data.item.id)"
                     size="sm"
@@ -118,7 +153,7 @@
                     title="Creditos"
                   >
                     <i class="fas fa-balance-scale" title="Abonos"></i>
-                  </b-button>
+                  </b-button> -->
                 </template>
               </b-table>
               <!-- PAGINACION -->
@@ -242,6 +277,13 @@ export default {
         {
           key: "id",
           label: "# Venta",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "list-item-enddate",
+        },
+            {
+          key: "tipo",
+          label: "Tipo",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate",

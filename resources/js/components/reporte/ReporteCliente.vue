@@ -12,7 +12,7 @@
               <!--   <h4 class="card-title">Por favor eliga las fechas previo a su reporte</h4> -->
 
               <div class="form-group">
-                <label for="email">Escoja un Cliente:</label>
+                <label for="email">ELIJA UN CLIENTE:</label>
 
                 <v-select
                   label="nombre"
@@ -23,9 +23,9 @@
                 ></v-select>
               </div>
               <div class="float-right">
-                <!-- 
- <button @click="downloadReporteCliente" class="btn btn-primary mb-2"><i class="fas fa-print"></i>EXPORTAR PDF</button>
- -->
+        
+        <button v-if="cliente" @click="downloadReporteCliente" class="btn btn-primary mb-2"><i class="fas fa-print"></i>EXPORTAR PDF</button>
+
               </div>
             </div>
           </div>
@@ -33,108 +33,113 @@
       </div>
     </div>
 
-    <div class="container-fluid mt--7">
-      <div class="row">
-        <div class="col">
-          <div class="card shadow">
-            <div class="card-header border-0">
-              <div class="row align-items-center">
-                <div class="col-12 text-left">
-                  <div v-if="infoventascliente.length > 0" class="container">
-                    <h3 class="text-center">Reportes de ventas de cliente</h3>
+    <div
+      v-if="infoventascliente.length > 0"
+      class="header bg-gradient-primary pb-1 pt-3 pt-md-2"
+    >
+      <div class="container-fluid">
+        <div class="header-body">
+          <!-- Card stats -->
+          <div class="card">
+            <div class="card-header text-center">
+              <strong>
+                REPORTE DE VENTAS DE CLIENTE - VENTAS NO ADEUDADAS
+              </strong>
+            </div>
+            <div class="card-body">
+              <b-table
+                striped
+                hover
+                :items="infoventascliente"
+                :fields="fields"
+              >
+                <template #cell(fecha)="data">
+                  <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
+                  <!--  {{ data.item.fecha }} -->
+                  {{
+                    moment(data.item.fecha).format(
+                      "MMM DD YYYY, ddd, h:mm:ss a"
+                    )
+                  }}
+                  <!--    {{ moment(data.item.fecha).format("MMM DD YYYY, ddd") }} -->
+                </template>
+                <template #cell(detalle)="data">
+                  <span v-if="data.item.tipo == 'Contado'">
+                    {{ data.item.detallecontado }}
+                  </span>
+                  <span v-if="data.item.tipo == 'Transferencia'">
+                    {{ data.item.numtransf }}
+                  </span>
+                  <span v-if="data.item.tipo == 'Credito'">
+                    {{ data.item.cheque }}
+                  </span>
+                  <span v-if="data.item.tipo == 'Cheque'">
+                    {{ data.item.cheque }}
+                  </span>
+                    <span v-if="data.item.tipo == 'Abono'">
+                    {{ data.item.detalleabono }}
+                  </span>
+                </template>
 
-                    <div class="row">
-                      <div class="col-md-12">
-                        <!-- {{infoventa}} -->
-                        <b-table
-                          striped
-                          hover
-                          :items="infoventascliente"
-                          :fields="fields"
-                        >
-                          <template #cell(fecha)="data">
-                            <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
-                            <!--  {{ data.item.fecha }} -->
-                            {{
-                              moment(data.item.fecha).format(
-                                "MMM DD YYYY, ddd, h:mm:ss a"
-                              )
-                            }}
-                            <!--    {{ moment(data.item.fecha).format("MMM DD YYYY, ddd") }} -->
-                          </template>
-
-                          <template #cell(total)="data">
-                            <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
-                            <!--  {{ data.item.fecha }} -->
-                            <span v-if="data.item.total"
-                              >$
-                              {{ parseFloat(data.item.total).toFixed(2) }}
-                            </span>
-                            <span v-else>0 </span>
-                            <!--    {{ moment(data.item.fecha).format("MMM DD YYYY, ddd") }} -->
-                          </template>
-                        </b-table>
-
-                        <!--   <b-col class="text-center" sm="12">
-                <b-button
-                  v-if="cliente "
-                  size="sm"
-                  @click="downloadReporteCliente"
-                  variant="warning"
-                  ><i class="fas fa-print" title="Reporte"></i> Descargar
-                  PDF</b-button
-                >
-              </b-col> -->
-                      </div>
-                    </div>
-                  </div>
-                  <div v-if="infodeudascliente.length > 0" class="container">
-                    <h3 class="text-center">Valores Adeudados</h3>
-
-                    <div class="row">
-                      <div class="col-md-12">
-                        <!-- {{infoventa}} -->
-                        <b-table
-                          striped
-                          hover
-                          :items="infodeudascliente"
-                          :fields="fields1"
-                        >
-                          <template #cell(fecha)="data">
-                            <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
-                            <!--  {{ data.item.fecha }} -->
-                            {{
-                              moment(data.item.fecha).format(
-                                "MMM DD YYYY, ddd, h:mm:ss a"
-                              )
-                            }}
-                            <!--    {{ moment(data.item.fecha).format("MMM DD YYYY, ddd") }} -->
-                          </template>
-                          <template #cell(saldos)="data">
-                            <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
-                            <!--  {{ data.item.fecha }} -->
-                            <span v-if="data.item.saldos > 0"
-                              >
-                              
-                                {{ parseFloat(data.item.saldos).toFixed(2) }}
-
-                            </span>
-                            <span v-else>0 </span>
-                            <!--    {{ moment(data.item.fecha).format("MMM DD YYYY, ddd") }} -->
-                          </template>
-                        </b-table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                <template #cell(total)="data">
+                  <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
+                  <!--  {{ data.item.fecha }} -->
+                  <span v-if="data.item.total"
+                    >$
+                    {{ parseFloat(data.item.total).toFixed(2) }}
+                  </span>
+                  <span v-else>0 </span>
+                  <!--    {{ moment(data.item.fecha).format("MMM DD YYYY, ddd") }} -->
+                </template>
+              </b-table>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
 
-          <!--  {{totalesventa}} -->
+    <div
+      v-if="infodeudascliente.length > 0"
+      class="header bg-gradient-primary pb-1 pt-3 pt-md-2"
+    >
+      <div class="container-fluid">
+        <div class="header-body">
+          <!-- Card stats -->
+          <div class="card">
+            <div class="card-header text-center">
+              <strong> REPORTE DE VENTAS DE CLIENTE - VENTAS ADEUDADAS -
+           TOTAL ADEUDADO   $ {{ parseFloat(totaldeudacliente).toFixed(2) }}  </strong>
+            </div>
+            <div class="card-body">
+              <b-table
+                striped
+                hover
+                :items="infodeudascliente"
+                :fields="fields1"
+              >
+                <template #cell(fecha)="data">
+                  <!--     <small class="mb-0 mr-2">{{ data.item.nombre }}</small> -->
+                  <!--  {{ data.item.fecha }} -->
+                  {{
+                    moment(data.item.fecha).format(
+                      "MMM DD YYYY, ddd, h:mm:ss a"
+                    )
+                  }}
+                  <!--    {{ moment(data.item.fecha).format("MMM DD YYYY, ddd") }} -->
+                </template>
+                <template #cell(tipo)="data">
+                  <span> {{ data.item.tipo }} </span>
+                </template>
 
-          <div class="card-footer py-4">
-            <nav class="d-flex justify-content-end" aria-label="..."></nav>
+                <template #cell(saldos)="data">
+                  <span v-if="data.item.saldos"
+                    >$
+                    {{ parseFloat(data.item.saldos).toFixed(2) }}
+                  </span>
+                  <span v-else>0 </span>
+                </template>
+              </b-table>
+            </div>
           </div>
         </div>
       </div>
@@ -170,8 +175,8 @@ export default {
           tdClass: "list-item-enddate",
         },
         {
-          key: "nombre",
-          label: "Cliente",
+          key: "detalle",
+          label: "Detalle",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate",
@@ -179,6 +184,13 @@ export default {
         {
           key: "fecha",
           label: "Fecha",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "list-item-enddate",
+        },
+        {
+          key: "tipo",
+          label: "Tipo",
           sortable: false,
           sortDirection: "desc",
           tdClass: "list-item-enddate",
@@ -208,6 +220,13 @@ export default {
           tdClass: "list-item-enddate",
         },
         {
+          key: "tipo",
+          label: "Tipo",
+          sortable: false,
+          sortDirection: "desc",
+          tdClass: "list-item-enddate",
+        },
+        {
           key: "saldos",
           label: "Saldos",
           sortable: false,
@@ -223,6 +242,7 @@ export default {
       producto: "",
       clientecapturado: "",
       infodeudascliente: [],
+      totaldeudacliente:"",
     };
   },
   watch: {
@@ -235,15 +255,39 @@ export default {
     this.getAllClientes();
   },
   methods: {
-    reporteDeudasporCliente(id) {
-      ReporteServices.reporteDeudasporCliente(id)
+
+  reporteVentas(id) {
+      ReporteServices.reporteVentasporCliente(id)
         .then((response) => {
-          this.infodeudascliente = response.data.data;
+          this.infoventascliente = response.data;
+          console.log(this.infoventascliente);
+          this.reporteDeudasporCliente(id);
+          this.reporteTotalVentasCliente(id);
         })
         .catch((error) => {
           console.log(error);
         });
     },
+
+    reporteDeudasporCliente(id) {
+      ReporteServices.reporteDeudasporCliente(id)
+        .then((response) => {
+          this.infodeudascliente = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+       reporteTotalVentasCliente(id) {
+      ReporteServices.reporteTotalDeudasporCliente(id)
+        .then((response) => {
+          this.totaldeudacliente = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
     onlyNumber($event) {
       //console.log($event.keyCode); //keyCodes value
       let keyCode = $event.keyCode ? $event.keyCode : $event.which;
@@ -262,16 +306,7 @@ export default {
         });
     },
 
-    reporteVentas(id) {
-      ReporteServices.reporteVentasporCliente(id)
-        .then((response) => {
-          this.infoventascliente = response.data.data;
-          this.reporteDeudasporCliente(id);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
+  
 
     downloadReporteCliente() {
       let routeData =

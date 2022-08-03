@@ -128,8 +128,10 @@ class VentaApiController extends ApiResponseController
         $fecha = $carbon->now();
         $data = request()->all();
         $total=$data['total'];
+        $detallecontado=$data['detallecontado'];
         $pago=$data['pago'];
         $vuelto=$data['vuelto'];
+
         
         $format_vuelto = number_format($vuelto, 2,'.','');
         $format_total = number_format($total, 2,'.','');
@@ -139,7 +141,7 @@ class VentaApiController extends ApiResponseController
         if( $format_pago>=$format_total ) { 
        // $estado=1;  //1 el pago ha sido completo
         $update_venta= Venta::findOrFail($data['venId']);
-        $update_venta->estadopago=1;
+        $update_venta->estadopago=1; // Jamas se iran a pagos pendientes
         $update_venta->total=$format_total;
         
         $update_venta->update();}
@@ -147,7 +149,7 @@ class VentaApiController extends ApiResponseController
         //$estado=0;  // el pago esta incompleto
         $update_venta= Venta::findOrFail($data['venId']);
         $update_venta->total=$format_total;
-        $update_venta->estadopago=1;
+        $update_venta->estadopago=1; // Jamas se iran a pagos pendientes
         $update_venta->update();}
 
         $saldo_pendiente=0;
@@ -164,6 +166,8 @@ class VentaApiController extends ApiResponseController
         $new_pago->pago =  $format_pago;
         $new_pago->total =  $format_total;
         $new_pago->saldo =  $saldo_pendiente;
+        $new_pago->detallecontado =  $detallecontado;
+        
         
         $new_pago->estado = $estado;
 
@@ -190,7 +194,7 @@ class VentaApiController extends ApiResponseController
         { 
             $estado=1;  //1 el pago ha sido completo
             $update_venta= Venta::findOrFail($data['venId']);
-            $update_venta->estadopago=1;
+            $update_venta->estadopago=1;  // Jamas se iran a pagos pendientes
             $update_venta->total=$format_total;
             $update_venta->update();}
 
@@ -198,24 +202,27 @@ class VentaApiController extends ApiResponseController
         { 
             $estado=0;  //1 el pago ha sido completo
             $update_venta= Venta::findOrFail($data['venId']);
-            $update_venta->estadopago=0;
+            $update_venta->estadopago=1;// Jamas se iran a pagos pendientes
             $update_venta->total=$format_total;
             $update_venta->update();}
 
-        $new_pago = new Pago;
-        $new_pago->venId = $data['venId'];
-
-        $new_pago->fecha = $fecha;
-        $new_pago->tipo = "Transferencia";
-        $new_pago->cliId =  $data['cliId'];
-       
-        $new_pago->pago =  $format_pago;
-        $new_pago->total =  $format_total;
-        $new_pago->saldo =  $format_total- $format_pago;
+            $saldo_pendiente=0;
+            $saldo_pendiente= $format_total- $format_pago;
+    
+            if($saldo_pendiente>0) $saldo_pendiente= $saldo_pendiente;
+            else $saldo_pendiente=0;
         
-        $new_pago->numtransf =  $data['numtransf'];
-        $new_pago->estado = $estado;
-        $new_pago->save();
+            $new_pago = new Pago;
+            $new_pago->venId = $data['venId'];
+            $new_pago->fecha = $fecha;
+            $new_pago->tipo = "Transferencia";
+            $new_pago->cliId =  $data['cliId'];
+            $new_pago->pago =  $format_pago;
+            $new_pago->total =  $format_total;
+            $new_pago->saldo =  $saldo_pendiente;
+            $new_pago->numtransf =  $data['numtransf'];
+            $new_pago->estado = $estado;
+            $new_pago->save();
 
         if (!$new_pago) return $this->errorResponse(500);
 
@@ -326,6 +333,11 @@ class VentaApiController extends ApiResponseController
             $update_venta->total=$format_total;
             $update_venta->update();}
 
+            if($saldo_actual>0) $saldo_actual= $saldo_actual;
+            else $saldo_actual=0; 
+    
+
+
                 $new_pago = new Pago;
                 $new_pago->fecha = $fecha;
                 $new_pago->cliId =  $cliId;
@@ -386,24 +398,24 @@ class VentaApiController extends ApiResponseController
 
         if( $format_pago>=$saldo_anterior )
         { 
-            $estado=1;  //1 el pago ha sido completo
             $update_venta= Venta::findOrFail($venId);
-            $update_venta->estadopago=1;
+            $update_venta->estadopago=1;//1 el pago ha sido completo
             $cambioestado= $fecha;
             $update_venta->total=$format_total;
             $update_venta->update();}
 
         if( $format_pago<$saldo_anterior )
        { 
-            $estado=0;  //0 el pago aun no ha sido completo
             $update_venta= Venta::findOrFail($venId);
-            $update_venta->estadopago=0;
+            $update_venta->estadopago=0;//0 el pago aun no ha sido completo
             $update_venta->total=$format_total;
             $update_venta->update();
             $cambioestado= null;
           
         }
 
+        if($saldo_actual>0) $saldo_actual= $saldo_actual;
+        else $saldo_actual=0; 
 
 
         $new_pago = new Pago;
@@ -437,55 +449,51 @@ class VentaApiController extends ApiResponseController
         $fecha = $carbon->now();
         $data = request()->all();
       
-
-  
-$fecha_actual = strtotime(date("d-m-Y H:i:00",time()));
-$fechamaxima = strtotime($data['fechamaxima']);
+        $fecha_actual = strtotime(date("d-m-Y H:i:00",time()));
+        $fechamaxima = strtotime($data['fechamaxima']);
 
 
-if($fecha_actual > $fechamaxima){
-    $total=$data['total'];
-    $format_total = number_format($total, 2,'.','');
-    $estado=1;  //1 el pago ha sido completo
-    $update_venta= Venta::findOrFail($data['venId']);
-    $update_venta->estadopago=1;
-    $update_venta->total=$format_total;
-    $update_venta->update();
-    $new_pago = new Pago;
-    $new_pago->venId = $data['venId'];
-    $new_pago->fecha = $fecha;
-    $new_pago->tipo = "Cheque";
-    $new_pago->cliId =  $data['cliId'];
-    $new_pago->pago = $format_total ;
-    $new_pago->total =  $data['total'];
-    $new_pago->saldo = 0;
-    $new_pago->fechamaxima =  $data['fechamaxima'];
-    $new_pago->cheque =  $data['cheque'];
-    $new_pago->estado = $estado;
-    $new_pago->save();
+        if($fecha_actual > $fechamaxima){
+            $total=$data['total'];
+            $format_total = number_format($total, 2,'.','');
+            $estado=1;  //1 el pago ha sido completo
+            $update_venta= Venta::findOrFail($data['venId']);
+            $update_venta->estadopago=1;
+            $update_venta->total=$format_total;
+            $update_venta->update();
+            $new_pago = new Pago;
+            $new_pago->venId = $data['venId'];
+            $new_pago->fecha = $fecha;
+            $new_pago->tipo = "Cheque";
+            $new_pago->cliId =  $data['cliId'];
+            $new_pago->pago = $format_total ;
+            $new_pago->total =  $data['total'];
+            $new_pago->saldo = 0;
+            $new_pago->fechamaxima =  $data['fechamaxima'];
+            $new_pago->cheque =  $data['cheque'];
+            $new_pago->estado = $estado;
+            $new_pago->save();
 
-
-
-}else{
-    $total=$data['total'];
-    $format_total = number_format($total, 2,'.','');
-    $estado=0;  //1 el pago ha sido completo
-    $update_venta= Venta::findOrFail($data['venId']);
-    $update_venta->estadopago=0;
-    $update_venta->total=$format_total;
-    $update_venta->update();
-    $new_pago = new Pago;
-    $new_pago->venId = $data['venId'];
-    $new_pago->fecha = $fecha;
-    $new_pago->tipo = "Cheque";
-    $new_pago->cliId =  $data['cliId'];
-    $new_pago->pago = 0;
-    $new_pago->total =  $format_total ;
-    $new_pago->saldo =  $data['total'];
-    $new_pago->fechamaxima =  $data['fechamaxima'];
-    $new_pago->cheque =  $data['cheque'];
-    $new_pago->estado = $estado;
-    $new_pago->save();
+            }else{
+                $total=$data['total'];
+                $format_total = number_format($total, 2,'.','');
+                $estado=0;  //1 el pago ha sido completo
+                $update_venta= Venta::findOrFail($data['venId']);
+                $update_venta->estadopago=0;
+                $update_venta->total=$format_total;
+                $update_venta->update();
+                $new_pago = new Pago;
+                $new_pago->venId = $data['venId'];
+                $new_pago->fecha = $fecha;
+                $new_pago->tipo = "Cheque";
+                $new_pago->cliId =  $data['cliId'];
+                $new_pago->pago = 0;
+                $new_pago->total =  $format_total ;
+                $new_pago->saldo =  $data['total'];
+                $new_pago->fechamaxima =  $data['fechamaxima'];
+                $new_pago->cheque =  $data['cheque'];
+                $new_pago->estado = $estado;
+                $new_pago->save();
 
 
 }
@@ -702,21 +710,20 @@ if($fecha_actual > $fechamaxima){
             'pagos.venId',
             'pagos.cliId',
             'pagos.cheque',
-            'pagos.numtransf'
+            'pagos.numtransf',
+            'pagos.detallecontado'
             
         )
             ->leftJoin('ventas', 'pagos.venId', '=', 'ventas.id')
             ->leftJoin('clientes', 'pagos.cliId', '=', 'clientes.id')
             ->where('venId', $venId)
             ->get();
-        //    return $detalle_venta;
+          
+       if(count($detalle_venta)>0){ 
         $total_pagos = Pago::where('pagos.venId', $venId)->sum('pagos.pago');
         $saldo = $detalle_venta[0]['total'] - $total_pagos;
-      
         $totalcobrar = $detalle_venta[0]['total'];
         $fechamaxima = $detalle_venta[0]['fechamaxima'];
-
-
         $info_pago_abono = [
             'detalle_venta' => $detalle_venta,
             'total_abonos' =>     $total_pagos,
@@ -727,6 +734,8 @@ if($fecha_actual > $fechamaxima){
         ];
 
         return $this->successResponse($info_pago_abono);
+    }
+        else return $this->errorResponse(500);
     }
     public function getInformacionPagosVentaAbonos($venId)
     {
@@ -956,40 +965,40 @@ if($fecha_actual > $fechamaxima){
             ->where('venId', $venId)->get();
 // informacion de pago
 //1 Sacar ventas con estado 0 asociadas a este cliente
-$detallepago= Venta::select('id as venId',
-DB::raw("(SELECT (pagos.saldo) FROM pagos
-WHERE ventas.id=pagos.venId
-and ventas.id = $venId
-ORDER BY pagos.saldo
-limit 1
-) AS saldos"),
-DB::raw("(SELECT (pagos.abono) FROM pagos
-WHERE ventas.id=pagos.venId
-and ventas.id = $venId
-ORDER BY pagos.saldo
-limit 1
-) AS abono"),
-DB::raw("(SELECT (pagos.tipo) FROM pagos
-WHERE ventas.id=pagos.venId
-and ventas.id = $venId
-ORDER BY pagos.saldo
-limit 1
-) AS tipo"),
-DB::raw("(SELECT (pagos.total) FROM pagos
-WHERE ventas.id=pagos.venId
-and ventas.id = $venId
-ORDER BY pagos.saldo
-limit 1
-) AS total"),
-DB::raw("(SELECT date_format(pagos.fechamaxima, '%d-%m-%Y') FROM pagos
-WHERE ventas.id=pagos.venId
-and ventas.id = $venId
-ORDER BY pagos.saldo
-limit 1
-) AS fechamaxima"),
-)
-->where('id',$venId)
-->get();
+            $detallepago= Venta::select('id as venId',
+            DB::raw("(SELECT (pagos.saldo) FROM pagos
+            WHERE ventas.id=pagos.venId
+            and ventas.id = $venId
+            ORDER BY pagos.saldo
+            limit 1
+            ) AS saldos"),
+            DB::raw("(SELECT (pagos.abono) FROM pagos
+            WHERE ventas.id=pagos.venId
+            and ventas.id = $venId
+            ORDER BY pagos.saldo
+            limit 1
+            ) AS abono"),
+            DB::raw("(SELECT (pagos.tipo) FROM pagos
+            WHERE ventas.id=pagos.venId
+            and ventas.id = $venId
+            ORDER BY pagos.saldo
+            limit 1
+            ) AS tipo"),
+            DB::raw("(SELECT (pagos.total) FROM pagos
+            WHERE ventas.id=pagos.venId
+            and ventas.id = $venId
+            ORDER BY pagos.saldo
+            limit 1
+            ) AS total"),
+            DB::raw("(SELECT date_format(pagos.fechamaxima, '%d-%m-%Y') FROM pagos
+            WHERE ventas.id=pagos.venId
+            and ventas.id = $venId
+            ORDER BY pagos.saldo
+            limit 1
+            ) AS fechamaxima"),
+            )
+            ->where('id',$venId)
+            ->get();
 
 
 
@@ -1275,21 +1284,19 @@ $mejores_clientes = Venta::select(
         $venta_update->descuento = $descuento ?: 0;;
         $venta_update->update();
 
-// actualizamos total
-
-if($venta_update){ 
-$parciales = DetalleVenta::queryVentaParcial($venId)->get();
- $descuentos_total= $descuento;
- $subtotal = $parciales->sum('parcial');
- $subtotal_sin_impuestos = $subtotal - $descuentos_total;
- $iva = 12;
- $valor_iva = $subtotal_sin_impuestos * $iva / 100;
- $total = $subtotal_sin_impuestos + $valor_iva;
- $update_total = Venta::findOrFail($venId);
- $update_total->total = $total;
- $update_total->update();
- 
-}
+        if($venta_update){ 
+        $parciales = DetalleVenta::queryVentaParcial($venId)->get();
+        $descuentos_total= $descuento;
+        $subtotal = $parciales->sum('parcial');
+        $subtotal_sin_impuestos = $subtotal - $descuentos_total;
+        $iva = 12;
+        $valor_iva = $subtotal_sin_impuestos * $iva / 100;
+        $total = $subtotal_sin_impuestos + $valor_iva;
+        $update_total = Venta::findOrFail($venId);
+        $update_total->total = $total;
+        $update_total->update();
+        
+        }
 
 
 

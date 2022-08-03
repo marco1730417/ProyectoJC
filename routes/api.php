@@ -60,6 +60,7 @@ Route::group(['prefix' => 'pagos'], function () {
     Route::get('get-pagos-pendientes', [PagoApiController::class, 'PagosPendientes']);
     Route::post('delete-pago/{id}', [PagoApiController::class, 'deletePago']);
     Route::post('update-pago/{id}', [PagoApiController::class, 'cambioestadoPago']);
+    Route::post('update-info-pago', [PagoApiController::class, 'editarPago']);
  
    
 
@@ -84,13 +85,11 @@ Route::group(['prefix' => 'reportes'], function () {
     Route::get('reporte-por-cliente/{cliId}', [ReportesApiController::class, 'reporteVentasporCLiente']);
     Route::get('download-reporte-venta/{fechainicio}/{fechafinal} ',  [ReportesApiController::class, 'downloadReporteVenta']);
     Route::get('download-reporte-cliente/{cliId} ',  [ReportesApiController::class, 'downloadReporteCliente']);
-    Route::get('reporte-compras/{fechadesde}/{fechahasta}', [ReportesApiController::class, 'reporteCompras']);
     Route::get('reporte-deudas-cliente/{cliId}', [ReportesApiController::class, 'reporteDeudasporCliente']);
+    Route::get('reporte-compras/{fechadesde}/{fechahasta}', [ReportesApiController::class, 'reporteCompras']);
+    Route::get('reporte-total-deudas-cliente/{cliId}', [ReportesApiController::class, 'reporteTotalDeudasporCliente']);
     
-  
 });
-
-
 
 
 Route::group(['prefix' => 'venta'], function () {

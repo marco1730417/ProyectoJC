@@ -122,8 +122,8 @@
                             <b-row v-if="producto.PrecioVenta1" class="my-1">
                               <b-col sm="9  ">
                                 <label for="input-none"
-                                  >Precio x {{ producto.uniPrecioVenta1 }} ( $
-                                  {{ producto.PrecioVenta1 }})
+                                  >Precio x {{ producto.uniPrecioVenta1 }} ( $ {{ parseFloat(producto.PrecioVenta1).toFixed(2) }}
+                                  )
                                 </label>
                               </b-col>
                               <b-col sm="3">
@@ -138,8 +138,10 @@
                             <b-row v-if="producto.PrecioVenta2" class="my-1">
                               <b-col sm="9">
                                 <label for="input-none"
-                                  >Precio x {{ producto.uniPrecioVenta2 }} ( $
-                                  {{ producto.PrecioVenta2 }})
+                                  >Precio x {{ producto.uniPrecioVenta2 }}
+                                   ( $ {{ parseFloat(producto.PrecioVenta2).toFixed(2) }}
+                               
+                                  )
                                 </label>
                               </b-col>
                               <b-col sm="3">
@@ -155,7 +157,10 @@
                               <b-col sm="9">
                                 <label for="input-none"
                                   >Precio esp x {{ producto.uniPrecioVenta3 }} (
-                                  $ {{ producto.PrecioVenta3 }})
+                                    $ {{ parseFloat(producto.PrecioVenta3).toFixed(2) }}
+                                  )
+
+
                                 </label>
                               </b-col>
                               <b-col sm="3">

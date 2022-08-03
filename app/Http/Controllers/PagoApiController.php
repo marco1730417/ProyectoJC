@@ -24,6 +24,90 @@ class PagoApiController extends ApiResponseController
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function PagosPendientes1()
+    { 
+
+
+/*         Convertir saldos negativos a 0  */
+       /*  $saldos_negativos= Pago:: where('saldo','<',0)->get();
+        foreach ($saldos_negativos as $value) {
+            $pago= Pago::findOrFail($value->id);
+            $pago->saldo=0;
+            $pago->update();
+          } 
+        return $saldos_negativos; */
+
+     /*    Formatear valores al estandar ingresado a las tablas, se puede usar cualquier valor de la tabla numericos */
+       
+/*         $totales_extremos= Pago::where('id','<',640)->get() ;
+        foreach ($totales_extremos as $value) {
+            $format_total= Pago::findOrFail($value->id);
+            $format_total->total = number_format($format_total->total, 2, '.', '');
+            $format_total->pago = number_format($format_total->pago, 2, '.', '');
+            $format_total->saldo = number_format($format_total->saldo, 2, '.', '');
+            $format_total->update();
+           
+          } 
+
+        return $totales_extremos; */
+
+       $ventas_pendientes= Pago::select(
+            'ventas.id as id',
+            'pagos.id as pagId',
+            'ventas.estadopago as estadopago',
+            'pagos.cliId as cliId',
+            'pagos.fechamaxima as fechamaxima',
+            'pagos.saldo as saldo',
+           
+            'pagos.cheque as cheque',
+            'pagos.numtransf as numtransf',
+            'pagos.detalleabono as detalleabono',
+            
+            'pagos.tipo as tipo',
+            'pagos.total as total',
+            'ventas.fecha as venfecha',
+            'clientes.nombre as nombre'
+
+            )
+            ->leftJoin('ventas', 'pagos.venId', '=', 'ventas.id')
+            ->leftJoin('clientes', 'pagos.cliId', '=', 'clientes.id')
+            
+            ->where('ventas.estadopago',0)
+            ->where('pagos.tipo','<>','Contado')
+            ->where('pagos.tipo','<>','Transferencia')
+            ->where('pagos.tipo','<>','Transferencia')
+            ->orderBy('pagos.venId')
+            ->get(); 
+
+
+
+          return $this->successResponse($ventas_pendientes);
+
+ 
+      /*   Este codigo permite saber los pagos duplicados de toda la tabla pagos es necesario analizar dato a dato  */
+          /*  $ventas_pendientes= Pago::select(
+            'pagos.venId as venId',
+            'pagos.cliId as cliId',
+            'pagos.tipo as tipo',
+            'pagos.total as total',
+            )
+            ->whereNotNull('pagos.total')
+
+            ->get();  */
+ 
+// RESULTADO CON FECHA 01 08 2022 CON PAGOS PENDIENTES QUE SE DUPLICAN  695-695-1241-1241-1278-1278-2165-2165-2354-2354-
+      /*       foreach ($ventas_pendientes as $value) {
+                $contar= Pago::where('venId',$value->id)->count();
+               // echo ($value->venId. '-');
+                if($contar >1){
+                     echo ($value->id. '-');
+                }
+              }  */
+            
+
+    } 
+
     public function PagosPendientes()
 
     {
@@ -81,12 +165,11 @@ class PagoApiController extends ApiResponseController
          )
         ->where('estadopago',0)
         ->get();
-       
-
-
-      
+     
         return $this->successResponse($ventas_pendientes);
     }
+
+
     public function PagosPendientesv1()
     {
         $pagos = Pago::select(
@@ -136,6 +219,31 @@ class PagoApiController extends ApiResponseController
         if (!$pago) return $this->errorResponse(500);
         return $this->successResponse(200);
     }
+
+    public function editarPago(Request $request)
+    {        
+   
+        $data = request()->all();
+        $info = $data['info'];
+        
+        $update_pago= PAgo::findOrFail($info['id']);
+
+
+        return $update_pago;
+
+    /*     $numero_pago = Pago::where('venId',$venta_asociada->venId)->count();
+        if($numero_pago==1){
+        $venta_asociada= Venta::findOrFail($venta_asociada->venId);
+        $venta_asociada->estadopago = 1;
+        $venta_asociada->update(); */
+    }
+     
+     
+
+       // if (!$pago) return $this->errorResponse(500);
+     //   return $this->successResponse(200);
+    
+
 
 // Api para registrar un pago como finalizado
     public function cambioestadoPago($id)

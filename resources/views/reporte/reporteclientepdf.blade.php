@@ -63,22 +63,20 @@
     <div class="card">
 
         <div class="card-body">
-            <div class="row ">
 
 
-
-
-            </div>
-
-
+            <h6 class="text-center">REPORTE CLIENTE:  {{$ventas_cliente[0]['nombre']}} </h6>
+            
+            <h6 class="text-center">VENTAS NO ADEUDADAS </h6> <br>
 
             <table class="table table-striped">
                 <thead>
                     <tr>
-                    <th>#</th>
-                     
-                    <th>Cliente</th>
+                        <th>#</th>
+                        <th>Detalle</th>
+                        
                         <th>Fecha</th>
+                        <th>Tipo</th>
                         <th>Total</th>
                     
                     </tr>
@@ -86,11 +84,60 @@
                 <tbody>
                 @foreach ($ventas_cliente as $item)
                     <tr>
-                    <td>{{$item['id']}}</td>
-                    <td>{{$item['nombre']}}</td>
+                    <td>{{$item['venId']}}</td>
+                     
+                    
+                        @if ($item['tipo']== 'Contado')
+                        <td class="center">{{$item['detallecontado']}}  </td>
+                        @endif
+                        @if ($item['tipo']== 'Transferencia')
+                        <td class="center">{{$item['numtransf']}}  </td>
+                        @endif
+                        @if ($item['tipo']== 'Credito')
+                        <td class="center">{{$item['cheque']}}  </td>
+                        @endif
+                        @if ($item['tipo']== 'Abono')
+                        <td class="center">{{$item['detalleabono']}}  </td>
+                        @endif
+                        @if ($item['tipo']== 'Cheque')
+                        <td class="center">{{$item['cheque']}}  </td>
+                        @endif
+                       
+
+
+
+
                     <td>{{$item['fecha']}}</td>
-                    <td>{{$item['total']}}</td>
+                    <td>{{$item['tipo']}}</td>
+                    <td>  $@php echo(number_format($item['total'],2));@endphp</td>
+                    
                    
+                    </tr>
+                    
+                    @endforeach
+                </tbody>
+            </table>
+
+<br>
+            <h6 class="text-center"> VENTAS ADEUDADAS $@php echo(number_format($total_deuda,2));@endphp </h6> <br>
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Fecha</th>
+                        <th>Tipo</th>
+                        <th>Saldo</th>
+                    
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach ($ventas_deuda as $venta)
+                    <tr>
+                    <td>{{$venta['venId']}}</td>
+                    <td>{{$venta['fecha']}}</td>
+                    <td>{{$venta['tipo']}}</td>
+                    <td>  $@php echo(number_format($venta['saldos'],2));@endphp</td>
                    
                     </tr>
                     
@@ -99,16 +146,7 @@
             </table>
 
 
-            <div class="row">
-      
-            <div class="col-xs-6">
-
-                <div class="col-lg-4 col-sm-5 ml-auto">
-        
-
-                </div>
-                </div>
-            </div>
+       
 
         </div>
 

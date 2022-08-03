@@ -15,10 +15,19 @@ class Pago extends Model
      * @var array
      */
     protected $fillable = [
-       'tipo', 'total',
-        'pago', 'abono', 'numtransf',
-        'fecha', 'cliId', 'saldo'
-,'vuelto'        ,'tipoabono' ,'detalleabono','cambioestado'
+       'tipo', 
+       'total',
+        'pago', 
+        'abono',
+        'numtransf',
+        'fecha', 
+        'cliId', 
+        'saldo'
+        ,'vuelto'
+        ,'tipoabono'
+         ,'detalleabono'
+         ,'cambioestado'
+         ,'detallecontado'
     ];
 
 }

@@ -44,12 +44,12 @@
                           </template>
                           <template #cell(cheque)="data">
                             <span
-                              v-if="data.item.cheque || data.item.numtransf"
+                              v-if="data.item.cheque || data.item.numtransf || data.item.detallecontado"
                             >
-                              {{ data.item.cheque }} {{ data.item.numtransf }}
-
+                              {{ data.item.cheque }} {{ data.item.numtransf }}  {{data.item.detallecontado}}
+<br>
                               <strong v-if="data.item.fechamaxima"
-                                >- Fecha máxima
+                                >Fecha máxima
                               </strong>
                               <span v-if="data.item.fechamaxima">
                                 {{
@@ -75,8 +75,74 @@
                             >
                               <i class="fas fa-trash"></i>
                             </b-button>
+                         <!--       <b-button
+                              variant="outline-info default actions"
+                              size="sm"
+                              data-toggle="tooltip"
+                              data-placement="top"
+                              title="Editar"
+                              @click="capturarpago(data.item)"
+                            >
+                              <i class="fas fa-edit"></i>
+                            </b-button> -->
                           </template>
                         </b-table>
+
+<!-- {{pagocapturado}}
+ -->
+<br>
+  <div v-if="editMode">
+  <div class="text-center">  <h4>EDITAR PAGO</h4> </div>
+
+    <b-form>
+      <b-form-group v-if="pagocapturado.cheque" id="input-group-2" label="Detalle:" label-for="input-2">
+        <b-form-input
+          id="input-2"
+          v-model="pagocapturado.cheque"
+          placeholder="Enter name"
+          required
+        ></b-form-input>
+      </b-form-group>
+
+            <b-form-group v-if="pagocapturado.numtransf" id="input-group-2" label="Detalle:" label-for="input-2">
+        <b-form-input
+          id="input-2"
+          v-model="pagocapturado.numtransf"
+          placeholder="Enter name"
+          required
+        ></b-form-input>
+      </b-form-group>
+
+       <b-form-group v-if="pagocapturado.detallecontado" id="input-group-2" label="Detalle:" label-for="input-2">
+        <b-form-input
+          id="input-2"
+          v-model="pagocapturado.detallecontado"
+          placeholder="Enter name"
+          required
+        ></b-form-input>
+      </b-form-group>
+
+<div class="text-center">
+  <b-button  v-if="pagocapturado.cheque || pagocapturado.numtransf || pagocapturado.detallecontado " @click="actualizarPago"  variant="primary">
+    
+    Actualizar</b-button>
+     <b-button  @click="editMode= false"  variant="secondary">
+    
+    Cerrar</b-button>
+</div>
+  
+    </b-form>
+   
+  </div>
+
+
+
+
+
+
+
+
+
                       </div>
 
 </template>
@@ -104,6 +170,7 @@ export default {
   data() {
     return {
       tipoabono: "1",
+      editMode:false,
       tipoabonocredito: "1",
 
       detalleabono: "",
@@ -151,6 +218,7 @@ export default {
       pagorecibido: "",
       saldo: "",
       venta: "",
+      pagocapturado:"",
     };
   },
   computed: {
@@ -167,6 +235,29 @@ export default {
   },
 
   methods: {
+
+        actualizarPago() {
+      let data = {
+        info: this.pagocapturado,
+ 
+      };
+      pagoServices.editarPago(data)
+        .then((response) => {
+          let mensaje = response.data.data;
+          if (mensaje == 200) {
+            this.$swal.fire({
+              icon: "success",
+              title: "Abono registrado",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            location.reload();
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     deletePago(id) {
       pagoServices
         .deletePago(id)
@@ -179,6 +270,10 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    capturarpago(infopago){
+this.pagocapturado= infopago;
+this.editMode= true;
     },
 
      registrarabono(pago, info) {

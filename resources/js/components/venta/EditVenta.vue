@@ -15,11 +15,19 @@
                       <h5 class="card-title text-uppercase text-muted mb-0">
                         Cliente - Nombre
                         <v-select
+                        v-if="!infopagosventa"
                           label="nombre"
                           v-model="clienteupdate"
                           :options="infocliente"
                           required
-                        >
+                          >
+                        </v-select>
+                            <v-select
+                       v-else
+                          label="nombre"
+                          v-model="clienteupdate"
+                          required
+                          >
                         </v-select>
                       </h5>
                     </div>
@@ -27,27 +35,24 @@
                       <h5 class="card-title text-uppercase text-muted mb-0">
                         Cliente - Ruc
                         <v-select
+                          v-if="!infopagosventa"
                           label="ruc"
                           v-model="clienteupdate"
                           :options="infocliente"
                           required
                         >
                         </v-select>
-                      </h5>
-                    </div>
+                              <v-select
+                        v-else
+                          label="ruc"
+                          v-model="clienteupdate"
+                          required
+                        >
+                        </v-select>
+                      </h5> <br>
 
-                    <!--  {{detalleventa}}
- -->
-                    <!--  <a
-              href=""
-              class="btn btn-sm btn-primary"
-              data-toggle="modal"
-              data-target="#ModalNuevoCliente"
-              >Nuevo Cliente</a
-            > -->
-                    <!-- <b-button size="sm" data-toggle="modal"
-              data-target="#ModalNuevoCliente"
-             variant="info"><i class="fas fa-plus-circle"></i> </b-button> -->
+                    </div>
+                 
 
                     <div class="col-auto">
                       <div
@@ -65,6 +70,9 @@
                       </div>
                     </div>
                   </div>
+
+<b-alert v-if="infopagosventa" variant="light" show>En caso que desee realizar modificaciones sobre esta venta, por favor elimine los pagos asociados</b-alert>
+
                   <br /><br />
                 </div>
               </div>
@@ -142,14 +150,17 @@
                   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">
-                        Este cliente adeuda valores con los siguientes detalles.
+                        Este cliente adeuda valores con los siguientes detalles. <span class="text-warning">Total Adeudado</span>  $ {{ parseFloat(totaldeudacliente).toFixed(2) }} 
                       </h5>
                       <span class="h2 font-weight-bold mb-0"> </span>
                     </div>
                   </div>
                   <p class="mt-3 mb-0 text-muted text-sm"></p>
 
-                  <b-list-group>
+                  <b-list-group style="max-height: 300px;
+    margin-bottom: 10px;
+    overflow:scroll;
+    -webkit-overflow-scrolling: touch;">
                     <b-list-group-item
                       v-for="item in infoventascliente"
                       :key="item.id"
@@ -217,13 +228,18 @@
                   <h3 class="mb-0">Venta</h3>
                 </div>
                 <div class="col-4 text-right">
-                  <a
+              <!--     <a
+                v-if="!infopagosventa"
                     href=""
                     class="btn btn-sm btn-primary"
                     data-toggle="modal"
                     data-target="#ModalVentaProducto"
                     ><i class="fas fa-search"></i>Buscar Productos</a
-                  >
+                  >  -->
+
+                  <b-button    v-if="!infopagosventa" variant="primary"  data-toggle="modal"
+                    data-target="#ModalVentaProducto" >Buscar Productos</b-button>
+                        <b-button    v-else variant="primary" disabled >Buscar Productos</b-button>
 
                   <b-badge pill variant="primary">
                     {{ detalleventa.length }}
@@ -264,6 +280,16 @@
                                 type="number"
                                 v-model="pagorecibido"
                                 @keypress="onlyNumber"
+                              />
+                            </div>
+                               <div class="mb-3">
+                              <p class="dis fw-bold mb-2">
+                                Detalle 
+                              </p>
+                              <input
+                                class="form-control"
+                                v-model="detallecontado"
+                                type="text"
                               />
                             </div>
                             <div>
@@ -741,9 +767,6 @@
                           />
                         </div>
 
-                        <!-- <b-form-checkbox v-model="banderaabonocredito" name="check-button" switch>
-      Deseo realizar un abono 
-    </b-form-checkbox> -->
 
                         <b-form-checkbox
                           id="checkbox-1"
@@ -880,40 +903,7 @@
                 </div>
               </div>
             </div>
-
-            <!-- modal observaciones generales  -->
-
-            <div
-              class="modal fade"
-              id="ModalObservacionesGenerales"
-              tabindex="-1"
-              role="dialog"
-              aria-hidden="true"
-            >
-              <div class="modal-dialog modal-md" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title">Observaciones Generales</h5>
-                    <button
-                      type="button"
-                      class="close"
-                      data-dismiss="modal"
-                      aria-label="Close"
-                    >
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <observacion-venta :venId="substr"></observacion-venta>
-                  </div>
-                  <div class="modal-footer"></div>
-                </div>
-              </div>
-            </div>
-
-            <!-- modal venta observaciones -->
             <!--          Modal agregar nuevo cliente -->
-
             <div
               class="modal fade"
               id="ModalNuevoCliente"
@@ -982,12 +972,7 @@
                 $
                 {{ parseFloat(data.item.precioUnitario).toFixed(2) }}
               </template>
-              <!--  <template #cell(descuento)="data">
-         
-             $ 
-             {{ parseFloat( data.item.descuento).toFixed(2) }}
-          </template>
- -->
+           
 
               <template #cell(subTotal)="data">
                 $
@@ -1059,8 +1044,17 @@
                                 <div class="input-group-append"></div>
                                 <!--  <button @click="UpdateDescuento()"></button> -->
                                 <button
+                                 v-if="!infopagosventa"
                                   class="btn btn-success"
                                   @click="UpdateDescuento()"
+                                  title="Aplicar descuento"
+                                >
+                                  <i class="fa fa-check"></i>
+                                </button>
+                                  <button
+                                v-else
+                               disabled
+                               class="btn btn-success"
                                   title="Aplicar descuento"
                                 >
                                   <i class="fa fa-check"></i>
@@ -1117,9 +1111,11 @@
 
                 <div @mouseover="onOver" @mouseleave="onLeave">
                   <b-dropdown
+                    v-if="!infopagosventa" 
                     id="dropdown-1"
                     text="Continuar"
                     ref="dropdown"
+                    
                     class="m-md-2"
                   >
                     <b-dropdown-item
@@ -1150,12 +1146,7 @@
                       data-target="#ModalVentaCredito"
                       ><i class="fas fa-bell"></i>Credito</b-dropdown-item
                     >
-                    <!--      <b-dropdown-item
-                      data-toggle="modal"
-                      data-target="#ModalObservacionesGenerales"
-                      ><i class="fas fa-paper-plane"></i
-                      >Observaciones</b-dropdown-item
-                    > -->
+               
                     <b-dropdown-item @click="downloadVenta()"
                       ><i class="fas fa-print"></i>Imprimir</b-dropdown-item
                     >
@@ -1164,16 +1155,12 @@
                       data-target="#ModalRetencion"
                       ><i class="fas fa-cube"></i>Retencion</b-dropdown-item
                     >
-                    <!-- 
-                    <b-dropdown-item @click="deleteVenta"
-                      ><i class="fas fa-ban"></i>Eliminar Venta</b-dropdown-item
-                    > -->
+               
                   </b-dropdown>
+
                 </div>
               </div>
             </div>
-
-            <!--  {{totalesventa}} -->
 
             <div class="card-footer py-4">
               <nav class="d-flex justify-content-end" aria-label="..."></nav>
@@ -1209,6 +1196,8 @@ export default {
       tipoabonocredito: null,
       banderaabonocredito: false, // sirve para elegir entre poner o no un abono de credito
       detalleabono: "",
+      detallecontado: "",
+      
       options: [
         { text: "Efectivo", value: "1" },
         { text: "Transferencia", value: "2" },
@@ -1219,13 +1208,7 @@ export default {
       filter: null,
       descuento: 0,
       fields: [
-        /*    {
-          key: "index",
-          label: "#",
-          sortable: false,
-          sortDirection: "desc",
-          tdClass: "index",
-        }, */
+  
         {
           key: "nombre",
           label: "Código",
@@ -1248,13 +1231,7 @@ export default {
           sortDirection: "desc",
           tdClass: "list-item-enddate",
         },
-        /*         {
-          key: "opcion",
-          label: "Unidad",
-          sortable: false,
-          sortDirection: "desc",
-          tdClass: "list-item-enddate",
-        }, */
+
         {
           key: "precioUnitario",
           label: "Precio",
@@ -1262,13 +1239,7 @@ export default {
           sortDirection: "desc",
           tdClass: "list-item-enddate",
         },
-        /*   {
-          key: "descuento",
-          label: "Descuento",
-          sortable: false,
-          sortDirection: "desc",
-          tdClass: "list-item-enddate",
-        }, */
+
         {
           key: "subTotal",
           label: "Total",
@@ -1276,16 +1247,7 @@ export default {
           sortDirection: "desc",
           tdClass: "list-item-enddate",
         },
-        /*   {
-          key: "Desc",
-          label: "Desc",
-          sortable: false,
-          sortDirection: "desc",
-          tdClass: "list-item-enddate",
-        },
-       
-         */
-
+      
         { key: "actions", label: "Accion", tdClass: "text-center" },
       ],
       fecha: moment().format("MMM DD YYYY, ddd, h:mm:ss a"),
@@ -1309,27 +1271,26 @@ export default {
       fechamaximacheque: "",
       detallecheque: "",
       fechamaximacredito: "",
+      totaldeudacliente:"",
       detallecredito: "",
       abonocredito: 0,
       saldo: "",
       totaldetallegeneral: [],
       infoventascliente: [],
+      infopagosventa:"",
     };
   },
   watch: {
     clienteupdate: function (newClient, oldClient) {
       this.actualizarVenta(newClient.id);
     },
-    /*     clienteupdate: function (newValue, oldValue) {
-      this.reporteVentasCliente(newValue.id);
-    }, */
+   
   },
   computed: {
     rows() {
       return this.detalleventa.length;
     },
     total_cambio: function () {
-      //console.log(this.productosSelected.tarVenta + "valor unitario");
       let total = this.totalesventa.total;
       let pagorecibido = this.pagorecibido;
       let tt = pagorecibido - total;
@@ -1337,7 +1298,6 @@ export default {
       return tt;
     },
     total_saldo: function () {
-      //console.log(this.productosSelected.tarVenta + "valor unitario");
       let total = this.totalesventa.total;
       let pagorecibido = this.pagorecibido;
       let tt = total - pagorecibido;
@@ -1354,6 +1314,7 @@ export default {
     this.getInformacionVenta();
     this.totalesVenta();
     this.detalleGeneralVenta();
+    this.obtenerpagos();
   },
   methods: {
     updateClientes() {
@@ -1363,6 +1324,15 @@ export default {
     downloadVenta() {
       let routeData = server + resource + `download-venta/` + this.substr;
       window.open(routeData);
+    },
+        obtenerpagos() {
+      VentaServices.getInformacionPagosVenta(this.substr)
+        .then((response) => {
+          this.infopagosventa = response.data.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     UpdateDescuento() {
       let data = {
@@ -1383,7 +1353,17 @@ export default {
     reporteVentasCliente(id) {
       ReporteServices.reporteDeudasporCliente(id)
         .then((response) => {
-          this.infoventascliente = response.data.data;
+          this.infoventascliente = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+   reporteTotalVentasCliente(id) {
+      ReporteServices.reporteTotalDeudasporCliente(id)
+        .then((response) => {
+          this.totaldeudacliente = response.data;
         })
         .catch((error) => {
           console.log(error);
@@ -1405,8 +1385,6 @@ export default {
         .then((response) => {
           let mensaje = response.data.data;
           if (mensaje == 200) {
-            //  this.getInformacionVenta();
-            //this.totalesVenta();
             location.reload();
           }
         })
@@ -1423,7 +1401,6 @@ export default {
           confirmButtonText: "Si",
         })
         .then((result) => {
-          /* Read more about isConfirmed, isDenied below */
           if (result.isConfirmed) {
             VentaServices.deleteVenta(this.substr)
               .then((response) => {
@@ -1473,6 +1450,7 @@ export default {
           else this.descuento = 0;
 
           this.reporteVentasCliente(this.clienteupdate[0].id);
+          this.reporteTotalVentasCliente(this.clienteupdate[0].id);
           //   console.log(JSON.stringify(this.clienteupdate[0].id));
         })
         .catch((error) => {
@@ -1486,6 +1464,8 @@ export default {
         pago: pago,
         vuelto: vuelto,
         cliId: cliId,
+        detallecontado: this.detallecontado,
+      
       };
       VentaServices.registrarPagoContado(data)
         .then((response) => {
@@ -1687,6 +1667,8 @@ export default {
           let mensaje = response.data.data;
           this.detalleGeneralVenta();
           this.reporteVentasCliente(cliente);
+          this.reporteTotalVentasCliente(cliente);
+          
         })
         .catch((error) => {
           console.log(error);

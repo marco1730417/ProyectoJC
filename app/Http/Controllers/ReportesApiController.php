@@ -397,69 +397,77 @@ class ReportesApiController extends ApiResponseController
   }
 
 
-
-
   public function reporteVentasporCLiente($cliId)
 
   {
-    /*   $ventas_cliente= Venta :: select ('ventas.id','pagos.tipo','pagos.total','ventas.fecha','ventas.observacion',
-      'clientes.nombre','clientes.ruc','clientes.direccion','clientes.telefono'
-      )
-     ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
-     ->leftJoin('pagos', 'ventas.id', '=', 'pagos.venId')
-   ->where('clientes.id',$cliId)
-      ->get(); */
-
-    //1 Sacar ventas con estado 0 asociadas a este cliente
-    $ventas_cliente = Venta::select(
+  
+    $ventas_cliente= Pago::select(
       'ventas.id as venId',
+      'pagos.id as pagId',
+      'ventas.estadopago as estadopago',
+      'pagos.cliId as cliId',
+      'pagos.fechamaxima as fechamaxima',
+      'pagos.saldo as saldos',
+      'pagos.cheque as cheque',
+      'pagos.numtransf as numtransf',
+      'pagos.detallecontado as detallecontado',
+      'pagos.detalleabono as detalleabono',
+      'pagos.tipo as tipo',
+      'pagos.total as total',
+      'ventas.fecha as fecha',
+      'clientes.nombre as nombre'
+   )
+      ->leftJoin('ventas', 'pagos.venId', '=', 'ventas.id')
+      ->leftJoin('clientes', 'pagos.cliId', '=', 'clientes.id')
+      ->where('ventas.estadopago',1)
+      ->where('clientes.id', $cliId)
+      ->wherenotNull('pagos.total')
+      ->orderBy('ventas.fecha')
+      ->get();
+
+    return $ventas_cliente;
+  }
+
+
+
+
+
+
+  public function reporteDeudasporCliente($cliId)
+
+  {
+
+     $ventas_pendientes = Venta::select(
+      'id as venId',
       'estadopago',
       'cliId',
       'ventas.fecha',
-      'ventas.observacion',
-      'clientes.nombre',
-      'clientes.ruc',
       DB::raw("(SELECT (pagos.saldo) FROM pagos
-        WHERE ventas.id=pagos.venId
-ORDER BY pagos.saldo
-limit 1
-) AS saldos"),
-      DB::raw("(SELECT (pagos.abono) FROM pagos
-WHERE ventas.id=pagos.venId
-ORDER BY pagos.saldo
-limit 1
-) AS abono"),
-      DB::raw("(SELECT (pagos.tipo) FROM pagos
-WHERE ventas.id=pagos.venId
+         WHERE ventas.id=pagos.venId
+         ORDER BY pagos.saldo
+         limit 1
+         ) AS saldos"),
 
-ORDER BY pagos.saldo
-limit 1
-) AS tipo"),
-      DB::raw("(SELECT (pagos.total) FROM pagos
-WHERE ventas.id=pagos.venId
-ORDER BY pagos.saldo
-limit 1
-) AS total"),
-      DB::raw("(SELECT (pagos.fechamaxima) FROM pagos
-WHERE ventas.id=pagos.venId
-ORDER BY pagos.saldo
-limit 1
-) AS fechamaxima"),
+         DB::raw("(SELECT (pagos.tipo) FROM pagos
+         WHERE ventas.id=pagos.venId
+         ORDER BY pagos.saldo
+         limit 1
+         ) AS tipo"),
     )
-
-      ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
       ->where('cliId', $cliId)
-      ->where('ventas.estadopago', 1)
+      ->where('estadopago', 0)
       ->get();
 
 
-
-
-
-    return $this->successResponse($ventas_cliente);
+    return $ventas_pendientes;
   }
 
-  public function reporteDeudasporCliente($cliId)
+
+
+
+
+
+  public function reporteTotalDeudasporCliente($cliId)
 
   {
 
@@ -473,37 +481,33 @@ limit 1
          WHERE ventas.id=pagos.venId
          ORDER BY pagos.saldo
          limit 1
-         ) AS saldos"),
+         ) AS saldos")
+
     )
       ->where('cliId', $cliId)
       ->where('estadopago', 0)
       ->get();
 
 
+   $total=  $ventas_pendientes->sum('saldos');
 
-
-    return $this->successResponse($ventas_pendientes);
+    return $total;
   }
   public function downloadReporteCliente($cliId)
 
   {
-    $ventas_cliente = Venta::select(
-      'ventas.id',
-      'pagos.tipo',
-      'pagos.total',
-      'ventas.fecha',
-      'ventas.observacion',
-      'clientes.nombre',
-      'clientes.ruc',
-      'clientes.direccion',
-      'clientes.telefono'
-    )
-      ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
-      ->leftJoin('pagos', 'ventas.id', '=', 'pagos.venId')
-      ->where('clientes.id', $cliId)
-      ->get();
+ 
+
+      $ventas_cliente=  ReportesApiController::reporteVentasporCLiente($cliId);
+      $ventas_deuda=  ReportesApiController::reporteDeudasporCliente($cliId);
+      $total_deuda=  ReportesApiController::reporteTotalDeudasporCliente($cliId);
+      
+      
+    //  return $ventas_deuda;
 
     $ventas_cliente = collect($ventas_cliente);
+    $ventas_deuda = collect($ventas_deuda);
+    
 
     // return $ventas_cliente[0]['nombre'];
     $pdf = PDF::loadView(
@@ -511,9 +515,9 @@ limit 1
 
       [
         "ventas_cliente" => $ventas_cliente,
-
-
-
+        "ventas_deuda" => $ventas_deuda,
+        "total_deuda" => $total_deuda,
+     
       ],
       ['format' => 'A4']
     );
@@ -577,4 +581,89 @@ limit 1
 
     return $this->successResponse($totales_compra);
   }
+
+  public function reporteVentasporCLiente1($cliId)
+
+  {
+  
+    //1 Sacar ventas con estado 0 asociadas a este cliente es decir ventas que el cliente NO ADEUDA NINGUN VALOR
+    $ventas_cliente = Venta::select(
+      'ventas.id as venId',
+      'estadopago',
+      'cliId',
+      'ventas.fecha',
+      'ventas.observacion',
+      'clientes.nombre',
+      'clientes.ruc',
+            DB::raw("(SELECT (pagos.saldo) FROM pagos
+              WHERE ventas.id=pagos.venId
+      ORDER BY pagos.saldo
+      limit 1
+      ) AS saldos"),
+            DB::raw("(SELECT (pagos.abono) FROM pagos
+      WHERE ventas.id=pagos.venId
+      ORDER BY pagos.saldo
+      limit 1
+      ) AS abono"),
+            DB::raw("(SELECT (pagos.tipo) FROM pagos
+      WHERE ventas.id=pagos.venId
+
+      ORDER BY pagos.saldo
+      limit 1
+      ) AS tipo"),
+            DB::raw("(SELECT (pagos.total) FROM pagos
+      WHERE ventas.id=pagos.venId
+      ORDER BY pagos.saldo
+      limit 1
+      ) AS total"),
+            DB::raw("(SELECT (pagos.fechamaxima) FROM pagos
+      WHERE ventas.id=pagos.venId
+      ORDER BY pagos.saldo
+      limit 1
+      ) AS fechamaxima"),
+    )
+
+      ->leftJoin('clientes', 'ventas.cliId', '=', 'clientes.id')
+      ->where('cliId', $cliId)
+      ->where('ventas.estadopago', 1)
+      ->get();
+
+    return $this->successResponse($ventas_cliente);
+  }
+/* 
+ Version 2 = Ajustar la apo */
+ public function reporteDeudasporCliente1($cliId)
+ { 
+
+     $ventas_pendientes= Pago::select(
+         'ventas.id as venId',
+         'pagos.id as pagId',
+         'ventas.estadopago as estadopago',
+         'pagos.cliId as cliId',
+         'pagos.fechamaxima as fechamaxima',
+         'pagos.saldo as saldos',
+         'pagos.cheque as cheque',
+         'pagos.numtransf as numtransf',
+         'pagos.detalleabono as detalleabono',
+         'pagos.tipo as tipo',
+         'pagos.total as total',
+         'ventas.fecha as fecha',
+         'clientes.nombre as nombre'
+         )
+         ->leftJoin('ventas', 'pagos.venId', '=', 'ventas.id')
+         ->leftJoin('clientes', 'pagos.cliId', '=', 'clientes.id')
+         ->where('clientes.id', $cliId)
+         ->where('ventas.estadopago',0)
+          ->where('pagos.tipo','<>','Contado')
+         ->where('pagos.tipo','<>','Transferencia')
+         ->where('pagos.tipo','<>','Transferencia')
+         ->orderBy('pagos.saldo')
+         ->get();
+
+       return $this->successResponse($ventas_pendientes);
+
+ } 
+
+
+
 }

@@ -243,6 +243,8 @@
                             <div class="mb-3">
                               <p class="dis fw-bold mb-2">Cantidad recibida</p>
                               <input
+                                  @keypress="onlyNumber"
+                        
                                 class="form-control"
                                 type="number"
                                 v-model="pagorecibido"
@@ -362,6 +364,8 @@
                             <div class="mb-3">
                               <p class="dis fw-bold mb-2">Cantidad recibida</p>
                               <input
+                                  @keypress="onlyNumber"
+                        
                                 class="form-control"
                                 type="number"
                                 v-model="pagorecibidotransferencia"
@@ -646,6 +650,14 @@ export default {
 
   },
   methods: {
+      onlyNumber($event) {
+      //console.log($event.keyCode); //keyCodes value
+      let keyCode = $event.keyCode ? $event.keyCode : $event.which;
+      if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) {
+        // 46 is dot
+        $event.preventDefault();
+      }
+    },
     updateDatos() {
       this.getInformacionVenta();
       this.totalesVenta();

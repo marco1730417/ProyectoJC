@@ -27,4 +27,9 @@ export default {
         return Axios.post(url+ '/' + id);
     },
 
+    editarPago(data) {
+        let url = server + resource + "update-info-pago";
+        return Axios.post(url, data);
+    },
+
 }
