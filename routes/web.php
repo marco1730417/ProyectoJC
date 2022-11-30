@@ -38,6 +38,11 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::get('cliente', ['as' => 'cliente.index', 'uses' => 'App\Http\Controllers\ClienteController@index']);
+	Route::get('exportcliente', 'App\Http\Controllers\ClienteController@export')->name('export');
+	Route::get('exportproducto', 'App\Http\Controllers\ProductoController@export')->name('export');
+
+
+
 	Route::get('productos', ['as' => 'productos.index', 'uses' => 'App\Http\Controllers\ProductoController@index']);
 
 	Route::get('proveedor', ['as' => 'proveedor.index', 'uses' => 'App\Http\Controllers\ProveedoresController@index']);
@@ -76,4 +81,9 @@ Route::group(['middleware' => 'auth'], function () {
 	 Route::get('table-list', function () {return view('pages.tables');})->name('table');
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
+
+
+
+Route::get('/facturaxml', 'App\Http\Controllers\VentaController@facturaxml')->name('facturaxml');
+
 

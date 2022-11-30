@@ -37,6 +37,8 @@
                     >
                       <span aria-hidden="true">&times;</span>
                     </button>
+
+                   
                   </div>
                   <div class="modal-body">
                     <modal-nuevo-cliente @updateClientes="updateClients" />
@@ -91,6 +93,7 @@
               data-target="#ModalNuevoCliente"
               >Nuevo Cliente</a
             ><button class="btn btn-success btn-sm" title="Recargar" @click="getAllClientes" ><i class="fas fa-sync"></i></button>
+   <button class="btn btn-info btn-sm" title="Exportar excel" @click="exportar" >Exportar</button>
    
           </div>
         </div>
@@ -206,6 +209,8 @@ import ClienteServices from "../../services/clienteServices";
 import { BootstrapVue } from "bootstrap-vue";
 import ModalNuevoCliente from "./ModalNuevoCliente.vue";
 Vue.use(BootstrapVue);
+import Conf from "../../services/conf.js";
+const server = Conf.server;
 export default {
   components: { ModalNuevoCliente },
   data() {
@@ -328,6 +333,14 @@ export default {
           }
         });
     },
+
+    exportar(){
+        let routeData =
+        server+
+        `exportcliente/`
+      window.open(routeData);
+
+    }
   },
 };
 </script>
