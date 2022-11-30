@@ -142,6 +142,15 @@
             >
               <i class="fas fa-sync"></i>
             </button>
+
+            
+            <button
+              class="btn btn-info btn-sm"
+              title="Exportar excel"
+              @click="exportar"
+            >
+             Exportar
+            </button>
           </div>
         </div>
       </div>
@@ -246,6 +255,9 @@ import ProductoServices from "../../services/productoServices";
 import { BootstrapVue } from "bootstrap-vue";
 import ModalNuevoProducto from "./ModalNuevoProducto.vue";
 Vue.use(BootstrapVue);
+import Conf from "../../services/conf.js";
+const server = Conf.server;
+
 export default {
   components: { ModalNuevoProducto },
   data() {
@@ -422,6 +434,13 @@ export default {
           }
         });
     },
+        exportar(){
+        let routeData =
+        server+
+        `exportproducto/`
+      window.open(routeData);
+
+    }
   },
 };
 </script>
